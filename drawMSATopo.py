@@ -4303,7 +4303,7 @@ def InitGlobalParameter():#{{{
     g_params['maxDistKR'] = 12
     g_params['isShrink'] = True
     g_params['aapath'] = ""
-    g_params['MAXIMAGESIZE'] = 20*1024*1024; #50M in pixels
+    g_params['MAXIMAGESIZE'] = 50*1024*1024; #50M in pixels
     g_params['marginX'] = 10; # marginX in pixels
     g_params['marginY'] = 20; # marginY in pixels
 

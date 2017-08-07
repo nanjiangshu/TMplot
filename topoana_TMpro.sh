@@ -176,7 +176,7 @@ AnaMSATopo0(){ # $id#{{{ # using multiple sequence alignment from pfam,  sequenc
   
     ### Step 2: get MSATopoSeq
     local msatopoSeqFile=$outpath/$id.topomsa.fa
-    $binpath/matchMSAtopo -msa $msaInFastaFormat  -topo $topoFile \
+    $binpath/matchMSAtopo.py -msa $msaInFastaFormat  -topo $topoFile \
         -o $msatopoSeqFile
  
     # step 3: cleaning, remove single spanning and non TM proteins
@@ -246,7 +246,7 @@ AnaMSATopo1(){ # $id#{{{ # using kalign to get MSA
   
     ### Step 2: get MSATopoSeq
     local msatopoSeqFile=$outpath/$id.cleaned.topomsa.fa
-    $binpath/matchMSAtopo -msa $msaInFastaFormat -topo $topoFile \
+    $binpath/matchMSAtopo.py -msa $msaInFastaFormat -topo $topoFile \
         -o $msatopoSeqFile
  
     ### Step 5: compare topologies 
@@ -456,7 +456,7 @@ AnaMSATopo2(){ # $id#{{{  #using kalignP and a fasta file with multiple homologo
             return 1
         fi
         echo Step 6: Matching Sequence MSA to topology MSA...
-        exec_cmd "$binpath/matchMSAtopo -msa $msaInFastaFormat -topo $topoFile_cleaned  -o $msatopoSeqFile"
+        exec_cmd "$binpath/matchMSAtopo.py -msa $msaInFastaFormat -topo $topoFile_cleaned  -o $msatopoSeqFile"
     fi
 
     ### Step 7 create dg files
@@ -765,7 +765,7 @@ AnaMSATopo3(){ #{{{ #$id #using kalignP and sequence and topology of query is gi
     ### Step 7: get MSATopoSeq
     local msatopoSeqFile=$outpath/$id.homology.cleaned.topomsa.fa
     echo -e Step 7: Get topology MSA by matching with sequence MSA...\n
-    $binpath/matchMSAtopo -msa $msaInFastaFormat -topo $topoFile_cleaned \
+    $binpath/matchMSAtopo.py -msa $msaInFastaFormat -topo $topoFile_cleaned \
         -o $msatopoSeqFile
     if [ ! -s "$msatopoSeqFile" ]; then 
         echo Failed to match topology MSA for ID $id. Ignore. >&2
