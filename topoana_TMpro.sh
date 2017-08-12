@@ -94,11 +94,19 @@ Options:
     -extfa    STR     File extension for sequence file, (default: .fa)
     -exttopo  STR     File extension for topology file, (default: .topo)
     -extmsa   STR     File extension for multiple sequence alignment file, (default: .msa.fa)
+    -fasttree-args <str> adding fast tree arguments, please enclosed by double quotes
     -v, --verbose     Print verbose information
     -h, --help        Print this help message and exit
 
-Created 2010-08-17, updated 2014-09-26, Nanjiang Shu
+
+Created 2010-08-17, updated 2017-08-08, Nanjiang Shu
 nanjiang.shu@scilifelab.se
+
+Notes:
+
+to add arguments for FastTree using the flag -fasttree-args
+
+
 "
 #export  GDFONTPATH=$DATADIR3/fonts/msttcorefonts/ 
 
@@ -538,9 +546,9 @@ AnaMSATopo2(){ # $id#{{{  #using kalignP and a fasta file with multiple homologo
             $sortedOrigTopoMSAFile \
             $groupedSortedOrigTopoMSAFile -aapath $datapath -showTMidx -colorTMbox -pfm no"
 
-        /usr/bin/convert -thumbnail 200 $outpath/$id.sorted.orig.topomsa.png \
+        convert -thumbnail 200 $outpath/$id.sorted.orig.topomsa.png \
             $outpath/thumb.$id.sorted.orig.topomsa.png
-        /usr/bin/convert -thumbnail 200 $outpath/$id.grouped.sorted.orig.topomsa.png \
+        convert -thumbnail 200 $outpath/$id.grouped.sorted.orig.topomsa.png \
             $outpath/thumb.$id.grouped.sorted.orig.topomsa.png
 
         # create full size image with text (text is amino acid sequence)
@@ -560,7 +568,7 @@ AnaMSATopo2(){ # $id#{{{  #using kalignP and a fasta file with multiple homologo
     $binpath/renameSeqIDInFasta.py $msaInFastaFormat -o $renamed_msaInFastaFormat
     treeFile=$outpath/$id.kalignp.fasttree
     if [  ! -s $treeFile  -o "$isOverwrite" == "1" ]; then 
-        exec_cmd "$fasttree_bin/FastTree $renamed_msaInFastaFormat > $treeFile"
+        exec_cmd "$fasttree_bin/FastTree \"$fasttree_args\" $renamed_msaInFastaFormat > $treeFile"
     fi
     $binpath/sortedTopoMSA2colordef.sh $sortedOrigTopoMSAFile > $outpath/$id.cmpclass.colordef.txt
     $binpath/clusteredTopoMSA2colordef.sh $clusteredOrigTopoMSAAnnoFile > $outpath/$id.cluster.colordef.txt
@@ -587,12 +595,12 @@ AnaMSATopo2(){ # $id#{{{  #using kalignP and a fasta file with multiple homologo
     exec_cmd "python $binpath/reordermsa.py -msafile $sortedOrigTopoMSAFile -orderlist $orderlistfile -o $reorderedmsafile"
     if [ -f "$reorderedmsafile" ]; then
         exec_cmd "python $binpath/drawMSATopo.py -sep n -text n -aapath $datapath  -showTMidx -colorTMbox -pfm no -outpath $outpath $reorderedmsafile"
-        exec_cmd "/usr/bin/convert -thumbnail 200 $outpath/${id}.reordered.topomsa.png $outpath/thumb.${id}.reordered.topomsa.png"
+        exec_cmd "convert -thumbnail 200 $outpath/${id}.reordered.topomsa.png $outpath/thumb.${id}.reordered.topomsa.png"
         #rm -f $reorderedmsafile
 
         if [ $numseq -lt 101 ] ;then  # draw pdf figure for smaller families
             exec_cmd "python $binpath/drawMSATopo.py -sep n -text n -aapath $datapath  -showTMidx -colorTMbox -pfm no -outpath $outpath -method mat $reorderedmsafile "
-            exec_cmd "/usr/bin/convert -thumbnail 200 $outpath/${id}.reordered.topomsa.pdf $outpath/thumb.${id}.reordered.topomsa.mat.png"
+            exec_cmd "convert -thumbnail 200 $outpath/${id}.reordered.topomsa.pdf $outpath/thumb.${id}.reordered.topomsa.mat.png"
         fi
     fi
 
@@ -810,7 +818,7 @@ AnaMSATopo3(){ #{{{ #$id #using kalignP and sequence and topology of query is gi
     # create thumbnail from non text orig
     echo -e Step 9: Draw figures for the topology MSA...\n
     python $binpath/drawMSATopo.py -text n $sortedOrigTopoMSAFile -outpath $outpath
-    /usr/bin/convert -thumbnail 200 \
+    convert -thumbnail 200 \
         $outpath/$id.homology.sorted.orig.topomsa.png \
         $outpath/thumb.$id.homology.sorted.orig.topomsa.png
 
@@ -852,6 +860,8 @@ ext_fa=.fa
 ext_topo=.topo
 ext_msa=.msa.fa
 
+fasttree_args=""
+
 
 isNonOptionArg=0
 isOverwrite=0
@@ -879,6 +889,7 @@ while [ "$1" != "" ]; do
             -outpath|--outpath) outpath=$2;shift;;
             -noblast|--noblast) isRunBlast=0;;
             -alnprog|--alnprog) msaProg=$2;shift;;
+            -fasttree-args|--fasttree-args) fasttree_args="$2";shift;;
             -topopredprog|--topopredprog) topologyPredProg=$2;shift;;
             -anamode|--anamode) anamode=$2;shift;;
             -min-rlty|--min-rlty) MIN_RLTY=$2;shift;;
