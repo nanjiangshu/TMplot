@@ -136,8 +136,7 @@ IsAllSeqIDUnique(){ #{{{
         echo File \'$1\' is empty >&2
         return 1
     else
-        python $binpath/getseqlen.py  $file  --printid | awk '{print $1}' \
-            | sort | uniq -d
+        python $binpath/getfastaid.py $file | sort | uniq -d
         return 0
     fi
 }
@@ -149,13 +148,14 @@ exec_cmd(){ #{{{
 #}}}
 RunTopoAna(){ #{{{
     local id=$1
-    # add a layer to show the running time
+    # Add a layer to show the running time
     res1=$(/bin/date +%s.%N)
     case $anamode in 
         0) AnaMSATopo0 $id;;
         1) AnaMSATopo1 $id;;
         2) AnaMSATopo2 $id;;
         3) AnaMSATopo3 $id;;
+        4) AnaMSATopo4 $id;;
     esac
     #        sleep 1s
     res2=$(/bin/date +%s.%N)
@@ -575,7 +575,7 @@ AnaMSATopo2(){ # $id#{{{  #using kalignP and a fasta file with multiple homologo
     $binpath/sortedTopoMSA2numTMbardef.sh $sortedOrigTopoMSAFile > $outpath/$id.numTMdef.txt
     python $binpath/sortedTopoMSA2inside-outside-colordef.py $sortedOrigTopoMSAFile > $outpath/$id.ntermstate.colordef.txt
     python $binpath/sortedTopoMSA2numTM_and_io.py $sortedOrigTopoMSAFile > $outpath/$id.numTM_and_io.txt
-    python $binpath/itol_pfamtree.py -datapath $outpath -outpath $outpath $id
+    python $binpath/itol_pfamtree.py -m 0 -datapath $outpath -outpath $outpath $id
     rm -f $renamed_msaInFastaFormat
 
     # draw reordered 
@@ -826,6 +826,170 @@ AnaMSATopo3(){ #{{{ #$id #using kalignP and sequence and topology of query is gi
     python $binpath/drawMSATopo.py -text y $sortedOrigTopoMSAFile -outpath $outpath
 }
 #}}}
+AnaMSATopo4(){ # $id#{{{
+    # Created 2017-08-11
+    # Derived from AnaMSATopo2.
+    # creating the topoMSA and three iTOLs figure
+    # the *.topo file and aligment should be prepared before running
+    # updated 2017-08-13
+    local id=$1
+    local fastaFile=$datapath/${id}${ext_fa}
+
+    if [ ! -s "$fastaFile" ]; then 
+        echo seqfile \'$fastaFile\' does not exist or empty. Ignore. >&2
+    else
+        local numseq=`python $binpath/countseq.py $fastaFile -nf `
+        if [ $numseq -le 1 ]; then 
+            echo Too few sequences \($numseq\) for ID $id. At least 2 \
+                sequences are needed. Ignore. >&2
+            return 1
+        fi
+    fi
+
+    # Step 1. check if there exists redundant seqIDs
+    local repeatedIDList=`IsAllSeqIDUnique $fastaFile`
+    if [ "$repeatedIDList" != "" ] ; then
+        echo -e Repeated sequence id found in file $fastaFile. Ignore. \
+            They are\n"$repeatedIDList" >&2
+        return 1
+    fi
+
+    local topoFile=$datapath/${id}${ext_topo}
+    local msaFile=${datapath}/${id}${ext_msa}
+    local msaFile_cleaned=$outpath/$id.cleaned.msa.fa
+
+    ### Step 2: remove unnecessary gaps if existing
+    exec_cmd "$binpath/removeUnnecessaryGap $msaFile -o $msaFile_cleaned"
+
+
+    ### Step 3: get MSATopoSeq
+    local msatopoSeqFile=$outpath/$id.topomsa.fa
+    echo Step 6: Matching Sequence MSA to topology MSA...
+    exec_cmd "$binpath/matchMSAtopo.py -msa $msaFile_cleaned -topo $topoFile  -o $msatopoSeqFile"
+
+    ### Step 4 create dg files
+    echo Step 4: create dg files
+    exec_cmd "$binpath/getDGvalueTMOfTopo.sh -topo $msatopoSeqFile -aa $fastaFile -outpath $outpath "
+    /bin/rm -f $outpath/$id.*.dgscorelist
+
+
+    ### Step 5: compare topologies 
+    local mm=0
+    local topowithDGscoreFile=$outpath/$id.topomsa.topowithdgscore
+    local identicalMatrixFile=$outpath/$id.identicalmatrix.mm${mm}.json
+    local dgscoreFile=$outpath/$id.cleaned.topomsa.dgscore
+    local sortedOrigTopoMSAFile=$outpath/$id.sorted.orig.topomsa.fa
+    local clusteredOrigTopoMSAFile=$outpath/$id.clustered.orig.topomsa.fa
+    local clusteredOrigTopoMSAAnnoFile=$outpath/$id.clustered.orig.topomsa.anno
+    local resultfile=$outpath/$id.diff.ana
+    local groupedSortedOrigTopoMSAFile=$outpath/$id.grouped.sorted.orig.topomsa.fa
+    local groupedResultFile=$outpath/$id.grouped.diff.ana
+    local invertedTopologyFile=$outpath/$id.inverted.info.txt
+    maxdgdiff=1.0
+    if [ $startfrom -le 8 ]; then
+        echo Step 8: compare MSA topologies
+        if [ ! -s $topowithDGscoreFile ] ; then 
+            echo Failed to generate topowithDGscoreFile for $id. Ignore. >&2
+            return 1
+        fi
+        exec_cmd "python $binpath/compareMSATopo.py $topowithDGscoreFile -mcmp $method_comparison \
+            -maxdgdiff $maxdgdiff \
+            -wo $sortedOrigTopoMSAFile -o $resultfile \
+            -og $groupedResultFile -wog $groupedSortedOrigTopoMSAFile \
+            -woc $clusteredOrigTopoMSAFile \
+            -woinv $invertedTopologyFile \
+            -widtmatrix $identicalMatrixFile
+            "
+        grep "^>" $clusteredOrigTopoMSAFile > $clusteredOrigTopoMSAAnnoFile
+        rm -f $clusteredOrigTopoMSAFile
+
+        if [ -s "$topowithDGscoreFile" ]; then 
+            awk '{if(NR%3== 0 || NR%3 == 1) print}' $topowithDGscoreFile > $dgscoreFile
+        fi
+        #rm -f $topowithDGscoreFile
+        pairalnTopoFile=$outpath/$id.cons_pairaln.topo.fa
+        paircmpFile=$outpath/$id.cons_pairaln.paircmp
+        badPairCmpFile=$outpath/$id.cons_pairaln.badpaircmp
+        signalpFile=/data3/wk/MPTopo/pfamAna_swissprot//pred_signalp/Pfam27-A.perTM75_nseq4.signalp_list
+        if [ -s "$pairalnTopoFile" ];then
+            exec_cmd "python $binpath/compareMSATopo.py $pairalnTopoFile -mode 0 -mp 3  -o $paircmpFile  -obad $badPairCmpFile -seqidttype 1 -signalp  $signalpFile -cmpsp"
+        fi
+    fi
+
+
+    ### Step 9: Create pictures
+    # create thumbnail from non text orig
+    if [ $startfrom -le 9 ]; then
+        echo Step 9: Draw figures
+        if [ ! -s $sortedOrigTopoMSAFile -a ! -s $groupedSortedOrigTopoMSAFile ]; then
+            echo Failed to generate sorted TopoMSA file for $id. >&2
+            return 1
+        fi
+        exec_cmd "python $binpath/drawMSATopo.py -text n -outpath $outpath\
+            $sortedOrigTopoMSAFile \
+            $groupedSortedOrigTopoMSAFile -aapath $datapath -showTMidx -colorTMbox -pfm no"
+
+        convert -thumbnail 200 $outpath/$id.sorted.orig.topomsa.png \
+            $outpath/thumb.$id.sorted.orig.topomsa.png
+        convert -thumbnail 200 $outpath/$id.grouped.sorted.orig.topomsa.png \
+            $outpath/thumb.$id.grouped.sorted.orig.topomsa.png
+
+        # create full size image with text (text is amino acid sequence)
+        exec_cmd "python $binpath/drawMSATopo.py -text y -outpath $outpath\
+            $sortedOrigTopoMSAFile \
+            $groupedSortedOrigTopoMSAFile\
+            -aapath $datapath -showTMidx -pfm no"
+
+        #rm -f $topoFile
+        #rm -f $topoFile_cleaned
+        #rm -f $fastaFile_cleaned
+        #rm -f $limitedFastaFile_cleaned
+    fi
+
+    # create tree
+    local renamed_msaInFastaFormat=$outpath/$id.renamedid.msa.fasta
+    exec_cmd "$binpath/renameSeqIDInFasta.py $msaFile_cleaned -o $renamed_msaInFastaFormat"
+    treeFile=$outpath/$id.kalignp.fasttree
+    if [  ! -s $treeFile  -o "$isOverwrite" == "1" ]; then 
+        exec_cmd "$fasttree_bin/FastTree $fasttree_args $renamed_msaInFastaFormat > $treeFile"
+    fi
+    $binpath/sortedTopoMSA2colordef.sh $sortedOrigTopoMSAFile > $outpath/$id.cmpclass.colordef.txt
+    $binpath/clusteredTopoMSA2colordef.sh $clusteredOrigTopoMSAAnnoFile > $outpath/$id.cluster.colordef.txt
+    $binpath/sortedTopoMSA2numTMbardef.sh $sortedOrigTopoMSAFile > $outpath/$id.numTMdef.txt
+    python $binpath/sortedTopoMSA2inside-outside-colordef.py $sortedOrigTopoMSAFile > $outpath/$id.ntermstate.colordef.txt
+    python $binpath/sortedTopoMSA2numTM_and_io.py $sortedOrigTopoMSAFile > $outpath/$id.numTM_and_io.txt
+    python $binpath/itol_pfamtree.py -m 0 -datapath $outpath -outpath $outpath $id
+    rm -f $renamed_msaInFastaFormat
+
+    # draw reordered 
+    local reorderedmsafile=$outpath/${id}.reordered.topomsa.fa
+    local bsname_treeFile=`basename $treeFile`
+    local rtname_treeFile=${bsname_treeFile%.*}
+    local orderlistfile=$outpath/${rtname_treeFile}.listorder.txt
+    exec_cmd "$binpath/itol_get_tree_listorder.py $treeFile -outpath $outpath"
+    if [ ! -s "$sortedOrigTopoMSAFile" ]; then
+        echo "msafile $sortedOrigTopoMSAFile does not exist or empty. Ignore $id" >&2
+        return 1
+    fi
+    if [ ! -s "$orderlistfile" ]; then
+        echo "orderlistfile $orderlistfile does not exist or empty. Ignore $id" >&2
+        return 1
+    fi
+    exec_cmd "python $binpath/reordermsa.py -msafile $sortedOrigTopoMSAFile -orderlist $orderlistfile -o $reorderedmsafile"
+    if [ -f "$reorderedmsafile" ]; then
+        exec_cmd "python $binpath/drawMSATopo.py -sep n -text n -aapath $datapath  -pfm no -outpath $outpath $reorderedmsafile"
+        exec_cmd "convert -thumbnail 200 $outpath/${id}.reordered.topomsa.png $outpath/thumb.${id}.reordered.topomsa.png"
+        #rm -f $reorderedmsafile
+
+        if [ $numseq -lt 101 ] ;then  # draw pdf figure for smaller families
+            exec_cmd "python $binpath/drawMSATopo.py -sep n -text n -aapath $datapath   -pfm no -outpath $outpath -method mat $reorderedmsafile "
+            exec_cmd "convert -thumbnail 200 $outpath/${id}.reordered.topomsa.pdf $outpath/thumb.${id}.reordered.topomsa.mat.png"
+        fi
+    fi
+
+    echo
+}
+#}}}
 
 if [ $# -lt 1 ]; then
     PrintHelp
@@ -962,7 +1126,7 @@ if [ ! -d "$datapath"  ] ; then
             $binpath/my_extractdb.py -dbname $dbnamemsa -l $tmpidlistfile \
                 -split -dataext .msf -outpath $tmpdir
             ;;
-        1|2)
+        1|2|4)
             if [ "$dbnameseq" == "" ]; then
                 echo dbnameseq not set. Exit. >&2
                 exit 1

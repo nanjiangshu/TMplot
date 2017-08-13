@@ -20,13 +20,22 @@ USAGE:  itol_pfamtree.py [-datapath DIR] -l pfamidlist [ID [ID ...]]
     Visualize phylogenetic tree of Pfam family, highlighting important features
     of membrane proteins
 OPTIONS:
-  -m, -method INT Method for visualization, (default: 0)
+  -m, -method STR Method for visualization, (default: 0)
+                  0:
+                  1:
+                  sd1: phylogenetic tree showing the number of the TM helices and with orientation
+                       represented by either red or blue, and also color subfamilies differently
+                       in the branches.
+                  sd2: phylogenetic tree with domain architectures
+                  sd3: phylogenetic tree with the first level (kingdom) colored in branches.
+                       and the next three levels are colored in outer circles,(three circles) 
+
   -datapath DIR   Set datapath, (default: ./)
   -outpath  DIR   Set outpath, (default: ./)
   -q              Quiet mode
   -h, --help      Print this help message and exit
 
-Created 2012-03-13, updated 2014-10-06, Nanjiang Shu 
+Created 2012-03-13, updated 2017-08-13, Nanjiang Shu 
 """
 
 def PrintHelp():#{{{
@@ -154,6 +163,84 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
     pdffile = outpath + os.sep + pfamid + '-itol.pdf'
     jpgfile = outpath + os.sep + pfamid + '-itol.jpg'
     thumbfile = outpath + os.sep + "thumb." + pfamid + '-itol.jpg'
+    itol_exporter.export(epsfile)
+    os.system("epstopdf %s" % epsfile )
+    os.system("convert %s %s" % (epsfile, jpgfile) )
+    os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
+    print 'exported tree to ',pdffile
+#}}}
+def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
+# calculate subfamilies
+    subfamfile = "%s/%s.subfamlies"%(datapath, pfamid)
+
+#Create the Itol class
+    itl = Itol.Itol()
+#Set the tree file
+    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
+    if not os.path.exists(tree):
+        print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
+        return 1
+    t = Tree(tree)
+    leaves = t.get_leaves()
+    numLeave = len(leaves)
+
+    fontsize = GetFontSize(numLeave)
+
+    dataset1 = datapath + os.sep + pfamid + '.numTM_and_io.txt'
+
+#===================================
+    itl.add_variable('treeFile',tree)
+    itl.add_variable('treeName','SD1')
+    itl.add_variable('treeFormat','newick')
+#===================================
+    if os.path.exists(dataset1):
+        itl.add_variable('dataset1File',dataset1)
+        itl.add_variable('dataset1Label','numTM_and_io')
+        itl.add_variable('dataset1Separator','comma')
+        itl.add_variable('dataset1Type','multibar')
+        itl.add_variable('dataset1PreventOverlap','1')
+        itl.add_variable('dataset1Color','#FF0000')
+#===================================
+# Check parameters
+# itl.print_variables()
+
+#Submit the tree
+    print ''
+    print 'Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server'
+    good_upload = itl.upload()
+    if good_upload == False:
+        print 'There was an error:'+itl.comm.upload_output
+        sys.exit(1)
+
+#Read the tree ID
+    print 'Tree ID: '+str(itl.comm.tree_id)
+
+#Read the iTOL API return statement
+    print 'iTOL output: '+str(itl.comm.upload_output)
+
+#Website to be redirected to iTOL tree
+    print 'Tree Web Page URL: '+itl.get_webpage()
+
+# Warnings associated with the upload
+    print 'Warnings: '+str(itl.comm.warnings)
+
+#Export to pdf
+    print 'Exporting to pdf'
+    itol_exporter = itl.get_itol_export()
+#itol_exporter = itolexport.ItolExport()
+#itol_exporter.set_export_param_value('tree','18793532031912684633930')
+    itol_exporter.set_export_param_value('format', 'eps')
+    itol_exporter.set_export_param_value('displayMode',"circular")
+    itol_exporter.set_export_param_value('showBS',"0")
+    itol_exporter.set_export_param_value('fontSize',fontsize)
+    itol_exporter.set_export_param_value('alignLabels',"1")
+    itol_exporter.set_export_param_value('datasetList','dataset1')
+    extname = "-itol-sd1"
+    epsfile = outpath + os.sep + pfamid + extname + '.eps'
+    pdffile = outpath + os.sep + pfamid + extname + '.pdf'
+    jpgfile = outpath + os.sep + pfamid + extname + '.jpg'
+    thumbfile = outpath + os.sep + "thumb." + pfamid + extname + '.jpg'
     itol_exporter.export(epsfile)
     os.system("epstopdf %s" % epsfile )
     os.system("convert %s %s" % (epsfile, jpgfile) )
@@ -311,8 +398,8 @@ def main(g_params):#{{{
             elif sys.argv[i] in [ "-datapath", "--datapath"]:
                 datapath = sys.argv[i+1]
                 i += 2;
-            elif argv[i] in [ "-method", "--method"]:
-                g_params['method'], i = myfunc.my_getopt_int(sys.argv, i)
+            elif argv[i] in [ "-m", "--m", "-method", "--method"]:
+                g_params['method'], i = myfunc.my_getopt_str(sys.argv, i)
             elif sys.argv[i] in [ "-l", "--l"]:
                 idListFile = sys.argv[i+1]
                 i = i + 2;
@@ -333,15 +420,21 @@ def main(g_params):#{{{
         cnt = 0
         for pfamid in idList:
             print "================== ", cnt , pfamid, " ===================="
-            if g_params['method'] == 0:
+            if g_params['method'] == "0":
                 Itol_Tree_m0(pfamid, datapath, outpath)
-            elif g_params['method'] == 1:
+            elif g_params['method'] == "1":
                 Itol_Tree_m1(pfamid, datapath, outpath)
+            elif g_params['method'] == "sd1":
+                Itol_Tree_m_sd1(pfamid, datapath, outpath)
+            elif g_params['method'] == "sd2":
+                Itol_Tree_m_sd2(pfamid, datapath, outpath)
+            elif g_params['method'] == "sd3":
+                Itol_Tree_m_sd3(pfamid, datapath, outpath)
             cnt += 1
 #}}}
 def InitGlobalParameter():#{{{
     g_params = {}
-    g_params['method'] = 0
+    g_params['method'] = "0"
     return g_params
 #}}}
 if __name__ == '__main__' :

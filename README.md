@@ -11,3 +11,10 @@ National Bioinformatics Infrastructure Sweden
 
 Eamil: nanjiang.shu@scilifelab.se
 
+
+# compile c code 
+Run
+
+    make 
+
+
