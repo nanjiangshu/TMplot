@@ -565,10 +565,10 @@ AnaMSATopo2(){ # $id#{{{  #using kalignP and a fasta file with multiple homologo
 
     # create tree
     local renamed_msaInFastaFormat=$outpath/$id.renamedid.msa.fasta
-    $binpath/renameSeqIDInFasta.py $msaInFastaFormat -o $renamed_msaInFastaFormat
+    exec_cmd "$binpath/renameSeqIDInFasta.py $msaInFastaFormat -o $renamed_msaInFastaFormat"
     treeFile=$outpath/$id.kalignp.fasttree
     if [  ! -s $treeFile  -o "$isOverwrite" == "1" ]; then 
-        exec_cmd "$fasttree_bin/FastTree \"$fasttree_args\" $renamed_msaInFastaFormat > $treeFile"
+        exec_cmd "$fasttree_bin/FastTree $fasttree_args $renamed_msaInFastaFormat > $treeFile"
     fi
     $binpath/sortedTopoMSA2colordef.sh $sortedOrigTopoMSAFile > $outpath/$id.cmpclass.colordef.txt
     $binpath/clusteredTopoMSA2colordef.sh $clusteredOrigTopoMSAAnnoFile > $outpath/$id.cluster.colordef.txt
