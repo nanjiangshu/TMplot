@@ -3372,7 +3372,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
 
     blue = Color("blue")
     red = Color("red")
-    lst_color = [list(blue.range_to(red,10)) for numTM in numTMList]
+    lst_color = [list(blue.range_to(red,numTM)) for numTM in numTMList]
 
     lengthAlignmentOriginal = len(topoSeqList[0])
 

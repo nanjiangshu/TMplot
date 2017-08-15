@@ -1054,6 +1054,39 @@ def ReadFam2SeqidMap(infile):#{{{
     hdl.close()
     return pfam2seqidDict
 #}}}
+def Read_subfamily(infile):#{{{
+    """
+    Read subfamiliy definition
+    format of the input file
+        FAMID: list-of-seq-ids-delimited-by-tabs
+    e.g.
+        PF00854:seqid1 seqid2
+    """
+    hdl = ReadLineByBlock(infile)
+    if hdl.failure:
+        return {}
+    lines = hdl.readlines()
+    dt = {}
+    famidset = set([])
+    while lines != None:
+        for line in lines:
+            line = line.strip()
+            if not line or line[0] == "#":
+                continue
+            strs = line.split(':')
+            if len(strs) == 2:
+                famid = strs[0].strip()
+                famidset.add(famid)
+                seqidlist = strs[1].strip().split()
+                for seqid in seqidlist:
+                    dt[seqid] = famid
+            else:
+                msg="broken item in file %s: line \"%s\""
+                print >> sys.stderr, msg%(infile, line)
+        lines = hdl.readlines()
+    hdl.close()
+    return (list(famidset), dt)
+#}}}
 def ReadPfamScan(infile, evalue_threshold=1e-3):#{{{
     """
     Read output of pfamscan.pl
@@ -2572,6 +2605,16 @@ def WriteTOPCONSTextResultFile(outfile, outpath_result, maplist,#{{{
     except IOError:
         print "Failed to write to file %s"%(outfile)
 #}}}
+def WriteSubFamColorDef(outfile, subfamDict, lst_color):#{{{
+    """Write subfamily color definition file"""
+    try:
+        fpout = open(outfile, "w")
+        
+    except IOError:
+        print >> sys.stderr, "Failed to write to outfile %s"%(outfile)
+        return 1
+#}}}
+
 def Sendmail(from_email, to_email, subject, bodytext):#{{{
     sendmail_location = "/usr/sbin/sendmail" # sendmail location
     p = os.popen("%s -t" % sendmail_location, "w")

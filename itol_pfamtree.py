@@ -5,6 +5,9 @@ import sys
 from ete2 import Tree
 import math
 import myfunc
+from colour import Color
+blue = Color("blue")
+red = Color("red")
 
 # itol_path = os.environ['HOME'] + os.sep + ".local/lib/python2.7/itol"
 # #itol_path = "/data3/downloads/itol/"
@@ -170,8 +173,21 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
     print 'exported tree to ',pdffile
 #}}}
 def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
-# calculate subfamilies
+# read subfamily definition
     subfamfile = "%s/%s.subfamlies"%(datapath, pfamid)
+    (subfamIDList, subfamDict) = myfunc.Read_subfamily(subfamfile)
+    numSubFam = len(subfamIDList)
+
+# create subfamily branch color definition file
+    subfam_colordef_file = "%s/%s.subfamilies.colordef.txt"%(outpath, pfamid)
+    lst_color = [list(blue.range_to(red,10)) for x in range(numSubFam)]
+    color_dict = {}
+    for i in xrange(numSubFam):
+        famid = subfamIDList[i]
+        color = lst_color[i][idxTM].get_hex_l()
+        color_dict[famid] = lst_color[i]
+    myfunc.WriteSubFamColorDef(subfam_colordef_file, subfamDict, lst_color)
+    #color = lst_color[i][idxTM].get_hex_l()
 
 #Create the Itol class
     itl = Itol.Itol()

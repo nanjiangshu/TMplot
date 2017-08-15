@@ -22,7 +22,7 @@ if not os.path.exists(infile):
 # write out taxdef
 fpout = sys.stdout
 numSeq = len(idList)
-fpout.write("LABELS,mylabel_1,mylabel_2\n")
+fpout.write("LABELS,Nterm-inside,Nterm-outside\n")
 fpout.write("COLORS,%s,%s\n"%(red, blue))
 
 for i in xrange(numSeq):
