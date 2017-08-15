@@ -1089,6 +1089,48 @@ def Read_subfamily(infile, subfam_idlist):#{{{
         subfam_idlist.append(famid)
     return dt
 #}}}
+def Read_domain_sd(infile, domain_idlist):#{{{
+    """
+    Read domain definition
+    format of the input file
+        seqID: domain definition list
+    e.g.
+        A0A024P4Z6:PF00999 11-392|PF02080 419-487
+    """
+    hdl = ReadLineByBlock(infile)
+    if hdl.failure:
+        return {}
+    lines = hdl.readlines()
+    domainIDSet = set([])
+    domainDict = {}
+    while lines != None:
+        for line in lines:
+            line = line.strip()
+            if not line or line[0] == "#":
+                continue
+            strs = line.split(':')
+            if len(strs) == 2:
+                seqid = strs[0].strip()
+                lst_domain = []
+                li = strs[1].strip().split('|')
+                for item in li:
+                    strs2 = item.split()
+                    domainid = strs2[0]
+                    domainIDSet.add(domainid)
+                    strs3 = strs2[1].split('-')
+                    beg = int(strs3[0]) - 1
+                    end = int(strs3[1]) - 1
+                    lst_domain.append([beg, end, domainid])
+                domainDict[seqid] = lst_domain
+            else:
+                msg="broken item in file %s: line \"%s\""
+                print >> sys.stderr, msg%(infile, line)
+        lines = hdl.readlines()
+    hdl.close()
+    for domainid in domainIDSet:
+        domain_idlist.append(domainid)
+    return domainDict
+#}}}
 def ReadPfamScan(infile, evalue_threshold=1e-3):#{{{
     """
     Read output of pfamscan.pl
@@ -2160,8 +2202,7 @@ def GetTMPosition_gapless(topo):#{{{
     return posTM
 #}}}
 def ReadSeqLengthDict(infile):#{{{
-    """
-    Input:
+    """Input:
         seqlen file
     Output:
         seqlenDict:   {'seqid': 134, 'seqid': 393}

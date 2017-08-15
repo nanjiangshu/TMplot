@@ -835,6 +835,9 @@ AnaMSATopo4(){ # $id#{{{
     local id=$1
     local fastaFile=$datapath/${id}${ext_fa}
 
+    local seqlenFile=$outpath/$id.seqlen.txt
+
+
     if [ ! -s "$fastaFile" ]; then 
         echo seqfile \'$fastaFile\' does not exist or empty. Ignore. >&2
     else
@@ -846,6 +849,7 @@ AnaMSATopo4(){ # $id#{{{
         fi
     fi
 
+    exec_cmd "$binpath/getseqlen.py -printid $fastaFile -o $seqlenFile"
     # Step 1. check if there exists redundant seqIDs
     local repeatedIDList=`IsAllSeqIDUnique $fastaFile`
     if [ "$repeatedIDList" != "" ] ; then
@@ -959,10 +963,16 @@ AnaMSATopo4(){ # $id#{{{
     python $binpath/sortedTopoMSA2inside-outside-colordef.py $sortedOrigTopoMSAFile > $outpath/$id.ntermstate.colordef.txt
     python $binpath/sortedTopoMSA2numTM_and_io.py $sortedOrigTopoMSAFile > $outpath/$id.numTM_and_io.txt
     subfamfile=$datapath/$id.subfamlies
+    domainfile=$datapath/$id.mdp
+    speciesfile=$datapath/$id.species
 
     /bin/cp -f $subfamfile $outpath/
+    /bin/cp -f $domainfile $outpath/
+    /bin/cp -f $speciesfile $outpath/
     exec_cmd "python $binpath/itol_pfamtree.py -m 0 -datapath $outpath -outpath $outpath $id"
     exec_cmd "python $binpath/itol_pfamtree.py -m sd1 -datapath $outpath -outpath $outpath $id"
+    exec_cmd "python $binpath/itol_pfamtree.py -m sd2 -datapath $outpath -outpath $outpath $id"
+    exec_cmd "python $binpath/itol_pfamtree.py -m sd3 -datapath $outpath -outpath $outpath $id"
     rm -f $renamed_msaInFastaFormat
 
     # draw reordered 

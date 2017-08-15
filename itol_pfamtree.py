@@ -51,7 +51,40 @@ def GetFontSize(numLeave):#{{{
 
     return fontsize
 #}}}
+def WriteDomainColorDefFile(domain_colordef_file, domain_dict, domain_idlist, seqlen_dict, leaves_name_set):#{{{
+    """Write domain color definition file for iTOL given domain file
+    """
+    default_color = "#008000"
+    default_shape = "HH"
+    lst_color = list(blue.range_to(red,len(domain_idlist)))
+    color_dict = {}
+    for i in xrange(len(domain_idlist)):
+        domainid = domain_idlist[i]
+        color = lst_color[i].get_hex_l()
+        color_dict[domainid] = lst_color[i].get_hex_l()
 
+    try:
+        fpout = open(domain_colordef_file, "w")
+        # write the domain colordef file
+        for seqid in domain_dict:
+            if not seqid in leaves_name_set:
+                continue
+            seqlen = seqlen_dict[seqid]
+            fpout.write("%s,%d"%(seqid, seqlen))
+            shape = default_shape
+            dlist = domain_dict[seqid]
+            for dm in dlist:
+                domainid = dm[2]
+                color = color_dict[domainid]
+                #color = default_color
+                fpout.write(",%s|%d|%d|%s|%s"%(shape, dm[0]+1, dm[1]+1, color, domainid))
+            fpout.write("\n")
+        return 0
+    except IOError:
+        print >> sys.stderr, "Failed to write to file %s"%(domain_colordef_file)
+        return 1
+
+#}}}
 def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 #Create the Itol class
     itl = Itol.Itol()
@@ -294,6 +327,8 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
     print 'exported tree to ',pdffile
 #}}}
 def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
+    """Phylogenetic tree with numTM_io and subfamilies branch coloring
+    """
     tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
     t = Tree(tree)
     leaves = t.get_leaves()
@@ -371,7 +406,6 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     print 'Warnings: '+str(itl.comm.warnings)
 
 #Export to pdf
-    print 'Exporting to pdf'
     itol_exporter = itl.get_itol_export()
 #itol_exporter = itolexport.ItolExport()
 #itol_exporter.set_export_param_value('tree','18793532031912684633930')
@@ -385,6 +419,101 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     epsfile = outpath + os.sep + pfamid + extname + '.eps'
     pdffile = outpath + os.sep + pfamid + extname + '.pdf'
     jpgfile = outpath + os.sep + pfamid + extname + '.jpg'
+    pngfile = outpath + os.sep + pfamid + extname + '.png'
+    thumbfile = outpath + os.sep + "thumb." + pfamid + extname + '.jpg'
+    itol_exporter.export(epsfile)
+    os.system("epstopdf %s" % epsfile )
+    os.system("convert %s %s" % (epsfile, jpgfile) )
+    os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
+    print 'exported tree to ',pdffile
+#}}}
+def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
+    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    t = Tree(tree)
+    leaves = t.get_leaves()
+    lst_leaves_name = []
+    for leaf in leaves:
+        lst_leaves_name.append(leaf.name)
+    numLeave = len(lst_leaves_name)
+    leaves_name_set = set(lst_leaves_name)
+# read seqlen file
+    seqlenfile = "%s/%s.seqlen.txt"%(datapath, pfamid)
+    seqlen_dict = myfunc.ReadSeqLengthDict(seqlenfile)
+
+# read subfamily definition
+    domain_idlist = []
+    domainfile = "%s/%s.mdp"%(datapath, pfamid)
+    domain_dict = myfunc.Read_domain_sd(domainfile, domain_idlist)
+    domain_colordef_file = "%s/%s.mdp.colordef.txt"%(datapath, pfamid)
+    WriteDomainColorDefFile(domain_colordef_file, domain_dict, domain_idlist, seqlen_dict, leaves_name_set)
+
+#Create the Itol class
+    itl = Itol.Itol()
+#Set the tree file
+    (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
+    if not os.path.exists(tree):
+        print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
+        return 1
+
+    fontsize = GetFontSize(numLeave)
+
+    dataset1 = domain_colordef_file
+#     colordeffile = subfam_colordef_file
+#     if os.path.exists(colordeffile):
+#         itl.add_variable('colorDefinitionFile', colordeffile)
+#         itl.add_variable('colorDefinitionLabel', "Subfamilies")
+#===================================
+    itl.add_variable('treeFile',tree)
+    itl.add_variable('treeName','SD2')
+    itl.add_variable('treeFormat','newick')
+#===================================
+    if os.path.exists(dataset1):
+        itl.add_variable('dataset1File',dataset1)
+        itl.add_variable('dataset1Label','Domain architecture')
+        itl.add_variable('dataset1Separator','comma')
+        itl.add_variable('dataset1Type','domains')
+        itl.add_variable('dataset1ProtSizeMax','1000')
+        itl.add_variable('dataset1PreventOverlap','1')
+        itl.add_variable('dataset1CirclesSpacing','100')
+#===================================
+# Check parameters
+# itl.print_variables()
+
+#Submit the tree
+    print ''
+    print 'Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server'
+    good_upload = itl.upload()
+    if good_upload == False:
+        print 'There was an error:'+itl.comm.upload_output
+        sys.exit(1)
+
+#Read the tree ID
+    print 'Tree ID: '+str(itl.comm.tree_id)
+
+#Read the iTOL API return statement
+    print 'iTOL output: '+str(itl.comm.upload_output)
+
+#Website to be redirected to iTOL tree
+    print 'Tree Web Page URL: '+itl.get_webpage()
+
+# Warnings associated with the upload
+    print 'Warnings: '+str(itl.comm.warnings)
+
+#Export to pdf
+    itol_exporter = itl.get_itol_export()
+#itol_exporter = itolexport.ItolExport()
+#itol_exporter.set_export_param_value('tree','18793532031912684633930')
+    itol_exporter.set_export_param_value('format', 'eps')
+    itol_exporter.set_export_param_value('displayMode',"circular")
+    itol_exporter.set_export_param_value('showBS',"0")
+    itol_exporter.set_export_param_value('fontSize',fontsize)
+    itol_exporter.set_export_param_value('alignLabels',"1")
+    itol_exporter.set_export_param_value('datasetList','dataset1')
+    extname = "-itol-sd2"
+    epsfile = outpath + os.sep + pfamid + extname + '.eps'
+    pdffile = outpath + os.sep + pfamid + extname + '.pdf'
+    jpgfile = outpath + os.sep + pfamid + extname + '.jpg'
+    pngfile = outpath + os.sep + pfamid + extname + '.png'
     thumbfile = outpath + os.sep + "thumb." + pfamid + extname + '.jpg'
     itol_exporter.export(epsfile)
     os.system("epstopdf %s" % epsfile )
