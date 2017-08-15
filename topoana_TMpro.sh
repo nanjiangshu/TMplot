@@ -962,7 +962,7 @@ AnaMSATopo4(){ # $id#{{{
     $binpath/sortedTopoMSA2numTMbardef.sh $sortedOrigTopoMSAFile > $outpath/$id.numTMdef.txt
     python $binpath/sortedTopoMSA2inside-outside-colordef.py $sortedOrigTopoMSAFile > $outpath/$id.ntermstate.colordef.txt
     python $binpath/sortedTopoMSA2numTM_and_io.py $sortedOrigTopoMSAFile > $outpath/$id.numTM_and_io.txt
-    subfamfile=$datapath/$id.subfamlies
+    subfamfile=$datapath/$id.subfamilies
     domainfile=$datapath/$id.mdp
     speciesfile=$datapath/$id.species
 
