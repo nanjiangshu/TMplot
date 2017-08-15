@@ -172,97 +172,6 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
     os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
     print 'exported tree to ',pdffile
 #}}}
-def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
-# read subfamily definition
-    subfamfile = "%s/%s.subfamlies"%(datapath, pfamid)
-    (subfamIDList, subfamDict) = myfunc.Read_subfamily(subfamfile)
-    numSubFam = len(subfamIDList)
-
-# create subfamily branch color definition file
-    subfam_colordef_file = "%s/%s.subfamilies.colordef.txt"%(outpath, pfamid)
-    lst_color = [list(blue.range_to(red,10)) for x in range(numSubFam)]
-    color_dict = {}
-    for i in xrange(numSubFam):
-        famid = subfamIDList[i]
-        color = lst_color[i][idxTM].get_hex_l()
-        color_dict[famid] = lst_color[i]
-    myfunc.WriteSubFamColorDef(subfam_colordef_file, subfamDict, lst_color)
-    #color = lst_color[i][idxTM].get_hex_l()
-
-#Create the Itol class
-    itl = Itol.Itol()
-#Set the tree file
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
-    (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
-    if not os.path.exists(tree):
-        print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
-        return 1
-    t = Tree(tree)
-    leaves = t.get_leaves()
-    numLeave = len(leaves)
-
-    fontsize = GetFontSize(numLeave)
-
-    dataset1 = datapath + os.sep + pfamid + '.numTM_and_io.txt'
-
-#===================================
-    itl.add_variable('treeFile',tree)
-    itl.add_variable('treeName','SD1')
-    itl.add_variable('treeFormat','newick')
-#===================================
-    if os.path.exists(dataset1):
-        itl.add_variable('dataset1File',dataset1)
-        itl.add_variable('dataset1Label','numTM_and_io')
-        itl.add_variable('dataset1Separator','comma')
-        itl.add_variable('dataset1Type','multibar')
-        itl.add_variable('dataset1PreventOverlap','1')
-        itl.add_variable('dataset1Color','#FF0000')
-#===================================
-# Check parameters
-# itl.print_variables()
-
-#Submit the tree
-    print ''
-    print 'Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server'
-    good_upload = itl.upload()
-    if good_upload == False:
-        print 'There was an error:'+itl.comm.upload_output
-        sys.exit(1)
-
-#Read the tree ID
-    print 'Tree ID: '+str(itl.comm.tree_id)
-
-#Read the iTOL API return statement
-    print 'iTOL output: '+str(itl.comm.upload_output)
-
-#Website to be redirected to iTOL tree
-    print 'Tree Web Page URL: '+itl.get_webpage()
-
-# Warnings associated with the upload
-    print 'Warnings: '+str(itl.comm.warnings)
-
-#Export to pdf
-    print 'Exporting to pdf'
-    itol_exporter = itl.get_itol_export()
-#itol_exporter = itolexport.ItolExport()
-#itol_exporter.set_export_param_value('tree','18793532031912684633930')
-    itol_exporter.set_export_param_value('format', 'eps')
-    itol_exporter.set_export_param_value('displayMode',"circular")
-    itol_exporter.set_export_param_value('showBS',"0")
-    itol_exporter.set_export_param_value('fontSize',fontsize)
-    itol_exporter.set_export_param_value('alignLabels',"1")
-    itol_exporter.set_export_param_value('datasetList','dataset1')
-    extname = "-itol-sd1"
-    epsfile = outpath + os.sep + pfamid + extname + '.eps'
-    pdffile = outpath + os.sep + pfamid + extname + '.pdf'
-    jpgfile = outpath + os.sep + pfamid + extname + '.jpg'
-    thumbfile = outpath + os.sep + "thumb." + pfamid + extname + '.jpg'
-    itol_exporter.export(epsfile)
-    os.system("epstopdf %s" % epsfile )
-    os.system("convert %s %s" % (epsfile, jpgfile) )
-    os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
-    print 'exported tree to ',pdffile
-#}}}
 def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
 # TM helices are treated as domains
 #Create the Itol class
@@ -378,6 +287,105 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
     pdffile = outpath + os.sep + pfamid + '-itol.pdf'
     jpgfile = outpath + os.sep + pfamid + '-itol.jpg'
     thumbfile = outpath + os.sep + "thumb." + pfamid + '-itol.jpg'
+    itol_exporter.export(epsfile)
+    os.system("epstopdf %s" % epsfile )
+    os.system("convert %s %s" % (epsfile, jpgfile) )
+    os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
+    print 'exported tree to ',pdffile
+#}}}
+def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
+    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    t = Tree(tree)
+    leaves = t.get_leaves()
+    lst_leaves_name = []
+    for leaf in leaves:
+        lst_leaves_name.append(leaf.name)
+    numLeave = len(lst_leaves_name)
+# read subfamily definition
+    subfamfile = "%s/%s.subfamilies"%(datapath, pfamid)
+    subfam_idlist = []
+    subfamDict = myfunc.Read_subfamily(subfamfile, subfam_idlist)
+    numSubFam = len(subfam_idlist)
+
+# create subfamily branch color definition file
+    subfam_colordef_file = "%s/%s.subfamilies.colordef.txt"%(outpath, pfamid)
+    lst_color = list(blue.range_to(red,numSubFam))
+    color_dict = {}
+    for i in xrange(numSubFam):
+        famid = subfam_idlist[i]
+        color = lst_color[i].get_hex_l()
+        color_dict[famid] = lst_color[i].get_hex_l()
+    myfunc.WriteSubFamColorDef(subfam_colordef_file, subfamDict, lst_leaves_name, color_dict)
+
+#Create the Itol class
+    itl = Itol.Itol()
+#Set the tree file
+    (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
+    if not os.path.exists(tree):
+        print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
+        return 1
+
+    fontsize = GetFontSize(numLeave)
+
+    dataset1 = datapath + os.sep + pfamid + '.numTM_and_io.txt'
+    colordeffile = subfam_colordef_file
+
+    if os.path.exists(colordeffile):
+        itl.add_variable('colorDefinitionFile', colordeffile)
+        itl.add_variable('colorDefinitionLabel', "Subfamilies")
+
+#===================================
+    itl.add_variable('treeFile',tree)
+    itl.add_variable('treeName','SD1')
+    itl.add_variable('treeFormat','newick')
+#===================================
+    if os.path.exists(dataset1):
+        itl.add_variable('dataset1File',dataset1)
+        itl.add_variable('dataset1Label','numTM_and_io')
+        itl.add_variable('dataset1Separator','comma')
+        itl.add_variable('dataset1Type','multibar')
+        itl.add_variable('dataset1PreventOverlap','1')
+        itl.add_variable('dataset1Color','#FF0000')
+#===================================
+# Check parameters
+# itl.print_variables()
+
+#Submit the tree
+    print ''
+    print 'Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server'
+    good_upload = itl.upload()
+    if good_upload == False:
+        print 'There was an error:'+itl.comm.upload_output
+        sys.exit(1)
+
+#Read the tree ID
+    print 'Tree ID: '+str(itl.comm.tree_id)
+
+#Read the iTOL API return statement
+    print 'iTOL output: '+str(itl.comm.upload_output)
+
+#Website to be redirected to iTOL tree
+    print 'Tree Web Page URL: '+itl.get_webpage()
+
+# Warnings associated with the upload
+    print 'Warnings: '+str(itl.comm.warnings)
+
+#Export to pdf
+    print 'Exporting to pdf'
+    itol_exporter = itl.get_itol_export()
+#itol_exporter = itolexport.ItolExport()
+#itol_exporter.set_export_param_value('tree','18793532031912684633930')
+    itol_exporter.set_export_param_value('format', 'eps')
+    itol_exporter.set_export_param_value('displayMode',"circular")
+    itol_exporter.set_export_param_value('showBS',"0")
+    itol_exporter.set_export_param_value('fontSize',fontsize)
+    itol_exporter.set_export_param_value('alignLabels',"1")
+    itol_exporter.set_export_param_value('datasetList','dataset1')
+    extname = "-itol-sd1"
+    epsfile = outpath + os.sep + pfamid + extname + '.eps'
+    pdffile = outpath + os.sep + pfamid + extname + '.pdf'
+    jpgfile = outpath + os.sep + pfamid + extname + '.jpg'
+    thumbfile = outpath + os.sep + "thumb." + pfamid + extname + '.jpg'
     itol_exporter.export(epsfile)
     os.system("epstopdf %s" % epsfile )
     os.system("convert %s %s" % (epsfile, jpgfile) )

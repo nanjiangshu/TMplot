@@ -1054,7 +1054,7 @@ def ReadFam2SeqidMap(infile):#{{{
     hdl.close()
     return pfam2seqidDict
 #}}}
-def Read_subfamily(infile):#{{{
+def Read_subfamily(infile, subfam_idlist):#{{{
     """
     Read subfamiliy definition
     format of the input file
@@ -1085,7 +1085,9 @@ def Read_subfamily(infile):#{{{
                 print >> sys.stderr, msg%(infile, line)
         lines = hdl.readlines()
     hdl.close()
-    return (list(famidset), dt)
+    for famid in famidset:
+        subfam_idlist.append(famid)
+    return dt
 #}}}
 def ReadPfamScan(infile, evalue_threshold=1e-3):#{{{
     """
@@ -2605,11 +2607,17 @@ def WriteTOPCONSTextResultFile(outfile, outpath_result, maplist,#{{{
     except IOError:
         print "Failed to write to file %s"%(outfile)
 #}}}
-def WriteSubFamColorDef(outfile, subfamDict, lst_color):#{{{
+def WriteSubFamColorDef(outfile, subfamDict, lst_leaves_name, color_dict):#{{{
     """Write subfamily color definition file"""
     try:
         fpout = open(outfile, "w")
-        
+        #fpout.write("SEPARATOR COMMA\n")
+        #fpout.write("DATA\n")
+        for leafname in lst_leaves_name:
+            subfamname = subfamDict[leafname]
+            color = color_dict[subfamname]
+            fpout.write("%s\t%s\t%s\t%s\n"%(leafname, 'range', color, subfamname))
+        fpout.close()
     except IOError:
         print >> sys.stderr, "Failed to write to outfile %s"%(outfile)
         return 1

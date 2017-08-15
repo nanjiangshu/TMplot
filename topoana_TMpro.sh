@@ -958,7 +958,11 @@ AnaMSATopo4(){ # $id#{{{
     $binpath/sortedTopoMSA2numTMbardef.sh $sortedOrigTopoMSAFile > $outpath/$id.numTMdef.txt
     python $binpath/sortedTopoMSA2inside-outside-colordef.py $sortedOrigTopoMSAFile > $outpath/$id.ntermstate.colordef.txt
     python $binpath/sortedTopoMSA2numTM_and_io.py $sortedOrigTopoMSAFile > $outpath/$id.numTM_and_io.txt
-    python $binpath/itol_pfamtree.py -m 0 -datapath $outpath -outpath $outpath $id
+    subfamfile=$datapath/$id.subfamlies
+
+    /bin/cp -f $subfamfile $outpath/
+    exec_cmd "python $binpath/itol_pfamtree.py -m 0 -datapath $outpath -outpath $outpath $id"
+    exec_cmd "python $binpath/itol_pfamtree.py -m sd1 -datapath $outpath -outpath $outpath $id"
     rm -f $renamed_msaInFastaFormat
 
     # draw reordered 
