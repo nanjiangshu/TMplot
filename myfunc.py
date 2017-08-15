@@ -1089,6 +1089,36 @@ def Read_subfamily(infile, subfam_idlist):#{{{
         subfam_idlist.append(famid)
     return dt
 #}}}
+def Read_species_sd(infile):#{{{
+    """
+    Read species definition
+    using the last item
+    """
+    hdl = ReadLineByBlock(infile)
+    if hdl.failure:
+        return {}
+    lines = hdl.readlines()
+    dt = {}
+    while lines != None:
+        for line in lines:
+            line = line.strip()
+            if not line or line[0] == "#":
+                continue
+            strs = line.split('|')
+            if len(strs) >= 2:
+                seqid = strs[0].strip()
+                raw_species = strs[-1].strip()
+                lst_species = raw_species.strip().split(';')
+                lst_species = [x.strip() for x in lst_species]
+                dt[seqid] = lst_species
+
+            else:
+                msg="broken item in file %s: line \"%s\""
+                print >> sys.stderr, msg%(infile, line)
+        lines = hdl.readlines()
+    hdl.close()
+    return dt
+#}}}
 def Read_domain_sd(infile, domain_idlist):#{{{
     """
     Read domain definition
@@ -2658,6 +2688,36 @@ def WriteSubFamColorDef(outfile, subfamDict, lst_leaves_name, color_dict):#{{{
             subfamname = subfamDict[leafname]
             color = color_dict[subfamname]
             fpout.write("%s\t%s\t%s\t%s\n"%(leafname, 'range', color, subfamname))
+        fpout.close()
+    except IOError:
+        print >> sys.stderr, "Failed to write to outfile %s"%(outfile)
+        return 1
+#}}}
+def WriteKingdomColorDefFile(outfile, speciesDict, leaves_name_set, color_dict):#{{{
+    """Write kingdom color definition file"""
+    try:
+        fpout = open(outfile, "w")
+        for leafname in leaves_name_set:
+            if not leafname in speciesDict:
+                continue
+            species = speciesDict[leafname]
+            color = color_dict[species]
+            fpout.write("%s\t%s\t%s\t%s\n"%(leafname, 'range', color, species))
+        fpout.close()
+    except IOError:
+        print >> sys.stderr, "Failed to write to outfile %s"%(outfile)
+        return 1
+#}}}
+def WriteSpeciesColorStripDefFile(outfile, speciesDict, leaves_name_set, color_dict):#{{{
+    """Write species color strip definition file"""
+    try:
+        fpout = open(outfile, "w")
+        for leafname in leaves_name_set:
+            if not leafname in speciesDict:
+                continue
+            species = speciesDict[leafname]
+            color = color_dict[species]
+            fpout.write("%s,%s,%s\n"%(leafname,  color, species))
         fpout.close()
     except IOError:
         print >> sys.stderr, "Failed to write to outfile %s"%(outfile)

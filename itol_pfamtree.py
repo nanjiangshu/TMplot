@@ -521,6 +521,153 @@ def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
     os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
     print 'exported tree to ',pdffile
 #}}}
+def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
+    """Phylogenetic tree with species definition
+    the Kindom use branch colordefinition, and others using color strips
+    """
+    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    t = Tree(tree)
+    leaves = t.get_leaves()
+    lst_leaves_name = []
+    for leaf in leaves:
+        lst_leaves_name.append(leaf.name)
+    numLeave = len(lst_leaves_name)
+    leaves_name_set = set(lst_leaves_name)
+
+# read species definition
+    speciesfile = "%s/%s.species"%(datapath, pfamid)
+    speciesDict = myfunc.Read_species_sd(speciesfile)
+
+# create branch color definition file for kingdom
+    lst_kingdom = ["Archaea","Bacteria", "Eukaryota" ]
+    lst_color_kingdom = ["#ff0000", "#0066ff","#cc6600"]
+    species_colordef_file = "%s/%s.kingdom.colordef.txt"%(outpath, pfamid)
+    color_dict_kingdom = {}
+    this_speciesDict = {}
+    for seqid in speciesDict:
+        speciesname = speciesDict[seqid][0]
+        this_speciesDict[seqid] = speciesname
+    for i in xrange(len(lst_kingdom)):
+        idd = lst_kingdom[i]
+        color_dict_kingdom[idd] = lst_color_kingdom[i]
+    myfunc.WriteKingdomColorDefFile(species_colordef_file, this_speciesDict, leaves_name_set, color_dict_kingdom)
+
+# generate the next three levels of classification
+    for level in [1,2,3]:
+        outfile = "%s/%s.species.level_%d.txt"%(outpath, pfamid, level)
+        this_speciesDict = {}
+        speciesIDSet = set([])
+        for seqid in speciesDict:
+            try:
+                speciesname = speciesDict[seqid][level]
+                speciesIDSet.add(speciesname)
+                this_speciesDict[seqid] = speciesname
+            except IndexError, KeyError:
+                pass
+        color_dict = {}
+        lst_color = list(blue.range_to(red,len(speciesIDSet)))
+        lst_speciesID = list(speciesIDSet)
+        for i in xrange(len(lst_speciesID)):
+            idd = lst_speciesID[i]
+            color_dict[idd] = lst_color[i].get_hex_l()
+        myfunc.WriteSpeciesColorStripDefFile(outfile, this_speciesDict, leaves_name_set, color_dict)
+
+#Create the Itol class
+    itl = Itol.Itol()
+#Set the tree file
+    (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
+    if not os.path.exists(tree):
+        print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
+        return 1
+
+    fontsize = GetFontSize(numLeave)
+
+    dataset1 = "%s/%s.species.level_%d.txt"%(outpath, pfamid, 1)
+    dataset2 = "%s/%s.species.level_%d.txt"%(outpath, pfamid, 2)
+    dataset3 = "%s/%s.species.level_%d.txt"%(outpath, pfamid, 3)
+    colordeffile = species_colordef_file
+
+    if os.path.exists(colordeffile):
+        itl.add_variable('colorDefinitionFile', colordeffile)
+        itl.add_variable('colorDefinitionLabel', "Kingdom")
+
+#===================================
+    itl.add_variable('treeFile',tree)
+    itl.add_variable('treeName','SD3')
+    itl.add_variable('treeFormat','newick')
+#===================================
+    if os.path.exists(dataset1):
+        itl.add_variable('dataset1File',dataset1)
+        itl.add_variable('dataset1Label','Phylum')
+        itl.add_variable('dataset1Separator','comma')
+        itl.add_variable('dataset1Type','colorstrip')
+        itl.add_variable('dataset1StripWidth','1000')
+        itl.add_variable('dataset1ColoringType','both')
+        itl.add_variable('dataset1PreventOverlap','1')
+#===================================
+    if os.path.exists(dataset2):
+        itl.add_variable('dataset2File',dataset2)
+        itl.add_variable('dataset2Label','Class')
+        itl.add_variable('dataset2Separator','comma')
+        itl.add_variable('dataset2Type','colorstrip')
+        itl.add_variable('dataset2StripWidth','1000')
+        itl.add_variable('dataset2ColoringType','both')
+        itl.add_variable('dataset2PreventOverlap','1')
+#===================================
+    if os.path.exists(dataset3):
+        itl.add_variable('dataset3File',dataset3)
+        itl.add_variable('dataset3Label','Order')
+        itl.add_variable('dataset3Separator','comma')
+        itl.add_variable('dataset3Type','colorstrip')
+        itl.add_variable('dataset3StripWidth','1000')
+        itl.add_variable('dataset3ColoringType','both')
+        itl.add_variable('dataset3PreventOverlap','1')
+#===================================
+# Check parameters
+# itl.print_variables()
+
+#Submit the tree
+    print ''
+    print 'Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server'
+    good_upload = itl.upload()
+    if good_upload == False:
+        print 'There was an error:'+itl.comm.upload_output
+        sys.exit(1)
+
+#Read the tree ID
+    print 'Tree ID: '+str(itl.comm.tree_id)
+
+#Read the iTOL API return statement
+    print 'iTOL output: '+str(itl.comm.upload_output)
+
+#Website to be redirected to iTOL tree
+    print 'Tree Web Page URL: '+itl.get_webpage()
+
+# Warnings associated with the upload
+    print 'Warnings: '+str(itl.comm.warnings)
+
+#Export to pdf
+    itol_exporter = itl.get_itol_export()
+#itol_exporter = itolexport.ItolExport()
+#itol_exporter.set_export_param_value('tree','18793532031912684633930')
+    itol_exporter.set_export_param_value('format', 'eps')
+    itol_exporter.set_export_param_value('displayMode',"circular")
+    itol_exporter.set_export_param_value('showBS',"0")
+    itol_exporter.set_export_param_value('fontSize',fontsize)
+    itol_exporter.set_export_param_value('alignLabels',"1")
+    itol_exporter.set_export_param_value('datasetList','dataset1,dataset2,dataset3')
+    extname = "-itol-sd3"
+    epsfile = outpath + os.sep + pfamid + extname + '.eps'
+    pdffile = outpath + os.sep + pfamid + extname + '.pdf'
+    jpgfile = outpath + os.sep + pfamid + extname + '.jpg'
+    pngfile = outpath + os.sep + pfamid + extname + '.png'
+    thumbfile = outpath + os.sep + "thumb." + pfamid + extname + '.jpg'
+    itol_exporter.export(epsfile)
+    os.system("epstopdf %s" % epsfile )
+    os.system("convert %s %s" % (epsfile, jpgfile) )
+    os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
+    print 'exported tree to ',pdffile
+#}}}
 
 def main(g_params):#{{{
     argv = sys.argv
