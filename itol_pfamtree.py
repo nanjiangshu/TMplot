@@ -601,7 +601,7 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
         itl.add_variable('dataset1Label','Phylum')
         itl.add_variable('dataset1Separator','comma')
         itl.add_variable('dataset1Type','colorstrip')
-        itl.add_variable('dataset1StripWidth','1000')
+        itl.add_variable('dataset1StripWidth','100')
         itl.add_variable('dataset1ColoringType','both')
         itl.add_variable('dataset1PreventOverlap','1')
 #===================================
@@ -610,7 +610,7 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
         itl.add_variable('dataset2Label','Class')
         itl.add_variable('dataset2Separator','comma')
         itl.add_variable('dataset2Type','colorstrip')
-        itl.add_variable('dataset2StripWidth','1000')
+        itl.add_variable('dataset2StripWidth','100')
         itl.add_variable('dataset2ColoringType','both')
         itl.add_variable('dataset2PreventOverlap','1')
 #===================================
@@ -619,7 +619,7 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
         itl.add_variable('dataset3Label','Order')
         itl.add_variable('dataset3Separator','comma')
         itl.add_variable('dataset3Type','colorstrip')
-        itl.add_variable('dataset3StripWidth','1000')
+        itl.add_variable('dataset3StripWidth','100')
         itl.add_variable('dataset3ColoringType','both')
         itl.add_variable('dataset3PreventOverlap','1')
 #===================================
