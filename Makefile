@@ -1,7 +1,14 @@
 # Makefile for all programs under this folder
 CP = /bin/cp -f 
 
-all:
-	make -f removeUnnecessaryGap.makefile
+APPS = removeUnnecessaryGap
+
+.PHONY: all clean $(APPS)
+
+all: $(APPS)
+
+$(APPS):
+	make -f $@.makefile
+
 clean:
-	make clean -f removeUnnecessaryGap.makefile
+	$(foreach var,$(APPS), make clean -f  $(var).makefile;)
