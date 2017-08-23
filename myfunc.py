@@ -2685,9 +2685,12 @@ def WriteSubFamColorDef(outfile, subfamDict, lst_leaves_name, color_dict):#{{{
         #fpout.write("SEPARATOR COMMA\n")
         #fpout.write("DATA\n")
         for leafname in lst_leaves_name:
-            subfamname = subfamDict[leafname]
-            color = color_dict[subfamname]
-            fpout.write("%s\t%s\t%s\t%s\n"%(leafname, 'range', color, subfamname))
+            try:
+                subfamname = subfamDict[leafname]
+                color = color_dict[subfamname]
+                fpout.write("%s\t%s\t%s\t%s\n"%(leafname, 'range', color, subfamname))
+            except KeyError:
+                print >> sys.stderr, "Warning! SeqID '%s' does not have a subfamily"%(leafname)
         fpout.close()
     except IOError:
         print >> sys.stderr, "Failed to write to outfile %s"%(outfile)
@@ -2698,11 +2701,13 @@ def WriteKingdomColorDefFile(outfile, speciesDict, leaves_name_set, color_dict):
     try:
         fpout = open(outfile, "w")
         for leafname in leaves_name_set:
-            if not leafname in speciesDict:
-                continue
-            species = speciesDict[leafname]
-            color = color_dict[species]
-            fpout.write("%s\t%s\t%s\t%s\n"%(leafname, 'range', color, species))
+            try:
+                species = speciesDict[leafname]
+                color = color_dict[species]
+                fpout.write("%s\t%s\t%s\t%s\n"%(leafname, 'range', color, species))
+            except KeyError:
+                print >> sys.stderr, "Warning! seqID '%s' has no species definition"%(leafname)
+
         fpout.close()
     except IOError:
         print >> sys.stderr, "Failed to write to outfile %s"%(outfile)
@@ -2713,11 +2718,12 @@ def WriteSpeciesColorStripDefFile(outfile, speciesDict, leaves_name_set, color_d
     try:
         fpout = open(outfile, "w")
         for leafname in leaves_name_set:
-            if not leafname in speciesDict:
-                continue
-            species = speciesDict[leafname]
-            color = color_dict[species]
-            fpout.write("%s,%s,%s\n"%(leafname,  color, species))
+            try:
+                species = speciesDict[leafname]
+                color = color_dict[species]
+                fpout.write("%s,%s,%s\n"%(leafname,  color, species))
+            except KeyError:
+                print >> sys.stderr, "Warning! seqID '%s' has no species definition"%(leafname)
         fpout.close()
     except IOError:
         print >> sys.stderr, "Failed to write to outfile %s"%(outfile)

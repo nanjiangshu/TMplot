@@ -2270,8 +2270,9 @@ def MapAlignedTopo_method1_obsolete2(topo1, topo2, posTM1, posTM2,   #{{{
                     else:
                         new_str_segment = str_segment[seg_posTM[0][1]:]
 
-                    print "SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
-                            seqID2, str_segment, new_str_segment, cntUnaligned)
+                    if g_params['verbose'] >= 2:
+                        print "SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
+                                seqID2, str_segment, new_str_segment, cntUnaligned)
                 else:
                     cntM1 = str_segment[seg_posTM[0][0]:seg_posTM[0][1]].count("M")
                     cntM2 = str_segment[seg_posTM[1][0]:seg_posTM[1][1]].count("M")
@@ -2287,8 +2288,9 @@ def MapAlignedTopo_method1_obsolete2(topo1, topo2, posTM1, posTM2,   #{{{
                             new_str_segment = str_segment[0:(seg_posTM[1][0])]
                         else:
                             new_str_segment = str_segment[seg_posTM[0][1]:]
-                    print "MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
-                            str_segment, new_str_segment, cntUnaligned)
+                    if g_params['verbose'] >= 2:
+                        print "MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
+                                str_segment, new_str_segment, cntUnaligned)
 
                 (cntTM, cntGap, cntSeq, freqTM, freqGap, freqSeq) = StatIOMFreq(
                         new_str_segment)
@@ -2356,11 +2358,12 @@ def MapAlignedTopo_method1(topo1, topo2, posTM1, posTM2,   #{{{
             freqSeq = myfunc.FloatDivision(cntSeq , cntAligned)
             freqUnaligned = myfunc.FloatDivision(cntUnaligned, sizeSeg)
             if cntUnaligned > 5 and 0:
-                print "cntUnaligned = %2d / %2d = %5.1f %21s #M=%d #GAP=%d #SEQ=%d"%(
-                        cntUnaligned,
-                        sizeSeg, freqUnaligned*100, "".join(segList2),
-                        segList2.count('M'), segList2.count('-'),
-                        sizeSeg-(segList2.count('M')+segList2.count('-')))
+                if g_params['verbose'] >= 2:
+                    print "cntUnaligned = %2d / %2d = %5.1f %21s #M=%d #GAP=%d #SEQ=%d"%(
+                            cntUnaligned,
+                            sizeSeg, freqUnaligned*100, "".join(segList2),
+                            segList2.count('M'), segList2.count('-'),
+                            sizeSeg-(segList2.count('M')+segList2.count('-')))
             #if cntUnaligned / float(sizeSeg) >= 0.5:
             str_segment = "".join(aligned_segList2)
             seg_posTM = myfunc.GetTMPosition(str_segment)
@@ -2382,8 +2385,9 @@ def MapAlignedTopo_method1(topo1, topo2, posTM1, posTM2,   #{{{
                     else:
                         new_str_segment = str_segment[seg_posTM[0][1]:]
 
-                    print "SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
-                            seqID2, str_segment, new_str_segment, cntUnaligned)
+                    if g_params['verbose'] >= 2:
+                        print "SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
+                                seqID2, str_segment, new_str_segment, cntUnaligned)
                 else:
                     cntM1 = str_segment[seg_posTM[0][0]:seg_posTM[0][1]].count("M")
                     cntM2 = str_segment[seg_posTM[1][0]:seg_posTM[1][1]].count("M")
@@ -2399,8 +2403,9 @@ def MapAlignedTopo_method1(topo1, topo2, posTM1, posTM2,   #{{{
                             new_str_segment = str_segment[0:(seg_posTM[1][0])]
                         else:
                             new_str_segment = str_segment[seg_posTM[0][1]:]
-                    print "MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
-                            str_segment, new_str_segment, cntUnaligned)
+                    if g_params['verbose'] >= 2:
+                        print "MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
+                                str_segment, new_str_segment, cntUnaligned)
                 (cntTM, cntGap, cntSeq, freqTM, freqGap, freqSeq) = StatIOMFreq(
                         new_str_segment)
             if cntUnaligned > sizeSeg - min_TM_overlap:
@@ -2500,8 +2505,9 @@ def MapAlignedTopo_method3(topo1, topo2, posTM1, posTM2,   #{{{
                 else:
                     new_str_segment = str_segment[seg_posTM[0][1]:]
 
-                print "SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
-                        seqID2, str_segment, new_str_segment, cntUnaligned)
+                if g_params['verbose'] >= 2:
+                    print "SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
+                            seqID2, str_segment, new_str_segment, cntUnaligned)
             else:
                 cntM1 = str_segment[seg_posTM[0][0]:seg_posTM[0][1]].count("M")
                 cntM2 = str_segment[seg_posTM[1][0]:seg_posTM[1][1]].count("M")
@@ -2517,8 +2523,9 @@ def MapAlignedTopo_method3(topo1, topo2, posTM1, posTM2,   #{{{
                         new_str_segment = str_segment[0:(seg_posTM[1][0])]
                     else:
                         new_str_segment = str_segment[seg_posTM[0][1]:]
-                print "MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
-                        str_segment, new_str_segment, cntUnaligned)
+                if g_params['verbose'] >= 2:
+                    print "MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
+                            str_segment, new_str_segment, cntUnaligned)
             (cntTM, cntGap, cntSeq, freqTM, freqGap, freqSeq) = StatIOMFreq(
                     new_str_segment)
         #if cntUnaligned > 11:
@@ -2535,7 +2542,7 @@ def MapAlignedTopo_method3(topo1, topo2, posTM1, posTM2,   #{{{
         else:
             cls = _TM2SEQ
 # debuging
-        if sp_pos2 != -1 and b < sp_pos2:
+        if sp_pos2 != -1 and b < sp_pos2 and g_params['verbose'] >= 2:
             print "TM - SP (%s - %s), cls=%d, cntSP=%d"%(seqID1, seqID2, cls, cntSP)
             tmpli = []
             for jj in range(b,e):
@@ -5066,7 +5073,6 @@ def MultipleTopologyComparison_alignment(topoRecordList, g_params):#{{{
     # number of sequences for the largest identity group
     numIDTTopo = len(indexIDTTopo); 
     numTMCons = myfunc.CountTM(consensusTopo)
-    #print "numIDTTopo=", numIDTTopo
 
     if numTMCons <= 0:
     #if numTMCons != numTM_IDT:
