@@ -901,8 +901,7 @@ AnaMSATopo4(){ # $id#{{{
             -wo $sortedOrigTopoMSAFile -o $resultfile \
             -og $groupedResultFile -wog $groupedSortedOrigTopoMSAFile \
             -woc $clusteredOrigTopoMSAFile \
-            -woinv $invertedTopologyFile \
-            -widtmatrix $identicalMatrixFile
+            -woinv $invertedTopologyFile
             "
         grep "^>" $clusteredOrigTopoMSAFile > $clusteredOrigTopoMSAAnnoFile
         rm -f $clusteredOrigTopoMSAFile
