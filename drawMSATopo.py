@@ -3355,6 +3355,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
         logger.debug("No sequence in the file %s. Ignore." %(inFile))
         return 1
 
+
     topoSeqList = []
     lst_unalignedNterm = []
     lst_unalignedCterm = []
@@ -3363,6 +3364,8 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
         topoSeqList.append(orig_topoSeqList[i][beg:end])
         lst_unalignedNterm.append(orig_topoSeqList[i][0:beg])
         lst_unalignedCterm.append(orig_topoSeqList[i][end:len(orig_topoSeqList[i])])
+
+
 
     maxlen_unaligned_nterm = max([len(x) for x in lst_unalignedNterm])
     maxlen_unaligned_cterm = max([len(x) for x in lst_unalignedCterm])
@@ -3413,12 +3416,66 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
 # e.g. pos[0] = 5 means the first residue is actually the 6th residue position
 # in the original MSA
 #   backup original aligned topoSeqList
-    alignedTopoSeqList = []
-    posTMList = []
-    for seq in topoSeqList:
-        alignedTopoSeqList.append(seq)
-        posTMList.append(myfunc.GetTMPosition(seq))
 
+    logger.info("before adding Ms")
+    logger.info("topoSeqList")
+    for i in range(numSeq):
+        logger.debug("%s - numTM = %d"%(idList[i],len(myfunc.GetTMPosition(topoSeqList[i]))))
+
+    # add 'M's if the terminal at TM helix of the aligned region is chopped
+    # to be too short, topoSeqList is the aligned region
+    # 1. for the N-terminal at the aligned region
+    MIN_LENGTH_OF_TM_TO_DRAWN = 6
+    posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
+    for posTM in posTMList:
+        lst_length_of_first_TM_withgaps = []
+        if len(posTM) > 0:
+            lenFirstTM = posTM[0][1]-posTM[0][0]
+        else:
+            lenFirstTM = 21
+        lst_length_of_first_TM_withgaps.append(lenFirstTM)
+
+    min_length_of_first_TM_withgaps = min(lst_length_of_first_TM_withgaps)
+    if min_length_of_first_TM_withgaps < MIN_LENGTH_OF_TM_TO_DRAWN: # if the TM is chopped
+        num_Ms_to_add = MIN_LENGTH_OF_TM_TO_DRAWN - min_length_of_first_TM_withgaps
+        newTopoSeqList = []
+        for top in topoSeqList:
+            if lcmp.Get_nongap_downstream(top, 0) == "M": 
+                newTopoSeqList.append("M"*num_Ms_to_add+top)
+            else:
+                newTopoSeqList.append("-"*num_Ms_to_add+top)
+        topoSeqList = newTopoSeqList
+
+    # 2. dealing with the last TM in the aligned region
+    posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
+    for posTM in posTMList:
+        lst_length_of_last_TM_withgaps = []
+        if len(posTM) > 0:
+            lenLastTM = posTM[-1][1]-posTM[-1][0]
+        else:
+            lenLastTM = 21
+        lst_length_of_last_TM_withgaps.append(lenLastTM)
+
+    min_length_of_last_TM_withgaps = min(lst_length_of_last_TM_withgaps)
+    if min_length_of_last_TM_withgaps < MIN_LENGTH_OF_TM_TO_DRAWN: # if the TM is chopped
+        num_Ms_to_add = MIN_LENGTH_OF_TM_TO_DRAWN - min_length_of_last_TM_withgaps
+        newTopoSeqList = []
+        for top in topoSeqList:
+            if lcmp.Get_nongap_uppstream(top, len(top)-1) == "M": 
+                newTopoSeqList.append(top+ "M"*num_Ms_to_add)
+            else:
+                newTopoSeqList.append(top+ "-"*num_Ms_to_add)
+        topoSeqList = newTopoSeqList
+
+    posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
+    alignedTopoSeqList = topoSeqList
+
+
+    logger.info("after adding Ms")
+    logger.info("topoSeqList")
+    for i in range(numSeq):
+        logger.debug("%s - numTM = %d"%(idList[i],len(myfunc.GetTMPosition(topoSeqList[i]))))
+#===========================================
     posindexmap = {}
     method_shrink = g_params['method_shrink']
 
@@ -3432,6 +3489,10 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
             aaseq = " "*lengthAlignmentOriginal
         aaSeqAlignList.append(aaseq)
 
+    logger.info("111111111111111111111")
+    logger.info("topoSeqList")
+    for i in range(numSeq):
+        logger.debug("%s - numTM = %d"%(idList[i],len(myfunc.GetTMPosition(topoSeqList[i]))))
 
     if g_params['isShrink']:
         if g_params['method_shrink'] == 0:
@@ -3444,6 +3505,11 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
                             g_params['shrinkrate_TM'], g_params['max_hold_loop'],
                             g_params['isDrawKRBias'])
             posindexmap = idxmap_shrink2align
+
+    logger.info("222222222222222222222")
+    logger.info("topoSeqList")
+    for i in range(numSeq):
+        logger.debug("%s - numTM = %d"%(idList[i],len(myfunc.GetTMPosition(topoSeqList[i]))))
 
     posTM = myfunc.GetTMPosition(topoSeqList[0])
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
@@ -3482,6 +3548,11 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
     fonttype = 'monospace'
 
     numSeq = len(topoSeqList)
+
+    logger.info("after shrinking")
+    logger.info("topoSeqList")
+    for i in range(numSeq):
+        logger.debug("%s - numTM = %d"%(idList[i],len(myfunc.GetTMPosition(topoSeqList[i]))))
 
     aaSeqList = [] # list of amino acid sequences, aligned and shrinked if enabled
     final2seq_idxMapList = [] # the index map from the final (shrinked or not)
@@ -3525,7 +3596,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
         final2seq_idxMapList.append(idxmap)
 
     # debug
-    if g_params['isPrintDebugInfo'] and g_params['isDrawKRBias']:
+    if g_params['isPrintDebugInfo']:
         print "print shrinked toposeq and krseq"
         for k in range(numSeq):
             print "%s\t%s"%(idList[k], topoSeqList[k])
@@ -3735,6 +3806,9 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
         #------------------------------
         # Draw aligned region and unaligned C-terminal
         #------------------------------
+
+        idxTM_drawn_set = set([]) # set of the TM index already been drawn,
+                                  # avoid duplicated drawn when cross border
         for item in ["unaligned_N_term", "aligned_region", "unaligned_C_term"]:
         #for item in ["aligned_region"]:
         #for item in ["unaligned_C_term"]:
@@ -3751,6 +3825,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
 
 
             posTM = myfunc.GetTMPosition(topo)
+            logger.debug("%s - %s: %s"%(anno, item, topo))
             if len(posTM) == 0: # if non TM protein, just draw the sequence if specified
                 x = x0 + shiftx
                 y = y0 - row_height*i
@@ -3839,9 +3914,12 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
                         ax.add_patch(rec)
 
                         # draw TM indeces
-                        x = x + width/2.5
-                        y = y + height/4.0
-                        plt.text(x, y, "%d"%(idxTM+1), fontproperties=fp_anno, transform=ax.transAxes)
+                        if not idxTM in idxTM_drawn_set:
+                            x = x + width/2.5
+                            y = y + height/4.0
+                            plt.text(x, y, "%d"%(idxTM+1), fontproperties=fp_anno, transform=ax.transAxes)
+                            idxTM_drawn_set.add(idxTM)
+                            logger.debug("idxTM=%d"%(idxTM))
 
                     # draw loops 
                     elif type_topo_stat in ["IN", "OUT"]: # draw loops

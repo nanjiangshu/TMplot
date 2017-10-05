@@ -117,6 +117,45 @@ def RemoveUnnecessaryGap(seqList): #{{{
     return newSeqList
 #}}}
 
+def Get_nongap_uppstream(topo, begin_TM):#{{{
+    """
+    Get the first non gap state uppstream
+    Input:
+        topo        topology sequence of the protein
+        begin_TM    sequence position at the beginning of the TM helix
+                    (begin_TM, end_TM) defines the location of the TM helix 
+                    in the sequence
+    Output:
+        state       non gap state, or '' if all gaps
+    """
+    i = begin_TM
+    while i >= 0:
+        if topo[i] != '-':
+            return topo[i]
+        i -= 1
+    return ''
+#}}}
+def Get_nongap_downstream(topo, end_TM):#{{{
+    """
+    get the first non gap state downstream
+    Input:
+        topo        topology sequence of the protein
+        end_TM      sequence position at the end of the TM helix
+                    (begin_TM, end_TM) defines the location of the TM helix 
+                    in the sequence
+    Output:
+        state       non gap state, or '' if all gaps
+    """
+    i = end_TM
+    length = len(topo)
+    while i < length:
+        if topo[i] != '-':
+            return topo[i]
+        i += 1
+    return ''
+#}}}
+
+
 def Get_IOState_upstream(topo, begin_TM):#{{{
     """
     Get inside/outside state for the loop before the current TM helix
