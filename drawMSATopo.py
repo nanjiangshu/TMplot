@@ -3769,7 +3769,8 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
                         idxTM = j/2
                     elif item == "aligned_region":
                         idxTM = j/2 + numTM_unalignedNterm
-                        if (lst_unalignedNterm[i][-1] == "M" and topoSeqList[i][0]=="M"):
+                        if (len(lst_unalignedNterm[i]) > 0 
+                                and (lst_unalignedNterm[i][-1] == "M" and topoSeqList[i][0]=="M")):
                             idxTM -= 1
                     elif item == "unaligned_C_term":
                         idxTM = j/2 + len(myfunc.GetTMPosition(lst_unalignedNterm[i]+topoSeqList[i]))
