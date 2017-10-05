@@ -3489,10 +3489,6 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
             aaseq = " "*lengthAlignmentOriginal
         aaSeqAlignList.append(aaseq)
 
-    logger.info("111111111111111111111")
-    logger.info("topoSeqList")
-    for i in range(numSeq):
-        logger.debug("%s - numTM = %d"%(idList[i],len(myfunc.GetTMPosition(topoSeqList[i]))))
 
     if g_params['isShrink']:
         if g_params['method_shrink'] == 0:
