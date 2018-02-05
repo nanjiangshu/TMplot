@@ -16,3 +16,5 @@ log/
 md5/
 env/
 bak.env/
+
+*.o
