@@ -53,9 +53,9 @@ PIL_user_path = os.environ['HOME'] + "/usr/lib64/python2.6/site-packages/PIL"
 if nodename.find("uppmax") != -1:
     sys.path.append(PIL_user_path)
 
-import Image
-import ImageDraw
-import ImageFont
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 
 GAP = myfunc.GAP
 
