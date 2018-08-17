@@ -1,0 +1,20 @@
+Bootstrap: docker
+From: ubuntu:latest
+
+%post
+
+apt-get -y update
+apt-get -y install python-pip
+apt-get -y install wget
+apt-get -y install git
+
+apt-get -y install build-essential
+
+tmpdir=`mktemp -d`
+cd $tmpdir && git clone https://github.com/nanjiangshu/KalignP && cd KalignP && ./configure &&  make -j4 && make install
+
+apt-get install -y kalign
+apt-get install -y emboss
+apt-get install -y clustalo
+apt-get install -y fasttree
+apt-get install -y cd-hit
