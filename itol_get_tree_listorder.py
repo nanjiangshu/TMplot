@@ -9,6 +9,9 @@ import sys
 #     itol_path = "/afs/pdc.kth.se/home/n/nanjiang" + os.sep +  "Public/lib/python2.7/itol" 
 # 
 # sys.path.append(itol_path)
+# ChangeLog 2018-08-20 
+#   updated the code for using itolAPI in accordance to the recent changes of
+#   the ITOL batch access API
 
 from itolapi import Itol
 from itolapi import ItolExport
@@ -25,14 +28,14 @@ Options:
   -q              Quiet mode
   -h|--help       Print this help message and exit
 
-Created 2012-03-19, updated 2013-09-19, Nanjiang Shu  
+Created 2012-03-19, updated 2018-08-20, Nanjiang Shu
 """%(progname)
 
 def PrintHelp():
     print usage
 def GetTreeListOrder(treefile, outpath):
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
     tree = treefile
 
@@ -47,9 +50,9 @@ def GetTreeListOrder(treefile, outpath):
     rootname = os.path.basename(os.path.splitext(treefile)[0])
 
 #===================================
-    itl.add_variable('treeFile',tree)
-    itl.add_variable('treeName',rootname)
-    itl.add_variable('treeFormat','newick')
+    itl.add_file(tree)
+    itl.params['treeName'] = rootname
+    itl.params['treeFormat'] = 'newick'
 #===================================
 # Check parameters
 # itl.print_variables()
@@ -61,22 +64,20 @@ def GetTreeListOrder(treefile, outpath):
         return 1
 
 #Export to pdf
-    print 'Exporting to pdf'
     tree_id = itl.comm.tree_id
 
     itol_exporter = itl.get_itol_export()
-    itol_exporter.set_export_param_value('format',"eps")
-    itol_exporter.set_export_param_value('displayMode',"normal")
-    itol_exporter.set_export_param_value('lineWidth',"1")
-    epsfile = outpath + os.sep + rootname + '.itolnormal.eps'
+    itol_exporter.set_export_param_value('format',"pdf")
+    itol_exporter.set_export_param_value('display_mode',"1") #(1=normal, 2=circular, 3=unrooted)
+    itol_exporter.set_export_param_value('line_width',"1")
+    #epsfile = outpath + os.sep + rootname + '.itolnormal.eps'
     pdffile = outpath + os.sep + rootname + '.itolnormal.pdf'
-    itol_exporter.export(epsfile)
+    print 'Exporting to pdffile %s'%(pdffile)
+    itol_exporter.export(pdffile)
     orderfile = outpath + os.sep + rootname + '.listorder.txt'
 
-    os.system("epstopdf %s" % epsfile )
     os.system("pdftotext -nopgbrk %s %s" %(pdffile, orderfile))
     os.system("rm -f %s"% pdffile)
-    os.system("rm -f %s"% epsfile)
     print 'list order output to ',orderfile    
 
 def main(g_params):#{{{
