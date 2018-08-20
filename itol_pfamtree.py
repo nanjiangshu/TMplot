@@ -87,7 +87,7 @@ def WriteDomainColorDefFile(domain_colordef_file, domain_dict, domain_idlist, se
 #}}}
 def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
     tree = datapath + os.sep + pfamid + '.kalignp.tree'
     (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
@@ -107,11 +107,12 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 
     colordeffile = datapath + os.sep + pfamid + '.pfam.colordef.txt'
     branchlabelfile = datapath + os.sep + pfamid + '.branchlabel.txt'
+    rootname = os.path.basename(os.path.splitext(tree)[0])
 
 #===================================
-    itl.add_variable('treeFile',tree)
-    itl.add_variable('treeName','PF00854')
-    itl.add_variable('treeFormat','newick')
+    itl.add_file(tree)
+    itl.params['treeName'] = rootname
+    itl.params['treeFormat'] = 'newick'
     if os.path.exists(colordeffile):
         itl.add_variable('colorDefinitionFile', colordeffile)
     if os.path.exists(branchlabelfile):
@@ -119,7 +120,7 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 
 #===================================
     if os.path.exists(dataset1):
-        itl.add_variable('dataset1File',dataset1)
+        itl.add_file(dataset1)
         itl.add_variable('dataset1Label','numTM_and_io')
         itl.add_variable('dataset1Separator','comma')
         itl.add_variable('dataset1Type','multibar')
@@ -128,7 +129,7 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 
 #===================================
     if os.path.exists(dataset2):
-        itl.add_variable('dataset2File', dataset2)
+        itl.add_file(dataset2)
         itl.add_variable('dataset2Label', 'cmpclass')
         itl.add_variable('dataset2Separator','comma')
         itl.add_variable('dataset2Type','colorstrip')
@@ -138,7 +139,7 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 
 #===================================
     if os.path.exists(dataset3):
-        itl.add_variable('dataset3File', dataset3)
+        itl.add_file(dataset3)
         itl.add_variable('dataset3Label', 'NtermState')
         itl.add_variable('dataset3Separator','comma')
         itl.add_variable('dataset3Type','colorstrip')
@@ -148,7 +149,7 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 
 #===================================
     if os.path.exists(dataset4):
-        itl.add_variable('dataset4File', dataset4)
+        itl.add_file(dataset4)
         itl.add_variable('dataset4Label', 'cluster')
         itl.add_variable('dataset4Separator','comma')
         itl.add_variable('dataset4Type','colorstrip')
@@ -208,7 +209,7 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
 # TM helices are treated as domains
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
     tree = datapath + os.sep + pfamid + '.kalignp.tree'
     (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
@@ -353,7 +354,7 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     myfunc.WriteSubFamColorDef(subfam_colordef_file, subfamDict, lst_leaves_name, color_dict)
 
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
     (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
     if not os.path.exists(tree):
@@ -448,7 +449,7 @@ def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
     WriteDomainColorDefFile(domain_colordef_file, domain_dict, domain_idlist, seqlen_dict, leaves_name_set)
 
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
     (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
     if not os.path.exists(tree):
@@ -573,7 +574,7 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
         myfunc.WriteSpeciesColorStripDefFile(outfile, this_speciesDict, leaves_name_set, color_dict)
 
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
     (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
     if not os.path.exists(tree):
