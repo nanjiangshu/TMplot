@@ -18,3 +18,6 @@ apt-get install -y emboss
 apt-get install -y clustalo
 apt-get install -y fasttree
 apt-get install -y cd-hit
+apt-get install -y ncbi-blast+-legacy
+
+pip install ete2
