@@ -566,7 +566,7 @@ AnaMSATopo2(){ # $id#{{{  #using kalignP and a fasta file with multiple homologo
     # create tree
     local renamed_msaInFastaFormat=$outpath/$id.renamedid.msa.fasta
     exec_cmd "$binpath/renameSeqIDInFasta.py $msaInFastaFormat -o $renamed_msaInFastaFormat"
-    treeFile=$outpath/$id.kalignp.fasttree
+    treeFile=$outpath/$id.kalignp.tree
     if [  ! -s $treeFile  -o "$isOverwrite" == "1" ]; then 
         exec_cmd "$fasttree_bin/FastTree $fasttree_args $renamed_msaInFastaFormat > $treeFile"
     fi
@@ -952,7 +952,7 @@ AnaMSATopo4(){ # $id#{{{
     # create tree
     local renamed_msaInFastaFormat=$outpath/$id.renamedid.msa.fasta
     exec_cmd "$binpath/renameSeqIDInFasta.py $msaFile_cleaned -o $renamed_msaInFastaFormat"
-    treeFile=$outpath/$id.kalignp.fasttree
+    treeFile=$outpath/$id.kalignp.tree
     if [  ! -s $treeFile  -o "$isOverwrite" == "1" ]; then 
         exec_cmd "$fasttree_bin/FastTree $fasttree_args $renamed_msaInFastaFormat > $treeFile"
     fi

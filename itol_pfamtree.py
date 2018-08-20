@@ -89,7 +89,7 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 #Create the Itol class
     itl = Itol.Itol()
 #Set the tree file
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    tree = datapath + os.sep + pfamid + '.kalignp.tree'
     (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
     if not os.path.exists(tree):
         print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
@@ -210,7 +210,7 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
 #Create the Itol class
     itl = Itol.Itol()
 #Set the tree file
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    tree = datapath + os.sep + pfamid + '.kalignp.tree'
     (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
     if not os.path.exists(tree):
         print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
@@ -329,7 +329,7 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
 def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     """Phylogenetic tree with numTM_io and subfamilies branch coloring
     """
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    tree = datapath + os.sep + pfamid + '.kalignp.tree'
     t = Tree(tree)
     leaves = t.get_leaves()
     lst_leaves_name = []
@@ -428,7 +428,7 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     print 'exported tree to ',pdffile
 #}}}
 def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    tree = datapath + os.sep + pfamid + '.kalignp.tree'
     t = Tree(tree)
     leaves = t.get_leaves()
     lst_leaves_name = []
@@ -525,7 +525,7 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
     """Phylogenetic tree with species definition
     the Kindom use branch colordefinition, and others using color strips
     """
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    tree = datapath + os.sep + pfamid + '.kalignp.tree'
     t = Tree(tree)
     leaves = t.get_leaves()
     lst_leaves_name = []
