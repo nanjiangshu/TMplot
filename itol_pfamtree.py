@@ -2,7 +2,7 @@
 
 import os
 import sys
-from ete2 import Tree
+from ete3 import Tree
 import math
 import myfunc
 from colour import Color
