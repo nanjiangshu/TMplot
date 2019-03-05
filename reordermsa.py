@@ -35,7 +35,7 @@ def ReadOrderList(infile):#{{{
         orderlist = []
         for line in lines:
             line = line.strip()
-            if line and line != "0.1":
+            if line and line.find("Tree Scale") == 0:
                 orderlist.append(line.strip())
         return orderlist
     except IOError:
