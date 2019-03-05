@@ -264,7 +264,7 @@ AnaMSATopo1(){ # $id#{{{ # using kalign to get MSA
         -wo $sortedOrigTopoMSAFile
 }
 #}}}
-AnaMSATopo2(){ # $id#{{{  #using kalignP and a fasta file with multiple homologous sequences
+AnaMSATopo2(){ # $id #{{{  #using kalignP and a fasta file with multiple homologous sequences
     # Created 2011-08-31
     # Derived from AnaMSATopo1. run_kalignP is used instead of kalign.
     # Single-spanning TM proteins not not filtered since they may be caused by
@@ -575,7 +575,7 @@ AnaMSATopo2(){ # $id#{{{  #using kalignP and a fasta file with multiple homologo
     $binpath/sortedTopoMSA2numTMbardef.sh $sortedOrigTopoMSAFile > $outpath/$id.numTMdef.txt
     python $binpath/sortedTopoMSA2inside-outside-colordef.py $sortedOrigTopoMSAFile > $outpath/$id.ntermstate.colordef.txt
     python $binpath/sortedTopoMSA2numTM_and_io.py $sortedOrigTopoMSAFile > $outpath/$id.numTM_and_io.txt
-    python $binpath/itol_pfamtree.py -m 0 -datapath $outpath -outpath $outpath $id
+    exec_cmd "python $binpath/itol_pfamtree.py -m 0 -datapath $outpath -outpath $outpath $id"
     rm -f $renamed_msaInFastaFormat
 
     # draw reordered 
