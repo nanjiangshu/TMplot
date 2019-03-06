@@ -34,6 +34,10 @@ wspace=`printf "%*s" $size_progname ""`
 rundir=`dirname $0`
 anamode=2  #default anamode = 2
 binpath=$rundir
+
+#******************************************************************************
+# Change these to the actual location of the software installed on your system
+# ----------------------------------------------------------------------------
 dgpredpath=$rundir/../../../program/dgpred_standalone
 newscampiscriptpath=$rundir/../../../program/newscampiscript
 run_kalignP_path=$rundir/../../../program/run_kalignP
@@ -44,13 +48,15 @@ cdhit_bin=$rundir/../../../bin
 clustalo_bin=$rundir/../../../bin
 kalign_bin=$rundir/../../../bin
 fasttree_bin=$rundir/../../../bin
-isPrintVerboseInfo= # in bash, if [ $istrue ]. the empty variable means false and any non-empty variable means true 
 blastbin=$BLASTBIN
+#******************************************************************************
+
 #blastdb=$BLASTDB/uniprotWG100Filtered
 blastdb=$BLASTDB/uniprotWG100
 #blastdb=$BLASTDB/swissprot
 
 
+isPrintVerboseInfo= # in bash, if [ $istrue ]. the empty variable means false and any non-empty variable means true 
 MAX_NUM_SEQ=1000 # maximum number of sequences to be processed in the multiple sequence alignment for anamode3.
 
 
@@ -1093,6 +1099,7 @@ IsProgExist $binpath/my_extractdb.py
 IsProgExist $binpath/countseq.py
 IsPathExist $run_kalignP_path
 IsProgExist $BINPATH/e
+IsProgExist $fasttree_bin/FastTree
 
 if [ "$idListFile" != "" ]; then 
     if [ -s "$idListFile" ]; then 
