@@ -21,6 +21,23 @@ Eamil: nanjiang.shu@scilifelab.se
 * EMBOSS (https://www.ebi.ac.uk/Tools/emboss/)
 * CD-HIT (http://weizhongli-lab.org/cd-hit/)
 
+## Installation
+
+It is highly recommended to use the Python virtual environment to run the
+pipeline
+
+Set up the virtual environment by running
+
+    virtualenv venv
+
+Then activate the environment by 
+
+    source venv/bin/activate
+
+After that, you can install the Python dependencies by 
+
+    pip install -r requirements.txt
+
 
 ## Usage
 
