@@ -1,0 +1,30 @@
+//Begin record 1
+PairwiseComparison: cons1_793 cons2_394 -99.00 TM2SEQ;FULL_ALIGNED;9;8;0;0;0;0   9   8  380  381
+TMMap cons1_793, numTM1 =  9:  0  0  0  2  0  0  0  0  0
+TMMap cons2_394, numTM2 =  8:  0  0  0     0  0  0  0  0
+//End record 1
+//Begin record 2
+PairwiseComparison: cons1_793 cons3_100 -99.00 TM2GAP;FULL_ALIGNED;9;3;0;0;0;0   9   3  380  162
+TMMap cons1_793, numTM1 =  9:  1  1  1  1  1  0  0  0  1
+TMMap cons3_100, numTM2 =  3:                 0  0  0   
+//End record 2
+//Begin record 3
+PairwiseComparison: cons1_793 cons4_2 -99.00 Mixed;FULL_ALIGNED;9;7;0;0;0;0   9   7  380  430
+TMMap cons1_793, numTM1 =  9:  0  0  0  2  0  0  0  0  1
+TMMap   cons4_2, numTM2 =  7:  0  0  0     0  0  0  0   
+//End record 3
+//Begin record 4
+PairwiseComparison: cons2_394 cons3_100 -99.00 TM2GAP;FULL_ALIGNED;8;3;0;0;0;0   8   3  381  162
+TMMap cons2_394, numTM1 =  8:  1  1  1  1  0  0  0  1
+TMMap cons3_100, numTM2 =  3:              0  0  0   
+//End record 4
+//Begin record 5
+PairwiseComparison: cons2_394 cons4_2 -99.00 TM2GAP;FULL_ALIGNED;8;7;0;0;0;0   8   7  381  430
+TMMap cons2_394, numTM1 =  8:  0  0  0  0  0  0  0  1
+TMMap   cons4_2, numTM2 =  7:  0  0  0  0  0  0  0   
+//End record 5
+//Begin record 6
+PairwiseComparison: cons3_100 cons4_2 -99.00 TM2GAP;FULL_ALIGNED;3;7;0;0;0;0   3   7  162  430
+TMMap cons3_100, numTM1 =  3:              0  0  0
+TMMap   cons4_2, numTM2 =  7:  1  1  1  1  0  0  0
+//End record 6

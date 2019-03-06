@@ -1,0 +1,4098 @@
+//Begin CMPMSA
+#                   EntryID  Nseq nTMIDT nTMcons  nIDT    N1    N2    N3    N4    N5  NIDT%    N1%    N2%    N3%    N4%    N5%
+MultipleComparison: PF00032  1292      9       9   793     0     0     1     0   498  61.38   0.00   0.00   0.08   0.00  38.54
+//Begin record 1
+PairwiseComparison: Cons Q35160 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35160, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 1
+//Begin record 2
+PairwiseComparison: Cons Q8LZ88 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8LZ88, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 2
+//Begin record 3
+PairwiseComparison: Cons O79520 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79520, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 3
+//Begin record 4
+PairwiseComparison: Cons O79524 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79524, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 4
+//Begin record 5
+PairwiseComparison: Cons O48093 -99.00 INV   9   9  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   9   9   9   9   9   9
+TMMap O48093, numTM2 =  9:   9   9   9   9   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+//End record 5
+//Begin record 6
+PairwiseComparison: Cons Q2N2J6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q2N2J6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 6
+//Begin record 7
+PairwiseComparison: Cons O47431 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O47431, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 7
+//Begin record 8
+PairwiseComparison: Cons Q9T6R8 -99.00 DIFF   9   8  380  378
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9T6R8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 8
+//Begin record 9
+PairwiseComparison: Cons Q9T6R9 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9T6R9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 9
+//Begin record 10
+PairwiseComparison: Cons Q9T6R5 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9T6R5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 10
+//Begin record 11
+PairwiseComparison: Cons Q956S6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q956S6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 11
+//Begin record 12
+PairwiseComparison: Cons Q950B9 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q950B9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 12
+//Begin record 13
+PairwiseComparison: Cons Q8HL81 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8HL81, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 13
+//Begin record 14
+PairwiseComparison: Cons Q9MIX8 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9MIX8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 14
+//Begin record 15
+PairwiseComparison: Cons Q951T6 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q951T6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 15
+//Begin record 16
+PairwiseComparison: Cons Q951T4 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q951T4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 16
+//Begin record 17
+PairwiseComparison: Cons Q9G250 -99.00 DIFF   9   8  380  371
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9G250, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 17
+//Begin record 18
+PairwiseComparison: Cons Q9G0M4 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9G0M4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 18
+//Begin record 19
+PairwiseComparison: Cons Q94T42 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94T42, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 19
+//Begin record 20
+PairwiseComparison: Cons Q36222 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36222, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 20
+//Begin record 21
+PairwiseComparison: Cons Q34683 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q34683, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 21
+//Begin record 22
+PairwiseComparison: Cons Q58F69 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q58F69, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 22
+//Begin record 23
+PairwiseComparison: Cons Q8WBP9 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8WBP9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 23
+//Begin record 24
+PairwiseComparison: Cons O79648 -99.00 DIFF   9   8  380  383
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79648, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 24
+//Begin record 25
+PairwiseComparison: Cons P62513 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P62513, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 25
+//Begin record 26
+PairwiseComparison: Cons Q5VJ50 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q5VJ50, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 26
+//Begin record 27
+PairwiseComparison: Cons Q5VJ58 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q5VJ58, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 27
+//Begin record 28
+PairwiseComparison: Cons Q20FQ2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q20FQ2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 28
+//Begin record 29
+PairwiseComparison: Cons Q7GEV4 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q7GEV4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 29
+//Begin record 30
+PairwiseComparison: Cons P29634 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P29634, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 30
+//Begin record 31
+PairwiseComparison: Cons P29636 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P29636, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 31
+//Begin record 32
+PairwiseComparison: Cons P29637 -99.00 DIFF   9   8  380  393
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P29637, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 32
+//Begin record 33
+PairwiseComparison: Cons A9BDY3 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A9BDY3, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 33
+//Begin record 34
+PairwiseComparison: Cons O79462 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79462, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 34
+//Begin record 35
+PairwiseComparison: Cons Q34889 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q34889, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 35
+//Begin record 36
+PairwiseComparison: Cons Q8LWM2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8LWM2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 36
+//Begin record 37
+PairwiseComparison: Cons Q8LWM4 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8LWM4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 37
+//Begin record 38
+PairwiseComparison: Cons Q508K8 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508K8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 38
+//Begin record 39
+PairwiseComparison: Cons Q8LZ94 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8LZ94, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 39
+//Begin record 40
+PairwiseComparison: Cons Q8LZ97 -99.00 DIFF   9   8  380  372
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8LZ97, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 40
+//Begin record 41
+PairwiseComparison: Cons Q9F721 -99.00 DIFF   9   7  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   0
+TMMap Q9F721, numTM2 =  7:   9   9   9   -   9   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Cterm1       :  1  | index   8  | gap   0.741  | DG   0.012 
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 41
+//Begin record 42
+PairwiseComparison: Cons Q4G3F7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q4G3F7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 42
+//Begin record 43
+PairwiseComparison: Cons O79512 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79512, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 43
+//Begin record 44
+PairwiseComparison: Cons Q8SGQ9 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SGQ9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 44
+//Begin record 45
+PairwiseComparison: Cons P46913 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P46913, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.955  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 45
+//Begin record 46
+PairwiseComparison: Cons O79274 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79274, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 46
+//Begin record 47
+PairwiseComparison: Cons Q7TUF3 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q7TUF3, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 47
+//Begin record 48
+PairwiseComparison: Cons O99240 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O99240, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 48
+//Begin record 49
+PairwiseComparison: Cons Q8HL93 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8HL93, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 49
+//Begin record 50
+PairwiseComparison: Cons A0EYN2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap A0EYN2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 50
+//Begin record 51
+PairwiseComparison: Cons Q9ZZT8 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9ZZT8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 51
+//Begin record 52
+PairwiseComparison: Cons O03363 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O03363, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 52
+//Begin record 53
+PairwiseComparison: Cons P34197 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34197, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 53
+//Begin record 54
+PairwiseComparison: Cons O79652 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79652, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 54
+//Begin record 55
+PairwiseComparison: Cons O79657 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79657, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 55
+//Begin record 56
+PairwiseComparison: Cons O79659 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79659, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 56
+//Begin record 57
+PairwiseComparison: Cons Q3AWF1 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q3AWF1, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 57
+//Begin record 58
+PairwiseComparison: Cons O48334 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O48334, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 58
+//Begin record 59
+PairwiseComparison: Cons O03548 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O03548, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 59
+//Begin record 60
+PairwiseComparison: Cons O03545 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O03545, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 60
+//Begin record 61
+PairwiseComparison: Cons Q8M3J6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8M3J6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 61
+//Begin record 62
+PairwiseComparison: Cons Q76LN6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q76LN6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 62
+//Begin record 63
+PairwiseComparison: Cons Q36976 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36976, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 63
+//Begin record 64
+PairwiseComparison: Cons Q508J5 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508J5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 64
+//Begin record 65
+PairwiseComparison: Cons Q508J2 -99.00 DIFF   9   8  380  384
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508J2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 65
+//Begin record 66
+PairwiseComparison: Cons Q508J3 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508J3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 66
+//Begin record 67
+PairwiseComparison: Cons Q508J0 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508J0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 67
+//Begin record 68
+PairwiseComparison: Cons Q508J9 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508J9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 68
+//Begin record 69
+PairwiseComparison: Cons Q7YJU7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q7YJU7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.370  | DG   0.012 
+//End record 69
+//Begin record 70
+PairwiseComparison: Cons Q58F82 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q58F82, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 70
+//Begin record 71
+PairwiseComparison: Cons Q9B9Z1 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9B9Z1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 71
+//Begin record 72
+PairwiseComparison: Cons B2Y1Z0 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap B2Y1Z0, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 72
+//Begin record 73
+PairwiseComparison: Cons Q06SK2 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q06SK2, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 73
+//Begin record 74
+PairwiseComparison: Cons O99655 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O99655, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 74
+//Begin record 75
+PairwiseComparison: Cons Q4JQH5 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q4JQH5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 75
+//Begin record 76
+PairwiseComparison: Cons O78415 -99.00 DIFF   9   3  380  384
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap O78415, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 76
+//Begin record 77
+PairwiseComparison: Cons Q36551 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36551, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 77
+//Begin record 78
+PairwiseComparison: Cons Q9T6R2 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9T6R2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 78
+//Begin record 79
+PairwiseComparison: Cons Q9T6R3 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9T6R3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 79
+//Begin record 80
+PairwiseComparison: Cons Q9B203 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9B203, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 80
+//Begin record 81
+PairwiseComparison: Cons Q9B205 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9B205, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 81
+//Begin record 82
+PairwiseComparison: Cons Q85X03 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q85X03, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.370  | DG   0.012 
+//End record 82
+//Begin record 83
+PairwiseComparison: Cons Q94YL5 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94YL5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 83
+//Begin record 84
+PairwiseComparison: Cons Q94T68 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94T68, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 84
+//Begin record 85
+PairwiseComparison: Cons O79413 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79413, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 85
+//Begin record 86
+PairwiseComparison: Cons Q59297 -99.00 DIFF   9   7  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   0
+TMMap Q59297, numTM2 =  7:   9   9   9   -   9   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Cterm1       :  1  | index   8  | gap   0.741  | DG   0.012 
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 86
+//Begin record 87
+PairwiseComparison: Cons A0T0T7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A0T0T7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 87
+//Begin record 88
+PairwiseComparison: Cons O03553 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O03553, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 88
+//Begin record 89
+PairwiseComparison: Cons Q36549 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36549, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 89
+//Begin record 90
+PairwiseComparison: Cons Q36548 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36548, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 90
+//Begin record 91
+PairwiseComparison: Cons Q20ET6 -99.00 DIFF   9   3  380  380
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q20ET6, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 91
+//Begin record 92
+PairwiseComparison: Cons B0C0E7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap B0C0E7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.773  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 92
+//Begin record 93
+PairwiseComparison: Cons P48877 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P48877, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 93
+//Begin record 94
+PairwiseComparison: Cons P48876 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P48876, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 94
+//Begin record 95
+PairwiseComparison: Cons P48875 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P48875, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 95
+//Begin record 96
+PairwiseComparison: Cons Q33987 -99.00 DIFF   9   8  380  378
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33987, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 96
+//Begin record 97
+PairwiseComparison: Cons Q9B9E4 -99.00 DIFF   9   8  380  378
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9B9E4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 97
+//Begin record 98
+PairwiseComparison: Cons P11093 -99.00 DIFF   9   3  380  428
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P11093, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 98
+//Begin record 99
+PairwiseComparison: Cons Q33818 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33818, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 99
+//Begin record 100
+PairwiseComparison: Cons P12117 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P12117, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 100
+//Begin record 101
+PairwiseComparison: Cons Q71KQ5 -99.00 DIFF   9   3  380  160
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q71KQ5, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 101
+//Begin record 102
+PairwiseComparison: Cons Q8M6Z3 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8M6Z3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 102
+//Begin record 103
+PairwiseComparison: Cons Q9GAW0 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9GAW0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 103
+//Begin record 104
+PairwiseComparison: Cons Q9GAW3 -99.00 DIFF   9   8  380  392
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9GAW3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 104
+//Begin record 105
+PairwiseComparison: Cons O03520 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O03520, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 105
+//Begin record 106
+PairwiseComparison: Cons Q8WHZ2 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q8WHZ2, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 106
+//Begin record 107
+PairwiseComparison: Cons A5GR40 -99.00 DIFF   9   3  380  255
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A5GR40, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 107
+//Begin record 108
+PairwiseComparison: Cons Q9L3Q0 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q9L3Q0, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 108
+//Begin record 109
+PairwiseComparison: Cons Q35019 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35019, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 109
+//Begin record 110
+PairwiseComparison: Cons Q8SJK9 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SJK9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 110
+//Begin record 111
+PairwiseComparison: Cons Q8SJK8 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SJK8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 111
+//Begin record 112
+PairwiseComparison: Cons Q8SJK7 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SJK7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 112
+//Begin record 113
+PairwiseComparison: Cons Q8SJK6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SJK6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 113
+//Begin record 114
+PairwiseComparison: Cons Q8SJK5 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SJK5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 114
+//Begin record 115
+PairwiseComparison: Cons Q35128 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35128, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 115
+//Begin record 116
+PairwiseComparison: Cons P0C8L0 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P0C8L0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 116
+//Begin record 117
+PairwiseComparison: Cons Q71KP3 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q71KP3, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 117
+//Begin record 118
+PairwiseComparison: Cons Q2Y067 -99.00 DIFF   9   8  380  378
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q2Y067, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 118
+//Begin record 119
+PairwiseComparison: Cons Q35621 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35621, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 119
+//Begin record 120
+PairwiseComparison: Cons P42792 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P42792, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 120
+//Begin record 121
+PairwiseComparison: Cons A9RAG6 -99.00 DIFF   9   8  380  392
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap A9RAG6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 121
+//Begin record 122
+PairwiseComparison: Cons P23134 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P23134, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 122
+//Begin record 123
+PairwiseComparison: Cons Q8HG55 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8HG55, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 123
+//Begin record 124
+PairwiseComparison: Cons Q36311 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36311, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 124
+//Begin record 125
+PairwiseComparison: Cons Q36319 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36319, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 125
+//Begin record 126
+PairwiseComparison: Cons P68533 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P68533, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 126
+//Begin record 127
+PairwiseComparison: Cons O63848 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O63848, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 127
+//Begin record 128
+PairwiseComparison: Cons Q35653 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35653, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 128
+//Begin record 129
+PairwiseComparison: Cons Q9T9C8 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9T9C8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 129
+//Begin record 130
+PairwiseComparison: Cons Q37078 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q37078, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 130
+//Begin record 131
+PairwiseComparison: Cons Q37395 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q37395, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 131
+//Begin record 132
+PairwiseComparison: Cons Q7TUQ1 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q7TUQ1, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 132
+//Begin record 133
+PairwiseComparison: Cons Q3ZEG3 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q3ZEG3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 133
+//Begin record 134
+PairwiseComparison: Cons O03176 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O03176, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 134
+//Begin record 135
+PairwiseComparison: Cons P24951 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P24951, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 135
+//Begin record 136
+PairwiseComparison: Cons Q1ACH0 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q1ACH0, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 136
+//Begin record 137
+PairwiseComparison: Cons B2J5T0 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap B2J5T0, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 137
+//Begin record 138
+PairwiseComparison: Cons P51340 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P51340, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 138
+//Begin record 139
+PairwiseComparison: Cons P05718 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P05718, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 139
+//Begin record 140
+PairwiseComparison: Cons P35075 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P35075, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 140
+//Begin record 141
+PairwiseComparison: Cons P34865 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34865, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 141
+//Begin record 142
+PairwiseComparison: Cons P0C523 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P0C523, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 142
+//Begin record 143
+PairwiseComparison: Cons P0C8N2 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P0C8N2, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.773  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 143
+//Begin record 144
+PairwiseComparison: Cons P24890 -99.00 DIFF   9  10  380  393
+TMMap   Cons, numTM1 =  9:   9   9   9   9   -   9   9   9   9   9
+TMMap P24890, numTM2 = 10:   9   9   9   9   0   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter2-0     :  1  | index   4  | gap   0.001  | DG   1.320 
+//End record 144
+//Begin record 145
+PairwiseComparison: Cons Q698P7 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q698P7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 145
+//Begin record 146
+PairwiseComparison: Cons A2BUV6 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A2BUV6, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 146
+//Begin record 147
+PairwiseComparison: Cons Q6B904 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q6B904, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 147
+//Begin record 148
+PairwiseComparison: Cons Q9B6D0 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9B6D0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 148
+//Begin record 149
+PairwiseComparison: Cons Q9TL32 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q9TL32, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 149
+//Begin record 150
+PairwiseComparison: Cons Q9MED6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9MED6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 150
+//Begin record 151
+PairwiseComparison: Cons A1EA39 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A1EA39, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 151
+//Begin record 152
+PairwiseComparison: Cons Q508K2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508K2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 152
+//Begin record 153
+PairwiseComparison: Cons Q9MJV1 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9MJV1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 153
+//Begin record 154
+PairwiseComparison: Cons Q31CK2 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q31CK2, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 154
+//Begin record 155
+PairwiseComparison: Cons Q54710 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q54710, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 155
+//Begin record 156
+PairwiseComparison: Cons Q7YD75 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q7YD75, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 156
+//Begin record 157
+PairwiseComparison: Cons P13348 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P13348, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 157
+//Begin record 158
+PairwiseComparison: Cons P12778 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P12778, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 158
+//Begin record 159
+PairwiseComparison: Cons P23662 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P23662, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 159
+//Begin record 160
+PairwiseComparison: Cons Q35819 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35819, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 160
+//Begin record 161
+PairwiseComparison: Cons Q02655 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q02655, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 161
+//Begin record 162
+PairwiseComparison: Cons Q2JTN9 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q2JTN9, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.364  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 162
+//Begin record 163
+PairwiseComparison: Cons Q35925 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35925, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 163
+//Begin record 164
+PairwiseComparison: Cons P09843 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P09843, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 164
+//Begin record 165
+PairwiseComparison: Cons Q32RU6 -99.00 DIFF   9   3  380  167
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q32RU6, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 165
+//Begin record 166
+PairwiseComparison: Cons Q9ZZ40 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9ZZ40, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 166
+//Begin record 167
+PairwiseComparison: Cons Q14FC6 -99.00 DIFF   9   3  380  398
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q14FC6, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.444  | DG   0.012 
+//End record 167
+//Begin record 168
+PairwiseComparison: Cons Q35516 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35516, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 168
+//Begin record 169
+PairwiseComparison: Cons Q8LWP6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8LWP6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 169
+//Begin record 170
+PairwiseComparison: Cons Q94YL9 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94YL9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 170
+//Begin record 171
+PairwiseComparison: Cons Q1PG50 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q1PG50, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 171
+//Begin record 172
+PairwiseComparison: Cons Q1PG51 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q1PG51, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 172
+//Begin record 173
+PairwiseComparison: Cons O03523 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O03523, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 173
+//Begin record 174
+PairwiseComparison: Cons Q6ED58 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q6ED58, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 174
+//Begin record 175
+PairwiseComparison: Cons Q1RIA4 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q1RIA4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 175
+//Begin record 176
+PairwiseComparison: Cons Q0H8X3 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q0H8X3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 176
+//Begin record 177
+PairwiseComparison: Cons Q9TEC1 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9TEC1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 177
+//Begin record 178
+PairwiseComparison: Cons Q9GA18 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9GA18, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 178
+//Begin record 179
+PairwiseComparison: Cons P05501 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P05501, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 179
+//Begin record 180
+PairwiseComparison: Cons Q2PMQ4 -99.00 DIFF   9   3  380  380
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q2PMQ4, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 180
+//Begin record 181
+PairwiseComparison: Cons Q8M4E2 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8M4E2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 181
+//Begin record 182
+PairwiseComparison: Cons Q8M4E6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8M4E6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 182
+//Begin record 183
+PairwiseComparison: Cons Q9ZZ42 -99.00 DIFF   9   8  380  389
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9ZZ42, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 183
+//Begin record 184
+PairwiseComparison: Cons Q8HF67 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8HF67, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 184
+//Begin record 185
+PairwiseComparison: Cons Q94T21 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94T21, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 185
+//Begin record 186
+PairwiseComparison: Cons Q35618 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35618, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 186
+//Begin record 187
+PairwiseComparison: Cons B1WWL0 -99.00 DIFF   9   3  380  383
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap B1WWL0, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 187
+//Begin record 188
+PairwiseComparison: Cons Q94WQ8 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94WQ8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 188
+//Begin record 189
+PairwiseComparison: Cons Q34302 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q34302, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 189
+//Begin record 190
+PairwiseComparison: Cons O03538 -99.00 DIFF   9   8  380  376
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O03538, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 190
+//Begin record 191
+PairwiseComparison: Cons Q7U4U7 -99.00 DIFF   9   3  380  376
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q7U4U7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 191
+//Begin record 192
+PairwiseComparison: Cons P92605 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P92605, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 192
+//Begin record 193
+PairwiseComparison: Cons Q85DF2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q85DF2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 193
+//Begin record 194
+PairwiseComparison: Cons Q35877 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35877, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 194
+//Begin record 195
+PairwiseComparison: Cons Q36654 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36654, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 195
+//Begin record 196
+PairwiseComparison: Cons Q9MTJ4 -99.00 DIFF   9   3  380  189
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q9MTJ4, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 196
+//Begin record 197
+PairwiseComparison: Cons Q37080 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q37080, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 197
+//Begin record 198
+PairwiseComparison: Cons P34867 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34867, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 198
+//Begin record 199
+PairwiseComparison: Cons P34861 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34861, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 199
+//Begin record 200
+PairwiseComparison: Cons P34869 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34869, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 200
+//Begin record 201
+PairwiseComparison: Cons P34868 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34868, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 201
+//Begin record 202
+PairwiseComparison: Cons Q94SJ5 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94SJ5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 202
+//Begin record 203
+PairwiseComparison: Cons Q68X99 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q68X99, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 203
+//Begin record 204
+PairwiseComparison: Cons P50663 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P50663, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 204
+//Begin record 205
+PairwiseComparison: Cons Q09ME6 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q09ME6, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 205
+//Begin record 206
+PairwiseComparison: Cons Q94TI3 -99.00 DIFF   9   8  380  381
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94TI3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 206
+//Begin record 207
+PairwiseComparison: Cons Q6KF39 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q6KF39, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 207
+//Begin record 208
+PairwiseComparison: Cons B1GYJ5 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap B1GYJ5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 208
+//Begin record 209
+PairwiseComparison: Cons O79936 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79936, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 209
+//Begin record 210
+PairwiseComparison: Cons Q95920 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q95920, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 210
+//Begin record 211
+PairwiseComparison: Cons P48885 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P48885, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 211
+//Begin record 212
+PairwiseComparison: Cons P34870 -99.00 DIFF   9   8  380  428
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34870, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 212
+//Begin record 213
+PairwiseComparison: Cons P34871 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34871, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 213
+//Begin record 214
+PairwiseComparison: Cons P34872 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34872, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 214
+//Begin record 215
+PairwiseComparison: Cons P34874 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34874, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 215
+//Begin record 216
+PairwiseComparison: Cons P34875 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34875, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 216
+//Begin record 217
+PairwiseComparison: Cons P34876 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34876, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 217
+//Begin record 218
+PairwiseComparison: Cons Q8HQF1 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8HQF1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 218
+//Begin record 219
+PairwiseComparison: Cons Q94SK8 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94SK8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 219
+//Begin record 220
+PairwiseComparison: Cons Q8LW83 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8LW83, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 220
+//Begin record 221
+PairwiseComparison: Cons Q9TAB1 -99.00 DIFF   9   8  380  161
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9TAB1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 221
+//Begin record 222
+PairwiseComparison: Cons Q3V503 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q3V503, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 222
+//Begin record 223
+PairwiseComparison: Cons Q9G6M3 -99.00 DIFF   9   8  380  386
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9G6M3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 223
+//Begin record 224
+PairwiseComparison: Cons Q8M4C7 -99.00 DIFF   9   8  380  384
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8M4C7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 224
+//Begin record 225
+PairwiseComparison: Cons Q8M4C6 -99.00 DIFF   9   8  380  381
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8M4C6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 225
+//Begin record 226
+PairwiseComparison: Cons Q7YA49 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q7YA49, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 226
+//Begin record 227
+PairwiseComparison: Cons Q8WB03 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8WB03, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 227
+//Begin record 228
+PairwiseComparison: Cons P0C2N9 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P0C2N9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 228
+//Begin record 229
+PairwiseComparison: Cons P26852 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P26852, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 229
+//Begin record 230
+PairwiseComparison: Cons B8HWC7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap B8HWC7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.773  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 230
+//Begin record 231
+PairwiseComparison: Cons Q5VJ49 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q5VJ49, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 231
+//Begin record 232
+PairwiseComparison: Cons Q85PM6 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q85PM6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 232
+//Begin record 233
+PairwiseComparison: Cons Q9G3M2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9G3M2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 233
+//Begin record 234
+PairwiseComparison: Cons Q6ENE3 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q6ENE3, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 234
+//Begin record 235
+PairwiseComparison: Cons Q9XP77 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9XP77, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 235
+//Begin record 236
+PairwiseComparison: Cons O47044 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap O47044, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.333  | DG   0.012 
+//End record 236
+//Begin record 237
+PairwiseComparison: Cons Q33772 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33772, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 237
+//Begin record 238
+PairwiseComparison: Cons Q5DWG5 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q5DWG5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 238
+//Begin record 239
+PairwiseComparison: Cons P34866 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34866, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 239
+//Begin record 240
+PairwiseComparison: Cons Q9MDF2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9MDF2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 240
+//Begin record 241
+PairwiseComparison: Cons Q8W8W1 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8W8W1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 241
+//Begin record 242
+PairwiseComparison: Cons O21167 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O21167, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 242
+//Begin record 243
+PairwiseComparison: Cons O21166 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O21166, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 243
+//Begin record 244
+PairwiseComparison: Cons O21163 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O21163, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 244
+//Begin record 245
+PairwiseComparison: Cons Q8M9Z5 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q8M9Z5, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 245
+//Begin record 246
+PairwiseComparison: Cons Q2VEE9 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q2VEE9, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 246
+//Begin record 247
+PairwiseComparison: Cons O79925 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79925, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 247
+//Begin record 248
+PairwiseComparison: Cons O79927 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79927, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 248
+//Begin record 249
+PairwiseComparison: Cons Q8SJL2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SJL2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 249
+//Begin record 250
+PairwiseComparison: Cons Q8SJL3 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SJL3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 250
+//Begin record 251
+PairwiseComparison: Cons Q8SJL1 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SJL1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 251
+//Begin record 252
+PairwiseComparison: Cons Q8WCK9 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8WCK9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 252
+//Begin record 253
+PairwiseComparison: Cons Q957D1 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q957D1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 253
+//Begin record 254
+PairwiseComparison: Cons Q9G3R1 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9G3R1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 254
+//Begin record 255
+PairwiseComparison: Cons O79386 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79386, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 255
+//Begin record 256
+PairwiseComparison: Cons Q9MR49 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9MR49, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 256
+//Begin record 257
+PairwiseComparison: Cons P0C317 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P0C317, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 257
+//Begin record 258
+PairwiseComparison: Cons Q95739 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q95739, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 258
+//Begin record 259
+PairwiseComparison: Cons Q9ZZE3 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9ZZE3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 259
+//Begin record 260
+PairwiseComparison: Cons Q9ZZE4 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9ZZE4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 260
+//Begin record 261
+PairwiseComparison: Cons Q9TLZ8 -99.00 DIFF   9   3  380  380
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q9TLZ8, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.593  | DG   0.012 
+//End record 261
+//Begin record 262
+PairwiseComparison: Cons Q9MQX8 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9MQX8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 262
+//Begin record 263
+PairwiseComparison: Cons Q9MI97 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9MI97, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 263
+//Begin record 264
+PairwiseComparison: Cons Q85G15 -99.00 DIFF   9   3  380  380
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q85G15, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 264
+//Begin record 265
+PairwiseComparison: Cons Q94ZD1 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94ZD1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 265
+//Begin record 266
+PairwiseComparison: Cons Q9XKC0 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9XKC0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 266
+//Begin record 267
+PairwiseComparison: Cons P56774 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P56774, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 267
+//Begin record 268
+PairwiseComparison: Cons P07747 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P07747, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 268
+//Begin record 269
+PairwiseComparison: Cons O21175 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O21175, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 269
+//Begin record 270
+PairwiseComparison: Cons Q8WEK7 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8WEK7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 270
+//Begin record 271
+PairwiseComparison: Cons Q8WEK2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8WEK2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 271
+//Begin record 272
+PairwiseComparison: Cons Q8WFX3 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8WFX3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 272
+//Begin record 273
+PairwiseComparison: Cons A0A366 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A0A366, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 273
+//Begin record 274
+PairwiseComparison: Cons Q33500 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33500, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 274
+//Begin record 275
+PairwiseComparison: Cons Q8HMZ7 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8HMZ7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 275
+//Begin record 276
+PairwiseComparison: Cons Q116S6 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q116S6, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 276
+//Begin record 277
+PairwiseComparison: Cons Q8M4D6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8M4D6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 277
+//Begin record 278
+PairwiseComparison: Cons P81381 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P81381, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 278
+//Begin record 279
+PairwiseComparison: Cons Q8W9L2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8W9L2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 279
+//Begin record 280
+PairwiseComparison: Cons P48122 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P48122, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 280
+//Begin record 281
+PairwiseComparison: Cons Q6V9D6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q6V9D6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 281
+//Begin record 282
+PairwiseComparison: Cons P11669 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P11669, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 282
+//Begin record 283
+PairwiseComparison: Cons Q9ZZD4 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9ZZD4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 283
+//Begin record 284
+PairwiseComparison: Cons Q9ZZD2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9ZZD2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 284
+//Begin record 285
+PairwiseComparison: Cons Q9ZZD8 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9ZZD8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 285
+//Begin record 286
+PairwiseComparison: Cons O48001 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O48001, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 286
+//Begin record 287
+PairwiseComparison: Cons Q93SX1 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q93SX1, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 287
+//Begin record 288
+PairwiseComparison: Cons Q508J7 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508J7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 288
+//Begin record 289
+PairwiseComparison: Cons Q33629 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33629, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 289
+//Begin record 290
+PairwiseComparison: Cons O79199 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79199, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 290
+//Begin record 291
+PairwiseComparison: Cons O79198 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79198, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 291
+//Begin record 292
+PairwiseComparison: Cons O79195 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79195, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 292
+//Begin record 293
+PairwiseComparison: Cons O79197 -99.00 DIFF   9   8  380  385
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79197, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 293
+//Begin record 294
+PairwiseComparison: Cons O79196 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79196, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 294
+//Begin record 295
+PairwiseComparison: Cons P04165 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P04165, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 295
+//Begin record 296
+PairwiseComparison: Cons O79680 -99.00 DIFF   9   8  380  387
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79680, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 296
+//Begin record 297
+PairwiseComparison: Cons A0T0B7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A0T0B7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 297
+//Begin record 298
+PairwiseComparison: Cons Q8HLB9 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8HLB9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 298
+//Begin record 299
+PairwiseComparison: Cons Q6X2M0 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q6X2M0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 299
+//Begin record 300
+PairwiseComparison: Cons P0C524 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P0C524, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 300
+//Begin record 301
+PairwiseComparison: Cons Q6X9S4 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q6X9S4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 301
+//Begin record 302
+PairwiseComparison: Cons Q8SJB6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SJB6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 302
+//Begin record 303
+PairwiseComparison: Cons Q34161 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q34161, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 303
+//Begin record 304
+PairwiseComparison: Cons Q9B1Z4 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9B1Z4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 304
+//Begin record 305
+PairwiseComparison: Cons Q06FN7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q06FN7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.519  | DG   0.012 
+//End record 305
+//Begin record 306
+PairwiseComparison: Cons P34873 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P34873, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 306
+//Begin record 307
+PairwiseComparison: Cons O20645 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O20645, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 307
+//Begin record 308
+PairwiseComparison: Cons O20644 -99.00 DIFF   9   8  380  393
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O20644, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 308
+//Begin record 309
+PairwiseComparison: Cons Q35533 -99.00 DIFF   9   8  380  383
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35533, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 309
+//Begin record 310
+PairwiseComparison: Cons Q35534 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q35534, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 310
+//Begin record 311
+PairwiseComparison: Cons Q94PA3 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94PA3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 311
+//Begin record 312
+PairwiseComparison: Cons Q94ZJ2 -99.00 DIFF   9   8  380  405
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94ZJ2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 312
+//Begin record 313
+PairwiseComparison: Cons P16360 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P16360, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 313
+//Begin record 314
+PairwiseComparison: Cons Q9XKK2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9XKK2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 314
+//Begin record 315
+PairwiseComparison: Cons Q0G9I8 -99.00 DIFF   9   3  380  385
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q0G9I8, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.909  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 315
+//Begin record 316
+PairwiseComparison: Cons Q06GW6 -99.00 DIFF   9   3  380  380
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q06GW6, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.519  | DG   0.012 
+//End record 316
+//Begin record 317
+PairwiseComparison: Cons P15547 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P15547, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 317
+//Begin record 318
+PairwiseComparison: Cons Q8WDV0 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8WDV0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 318
+//Begin record 319
+PairwiseComparison: Cons Q8WDV6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8WDV6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 319
+//Begin record 320
+PairwiseComparison: Cons A2C0H2 -99.00 DIFF   9   3  380  386
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A2C0H2, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 320
+//Begin record 321
+PairwiseComparison: Cons P19586 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P19586, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 321
+//Begin record 322
+PairwiseComparison: Cons Q0G9T1 -99.00 DIFF   9   3  380  380
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q0G9T1, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 322
+//Begin record 323
+PairwiseComparison: Cons Q34607 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q34607, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 323
+//Begin record 324
+PairwiseComparison: Cons Q06GM9 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q06GM9, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.667  | DG   0.012 
+//End record 324
+//Begin record 325
+PairwiseComparison: Cons Q5DNB7 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q5DNB7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 325
+//Begin record 326
+PairwiseComparison: Cons Q6YXR5 -99.00 DIFF   9   3  380  380
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q6YXR5, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 326
+//Begin record 327
+PairwiseComparison: Cons Q9G2W6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9G2W6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 327
+//Begin record 328
+PairwiseComparison: Cons O47477 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O47477, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 328
+//Begin record 329
+PairwiseComparison: Cons Q3LTW2 -99.00 DIFF   9   8  380  382
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q3LTW2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 329
+//Begin record 330
+PairwiseComparison: Cons Q4VWH9 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q4VWH9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 330
+//Begin record 331
+PairwiseComparison: Cons Q94SZ7 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94SZ7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 331
+//Begin record 332
+PairwiseComparison: Cons Q3T4F1 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q3T4F1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 332
+//Begin record 333
+PairwiseComparison: Cons Q36099 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36099, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 333
+//Begin record 334
+PairwiseComparison: Cons Q8HQ92 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8HQ92, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 334
+//Begin record 335
+PairwiseComparison: Cons O21217 -99.00 DIFF   9   8  380  400
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O21217, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 335
+//Begin record 336
+PairwiseComparison: Cons P29757 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P29757, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 336
+//Begin record 337
+PairwiseComparison: Cons Q950C6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q950C6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 337
+//Begin record 338
+PairwiseComparison: Cons Q950C7 -99.00 DIFF   9   8  380  378
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q950C7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 338
+//Begin record 339
+PairwiseComparison: Cons Q950C2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q950C2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 339
+//Begin record 340
+PairwiseComparison: Cons Q85AY5 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q85AY5, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 340
+//Begin record 341
+PairwiseComparison: Cons Q8M0A6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8M0A6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 341
+//Begin record 342
+PairwiseComparison: Cons Q36445 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36445, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 342
+//Begin record 343
+PairwiseComparison: Cons Q85FJ2 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q85FJ2, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.864  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 343
+//Begin record 344
+PairwiseComparison: Cons Q1HCL0 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q1HCL0, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.864  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.704  | DG   0.012 
+//End record 344
+//Begin record 345
+PairwiseComparison: Cons Q94TE4 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94TE4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 345
+//Begin record 346
+PairwiseComparison: Cons Q85QA4 -99.00 DIFF   9   8  380  381
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q85QA4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 346
+//Begin record 347
+PairwiseComparison: Cons A0ZZ66 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A0ZZ66, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 347
+//Begin record 348
+PairwiseComparison: Cons O78927 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O78927, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 348
+//Begin record 349
+PairwiseComparison: Cons Q92IR1 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q92IR1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 349
+//Begin record 350
+PairwiseComparison: Cons O47499 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O47499, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 350
+//Begin record 351
+PairwiseComparison: Cons B7KHH9 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap B7KHH9, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 351
+//Begin record 352
+PairwiseComparison: Cons Q956Y7 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q956Y7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 352
+//Begin record 353
+PairwiseComparison: Cons Q956Y9 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q956Y9, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 353
+//Begin record 354
+PairwiseComparison: Cons P92472 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P92472, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 354
+//Begin record 355
+PairwiseComparison: Cons Q94SA4 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94SA4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 355
+//Begin record 356
+PairwiseComparison: Cons O21205 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O21205, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 356
+//Begin record 357
+PairwiseComparison: Cons Q9TAD3 -99.00 DIFF   9   8  380  392
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9TAD3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 357
+//Begin record 358
+PairwiseComparison: Cons Q1AGX7 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q1AGX7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 358
+//Begin record 359
+PairwiseComparison: Cons P49489 -99.00 DIFF   9   3  380  380
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P49489, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 359
+//Begin record 360
+PairwiseComparison: Cons Q34534 -99.00 DIFF   9   8  380  381
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q34534, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 360
+//Begin record 361
+PairwiseComparison: Cons Q45659 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q45659, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.955  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 361
+//Begin record 362
+PairwiseComparison: Cons P56322 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P56322, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 362
+//Begin record 363
+PairwiseComparison: Cons P92599 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P92599, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 363
+//Begin record 364
+PairwiseComparison: Cons Q508M6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508M6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 364
+//Begin record 365
+PairwiseComparison: Cons Q4UJM4 -99.00 DIFF   9   8  380  381
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q4UJM4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 365
+//Begin record 366
+PairwiseComparison: Cons Q1XIL4 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q1XIL4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 366
+//Begin record 367
+PairwiseComparison: Cons A3PB50 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A3PB50, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 367
+//Begin record 368
+PairwiseComparison: Cons Q7YEV2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q7YEV2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 368
+//Begin record 369
+PairwiseComparison: Cons Q9TA00 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9TA00, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 369
+//Begin record 370
+PairwiseComparison: Cons P00161 -99.00 DIFF   9   8  380  384
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P00161, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 370
+//Begin record 371
+PairwiseComparison: Cons P00160 -99.00 DIFF   9   8  380  378
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P00160, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 371
+//Begin record 372
+PairwiseComparison: Cons P00163 -99.00 DIFF   9   8  380  397
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P00163, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 372
+//Begin record 373
+PairwiseComparison: Cons P00166 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P00166, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 373
+//Begin record 374
+PairwiseComparison: Cons P81378 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P81378, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 374
+//Begin record 375
+PairwiseComparison: Cons Q957B7 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q957B7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 375
+//Begin record 376
+PairwiseComparison: Cons B7K1G0 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap B7K1G0, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 376
+//Begin record 377
+PairwiseComparison: Cons P48173 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P48173, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 377
+//Begin record 378
+PairwiseComparison: Cons Q9T9J2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9T9J2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 378
+//Begin record 379
+PairwiseComparison: Cons Q9T9J5 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9T9J5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 379
+//Begin record 380
+PairwiseComparison: Cons Q34653 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q34653, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 380
+//Begin record 381
+PairwiseComparison: Cons Q3AMC2 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q3AMC2, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 381
+//Begin record 382
+PairwiseComparison: Cons O79785 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79785, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 382
+//Begin record 383
+PairwiseComparison: Cons P29663 -99.00 DIFF   9   8  380  161
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P29663, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 383
+//Begin record 384
+PairwiseComparison: Cons P29667 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P29667, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 384
+//Begin record 385
+PairwiseComparison: Cons Q5BQG8 -99.00 DIFF   9   8  380  370
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q5BQG8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 385
+//Begin record 386
+PairwiseComparison: Cons O54070 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O54070, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 386
+//Begin record 387
+PairwiseComparison: Cons Q508L0 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508L0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 387
+//Begin record 388
+PairwiseComparison: Cons Q508L1 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508L1, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 388
+//Begin record 389
+PairwiseComparison: Cons Q8M354 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8M354, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 389
+//Begin record 390
+PairwiseComparison: Cons Q8LX87 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8LX87, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 390
+//Begin record 391
+PairwiseComparison: Cons Q85C43 -99.00 DIFF   9   8  380  385
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q85C43, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 391
+//Begin record 392
+PairwiseComparison: Cons Q3T4C8 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q3T4C8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 392
+//Begin record 393
+PairwiseComparison: Cons P16674 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P16674, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 393
+//Begin record 394
+PairwiseComparison: Cons O79210 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79210, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 394
+//Begin record 395
+PairwiseComparison: Cons O79211 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79211, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 395
+//Begin record 396
+PairwiseComparison: Cons Q9MMZ2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9MMZ2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 396
+//Begin record 397
+PairwiseComparison: Cons Q33954 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33954, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 397
+//Begin record 398
+PairwiseComparison: Cons Q33989 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33989, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 398
+//Begin record 399
+PairwiseComparison: Cons O79223 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79223, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 399
+//Begin record 400
+PairwiseComparison: Cons O79221 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79221, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 400
+//Begin record 401
+PairwiseComparison: Cons O79220 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79220, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 401
+//Begin record 402
+PairwiseComparison: Cons O79227 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79227, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 402
+//Begin record 403
+PairwiseComparison: Cons O79226 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79226, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 403
+//Begin record 404
+PairwiseComparison: Cons O79225 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79225, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 404
+//Begin record 405
+PairwiseComparison: Cons O79224 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79224, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 405
+//Begin record 406
+PairwiseComparison: Cons O79229 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79229, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 406
+//Begin record 407
+PairwiseComparison: Cons O79228 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79228, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 407
+//Begin record 408
+PairwiseComparison: Cons Q94S78 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94S78, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 408
+//Begin record 409
+PairwiseComparison: Cons P12361 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P12361, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 409
+//Begin record 410
+PairwiseComparison: Cons O21224 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O21224, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 410
+//Begin record 411
+PairwiseComparison: Cons O21223 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O21223, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 411
+//Begin record 412
+PairwiseComparison: Cons O21220 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O21220, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 412
+//Begin record 413
+PairwiseComparison: Cons P18946 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P18946, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 413
+//Begin record 414
+PairwiseComparison: Cons Q6EW21 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q6EW21, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.333  | DG   0.012 
+//End record 414
+//Begin record 415
+PairwiseComparison: Cons Q70XX7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q70XX7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 415
+//Begin record 416
+PairwiseComparison: Cons O78690 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O78690, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 416
+//Begin record 417
+PairwiseComparison: Cons Q9MUV2 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q9MUV2, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 417
+//Begin record 418
+PairwiseComparison: Cons Q8HLR2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8HLR2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 418
+//Begin record 419
+PairwiseComparison: Cons Q9G2S5 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9G2S5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 419
+//Begin record 420
+PairwiseComparison: Cons Q33645 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33645, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 420
+//Begin record 421
+PairwiseComparison: Cons P29671 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P29671, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 421
+//Begin record 422
+PairwiseComparison: Cons P06250 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P06250, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 422
+//Begin record 423
+PairwiseComparison: Cons P81376 -99.00 DIFF   9   7  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   9   9   0   9   9   0
+TMMap P81376, numTM2 =  7:   9   9   9   9   9   -   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Cterm1       :  1  | index   8  | gap   0.593  | DG   0.012 
+Inter1-0     :  1  | index   5  | gap   0.679  | DG  -1.930 
+//End record 423
+//Begin record 424
+PairwiseComparison: Cons Q7NJB4 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q7NJB4, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.864  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 424
+//Begin record 425
+PairwiseComparison: Cons Q8HLD2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8HLD2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 425
+//Begin record 426
+PairwiseComparison: Cons Q33941 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33941, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 426
+//Begin record 427
+PairwiseComparison: Cons P29664 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P29664, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 427
+//Begin record 428
+PairwiseComparison: Cons Q3BAK6 -99.00 DIFF   9   3  380  380
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q3BAK6, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.519  | DG   0.012 
+//End record 428
+//Begin record 429
+PairwiseComparison: Cons O79230 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79230, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 429
+//Begin record 430
+PairwiseComparison: Cons Q9BBQ5 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q9BBQ5, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 430
+//Begin record 431
+PairwiseComparison: Cons Q94SD0 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q94SD0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 431
+//Begin record 432
+PairwiseComparison: Cons Q3ZJ11 -99.00 DIFF   9   3  380  381
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q3ZJ11, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 432
+//Begin record 433
+PairwiseComparison: Cons Q9B2C4 -99.00 DIFF   9   8  380  385
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9B2C4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 433
+//Begin record 434
+PairwiseComparison: Cons Q20FR8 -99.00 DIFF   9   8  380  378
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q20FR8, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 434
+//Begin record 435
+PairwiseComparison: Cons Q20FR3 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q20FR3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 435
+//Begin record 436
+PairwiseComparison: Cons Q8SGA0 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SGA0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 436
+//Begin record 437
+PairwiseComparison: Cons O47714 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O47714, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 437
+//Begin record 438
+PairwiseComparison: Cons P92493 -99.00 DIFF   9   8  380  387
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap P92493, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 438
+//Begin record 439
+PairwiseComparison: Cons Q85DF5 -99.00 DIFF   9   8  380  170
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q85DF5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 439
+//Begin record 440
+PairwiseComparison: Cons Q8M0E7 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8M0E7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 440
+//Begin record 441
+PairwiseComparison: Cons Q9XM10 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9XM10, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 441
+//Begin record 442
+PairwiseComparison: Cons Q8WE97 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8WE97, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 442
+//Begin record 443
+PairwiseComparison: Cons Q33842 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33842, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 443
+//Begin record 444
+PairwiseComparison: Cons Q9XKK5 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9XKK5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 444
+//Begin record 445
+PairwiseComparison: Cons Q9XKK0 -99.00 DIFF   9   8  380  381
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9XKK0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 445
+//Begin record 446
+PairwiseComparison: Cons Q7Y8F6 -99.00 DIFF   9   8  380  394
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q7Y8F6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 446
+//Begin record 447
+PairwiseComparison: Cons Q9BA02 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9BA02, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 447
+//Begin record 448
+PairwiseComparison: Cons O31215 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O31215, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 448
+//Begin record 449
+PairwiseComparison: Cons O79209 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79209, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 449
+//Begin record 450
+PairwiseComparison: Cons O79208 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79208, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 450
+//Begin record 451
+PairwiseComparison: Cons O79201 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79201, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 451
+//Begin record 452
+PairwiseComparison: Cons O79200 -99.00 DIFF   9   8  380  386
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79200, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 452
+//Begin record 453
+PairwiseComparison: Cons O79203 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79203, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 453
+//Begin record 454
+PairwiseComparison: Cons O79202 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79202, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 454
+//Begin record 455
+PairwiseComparison: Cons O79205 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79205, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 455
+//Begin record 456
+PairwiseComparison: Cons O79204 -99.00 DIFF   9   8  380  165
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79204, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 456
+//Begin record 457
+PairwiseComparison: Cons O79207 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79207, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 457
+//Begin record 458
+PairwiseComparison: Cons O79206 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79206, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 458
+//Begin record 459
+PairwiseComparison: Cons Q5YJ93 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q5YJ93, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 459
+//Begin record 460
+PairwiseComparison: Cons Q0ICP7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q0ICP7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 460
+//Begin record 461
+PairwiseComparison: Cons Q2MIF7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q2MIF7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 461
+//Begin record 462
+PairwiseComparison: Cons Q7VDK8 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q7VDK8, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 462
+//Begin record 463
+PairwiseComparison: Cons Q9T9I2 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9T9I2, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 463
+//Begin record 464
+PairwiseComparison: Cons Q9T9I7 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9T9I7, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 464
+//Begin record 465
+PairwiseComparison: Cons Q2JL31 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q2JL31, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.364  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 465
+//Begin record 466
+PairwiseComparison: Cons Q5F4F4 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q5F4F4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 466
+//Begin record 467
+PairwiseComparison: Cons Q5F4F5 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q5F4F5, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 467
+//Begin record 468
+PairwiseComparison: Cons O79660 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79660, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 468
+//Begin record 469
+PairwiseComparison: Cons Q5SD24 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q5SD24, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 469
+//Begin record 470
+PairwiseComparison: Cons Q20FS0 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q20FS0, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 470
+//Begin record 471
+PairwiseComparison: Cons Q36507 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36507, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 471
+//Begin record 472
+PairwiseComparison: Cons O47976 -99.00 DIFF   9   8  380  384
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O47976, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 472
+//Begin record 473
+PairwiseComparison: Cons B0JM93 -99.00 DIFF   9   3  380  400
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap B0JM93, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 473
+//Begin record 474
+PairwiseComparison: Cons P83792 -99.00 DIFF   9   3  380  393
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P83792, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 474
+//Begin record 475
+PairwiseComparison: Cons P23230 -99.00 DIFF   9   3  380  381
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P23230, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 475
+//Begin record 476
+PairwiseComparison: Cons Q33798 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q33798, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 476
+//Begin record 477
+PairwiseComparison: Cons P06527 -99.00 DIFF   9   3  380  387
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P06527, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 477
+//Begin record 478
+PairwiseComparison: Cons O48089 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O48089, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 478
+//Begin record 479
+PairwiseComparison: Cons Q36082 -99.00 DIFF   9   8  380  160
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q36082, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 479
+//Begin record 480
+PairwiseComparison: Cons Q1XDE7 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q1XDE7, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 480
+//Begin record 481
+PairwiseComparison: Cons O79218 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79218, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 481
+//Begin record 482
+PairwiseComparison: Cons O79219 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79219, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 482
+//Begin record 483
+PairwiseComparison: Cons O79212 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79212, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 483
+//Begin record 484
+PairwiseComparison: Cons O79213 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79213, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 484
+//Begin record 485
+PairwiseComparison: Cons O79216 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79216, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 485
+//Begin record 486
+PairwiseComparison: Cons O79217 -99.00 DIFF   9   8  380  381
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79217, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 486
+//Begin record 487
+PairwiseComparison: Cons O79215 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79215, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 487
+//Begin record 488
+PairwiseComparison: Cons Q8SJZ4 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q8SJZ4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 488
+//Begin record 489
+PairwiseComparison: Cons P28057 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P28057, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 489
+//Begin record 490
+PairwiseComparison: Cons P28059 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P28059, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 490
+//Begin record 491
+PairwiseComparison: Cons Q32RG3 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q32RG3, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 491
+//Begin record 492
+PairwiseComparison: Cons Q34902 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q34902, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 492
+//Begin record 493
+PairwiseComparison: Cons Q508L6 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q508L6, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 493
+//Begin record 494
+PairwiseComparison: Cons A2CBQ9 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap A2CBQ9, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 494
+//Begin record 495
+PairwiseComparison: Cons A6H4Q4 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap A6H4Q4, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 495
+//Begin record 496
+PairwiseComparison: Cons Q9MLI3 -99.00 DIFF   9   8  380  380
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap Q9MLI3, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 496
+//Begin record 497
+PairwiseComparison: Cons O79222 -99.00 DIFF   9   8  380  379
+TMMap   Cons, numTM1 =  9:   9   9   9   0   9   9   9   9   9
+TMMap O79222, numTM2 =  8:   9   9   9   -   9   9   9   9   9
+NtermTopo1 o
+NtermTopo2 i
+Inter1-0     :  1  | index   3  | gap   0.000  | DG   3.572 
+//End record 497
+//Begin record 498
+PairwiseComparison: Cons Q06J44 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap Q06J44, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 498
+//Begin record 499
+PairwiseComparison: Cons P27589 -99.00 DIFF   9   3  380  379
+TMMap   Cons, numTM1 =  9:   0   0   0   0   0   9   9   9   0
+TMMap P27589, numTM2 =  3:   -   -   -   -   -   9   9   9   -
+NtermTopo1 o
+NtermTopo2 i
+Nterm1       :  5  | index   0   1   2   3   4  | gap   1.000   1.000   1.000   1.000   0.818  | DG  -0.764   2.176  -0.850   3.572  -0.895 
+Cterm1       :  1  | index   8  | gap   0.630  | DG   0.012 
+//End record 499
+//End CMPMSA
