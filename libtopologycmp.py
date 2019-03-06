@@ -65,8 +65,8 @@ def RemoveUnnecessaryGap_old(seqList): #{{{
 #}}}
 def RemoveUnnecessaryGap(seqList): #{{{
     """Remove unnecessary gaps in the alignment, i.e. colums with all gaps
-    this method is 10x faster than RemoveUnnecessaryGap_old
-    There might be bugs with this function, 2014-10-02, do not use it
+    this method is slightly faster than RemoveUnnecessaryGap_old
+    However, compared to the C version, it takes 20+ times more time.
     """
     numSeq = len(seqList)
     if numSeq < 1:

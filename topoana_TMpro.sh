@@ -450,7 +450,7 @@ AnaMSATopo2(){ # $id #{{{  #using kalignP and a fasta file with multiple homolog
         local msaFile_TM=$outpath/${id}.TM.mfa
         exec_cmd "$binpath/selectfastaseq.py -f $fastaFile -l $seqidListFile_TM -o $fastaFile_TM"
         exec_cmd "$binpath/selectfastaseq.py -f $msaFile -l $seqidListFile_TM -o $msaFile_TM.tmp"
-        exec_cmd "$binpath/removeUnnecessaryGap $msaFile_TM.tmp -o $msaFile_TM"
+        exec_cmd "$binpath/removeUnnecessaryGap.py $msaFile_TM.tmp --outfile $msaFile_TM"
 
         fastaFile_cleaned=$fastaFile_TM
         msaInFastaFormat=$msaFile_TM
@@ -863,7 +863,7 @@ AnaMSATopo4(){ # $id#{{{
     local msaFile_cleaned=$outpath/$id.cleaned.msa.fa
 
     ### Step 2: remove unnecessary gaps if existing
-    exec_cmd "$binpath/removeUnnecessaryGap $msaFile -o $msaFile_cleaned"
+    exec_cmd "$binpath/removeUnnecessaryGap.py $msaFile --outfile $msaFile_cleaned"
 
 
     ### Step 3: get MSATopoSeq
