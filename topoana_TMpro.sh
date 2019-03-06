@@ -36,7 +36,8 @@ anamode=2  #default anamode = 2
 binpath=$rundir
 dgpredpath=$rundir/../../../program/dgpred_standalone
 newscampiscriptpath=$rundir/../../../program/newscampiscript
-run_kalignP_path=$rundir/../../../program/run_kalignP scampi_dir=$rundir/../../../share/scampi
+run_kalignP_path=$rundir/../../../program/run_kalignP
+scampi_dir=$rundir/../../../share/scampi
 modhmm_bin=$rundir/../../../share/modhmm/bin
 emboss_bin=$rundir/../../../usr/share/emboss/bin
 cdhit_bin=$rundir/../../../bin
@@ -93,7 +94,7 @@ Options:
                       multiple alignment, (default: 1000)
     -extfa    STR     File extension for sequence file, (default: .fa)
     -exttopo  STR     File extension for topology file, (default: .topo)
-    -extmsa   STR     File extension for multiple sequence alignment file, (default: .msa.fa)
+    -extmsa   STR     File extension for multiple sequence alignment file, (default: .mfa)
     -fasttree-args <str> adding fast tree arguments, please enclosed by double quotes
     -v, --verbose     Print verbose information
     -h, --help        Print this help message and exit
@@ -357,7 +358,7 @@ AnaMSATopo2(){ # $id #{{{  #using kalignP and a fasta file with multiple homolog
             rm -f $tmpcleanedidlistfile
         fi
         # Step 4 limit the number of sequences to MAX_NUM_SEQ
-        local limitedFastaFile_cleaned=$outpath/$id.homology.cleaned.le${MAX_NUM_SEQ}.fa 
+        local limitedFastaFile_cleaned=$outpath/$id.homology.cleaned.le${MAX_NUM_SEQ}.fa
         if [ $startfrom -le 4 ]; then
             if [ ! -s $fastaFile_cleaned ] ; then 
                 echo Failed to get cleaned fasta seq file for ID $id. Ignore. >&2
@@ -414,7 +415,7 @@ AnaMSATopo2(){ # $id #{{{  #using kalignP and a fasta file with multiple homolog
             /bin/rm -f ${tmpnrfastafile}*
         fi
 
-        local msaInFastaFormat=${limitedFastaFile_cleaned%.*}.kalignP.fasta
+        local msaInFastaFormat=${limitedFastaFile_cleaned%.*}.$msaProg.fasta
         if [ $startfrom -le 5 ]; then
             if [ ! -s "$limitedFastaFile_cleaned" ]; then
                 echo Failed to get limited sequences for ID $id. Ignore. >&2
@@ -566,7 +567,7 @@ AnaMSATopo2(){ # $id #{{{  #using kalignP and a fasta file with multiple homolog
     # create tree
     local renamed_msaInFastaFormat=$outpath/$id.renamedid.msa.fasta
     exec_cmd "$binpath/renameSeqIDInFasta.py $msaInFastaFormat -o $renamed_msaInFastaFormat"
-    treeFile=$outpath/$id.kalignp.tree
+    treeFile=$outpath/$id.tree
     if [  ! -s $treeFile  -o "$isOverwrite" == "1" ]; then 
         exec_cmd "$fasttree_bin/FastTree $fasttree_args $renamed_msaInFastaFormat > $treeFile"
     fi
@@ -754,7 +755,7 @@ AnaMSATopo3(){ #{{{ #$id #using kalignP and sequence and topology of query is gi
     ### Step 6: Get multiple sequence alignment
     echo -e Step 6: Do multiple sequence alignment for \
         $limitedFastaFile_cleaned...\n
-    local msaInFastaFormat=${limitedFastaFile_cleaned%.*}.kalignP.fasta
+    local msaInFastaFormat=${limitedFastaFile_cleaned%.*}.$msaProg.fasta
     $run_kalignP_path/run_kalignP.sh  $limitedFastaFile_cleaned -f fasta \
         -outpath $outpath -q
     
@@ -952,7 +953,7 @@ AnaMSATopo4(){ # $id#{{{
     # create tree
     local renamed_msaInFastaFormat=$outpath/$id.renamedid.msa.fasta
     exec_cmd "$binpath/renameSeqIDInFasta.py $msaFile_cleaned -o $renamed_msaInFastaFormat"
-    treeFile=$outpath/$id.kalignp.tree
+    treeFile=$outpath/$id.tree
     if [  ! -s $treeFile  -o "$isOverwrite" == "1" ]; then 
         exec_cmd "$fasttree_bin/FastTree $fasttree_args $renamed_msaInFastaFormat > $treeFile"
     fi
@@ -1035,7 +1036,7 @@ MIN_RLTY=0
 
 ext_fa=.fa
 ext_topo=.topo
-ext_msa=.msa.fa
+ext_msa=.mfa
 
 fasttree_args=""
 
