@@ -24,4 +24,14 @@ Eamil: nanjiang.shu@scilifelab.se
 
 ## Usage
 
+In the folder `test`, run
+
+    ../topoana_TMpro.sh -anamode 2 -outpath out1  -datapath data PF00032
+
+The result will be output to the folder `out1`
+
+
+
+
+
 
