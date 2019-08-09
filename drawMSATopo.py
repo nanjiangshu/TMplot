@@ -597,24 +597,43 @@ def ReadInDGProfile(infile):#{{{
         print >> sys.stderr, "Failed to read dgprofile", infile
 #}}}
 
-def MatchAlignedDGP(dgp, aligned_toposeq):#{{{
-    """match dgp (a list of tuples) to the aligned toposeq"""
+def MatchAlignedDGP(dgp, idxmap_aligne2seq, posindexmap, aligned_toposeq):#{{{
+    """
+    match dgp (a list of tuples) to the aligned toposeq
+    posindexmap is the index map from the shrinked seq to the original seq
+    idxmap_aligne2seq is a dictionary of index map from the original (non-shrinked) MSA to the gapless seq
+    """
     aligned_dgp = []
     lenAlignedSeq = len(aligned_toposeq)
     resMap = {}
     inew = 0
-    for i in xrange(lenAlignedSeq):
-        if aligned_toposeq[i] != '-':
-            resMap[inew] = i
-            inew += 1
+    if len(posindexmap) == 0:
+        isShrink = False
+    else:
+        isShrink = True
+
+    # convert dgp in to dictionary
+    dgp_dt = {}
     for (idx, dg) in dgp:
-        aligned_dgp.append((resMap[idx], dg))
+        dgp_dt[idx] = dg
+
+    for j in xrange(lenAlignedSeq):
+        if aligned_toposeq[j] != '-':
+            if isShrink:
+                j_origseq = idxmap_aligne2seq[posindexmap[j]]
+            else:
+                j_origseq = idxmap_aligne2seq[j]
+            try:
+                dg = dgp_dt[j_origseq]
+                aligned_dgp.append((j, dg))
+            except KeyError:
+                pass
     return aligned_dgp
 #}}}
 
 def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{ 
         seqID, dgprofileRegionWidth, dgprofileRegionHeight, spaceToLeftBorder,
-        draw):
+        isDrawSeqID, draw):
     """Draw DG profile"""
     (x0, y0) = xy0
     paddingtop = int(dgprofileRegionHeight*0.05+0.5)
@@ -658,7 +677,7 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
         draw.text((x1-textWidth-lengthtic,y1-textHeight/2), text, font=fnt,
                 fill='black')
         ytic += step
-    
+
     ytic = -step
     while ytic > minDG:
         x1 = x0 - lengthtic
@@ -673,18 +692,19 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
         ytic -= step
 
 # draw seqID 
-    text = seqID
-    x = 1
-    (textWidth,textHeight) = fnt.getsize(text)
-    y = yMiddle - textHeight
-    draw.text((x,y), text, font=fnt, fill='black')
+    if isDrawSeqID:
+        text = seqID
+        x = 1
+        (textWidth,textHeight) = fnt.getsize(text)
+        y = yMiddle - textHeight
+        draw.text((x,y), text, font=fnt, fill='black')
 
 # draw profile
     sizeSquare = 4
     pointList= []
-    papd=pointList.append
+    papd = pointList.append
     for (idx, dg) in aligned_dgp:
-        print (idx, dg)
+        #print (idx, dg)
         h = int(round(dg/(maxDG-minDG)*heightDrawRegion))
         x1 = (x0 + int(round(widthDrawRegion*float(idx)/lengthAlignment)) -
                 sizeSquare/2)
@@ -692,9 +712,10 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
         x2 = x1+sizeSquare
         y2 = y1+sizeSquare
         box=[x1,y1,x2,y2]
-        draw.ellipse(box, outline='red')
-#     for i in xrange(0,len(pointList)-1,1):
-#         draw.line([pointList[i],pointList[i+1]],fill="green")
+        #draw.ellipse(box, outline='red')
+        papd((x1+sizeSquare/2, y1+sizeSquare/2))
+    for i in xrange(0,len(pointList)-1,1):
+        draw.line([pointList[i],pointList[i+1]],fill="blue", width=4)
 
 
 #}}}
@@ -2264,6 +2285,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                     (y, height))
 # draw DGprofile
     if g_params['isDrawDGprofile']:
+        isDrawSeqID = False
         dgprofileDict = None
         if os.path.exists(g_params['DGProfileFile']):
             dgprofileDict = ReadInDGProfile(g_params['DGProfileFile'])
@@ -2292,14 +2314,18 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 dgList = [x[1] for x in dgp]
                 minDG = min(dgList)
                 maxDG = max(dgList)
-                aligned_dgp = MatchAlignedDGP(dgp, toposeq)
+
+                idxmap_aligne2seq = lcmp.GetAlign2SeqMap(alignedTopoSeqList[i],
+                        alignedTopoSeqList[i].replace(GAP,""))  
+
+                aligned_dgp = MatchAlignedDGP(dgp, idxmap_aligne2seq, posindexmap, toposeq)
                 x = (marginX + widthAnnotation * fontWidth +  annoSeqInterval *
                         fontWidthTMbox)
                 spaceToLeftBorder = (annoSeqInterval * fontWidthTMbox +
                         widthAnnotation * fontWidth)
                 DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG,
                         (x,y), seqID, dgprofileRegionWidth,
-                        dgprofileRegionHeight, spaceToLeftBorder,
+                        dgprofileRegionHeight, spaceToLeftBorder, isDrawSeqID,
                         draw)
                 y += dgprofileRegionHeight
 
