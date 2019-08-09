@@ -42,7 +42,7 @@ import logging.config
 import yaml
 
 # PyX
-# import pyx
+#import pyx
 
 
 nodename = os.uname()[1]
@@ -120,7 +120,7 @@ GAP = myfunc.GAP
 usage="""
 Usage:   drawMSATopo.py [-i] topomsa-in-fasta-format
 Options:
-  -method    STR   Modules to use for plotting, (default: pyx)
+  -method    STR   Modules to use for plotting, (default: pil)
                    Can be pyx, svg, pil, mat, core-rainbow
   -of        STR   Output format, can be png
   -l        FILE   Set input file list
@@ -151,6 +151,8 @@ Options:
   -htmlheader STR  Set header text for HTML output
   -colorhtml       Use colorful output for HTML alignment
   -colorTMbox      Color the whole TM helix as a red rectangle, even gaps
+  -colorkingdom   Color the TM regions by kingdom (Archaea green, Bacteria Red, Eukaryota blue) as present in annotations.
+  -advtopo         Show advanced topology at top (reentrant regions and in/out helices)
   -showTMidx       Display index of TM helix as the text for the sequence, e.g. TM1 TM2
   -shrinkrate FLOAT     Proportional shrink rate, (default: 1.0)
   -shrinkrateTM FLOAT   Proportional shrink rate for TM regions, (default: 2.0)
@@ -589,6 +591,7 @@ def ReadInDGProfile(infile):#{{{
                 i += numWin
                 dgpDict[seqid] = dgp
             i += 1
+        #print (dgpDict)
         return dgpDict
     except IOError:
         print >> sys.stderr, "Failed to read dgprofile", infile
@@ -681,6 +684,7 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
     pointList= []
     papd=pointList.append
     for (idx, dg) in aligned_dgp:
+        print (idx, dg)
         h = int(round(dg/(maxDG-minDG)*heightDrawRegion))
         x1 = (x0 + int(round(widthDrawRegion*float(idx)/lengthAlignment)) -
                 sizeSquare/2)
@@ -1591,6 +1595,131 @@ def DrawTMOfConsensus(posTM, xy0, fontWidth, fontHeight, draw): #{{{
         draw.text((x3, y3), s, font=fntTMbox, fill="black")
         cnt += 1
 #}}}
+
+def GetTMType(topo):#{{{
+    """
+    Get position of TM helices given a topology
+    this version is much faster (~25 times) than using than finditer
+    updated 2011-10-24
+    """
+    #    print topo
+    posTM=[]
+    typeTM=[]
+    type=''
+    lengthTopo=len(topo)
+    b=0
+    e=0
+    while 1:
+        b=topo.find('M',e)
+        if b != -1:
+            m = re.search('[io]', topo[b+1:])
+            if m != None:
+                e = m.start(0)+b+1
+            else:
+                e=lengthTopo
+            if topo[e-1] == GAP:
+                e=topo[:e-1].rfind('M')+1
+#           print (b,e)
+            if b == e:
+                print "Error topo[b-10:e+10]=", topo[b-30:e+30]
+                #sys.exit(1)
+                return []
+            posTM.append((b,e))
+            # Now we need to devide the type (can be one of four)
+            before=topo[0:b]
+            after=topo[e-1:]
+            ib=before.rfind('i')
+            ob=before.rfind('o')
+            ia=after.find('i')
+            oa=after.find('o')
+            if (ia==-1):
+                ia=lengthTopo
+            if (oa==-1):
+                oa=lengthTopo
+            if (ib>ob and ia>oa):
+                type="M"
+            elif(ib<ob and ia<oa):
+                type="W"
+            elif(ib>ob and ia<oa):
+                type="R"
+            elif(ib<ob and ia>oa):
+                type="r"
+            else:
+                type="X"
+            typeTM.append(type)
+            #print (before, after,ib,ob,ia,oa,type)
+        else:
+            break
+    return posTM,typeTM
+
+def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,length): #{{{
+    """Draw TM box"""
+    widthAnnotation = g_params['widthAnnotation']
+    annoSeqInterval = g_params['annoSeqInterval']
+    font_size_TMbox = g_params['font_size_TMbox']
+    fntTMbox = g_params['fntTMbox']
+    heightTMbox = g_params['heightTMbox']
+    (fontWidthTMbox, fontHeightTMbox) = fntTMbox.getsize("M")
+
+    fntTMbox = g_params['fntTMbox']
+    (x0,y0) = xy0
+    x0 = x0 + widthAnnotation * fontWidth + annoSeqInterval * fontWidthTMbox
+    y0 = y0 - fontHeightTMbox/2
+
+    marginTop = 0
+    marginBottom = 0
+    incolor="#F2EABD"
+    outcolor="#CCFFFF"
+    cnt = 0
+    last=x0
+    for (b, e) in posTM:
+        x1 = x0 + b*fontWidth
+        y1 = y0 - marginTop
+        x2 = x0 + e*fontWidth
+        y2 = y0 + heightTMbox*fontHeightTMbox + marginBottom
+        box=[x1, y1 , x2, y2]
+        if (typeTM[cnt]=="M"): # out to in
+            draw.rectangle(box, fill="grey", outline="black")
+            #draw.line([last,y2,x1,y2],incolor)
+            draw.rectangle([last,y2-fontHeightTMbox/5,x1,y2],fill=incolor)
+        elif (typeTM[cnt]=="W"): # in to out
+            draw.rectangle(box, fill="white", outline="black")
+            #draw.line([last,y1,x1,y1],outcolor)
+            draw.rectangle([last,y1,x1,y1+fontHeightTMbox/5],fill=outcolor)
+        elif (typeTM[cnt]=="R"): # Reeentrant inside
+            y1 = y0 - marginTop + heightTMbox*fontHeightTMbox/2
+            y2 = y0 + heightTMbox*fontHeightTMbox + marginBottom
+            box=[x1, y1 , x2, y2]
+            draw.rectangle(box, fill=incolor, outline="black")
+            #draw.line([last,y2,x1,y2],incolor)
+            draw.rectangle([last,y2-fontHeightTMbox/5,x1,y2],fill=incolor)
+        elif (typeTM[cnt]=="r"): # Reentrant outside
+            y1 = y0 - marginTop
+            y2 = y0 + heightTMbox*fontHeightTMbox/2 + marginBottom
+            box=[x1, y1 , x2, y2]
+            draw.rectangle(box, fill=outcolor, outline="black")
+            #draw.line([last,y1,x1,y1],outcolor)
+            draw.rectangle([last,y1,x1,y1+fontHeightTMbox/5],fill=outcolor)
+        else:
+            draw.rectangle(box, fill="violet", outline="black")
+        last=x2
+        # draw text
+        s = "TM %d"%(cnt+1)
+        if g_params['isTMname']:
+            s=TMname[cnt]
+        (textwidth, textheight) = fntTMbox.getsize(s)
+        textheight+=2
+        x3 = int(round((x1+x2-textwidth)/2.0))
+        y3 = int(round((y1+y2-textheight)/2.0))
+        draw.text((x3, y3), s, font=fntTMbox, fill="black")
+        cnt += 1
+    if (typeTM[cnt-1]=="R" or typeTM[cnt-1]=="W"):
+        #draw.line([x2,y2,x0 + length*fontWidth,y2],incolor)
+        draw.rectangle([x2,y2-fontHeightTMbox/5,x0 + length*fontWidth,y2],fill=incolor)
+    elif (typeTM[cnt-1]=="r" or (typeTM[cnt-1]=="M")):
+        draw.line([x2,y1,x0 + length*fontWidth,y1],outcolor)
+        draw.rectangle([x2,y1,x0 + length*fontWidth,y1+fontHeightTMbox/5],fill=outcolor)
+#}}}
 def DrawScale(length, posindexmap, xy0, font_size_alignment, #{{{
         fontWidth, fontHeight, draw):
     """Draw horizontal scale bar. font_size_alignment is the font_size for the
@@ -1748,6 +1877,12 @@ def GetSeqTag(anno):#{{{
         tag = "TM2GAP_AND_TM2SEQ"
     elif anno.find(" Mixed ") != -1:
         tag = "Mixed"
+    elif anno.find("Eukaryota") != -1:
+        tag = "Eukaryota"
+    elif anno.find("Archaea") != -1:
+        tag = "Archaea"
+    elif anno.find("Bacteria") != -1:
+        tag = "Bacteria"
     else:
         tag = ""
     return tag
@@ -1766,7 +1901,9 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
 
     if isDrawText: # leave the width for the annotation text
         x += widthAnnotation * fontWidth
-
+    else: # We actually need this shift anyhow to not get things shifted
+        x += widthAnnotation * fontWidth
+        
     #Draw a vertical bar for proteins in different groups
     if g_params['isDrawTagColumn']:
         if tag.find("ClusterNo") != -1:#{{{
@@ -1823,7 +1960,14 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
                 fill_color ="lightgreen"
             elif tag == "DIFF":
                 fill_color ="black"
-
+            elif tag == "Archaea":
+                fill_color ="blue"
+            elif tag == "Bacteria":
+                fill_color ="purple"
+            elif tag == "Eukaryota":
+                fill_color ="green"
+            #print ("TEST",x,y,tag,fill_color)
+            #fill_color='green'
             box=[x+fontWidthTMbox*1,y,x+fontWidthTMbox*3,y+fontHeight]
             draw.rectangle(box, fill=fill_color)
 
@@ -1835,22 +1979,36 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
     posTM = myfunc.GetTMPosition(toposeq)
 # it is much faster to draw a block of text than drawing characters one by one
     i=0
+    memcolor="#FF0000"
+    if g_params['isColorByKingdom']:
+        if ("Eukaryota" in anno):
+            memcolor="#0000FF"; #blue
+        elif ("Archaea" in anno):
+            memcolor="#00FF00"; #Green
+        elif ("Bacteria" in anno):
+            memcolor="#FF0000"; #red
+        else:  
+            memcolor="#808080"; #grey
+        
     while i < lengthSeq:
         j=i
         while j < lengthSeq and toposeq[j] == toposeq[i]:
             j += 1
         lengthSegment = j-i
+
         if toposeq[i] == "M":
-            bg="#FF0000"; #red
+            bg=memcolor
         elif toposeq[i] == "i":
             bg="#F2EABD"; # light yellow
         elif toposeq[i] == "o":
             bg="#CCFFFF"; # faded blue
         elif toposeq[i] == "S":
             bg="#228B22"; # forestgreen for signal peptide
+
+
         else:
             if g_params['isColorWholeTMbox'] and IsWithinTMRegion(i, posTM):
-                bg = "#FF0000"
+                bg = memcolor #"#FF0000"
             else:
                 bg = "#FFFFFF"  #white
         box=[x,y,x+fontWidth*lengthSegment,y+fontHeight]
@@ -1955,7 +2113,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         elif g_params['method_shrink'] == 1:
             posindexmap = ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList)
 
-    posTM = myfunc.GetTMPosition(topoSeqList[0])
+    #posTM = myfunc.GetTMPosition(topoSeqList[0])
+    (posTM,typeTM) = GetTMType(topoSeqList[0])
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
     widthAnnotation = g_params['widthAnnotation']
     tagList = []
@@ -2044,7 +2203,10 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 
 # Draw TM helices of the consensus.
     (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM, fontWidth, fontHeight, numSeq)
-    DrawTMOfConsensus(posTM, (x,y), fontWidth, fontHeight, draw)
+    if g_params['isAdvTopo']:
+        DrawTMOfConsensus2(posTM, typeTM, g_params['TMname'], (x,y), fontWidth, fontHeight, draw,lengthAlignment)
+    else:
+        DrawTMOfConsensus(posTM, (x,y), fontWidth, fontHeight, draw)
     y += heightTMbox * fontHeightTMbox
 # Draw a scale bar of the residue position
     DrawScale(lengthAlignment, posindexmap, (x,y), font_size, fontWidth,
@@ -4266,6 +4428,14 @@ def main(g_params):#{{{
                 aaSeqFile, i = myfunc.my_getopt_str(argv, i)
             elif argv[i] in["-colorTMbox", "--colorTMbox"]:
                 g_params['isColorWholeTMbox'] = True; i += 1
+            elif argv[i] in["-advtopo", "--advtopo"]:
+                g_params['isAdvTopo'] = True; i += 1
+            elif argv[i] in["-TMname", "--TMname"]:
+                g_params['isTMname'] = True
+                g_params['TMname']=argv[i+1].split(',')
+                i += 2
+            elif argv[i] in["-colorkingdom", "--colorkingdom"]:
+                g_params['isColorByKingdom'] = True; i += 1
             elif argv[i] in["-showTMidx", "--showTMidx"]:
                 g_params['isShowTMIndex'] = True; i += 1
             elif argv[i] in["-debug", "--debug"]:
@@ -4396,6 +4566,10 @@ def InitGlobalParameter():#{{{
     g_params['colorhtml'] = False
     g_params['method_shrink'] = 1
     g_params['isColorWholeTMbox'] = False
+    g_params['isAdvTopo'] = False
+    g_params['isTMname'] = False
+    g_params['TMname'] = []
+    g_params['isColorByKingdom'] = False
     g_params['isShowTMIndex'] = False
     g_params['shrinkrate'] = None # shrink the alignment proportionally
     g_params['shrinkrate_TM'] = 2.0 # shrink the aligned TM region proportionally
