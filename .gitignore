@@ -16,5 +16,15 @@ log/
 md5/
 env/
 bak.env/
-
 *.o
+
+test/family_topologies
+test/t[0-9].txt
+test/PF*/
+test/logs
+removeUnnecessaryGap
+*bak1*
+
+venv*/
+
+
