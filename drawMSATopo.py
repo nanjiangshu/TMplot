@@ -1726,7 +1726,8 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
         last=x2
         # draw text
         s = "TM %d"%(cnt+1)
-        if g_params['isTMname']:
+        #if g_params['isTMname']:
+        if len(TMname) >= len(posTM):
             s=TMname[cnt]
         (textwidth, textheight) = fntTMbox.getsize(s)
         textheight+=2
@@ -2084,11 +2085,17 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
 def DrawMSATopo_PIL(inFile, g_params):#{{{
     logger = logging.getLogger(__name__)
     (idList, annotationList, topoSeqList) = myfunc.ReadFasta(inFile)
+
+
     topoSeqList = lcmp.RemoveUnnecessaryGap(topoSeqList)
     numSeq = len(idList)
     if numSeq < 1:
         print >> sys.stderr, "No sequence in the file %s. Ignore." %(inFile)
         return 1
+
+    seqIDIndexDict = {}
+    for i in xrange(numSeq):
+        seqIDIndexDict[idList[i]] = i
 
     marginX = g_params['marginX']
     marginY = g_params['marginY']
@@ -2134,8 +2141,27 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         elif g_params['method_shrink'] == 1:
             posindexmap = ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList)
 
-    #posTM = myfunc.GetTMPosition(topoSeqList[0])
-    (posTM,typeTM) = GetTMType(topoSeqList[0])
+    # get index of special proteins
+    #   * representative protein
+    #   * topology of a PDB structure
+    #   * the final topology
+    try:
+        idxRepPro = seqIDIndexDict['rep1'] 
+    except KeyError:
+        idxRepPro = 0  # use the first seq as the representative protein if not defined
+
+    try: 
+        idxFinalPro = seqIDIndexDict['final1']
+    except KeyError:
+        idxFinalPro = -1 # if there is no final topology, set as -1
+
+    idxPDB = -1
+    for i in xrange(numSeq):
+        if idList[i].find("pdb_") != -1:
+            idxPDB = i
+    
+
+    (posTM_rep,typeTM_rep) = GetTMType(topoSeqList[idxRepPro])
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
     widthAnnotation = g_params['widthAnnotation']
     tagList = []
@@ -2150,7 +2176,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             g_params['font_size'])
     (fontWidth, fontHeight) = fnt.getsize("a")
 #   print "font_size=",font_size, "width,height=", (fontWidth,fontHeight)
-    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM, fontWidth, fontHeight, numSeq)
+    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq)
 
     histoRegionWidth = lengthAlignment * fontWidth
     histoRegionHeight = max(50, int(round(lengthAlignment * fontHeight * 0.15)))
@@ -2185,7 +2211,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             histoRegionWidth = lengthAlignment * fontWidth
             histoRegionHeight = max(50, 
                     int(round(lengthAlignment * fontHeight * 0.15)))
-            (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM, fontWidth, fontHeight, numSeq)
+            (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq)
             width = ((widthAnnotation + lengthAlignment) * (fontWidth) +
                     annoSeqInterval*fontWidthTMbox +  marginX * 2)
             height = (heightScaleBar*fontHeightScaleBar +
@@ -2223,11 +2249,12 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     y = marginY
 
 # Draw TM helices of the consensus.
-    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM, fontWidth, fontHeight, numSeq)
-    if g_params['isAdvTopo']:
-        DrawTMOfConsensus2(posTM, typeTM, g_params['TMname'], (x,y), fontWidth, fontHeight, draw,lengthAlignment)
+    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq)
+    if g_params['isAdvTopo']: # draw topology of the representative protein
+        DrawTMOfConsensus2(posTM_rep, typeTM_rep, g_params['TMname'], (x,y),
+                fontWidth, fontHeight, draw,lengthAlignment)
     else:
-        DrawTMOfConsensus(posTM, (x,y), fontWidth, fontHeight, draw)
+        DrawTMOfConsensus(posTM_rep, (x,y), fontWidth, fontHeight, draw)
     y += heightTMbox * fontHeightTMbox
 # Draw a scale bar of the residue position
     DrawScale(lengthAlignment, posindexmap, (x,y), font_size, fontWidth,
@@ -2242,6 +2269,9 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     for i in range(numSeq):
         tagCurrent = tagList[i]
         seqID = idList[i]
+
+        if i in [idxPDB, idxFinalPro]: #do not draw the topology of special proteins 
+            continue
 
         if tagCurrent != tagFormer:
             tagFormer = tagCurrent
@@ -2283,7 +2313,19 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         if y >= height:
             print >> sys.stderr, ("Error! position y(%d) exceeds height (%d)" %
                     (y, height))
-# draw DGprofile
+
+# Draw special topologies
+    for idx in [idxPDB, idxFinalPro]:
+        if idx != -1:
+            y += 2* heightTMbox * fontHeightTMbox
+            (posTM,typeTM) = GetTMType(topoSeqList[idx])
+            if g_params['isAdvTopo']: # draw topology of the representative protein
+                TMname = []
+                DrawTMOfConsensus2(posTM, typeTM, TMname, (x,y), fontWidth,
+                        fontHeight, draw,lengthAlignment)
+
+    y += heightTMbox * fontHeightTMbox
+# Draw DGprofile
     if g_params['isDrawDGprofile']:
         isDrawSeqID = False
         dgprofileDict = None
