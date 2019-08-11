@@ -642,6 +642,8 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
     heightDrawRegion = dgprofileRegionHeight - paddingtop - paddingbottom
     widthDrawRegion = dgprofileRegionWidth
 
+    font_size = g_params['font_size_scale']
+
 # draw outline box
     x1 = x0
     y1 = y0 + paddingtop
@@ -656,12 +658,11 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
     y1 = y0 + paddingtop + int(round(heightDrawRegion*maxDG/(maxDG-minDG)))
     x2 = x1 + widthDrawRegion
     y2 = y1
-    draw.line([x1, y1, x2, y2],fill="black")
+    draw.line([x1, y1, x2, y2],fill="grey")
 
     yZero = y1
 
 # draw ytics and text
-    font_size = 12
     fnt = ImageFont.truetype(g_params['font_dir']+g_params['font'], font_size)
     step = max(0.5, round((maxDG-minDG)/5))
     lengthtic = min(5, int(widthDrawRegion*0.01+0.5))
@@ -2089,6 +2090,7 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
 #             i=j
 #}}}
 def DrawMSATopo_PIL(inFile, g_params):#{{{
+    isDrawSeqLable = True
     logger = logging.getLogger(__name__)
     (idList, annotationList, topoSeqList) = myfunc.ReadFasta(inFile)
 
@@ -2260,6 +2262,12 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 # Draw TM helices of the consensus.
     (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq)
     if g_params['isAdvTopo']: # draw topology of the representative protein
+        if isDrawSeqLable:
+            xt = marginX + fontWidth*widthAnnotation*0
+            label = "Initial Topology"
+            ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
+            fg="#000000";# black
+            draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
         DrawTMOfConsensus2(posTM_rep, typeTM_rep, g_params['TMname'], (x,y),
                 fontWidth, fontHeight, draw,lengthAlignment)
     else:
@@ -2324,7 +2332,6 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                     (y, height))
 
 # Draw special topologies
-    isDrawSeqLable = True
     for idx in [idxPDB, idxFinalPro]:
         if idx != -1:
             y += 2* heightTMbox * fontHeightTMbox
@@ -2385,7 +2392,6 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                         fontWidthTMbox)
                 spaceToLeftBorder = (annoSeqInterval * fontWidthTMbox +
                         widthAnnotation * fontWidth)
-                print (dgprofileRegionWidth, dgprofileRegionHeight, minDG, maxDG, (x,y)) 
                 DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG,
                         (x,y), seqID, dgprofileRegionWidth,
                         dgprofileRegionHeight, spaceToLeftBorder, isDrawSeqID,
