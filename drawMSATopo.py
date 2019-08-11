@@ -2188,7 +2188,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     histoRegionHeight = max(50, int(round(lengthAlignment * fontHeight * 0.15)))
 
     dgprofileRegionWidth = lengthAlignment * fontWidth
-    dgprofileRegionHeight = max(40, 
+    dgprofileRegionHeight = max(30, 
             int(round(lengthAlignment * fontHeight * 0.05)))
 
     width = ((widthAnnotation + lengthAlignment) * (fontWidth) +
@@ -2199,7 +2199,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             (idxPDB!=-1)*3*heightTMbox*fontHeightTMbox+
             (idxFinalPro!=-1)*3*heightTMbox*fontHeightTMbox+
             g_params['isDrawPerMDistribution'] *histoRegionHeight +
-            g_params['isDrawDGprofile'] * dgprofileRegionHeight * numSeq
+            g_params['isDrawDGprofile'] * dgprofileRegionHeight
             )
 
     isDrawText = g_params['isDrawText']
@@ -2222,12 +2222,13 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq)
             width = ((widthAnnotation + lengthAlignment) * (fontWidth) +
                     annoSeqInterval*fontWidthTMbox +  marginX * 2)
-            height = (heightScaleBar*fontHeightScaleBar +
-                    heightTMbox*fontHeightTMbox + numSeq*fontHeight + marginY*2
-                    + g_params['isDrawSeprationLine'] * numSeprationLine *
-                    scaleSeprationLine * fontHeight +
+            height = (heightScaleBar*fontHeightScaleBar +  
+                    heightTMbox*fontHeightTMbox + numSeq*fontHeight + marginY*2 +
+                    g_params['isDrawSeprationLine'] * numSeprationLine * scaleSeprationLine * fontHeight +
+                    (idxPDB!=-1)*3*heightTMbox*fontHeightTMbox+
+                    (idxFinalPro!=-1)*3*heightTMbox*fontHeightTMbox+
                     g_params['isDrawPerMDistribution'] *histoRegionHeight +
-                    g_params['isDrawDGprofile'] * dgprofileRegionHeight * numSeq
+                    g_params['isDrawDGprofile'] * dgprofileRegionHeight
                     )
             if font_size < 3:
                 isDrawText = False
@@ -2335,7 +2336,6 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 elif idx == idxFinalPro:
                     label = "Final Topology"
                 ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
-                print (label, ss)
                 fg="#000000";# black
                 draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
 
@@ -2374,18 +2374,18 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 if dgpDict and seqID in dgpDict:
                     dgp = dgpDict[seqID]
             if dgp:
-                dgList = [x[1] for x in dgp]
-                minDG = min(dgList)
-                maxDG = max(dgList)
-
                 idxmap_aligne2seq = lcmp.GetAlign2SeqMap(alignedTopoSeqList[i],
                         alignedTopoSeqList[i].replace(GAP,""))  
 
                 aligned_dgp = MatchAlignedDGP(dgp, idxmap_aligne2seq, posindexmap, toposeq)
+                dgList = [x[1] for x in aligned_dgp]
+                minDG = min(dgList)
+                maxDG = max(dgList)
                 x = (marginX + widthAnnotation * fontWidth +  annoSeqInterval *
                         fontWidthTMbox)
                 spaceToLeftBorder = (annoSeqInterval * fontWidthTMbox +
                         widthAnnotation * fontWidth)
+                print (dgprofileRegionWidth, dgprofileRegionHeight, minDG, maxDG, (x,y)) 
                 DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG,
                         (x,y), seqID, dgprofileRegionWidth,
                         dgprofileRegionHeight, spaceToLeftBorder, isDrawSeqID,
