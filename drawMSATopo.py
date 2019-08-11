@@ -780,7 +780,8 @@ def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq): #{{{
     maxAllowedFontWidthList = []
     margin = 1; #pixels
     # scale is roughly 50 seqs -> 0.5, 1500 seqs -> 1.5
-    scaleTMBox = myfunc.FloatDivision(numSeq, 1450)+ 27.0/58.0
+    #scaleTMBox = myfunc.FloatDivision(numSeq, 1450)+ 27.0/58.0
+    scaleTMBox = 1
     for i in range(len(posTM)):
         (b, e) = posTM[i]
         s = "TM %d" % (i+1)
@@ -809,8 +810,13 @@ def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq): #{{{
         else:
             fs += 1
     g_params['font_size_TMbox'] = fs
+    g_params['font_size_scale'] = int(fs*0.9)
+    g_params['fntScaleBar'] = ImageFont.truetype(g_params['font_dir'] +
+            g_params['font'], g_params['font_size_scale'])
     g_params['fntTMbox'] = ImageFont.truetype(g_params['font_dir'] +
             g_params['font'], g_params['font_size_TMbox'])
+    g_params['fntTMbox_label'] = ImageFont.truetype(g_params['font_dir'] +
+            "DejaVuSerif", g_params['font_size_TMbox']+2)
     fnt = ImageFont.truetype(g_params['font_dir'] + g_params['font'], fs)
     #print "fs=",fs
     return fnt.getsize("a")
@@ -1764,7 +1770,7 @@ def DrawScale(length, posindexmap, xy0, font_size_alignment, #{{{
     x = x0 + widthAnnotation*fontWidth +annoSeqInterval* fontWidthTMbox
     y = y0
     fg = "black"
-    step = 10 * max(1,int(math.ceil(fontWidthScaleBar / float(fontWidth) *
+    step = 20 * max(1,int(math.ceil(fontWidthScaleBar / float(fontWidth) *
         len("%d"%length) /10 + 0.5)))
 #     print "step=", step
     i = step
@@ -2182,7 +2188,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     histoRegionHeight = max(50, int(round(lengthAlignment * fontHeight * 0.15)))
 
     dgprofileRegionWidth = lengthAlignment * fontWidth
-    dgprofileRegionHeight = max(30, 
+    dgprofileRegionHeight = max(40, 
             int(round(lengthAlignment * fontHeight * 0.05)))
 
     width = ((widthAnnotation + lengthAlignment) * (fontWidth) +
@@ -2190,6 +2196,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     height = (heightScaleBar*fontHeightScaleBar +  heightTMbox*fontHeightTMbox
             + numSeq*fontHeight + marginY*2 + g_params['isDrawSeprationLine'] *
             numSeprationLine * scaleSeprationLine * fontHeight +
+            (idxPDB!=-1)*3*heightTMbox*fontHeightTMbox+
+            (idxFinalPro!=-1)*3*heightTMbox*fontHeightTMbox+
             g_params['isDrawPerMDistribution'] *histoRegionHeight +
             g_params['isDrawDGprofile'] * dgprofileRegionHeight * numSeq
             )
@@ -2315,9 +2323,22 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                     (y, height))
 
 # Draw special topologies
+    isDrawSeqLable = True
     for idx in [idxPDB, idxFinalPro]:
         if idx != -1:
             y += 2* heightTMbox * fontHeightTMbox
+
+            if isDrawSeqLable:
+                xt = marginX + fontWidth*widthAnnotation*0
+                if idx == idxPDB:
+                    label = idList[idxPDB].lstrip('pdb_')
+                elif idx == idxFinalPro:
+                    label = "Final Topology"
+                ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
+                print (label, ss)
+                fg="#000000";# black
+                draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
+
             (posTM,typeTM) = GetTMType(topoSeqList[idx])
             if g_params['isAdvTopo']: # draw topology of the representative protein
                 TMname = []
@@ -4598,7 +4619,7 @@ def InitGlobalParameter():#{{{
     # font size for scale bar always set to 11 for easy reading
     g_params['font_size_scale'] = 11
 
-    g_params['heightTMbox'] = 2; # number of lines for the TM helices box
+    g_params['heightTMbox'] = 3; # number of lines for the TM helices box
     g_params['font_size_TMbox'] = 36; # size of the font for text written in TM
                                       # box
     g_params['font'] = "DejaVuSansMono.ttf"
@@ -4616,7 +4637,7 @@ def InitGlobalParameter():#{{{
     g_params['maxDistKR'] = 12
     g_params['isShrink'] = True
     g_params['aapath'] = ""
-    g_params['MAXIMAGESIZE'] = 50*1024*1024; #50M in pixels
+    g_params['MAXIMAGESIZE'] = 150*1024*1024; #50M in pixels
     g_params['marginX'] = 10; # marginX in pixels
     g_params['marginY'] = 20; # marginY in pixels
 
