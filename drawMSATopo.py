@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#
+# -*- coding: utf-8 -*-
 # Filename:  drawMSATopo.py
 #
 # Description:
@@ -664,6 +664,7 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
 
 # draw ytics and text
     fnt = ImageFont.truetype(g_params['font_dir']+g_params['font'], font_size)
+    fnt_label = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif", font_size)
     step = max(0.5, round((maxDG-minDG)/5))
     lengthtic = min(5, int(widthDrawRegion*0.01+0.5))
     ytic = 0.0
@@ -2396,6 +2397,19 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                         (x,y), seqID, dgprofileRegionWidth,
                         dgprofileRegionHeight, spaceToLeftBorder, isDrawSeqID,
                         draw)
+
+                # Add ylabel deltaG (kcal/mol)
+                fnt_label = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif", g_params['font_size_TMbox'])
+                ss =  u"\u0394G (kcal/mol)"
+                image2 = Image.new('RGBA', (len(ss)*fontWidthTMbox, fontHeightTMbox*2))
+                draw2 = ImageDraw.Draw(image2)
+                draw2.text((marginX, marginY), text=ss, font=fnt_label, fill="black")
+                image2 = image2.rotate(90, expand=1)
+                px, py = marginX+fontWidth*int(widthAnnotation*0.4), y-fontWidth*5
+                sx, sy = image2.size
+                newImage.paste(image2, (px, py))
+                del image2
+
                 y += dgprofileRegionHeight
 
 
