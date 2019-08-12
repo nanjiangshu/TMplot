@@ -157,9 +157,10 @@ Options:
   -shrinkrate FLOAT     Proportional shrink rate, (default: 1.0)
   -shrinkrateTM FLOAT   Proportional shrink rate for TM regions, (default: 2.0)
   -max-hold-loop INT    Maximal positions to keep for loop regions (default: 12)
+  -imagescale FLOAT     Overal scale of the image (default: 1.0)
   -debug                Print debug information, (default: no)
 
-Created 2011-09-05, updated 2017-06-30, Nanjiang Shu
+Created 2011-09-05, updated 2019-08-12, Nanjiang Shu
 
 Examples:
 # Draw topology alignment with aligned and unaligned regions, aligned regions
@@ -633,7 +634,7 @@ def MatchAlignedDGP(dgp, idxmap_aligne2seq, posindexmap, aligned_toposeq):#{{{
 
 def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{ 
         seqID, dgprofileRegionWidth, dgprofileRegionHeight, spaceToLeftBorder,
-        isDrawSeqID, draw):
+        isDrawSeqID, line_mode, draw):
     """Draw DG profile"""
     (x0, y0) = xy0
     paddingtop = int(dgprofileRegionHeight*0.05+0.5)
@@ -642,7 +643,7 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
     heightDrawRegion = dgprofileRegionHeight - paddingtop - paddingbottom
     widthDrawRegion = dgprofileRegionWidth
 
-    font_size = g_params['font_size_scale']
+    font_size = g_params['font_size_scalebar']
 
 # draw outline box
     x1 = x0
@@ -702,7 +703,7 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
         draw.text((x,y), text, font=fnt, fill='black')
 
 # draw profile
-    sizeSquare = 4
+    sizeSquare = int(g_params['image_scale']* 4+0.5)
     pointList= []
     papd = pointList.append
     for (idx, dg) in aligned_dgp:
@@ -714,10 +715,12 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
         x2 = x1+sizeSquare
         y2 = y1+sizeSquare
         box=[x1,y1,x2,y2]
-        #draw.ellipse(box, outline='red')
+        if line_mode == "dot":
+            draw.ellipse(box, outline='blue')
         papd((x1+sizeSquare/2, y1+sizeSquare/2))
-    for i in xrange(0,len(pointList)-1,1):
-        draw.line([pointList[i],pointList[i+1]],fill="blue", width=4)
+    if line_mode == "line":
+        for i in xrange(0,len(pointList)-1,1):
+            draw.line([pointList[i],pointList[i+1]],fill="blue", width=4)
 
 
 #}}}
@@ -812,9 +815,9 @@ def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq): #{{{
         else:
             fs += 1
     g_params['font_size_TMbox'] = fs
-    g_params['font_size_scale'] = int(fs*0.9)
+    g_params['font_size_scalebar'] = int(fs*0.9)
     g_params['fntScaleBar'] = ImageFont.truetype(g_params['font_dir'] +
-            g_params['font'], g_params['font_size_scale'])
+            g_params['font'], g_params['font_size_scalebar'])
     g_params['fntTMbox'] = ImageFont.truetype(g_params['font_dir'] +
             g_params['font'], g_params['font_size_TMbox'])
     g_params['fntTMbox_label'] = ImageFont.truetype(g_params['font_dir'] +
@@ -1699,6 +1702,9 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
     marginBottom = 0
     incolor="#F2EABD"
     outcolor="#CCFFFF"
+    outline_color = "black"
+    text_color = "black"
+    outline_width = int(2*g_params['image_scale']+0.5)
     cnt = 0
     last=x0
     for (b, e) in posTM:
@@ -1708,29 +1714,29 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
         y2 = y0 + heightTMbox*fontHeightTMbox + marginBottom
         box=[x1, y1 , x2, y2]
         if (typeTM[cnt]=="M"): # out to in
-            draw.rectangle(box, fill="grey", outline="black")
+            draw.rectangle(box, fill="grey", outline=outline_color)
             #draw.line([last,y2,x1,y2],incolor)
             draw.rectangle([last,y2-fontHeightTMbox/5,x1,y2],fill=incolor)
         elif (typeTM[cnt]=="W"): # in to out
-            draw.rectangle(box, fill="white", outline="black")
+            draw.rectangle(box, fill="white", outline=outline_color)
             #draw.line([last,y1,x1,y1],outcolor)
             draw.rectangle([last,y1,x1,y1+fontHeightTMbox/5],fill=outcolor)
         elif (typeTM[cnt]=="R"): # Reeentrant inside
             y1 = y0 - marginTop + heightTMbox*fontHeightTMbox/2
             y2 = y0 + heightTMbox*fontHeightTMbox + marginBottom
             box=[x1, y1 , x2, y2]
-            draw.rectangle(box, fill=incolor, outline="black")
+            draw.rectangle(box, fill=incolor, outline=outline_color)
             #draw.line([last,y2,x1,y2],incolor)
             draw.rectangle([last,y2-fontHeightTMbox/5,x1,y2],fill=incolor)
         elif (typeTM[cnt]=="r"): # Reentrant outside
             y1 = y0 - marginTop
             y2 = y0 + heightTMbox*fontHeightTMbox/2 + marginBottom
             box=[x1, y1 , x2, y2]
-            draw.rectangle(box, fill=outcolor, outline="black")
+            draw.rectangle(box, fill=outcolor, outline=outline_color)
             #draw.line([last,y1,x1,y1],outcolor)
             draw.rectangle([last,y1,x1,y1+fontHeightTMbox/5],fill=outcolor)
         else:
-            draw.rectangle(box, fill="violet", outline="black")
+            draw.rectangle(box, fill="violet", outline=outline_color)
         last=x2
         # draw text
         s = "TM %d"%(cnt+1)
@@ -1741,7 +1747,7 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
         textheight+=2
         x3 = int(round((x1+x2-textwidth)/2.0))
         y3 = int(round((y1+y2-textheight)/2.0))
-        draw.text((x3, y3), s, font=fntTMbox, fill="black")
+        draw.text((x3, y3), s, font=fntTMbox, fill=text_color)
         cnt += 1
     if (typeTM[cnt-1]=="R" or typeTM[cnt-1]=="W"):
         #draw.line([x2,y2,x0 + length*fontWidth,y2],incolor)
@@ -1765,7 +1771,7 @@ def DrawScale(length, posindexmap, xy0, font_size_alignment, #{{{
         length = len(posindexmap)
         isShrinked = True
 
-    font_size_scale = g_params['font_size_scale']
+    font_size_scalebar = g_params['font_size_scalebar']
     fntScaleBar = g_params['fntScaleBar']
     (fontWidthScaleBar, fontHeightScaleBar) = fntScaleBar.getsize("a")
     (x0,y0) = xy0
@@ -1919,6 +1925,7 @@ def GetSeqTag(anno):#{{{
 #}}}
 def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
         fontHeight, isDrawText, draw):
+    """Draw the topology MSA region with the PIL library"""
 # draw background
     annoSeqInterval = g_params['annoSeqInterval']
     widthAnnotation = g_params['widthAnnotation']
@@ -2091,6 +2098,7 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
 #             i=j
 #}}}
 def DrawMSATopo_PIL(inFile, g_params):#{{{
+    """Draw multiple alignment of topologies using the PIL library"""
     isDrawSeqLable = True
     logger = logging.getLogger(__name__)
     (idList, annotationList, topoSeqList) = myfunc.ReadFasta(inFile)
@@ -2106,14 +2114,14 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     for i in xrange(numSeq):
         seqIDIndexDict[idList[i]] = i
 
-    marginX = g_params['marginX']
-    marginY = g_params['marginY']
-    annoSeqInterval = g_params['annoSeqInterval']
-    widthAnnotation = g_params['widthAnnotation']
-    heightScaleBar = g_params['heightScaleBar']
-    heightTMbox = g_params['heightTMbox']
-    scaleSeprationLine = g_params['scaleSeprationLine']
-    font_size_scale = g_params['font_size_scale']
+    marginX = int(g_params['image_scale'] * g_params['marginX'])
+    marginY = int(g_params['image_scale'] * g_params['marginY'])
+    annoSeqInterval = int(g_params['image_scale']*g_params['annoSeqInterval'])
+    widthAnnotation = int(g_params['image_scale']*g_params['widthAnnotation'])
+    heightScaleBar  = int(g_params['image_scale']*g_params['heightScaleBar'])
+    heightTMbox = int(g_params['image_scale']*g_params['heightTMbox'])
+    scaleSeprationLine = int(g_params['image_scale']*g_params['scaleSeprationLine'])
+    font_size_scalebar = g_params['font_size_scalebar']
     fntScaleBar = g_params['fntScaleBar']
     (fontWidthScaleBar, fontHeightScaleBar) = fntScaleBar.getsize("a")
 
@@ -2176,13 +2184,12 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     tagList = []
     for seqAnno in annotationList:
         tagList.append(GetSeqTag(seqAnno))
-#     print tagList
     numSeprationLine = len(set(tagList))
 
     lengthAlignment = len(topoSeqList[0])
 
     fnt = ImageFont.truetype(g_params['font_dir'] + g_params['font'],
-            g_params['font_size'])
+            int(g_params['image_scale']*g_params['font_size']))
     (fontWidth, fontHeight) = fnt.getsize("a")
 #   print "font_size=",font_size, "width,height=", (fontWidth,fontHeight)
     (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq)
@@ -2288,7 +2295,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         tagCurrent = tagList[i]
         seqID = idList[i]
 
-        if i in [idxPDB, idxFinalPro]: #do not draw the topology of special proteins 
+        if i in [idxRepPro, idxPDB, idxFinalPro]: #do not draw the topology of special proteins 
             continue
 
         if tagCurrent != tagFormer:
@@ -2389,6 +2396,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 dgList = [x[1] for x in aligned_dgp]
                 minDG = min(dgList)
                 maxDG = max(dgList)
+                line_mode = "line"
                 x = (marginX + widthAnnotation * fontWidth +  annoSeqInterval *
                         fontWidthTMbox)
                 spaceToLeftBorder = (annoSeqInterval * fontWidthTMbox +
@@ -2396,7 +2404,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG,
                         (x,y), seqID, dgprofileRegionWidth,
                         dgprofileRegionHeight, spaceToLeftBorder, isDrawSeqID,
-                        draw)
+                        line_mode, draw)
 
                 # Add ylabel deltaG (kcal/mol)
                 fnt_label = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif", g_params['font_size_TMbox'])
@@ -2454,7 +2462,7 @@ def DrawMSATopo_SVG(inFile, g_params):#{{{
     heightScaleBar = g_params['heightScaleBar']
     heightTMbox = g_params['heightTMbox']
     scaleSeprationLine = g_params['scaleSeprationLine']
-    font_size_scale = g_params['font_size_scale']
+    font_size_scalebar = g_params['font_size_scalebar']
     fntScaleBar = g_params['fntScaleBar']
     (fontWidthScaleBar, fontHeightScaleBar) = fntScaleBar.getsize("a")
 
@@ -2555,7 +2563,7 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
     heightScaleBar = g_params['heightScaleBar']
     heightTMbox = g_params['heightTMbox']
     scaleSeprationLine = g_params['scaleSeprationLine']
-    font_size_scale = g_params['font_size_scale']
+    font_size_scalebar = g_params['font_size_scalebar']
     fntScaleBar = g_params['fntScaleBar']
     (fontWidthScaleBar, fontHeightScaleBar) = fntScaleBar.getsize("a")
 
@@ -3032,7 +3040,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
     heightScaleBar = g_params['heightScaleBar']
     heightTMbox = g_params['heightTMbox']
     scaleSeprationLine = g_params['scaleSeprationLine']
-    font_size_scale = g_params['font_size_scale']
+    font_size_scalebar = g_params['font_size_scalebar']
     fntScaleBar = g_params['fntScaleBar']
     (fontWidthScaleBar, fontHeightScaleBar) = fntScaleBar.getsize("a")
 
@@ -3658,7 +3666,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
     heightScaleBar = g_params['heightScaleBar']
     heightTMbox = g_params['heightTMbox']
     scaleSeprationLine = g_params['scaleSeprationLine']
-    font_size_scale = g_params['font_size_scale']
+    font_size_scalebar = g_params['font_size_scalebar']
     fntScaleBar = g_params['fntScaleBar']
     (fontWidthScaleBar, fontHeightScaleBar) = fntScaleBar.getsize("a")
 
@@ -4352,7 +4360,7 @@ def DrawMSATopo_PYX(inFile, g_params):#{{{
     heightScaleBar = g_params['heightScaleBar']
     heightTMbox = g_params['heightTMbox']
     scaleSeprationLine = g_params['scaleSeprationLine']
-    font_size_scale = g_params['font_size_scale']
+    font_size_scalebar = g_params['font_size_scalebar']
     fntScaleBar = g_params['fntScaleBar']
     (fontWidthScaleBar, fontHeightScaleBar) = fntScaleBar.getsize("a")
 
@@ -4523,6 +4531,8 @@ def main(g_params):#{{{
                 g_params['shrinkrate'], i = myfunc.my_getopt_float(argv, i)
             elif (argv[i] in ["-shrinkrateTM", "--shrinkrateTM"]):
                 g_params['shrinkrate_TM'], i = myfunc.my_getopt_float(argv, i)
+            elif (argv[i] in ["-imagescale", "--imagescale"]):
+                g_params['image_scale'], i = myfunc.my_getopt_float(argv, i)
             elif (argv[i] in ["-max-hold-loop", "--max-hold-loop"]):
                 g_params['max_hold_loop'], i = myfunc.my_getopt_int(argv, i)
             elif (argv[i] in ["-m-shrink", "--m-shrink"]):
@@ -4596,7 +4606,7 @@ def main(g_params):#{{{
         print >> sys.stderr,"Error! Input file not set."
 
     g_params['fntScaleBar'] = ImageFont.truetype(g_params['font_dir'] +
-            g_params['font'], g_params['font_size_scale'])
+            g_params['font'], g_params['font_size_scalebar'])
     g_params['fntTMbox'] = ImageFont.truetype(g_params['font_dir'] +
         g_params['font'], g_params['font_size_TMbox'])
 
@@ -4633,11 +4643,12 @@ def InitGlobalParameter():#{{{
     g_params['isQuiet'] = False
     g_params['outFormat'] = "png"
     g_params['mode'] = "P"
+    g_params['image_scale'] = 1.0   #overal image scale, set it to a higher value to increase the DPI
     g_params['font_dir'] = "%s/fonts/truetype/ttf-dejavu/"%(rundir)
     g_params['font_size'] = 9
 
     # font size for scale bar always set to 11 for easy reading
-    g_params['font_size_scale'] = 11
+    g_params['font_size_scalebar'] = 11
 
     g_params['heightTMbox'] = 3; # number of lines for the TM helices box
     g_params['font_size_TMbox'] = 36; # size of the font for text written in TM
