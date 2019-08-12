@@ -644,7 +644,8 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
     widthDrawRegion = dgprofileRegionWidth
 
     font_size = g_params['font_size_scalebar']
-    outline_width = int(2*g_params['image_scale']+0.5)
+    outline_width = max(1, int(2*g_params['image_scale']+0.5))
+    line_width = max(1, int(4*g_params['image_scale']+0.5))
 
 # draw outline box
     x1 = x0
@@ -721,7 +722,7 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
         papd((x1+sizeSquare/2, y1+sizeSquare/2))
     if line_mode == "line":
         for i in xrange(0,len(pointList)-1,1):
-            draw.line([pointList[i],pointList[i+1]],fill="blue", width=4)
+            draw.line([pointList[i],pointList[i+1]],fill="blue", width=line_width)
 
 
 #}}}
@@ -816,13 +817,13 @@ def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq): #{{{
         else:
             fs += 1
     g_params['font_size_TMbox'] = fs
-    g_params['font_size_scalebar'] = int(fs*0.9)
+    g_params['font_size_scalebar'] = int(fs*0.9+0.5)
     g_params['fntScaleBar'] = ImageFont.truetype(g_params['font_dir'] +
             g_params['font'], g_params['font_size_scalebar'])
     g_params['fntTMbox'] = ImageFont.truetype(g_params['font_dir'] +
             g_params['font'], g_params['font_size_TMbox'])
     g_params['fntTMbox_label'] = ImageFont.truetype(g_params['font_dir'] +
-            "DejaVuSerif", g_params['font_size_TMbox']+2)
+            "DejaVuSerif", g_params['font_size_TMbox']+1)
     fnt = ImageFont.truetype(g_params['font_dir'] + g_params['font'], fs)
     #print "fs=",fs
     return fnt.getsize("a")
@@ -2117,11 +2118,11 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 
     marginX = int(g_params['image_scale'] * g_params['marginX']+0.5)
     marginY = int(g_params['image_scale'] * g_params['marginY']+0.5)
-    annoSeqInterval = int(g_params['image_scale']*g_params['annoSeqInterval']+0.5)
-    widthAnnotation = int(g_params['image_scale']*g_params['widthAnnotation']+0.5)
+    annoSeqInterval = g_params['annoSeqInterval']
+    widthAnnotation = g_params['widthAnnotation']
     heightScaleBar  = int(g_params['image_scale']*g_params['heightScaleBar']+0.5)
-    heightTMbox = int(g_params['image_scale']*g_params['heightTMbox']+0.5)
-    scaleSeprationLine = int(g_params['image_scale']*g_params['scaleSeprationLine']+0.5)
+    heightTMbox = g_params['heightTMbox']
+    scaleSeprationLine = g_params['scaleSeprationLine']
     font_size_scalebar = g_params['font_size_scalebar']
     fntScaleBar = g_params['fntScaleBar']
     (fontWidthScaleBar, fontHeightScaleBar) = fntScaleBar.getsize("a")
@@ -2205,10 +2206,11 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     height = (heightScaleBar*fontHeightScaleBar +  heightTMbox*fontHeightTMbox
             + numSeq*fontHeight + marginY*2 + g_params['isDrawSeprationLine'] *
             numSeprationLine * scaleSeprationLine * fontHeight +
-            (idxPDB!=-1)*(2*heightTMbox*fontHeightTMbox)+
-            (idxFinalPro!=-1)*(2*heightTMbox*fontHeightTMbox+sectionSepSpace*fontHeightTMbox)+
-            g_params['isDrawPerMDistribution'] *(histoRegionHeight+sectionSepSpace*fontHeightTMbox)+
-            g_params['isDrawDGprofile'] * (dgprofileRegionHeight)
+            (idxPDB!=-1 or idxFinalPro!=-1)*(heightTMbox*fontHeightTMbox+sectionSepSpace*fontHeightScaleBar)+
+            (idxPDB!=-1)*(int(1.5*heightTMbox*fontHeightTMbox+0.5))+
+            (idxFinalPro!=-1)*(int(1.5*heightTMbox*fontHeightTMbox+0.5))+
+            g_params['isDrawDGprofile'] *(dgprofileRegionHeight+sectionSepSpace*fontHeightScaleBar)+
+            g_params['isDrawPerMDistribution'] * (histoRegionHeight)
             )
 
     isDrawText = g_params['isDrawText']
@@ -2239,13 +2241,14 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 
             width = ((widthAnnotation + lengthAlignment) * (fontWidth) +
                     annoSeqInterval*fontWidthTMbox +  marginX * 2)
-            height = (heightScaleBar*fontHeightScaleBar +  
-                    heightTMbox*fontHeightTMbox + numSeq*fontHeight + marginY*2 +
-                    g_params['isDrawSeprationLine'] * numSeprationLine * scaleSeprationLine * fontHeight +
-                    (idxPDB!=-1)*(2*heightTMbox*fontHeightTMbox)+
-                    (idxFinalPro!=-1)*(2*heightTMbox*fontHeightTMbox+sectionSepSpace*fontHeightTMbox)+
-                    g_params['isDrawPerMDistribution'] *(histoRegionHeight +sectionSepSpace*fontHeightTMbox)+
-                    g_params['isDrawDGprofile'] * (dgprofileRegionHeight)
+            height = (heightScaleBar*fontHeightScaleBar +  heightTMbox*fontHeightTMbox
+                    + numSeq*fontHeight + marginY*2 + g_params['isDrawSeprationLine'] *
+                    numSeprationLine * scaleSeprationLine * fontHeight +
+                    (idxPDB!=-1 or idxFinalPro!=-1)*(heightTMbox*fontHeightTMbox+sectionSepSpace*fontHeightScaleBar)+
+                    (idxPDB!=-1)*(int(1.5*heightTMbox*fontHeightTMbox+0.5))+
+                    (idxFinalPro!=-1)*(int(1.5*heightTMbox*fontHeightTMbox+0.5))+
+                    g_params['isDrawDGprofile'] *(dgprofileRegionHeight+sectionSepSpace*fontHeightScaleBar)+
+                    g_params['isDrawPerMDistribution'] * (histoRegionHeight)
                     )
             if font_size < 3:
                 isDrawText = False
@@ -2350,29 +2353,29 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                     (y, height))
 
 # Draw special topologies
-    for idx in [idxPDB, idxFinalPro]:
-        if idx != -1:
-            y += 1* heightTMbox * fontHeightTMbox
-            #y += sectionSepSpace*fontHeightScaleBar
+    if max([idxPDB, idxFinalPro]) > -1:
+        y += heightTMbox*fontHeightTMbox
+        for idx in [idxPDB, idxFinalPro]:
+            if idx != -1:
+                if isDrawSeqLable:
+                    xt = marginX + fontWidth*widthAnnotation*0
+                    if idx == idxPDB:
+                        label = idList[idxPDB].lstrip('pdb_')
+                    elif idx == idxFinalPro:
+                        label = "Final Topology"
+                    ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
+                    fg="#000000";# black
+                    draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
 
-            if isDrawSeqLable:
-                xt = marginX + fontWidth*widthAnnotation*0
-                if idx == idxPDB:
-                    label = idList[idxPDB].lstrip('pdb_')
-                elif idx == idxFinalPro:
-                    label = "Final Topology"
-                ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
-                fg="#000000";# black
-                draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
+                (posTM,typeTM) = GetTMType(topoSeqList[idx])
+                if g_params['isAdvTopo']: # draw topology of the representative protein
+                    TMname = []
+                    DrawTMOfConsensus2(posTM, typeTM, TMname, (x,y), fontWidth,
+                            fontHeight, draw, lengthAlignment)
 
-            (posTM,typeTM) = GetTMType(topoSeqList[idx])
-            if g_params['isAdvTopo']: # draw topology of the representative protein
-                TMname = []
-                DrawTMOfConsensus2(posTM, typeTM, TMname, (x,y), fontWidth,
-                        fontHeight, draw,lengthAlignment)
+                    y += int(heightTMbox*fontHeightTMbox*1.5+0.5)
 
-    y += heightTMbox * fontHeightTMbox
-    y += sectionSepSpace*fontHeightScaleBar
+        y += sectionSepSpace*fontHeightScaleBar
 # Draw DGprofile
     if g_params['isDrawDGprofile']:
         isDrawSeqID = False
@@ -2421,7 +2424,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 # Add ylabel deltaG (kcal/mol)
                 fnt_label = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif-Bold", g_params['font_size_TMbox'])
                 ss =  u"\u0394G (kcal/mol)"
-                image2 = Image.new('RGBA', ((len(ss)+1)*fontWidthTMbox, fontHeightTMbox*2))
+                image2 = Image.new('RGBA', ((len(ss)+1)*fontWidthTMbox, fontHeightTMbox*2+5))
                 draw2 = ImageDraw.Draw(image2)
                 draw2.text((marginX, marginY), text=ss, font=fnt_label, fill="black")
                 image2 = image2.rotate(90, expand=1)
@@ -4682,7 +4685,7 @@ def InitGlobalParameter():#{{{
     g_params['aapath'] = ""
     g_params['MAXIMAGESIZE'] = 150*1024*1024; #50M in pixels
     g_params['marginX'] = 20; # marginX in pixels
-    g_params['marginY'] = 40; # marginY in pixels
+    g_params['marginY'] = 50; # marginY in pixels
 
     # number of columns for the annotation text
     g_params['widthAnnotation'] = 30
