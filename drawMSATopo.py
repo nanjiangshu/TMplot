@@ -2099,7 +2099,7 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
 #             x+=(fontWidth*lengthSegment)
 #             i=j
 #}}}
-def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace):# {{{
+def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRation):# {{{
     """
     Calculate image parameters for the PIL method
     """
@@ -2108,15 +2108,17 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, posT
     (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq)
 
     histoRegionWidth = lengthAlignment * fontWidth
-    histoRegionHeight = max(50, int(round(lengthAlignment * fontHeight * 0.15)))
+    histoRegionHeight = max(50, int(round(lengthAlignment*fontHeight*widthAdjustRation* 0.15)))
 
     dgprofileRegionWidth = lengthAlignment * fontWidth
-    dgprofileRegionHeight = max(30, int(round(lengthAlignment * fontHeight * 0.05)))
+    dgprofileRegionHeight = max(30, int(round(lengthAlignment * fontHeight * widthAdjustRation*0.05)))
 
 
     width = ((g_params['widthAnnotation'] + lengthAlignment) * (fontWidth) +
             g_params['annoSeqInterval']*fontWidthTMbox + g_params['marginX'] * 2)
-    height = (g_params['heightScaleBar']*fontHeightScaleBar +  g_params['heightTMbox']*fontHeightTMbox
+    height = ( g_params['heightTMbox']*fontHeightTMbox +
+             int(g_params['heightScaleBar']*fontHeightScaleBar*widthAdjustRation*2+0.5)+
+            sectionSepSpace*fontHeightScaleBar +
             + numSeq*fontHeight + g_params['marginY']*2 + g_params['isDrawSeprationLine'] *
             numSeprationLine * g_params['scaleSeprationLine']* fontHeight +
             (idxPDB!=-1 or idxFinalPro!=-1)*(g_params['heightTMbox']*fontHeightTMbox+sectionSepSpace*fontHeightScaleBar)+
@@ -2132,6 +2134,9 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     isDrawSeqLable = True
     logger = logging.getLogger(__name__)
     (idList, annotationList, topoSeqList) = myfunc.ReadFasta(inFile)
+
+    H2W_ratio = 4/3.0
+    H2W_ratio = 4/2.0
 
 
     topoSeqList = lcmp.RemoveUnnecessaryGap(topoSeqList)
@@ -2210,7 +2215,12 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     fnt = ImageFont.truetype(g_params['font_dir'] + g_params['font'],
             int(g_params['image_scale']*g_params['font_size']))
     (fontWidth, fontHeight) = fnt.getsize("a")
-    (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace)
+    (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, 1.0)
+
+    if (height/float(width)>H2W_ratio):
+        widthAdjustRation = height/float(width)/H2W_ratio
+        fontWidth = int(fontWidth * H2W_ratio + 0.5)
+        (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRation)
 
     isDrawText = g_params['isDrawText']
     font_size = g_params['font_size']
@@ -2227,13 +2237,19 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 if fontHeight > 1:
                     fontHeight -= 1
 
-            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace)
+            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, 1.0)
 
             if font_size < 3:
                 isDrawText = False
             if fontWidth < 2 and fontHeight < 2:
                 break
         logger.debug("height (%d) *width (%d) = %d"%(height, width, height*width))
+
+        if (height/float(width)>H2W_ratio):
+            widthAdjustRation = height/float(width)/H2W_ratio
+            fontWidth = int(fontWidth * H2W_ratio + 0.5)
+            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRation)
+
         if height*width > g_params['MAXIMAGESIZE']:
             msg = "%s: (fontWidth, fontHeight) have been reduced to (%d, %d)"\
                   ", but the image size is still too big (%dM)"%(
@@ -2276,7 +2292,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     DrawScale(lengthAlignment, posindexmap, (x,y), font_size, fontWidth,
             fontHeight, draw)
 
-    y += g_params['heightScaleBar']*fontHeightScaleBar
+    y += int(g_params['heightScaleBar']*fontHeightScaleBar*widthAdjustRation*2+0.5)
     y += sectionSepSpace*fontHeightScaleBar
 
     maxDistKR = g_params['maxDistKR'] 
