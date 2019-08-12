@@ -1714,29 +1714,29 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
         y2 = y0 + heightTMbox*fontHeightTMbox + marginBottom
         box=[x1, y1 , x2, y2]
         if (typeTM[cnt]=="M"): # out to in
-            draw.rectangle(box, fill="grey", outline=outline_color)
+            draw.rectangle(box, fill="grey", outline=outline_color, width=outline_width)
             #draw.line([last,y2,x1,y2],incolor)
             draw.rectangle([last,y2-fontHeightTMbox/5,x1,y2],fill=incolor)
         elif (typeTM[cnt]=="W"): # in to out
-            draw.rectangle(box, fill="white", outline=outline_color)
+            draw.rectangle(box, fill="white", outline=outline_color, width=outline_width)
             #draw.line([last,y1,x1,y1],outcolor)
             draw.rectangle([last,y1,x1,y1+fontHeightTMbox/5],fill=outcolor)
         elif (typeTM[cnt]=="R"): # Reeentrant inside
             y1 = y0 - marginTop + heightTMbox*fontHeightTMbox/2
             y2 = y0 + heightTMbox*fontHeightTMbox + marginBottom
             box=[x1, y1 , x2, y2]
-            draw.rectangle(box, fill=incolor, outline=outline_color)
+            draw.rectangle(box, fill=incolor, outline=outline_color, width=outline_width)
             #draw.line([last,y2,x1,y2],incolor)
             draw.rectangle([last,y2-fontHeightTMbox/5,x1,y2],fill=incolor)
         elif (typeTM[cnt]=="r"): # Reentrant outside
             y1 = y0 - marginTop
             y2 = y0 + heightTMbox*fontHeightTMbox/2 + marginBottom
             box=[x1, y1 , x2, y2]
-            draw.rectangle(box, fill=outcolor, outline=outline_color)
+            draw.rectangle(box, fill=outcolor, outline=outline_color, width=outline_width)
             #draw.line([last,y1,x1,y1],outcolor)
             draw.rectangle([last,y1,x1,y1+fontHeightTMbox/5],fill=outcolor)
         else:
-            draw.rectangle(box, fill="violet", outline=outline_color)
+            draw.rectangle(box, fill="violet", outline=outline_color, width=outline_width)
         last=x2
         # draw text
         s = "TM %d"%(cnt+1)

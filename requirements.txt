@@ -11,5 +11,5 @@ ete3
 biopython
 matplotlib
 colour
-Pillow
+Pillow==6.1.0
 click
