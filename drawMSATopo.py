@@ -687,7 +687,7 @@ def AutoSizeFontHistogram(ylabel, yticList, widthBox, heigthBox, #{{{
     return fs
     #}}}
 
-def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq): #{{{
+def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq, specialProIdxList, posTMList, TMnameList ): #{{{
     """Autosize the font for text written in TM box so that it fits the
        narrowest box """
 # Get the maximum allowd fontWidth for each box
@@ -696,33 +696,45 @@ def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq): #{{{
     # scale is roughly 50 seqs -> 0.5, 1500 seqs -> 1.5
     #scaleTMBox = myfunc.FloatDivision(numSeq, 1450)+ 27.0/58.0
     scaleTMBox = 1
-    for i in range(len(posTM)):
-        (b, e) = posTM[i]
-        s = "TM %d" % (i+1)
-        boxWidthInPixel = fontWidthAlign * (e-b)
-
-        pixelPerChar = int(boxWidthInPixel / float(len(s)) *scaleTMBox)
-
-        maxAllowedFontWidthList.append(pixelPerChar)
-    if len(maxAllowedFontWidthList) > 0:
-        maxAllowedFontWidth = min(maxAllowedFontWidthList) - margin
-    else:
-        maxAllowedFontWidth = 10
 
     fs = 60
+    itr = 0
+    MAX_ITR = 50
     while 1:
         if fs < 2:
             break
-        fnt1 = ImageFont.truetype(g_params['font_dir'] + g_params['font'], fs)
-        (fw1, fh1) = fnt1.getsize("M")
-        fnt2 = ImageFont.truetype(g_params['font_dir'] + g_params['font'], fs+1)
-        (fw2, fh2) = fnt2.getsize("M")
-        if maxAllowedFontWidth >= fw1 and maxAllowedFontWidth < fw2:
-            break
-        elif maxAllowedFontWidth < fw1:
+        fnt = ImageFont.truetype(g_params['font_dir'] + g_params['font'], fs)
+        maxMargin = -9999999
+        minMargin = 9999999
+        for idx in specialProIdxList: # check all topologies with TMbox
+            posTM = posTMList[idx]
+            TMname = TMnameList[idx]
+            for j in range(len(posTM)):
+                (b, e) = posTM[j]
+                try:
+                    ss = TMname[j]
+                except IndexError:
+                    ss = "TM %d"%(j+1)
+                boxWidth = fontWidthAlign * (e-b)
+                textWidth, textHeight = fnt.getsize(ss)
+                margin = boxWidth - textWidth
+                #print ("margin, boxwidth, textwidth)=", (margin, boxWidth, textWidth))
+                if margin > maxMargin:
+                    maxMargin = margin
+                if margin < minMargin:
+                    minMargin = margin
+        print ("itr=", itr, "fs=",fs, "(minMargin,maxMargin) = ",(minMargin, maxMargin))
+
+        if minMargin < fontHeightAlign/2:
             fs -= 1
-        else:
+        elif minMargin > fontHeightAlign/2:
             fs += 1
+        else:
+            break
+        itr += 1
+        if itr > MAX_ITR:
+            break
+
     g_params['font_size_TMbox'] = fs
     g_params['font_size_scalebar'] = int(fs*0.9+0.5)
     g_params['fntScaleBar'] = ImageFont.truetype(g_params['font_dir'] +
@@ -1763,10 +1775,10 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
             draw.rectangle(box, fill="violet", outline=outline_color, width=outline_width)
         last=x2
         # draw text
-        s = "TM %d"%(cnt+1)
-        #if g_params['isTMname']:
-        if len(TMname) >= len(posTM):
-            s=TMname[cnt]
+        try:
+            s = TMname[cnt]
+        except IndexError:
+            s = "TM %d"%(cnt+1)
         (textwidth, textheight) = fntTMbox.getsize(s)
         textheight+=2
         x3 = int(round((x1+x2-textwidth)/2.0))
@@ -2121,12 +2133,12 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
 #             x+=(fontWidth*lengthSegment)
 #             i=j
 #}}}
-def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRatio):# {{{
+def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace,specialProIdxList, posTMList, TMnameList,  widthAdjustRatio):# {{{
     """
     Calculate image parameters for the PIL method
     """
     (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
-    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq)
+    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq, specialProIdxList, posTMList, TMnameList)
 
     histoRegionWidth = lengthAlignment * fontWidth
     histoRegionHeight = max(50, int(round(lengthAlignment*fontHeight*widthAdjustRatio* 0.1)), int(round(numSeq*fontHeight* 0.1)))
@@ -2221,6 +2233,24 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         if idList[i].find("pdb_") != -1:
             idxPDB = i
 
+    specialProIdxList = [idxRepPro, idxPDB, idxFinalPro]
+    posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
+    TMnameList = []
+    for i in xrange(numSeq):
+        if i == idxRepPro:
+            TMname = []
+            if len(g_params['TMname']) > 0:
+                TMname = g_params['TMname']
+            else:
+                TMname = myfunc.GetTMnameFromAnnotation(annotationList[idxRepPro])
+            TMnameList.append(TMname)
+        elif i in [idxPDB, idxFinalPro]:
+            TMname = myfunc.GetTMnameFromAnnotation(annotationList[i])
+            TMnameList.append(TMname)
+        else:
+            TMnameList.append([])
+
+
     (posTM_rep,typeTM_rep) = GetTMType(topoSeqList[idxRepPro])
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
     widthAnnotation = g_params['widthAnnotation']
@@ -2234,13 +2264,13 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     fnt = ImageFont.truetype(g_params['font_dir'] + g_params['font'],
             int(g_params['image_scale']*g_params['font_size']))
     (fontWidth, fontHeight) = fnt.getsize("a")
-    (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, 1.0)
+    (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, specialProIdxList, posTMList, TMnameList, 1.0)
 
     if (H2W_ratio != None and height/float(width)!=H2W_ratio):
         widthAdjustRatio = height/float(width)/H2W_ratio
         fontWidth = int(fontWidth * widthAdjustRatio + 0.5)
         g_params['marginY'] += int(widthAdjustRatio*10+0.5)
-        (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRatio)
+        (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace,specialProIdxList, posTMList, TMnameList,  widthAdjustRatio)
 
     isDrawText = g_params['isDrawText']
     font_size = g_params['font_size']
@@ -2257,7 +2287,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 if fontHeight > 1:
                     fontHeight -= 1
 
-            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, 1.0)
+            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace,specialProIdxList, posTMList, TMnameList,  1.0)
 
             if font_size < 3:
                 isDrawText = False
@@ -2269,7 +2299,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             widthAdjustRatio = height/float(width)/H2W_ratio
             fontWidth = int(fontWidth * widthAdjustRatio + 0.5)
             g_params['marginY'] += int(widthAdjustRatio*10+0.5)
-            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRatio)
+            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace,specialProIdxList, posTMList, TMnameList,  widthAdjustRatio)
 
         if height*width > g_params['MAXIMAGESIZE']:
             msg = "%s: (fontWidth, fontHeight) have been reduced to (%d, %d)"\
@@ -2294,7 +2324,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     y = g_params['marginY']
 
 # Draw TM helices of the consensus.
-    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq)
+    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq, specialProIdxList, posTMList, TMnameList )
     if g_params['isAdvTopo']: # draw topology of the representative protein
         if isDrawSeqLable:
             xt = g_params['marginX'] + fontWidth*g_params['widthAnnotation']*0
@@ -2302,7 +2332,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
             fg="#000000";# black
             draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
-        DrawTMOfConsensus2(posTM_rep, typeTM_rep, g_params['TMname'], (x,y),
+
+        DrawTMOfConsensus2(posTM_rep, typeTM_rep, TMnameList[idxRepPro], (x,y),
                 fontWidth, fontHeight, draw,lengthAlignment)
     else:
         DrawTMOfConsensus(posTM_rep, (x,y), fontWidth, fontHeight, draw)
@@ -2385,7 +2416,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 
                 (posTM,typeTM) = GetTMType(topoSeqList[idx])
                 if g_params['isAdvTopo']: # draw topology of the representative protein
-                    TMname = []
+                    TMname = myfunc.GetTMnameFromAnnotation(annotationList[idx])
                     DrawTMOfConsensus2(posTM, typeTM, TMname, (x,y), fontWidth,
                             fontHeight, draw, lengthAlignment)
 

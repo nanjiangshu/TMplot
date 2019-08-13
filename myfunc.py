@@ -1401,6 +1401,21 @@ def GetNumSeqInClusterFromAnnotation(line):#{{{
             return None
     return None
 #}}}
+def GetTMnameFromAnnotation(line):#{{{
+    if line:
+        beg = line.find("TMname:")
+        if beg == -1:
+            return []
+        else:
+            end = line[beg:].find('|')
+            if end == -1:
+                end = len(line)
+            else:
+                end = end+beg
+            ss = line[beg:end].lstrip("TMname:").strip()
+            TMname = ss.split(';')
+            return TMname
+#}}}
 def ReadSingleFasta(inFile):#{{{
 # return seqID, annotation, aaSeq
 # the leading '>' of the annotation is removed
