@@ -158,6 +158,7 @@ Options:
   -shrinkrateTM FLOAT   Proportional shrink rate for TM regions, (default: 2.0)
   -max-hold-loop INT    Maximal positions to keep for loop regions (default: 12)
   -imagescale FLOAT     Overal scale of the image (default: 1.0)
+  -h2wratio FLOAT       Set the height to width ratio (default: None). If not set, it use the original ratio
   -debug                Print debug information, (default: no)
 
 Created 2011-09-05, updated 2019-08-12, Nanjiang Shu
@@ -632,100 +633,6 @@ def MatchAlignedDGP(dgp, idxmap_aligne2seq, posindexmap, aligned_toposeq):#{{{
     return aligned_dgp
 #}}}
 
-def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{ 
-        seqID, dgprofileRegionWidth, dgprofileRegionHeight, spaceToLeftBorder,
-        isDrawSeqID, line_mode, draw):
-    """Draw DG profile"""
-    (x0, y0) = xy0
-    paddingtop = int(dgprofileRegionHeight*0.05+0.5)
-    paddingbottom = int(dgprofileRegionHeight*0.05+0.5)
-
-    heightDrawRegion = dgprofileRegionHeight - paddingtop - paddingbottom
-    widthDrawRegion = dgprofileRegionWidth
-
-    font_size = g_params['font_size_scalebar']
-    outline_width = max(1, int(2*g_params['image_scale']+0.5))
-    line_width = max(1, int(4*g_params['image_scale']+0.5))
-
-# draw outline box
-    x1 = x0
-    y1 = y0 + paddingtop
-    x2 = x1 + dgprofileRegionWidth
-    y2 = y0 + dgprofileRegionHeight - paddingbottom
-    box = [x1,y1,x2,y2]
-    draw.rectangle(box, outline='black', width=outline_width)
-    yMiddle = int(round((y1 + y2) / 2.0))
-
-# draw x, axis
-    x1 = x0
-    y1 = y0 + paddingtop + int(round(heightDrawRegion*maxDG/(maxDG-minDG)))
-    x2 = x1 + widthDrawRegion
-    y2 = y1
-    draw.line([x1, y1, x2, y2],fill="grey")
-
-    yZero = y1
-
-# draw ytics and text
-    fnt = ImageFont.truetype(g_params['font_dir']+g_params['font'], font_size)
-    fnt_label = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif", font_size)
-    step = max(0.5, round((maxDG-minDG)/5))
-    lengthtic = min(5, int(widthDrawRegion*0.01+0.5))
-    ytic = 0.0
-    while ytic <= maxDG:
-        x1 = x0 - lengthtic
-        y1 = yZero - int(round(heightDrawRegion*ytic/(maxDG-minDG))) 
-        x2 = x1 + lengthtic
-        y2 = y1
-        draw.line([x1, y1, x2, y2],fill="black")
-        text = "%.1f"%ytic
-        (textWidth,textHeight) = fnt.getsize(text)
-        draw.text((x1-textWidth-lengthtic,y1-textHeight/2), text, font=fnt,
-                fill='black')
-        ytic += step
-
-    ytic = -step
-    while ytic > minDG:
-        x1 = x0 - lengthtic
-        y1 = yZero - int(round(heightDrawRegion*ytic/(maxDG-minDG))) 
-        x2 = x1 + lengthtic
-        y2 = y1
-        draw.line([x1, y1, x2, y2],fill="black")
-        text = "%.1f"%ytic
-        (textWidth,textHeight) = fnt.getsize(text)
-        draw.text((x1-textWidth-lengthtic,y1-textHeight/2), text, font=fnt,
-                fill='black')
-        ytic -= step
-
-# draw seqID 
-    if isDrawSeqID:
-        text = seqID
-        x = 1
-        (textWidth,textHeight) = fnt.getsize(text)
-        y = yMiddle - textHeight
-        draw.text((x,y), text, font=fnt, fill='black')
-
-# draw profile
-    sizeSquare = int(g_params['image_scale']* 4+0.5)
-    pointList= []
-    papd = pointList.append
-    for (idx, dg) in aligned_dgp:
-        #print (idx, dg)
-        h = int(round(dg/(maxDG-minDG)*heightDrawRegion))
-        x1 = (x0 + int(round(widthDrawRegion*float(idx)/lengthAlignment)) -
-                sizeSquare/2)
-        y1 = yZero - h - sizeSquare/2
-        x2 = x1+sizeSquare
-        y2 = y1+sizeSquare
-        box=[x1,y1,x2,y2]
-        if line_mode == "dot":
-            draw.ellipse(box, outline='blue')
-        papd((x1+sizeSquare/2, y1+sizeSquare/2))
-    if line_mode == "line":
-        for i in xrange(0,len(pointList)-1,1):
-            draw.line([pointList[i],pointList[i+1]],fill="blue", width=line_width)
-
-
-#}}}
 
 def GetFontDimension(font_size):#{{{
     if font_size == 3:
@@ -1594,6 +1501,26 @@ def ShrinkMSA_Method_2(topoSeqList, aaSeqList=[], posTMList=[],#{{{
     return (idxmap_align2shrink, idxmap_shrink2align)
 #}}}
 
+def RunDGScan(aaseq, seqID):# {{{
+    """
+    Calculate the DG profile by using the dgscanProg
+    return dgp
+    """
+    dgp = None
+    tmpaaseqfile = tempfile.mktemp()
+    tmpdgpfile = tempfile.mktemp()
+    tmpfp = open(tmpaaseqfile, 'w')
+    tmpfp.write(">%s\n"%seqID)
+    tmpfp.write("%s\n"%aaseq)
+    tmpfp.close()
+    os.system("%s %s -lmin 21 -lmax 21 -o %s"%(g_params['dgscanProg'],
+        tmpaaseqfile, tmpdgpfile))
+    dgpDict = ReadInDGProfile(tmpdgpfile)
+    os.system("rm -f %s %s" %(tmpaaseqfile, tmpdgpfile))
+    if dgpDict and seqID in dgpDict:
+        dgp = dgpDict[seqID]
+    return dgp
+# }}}
 
 def DrawTMOfConsensus(posTM, xy0, fontWidth, fontHeight, draw): #{{{
     """Draw TM box"""
@@ -1685,7 +1612,102 @@ def GetTMType(topo):#{{{
         else:
             break
     return posTM,typeTM
+#}}}
 
+def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{ 
+        seqID, dgprofileRegionWidth, dgprofileRegionHeight, spaceToLeftBorder,
+        isDrawSeqID, line_mode, draw):
+    """Draw DG profile"""
+    (x0, y0) = xy0
+    paddingtop = int(dgprofileRegionHeight*0.05+0.5)
+    paddingbottom = int(dgprofileRegionHeight*0.05+0.5)
+
+    heightDrawRegion = dgprofileRegionHeight - paddingtop - paddingbottom
+    widthDrawRegion = dgprofileRegionWidth
+
+    font_size = g_params['font_size_scalebar']
+    outline_width = max(1, int(4*g_params['image_scale']+0.5))
+    line_width = max(1, int(6*g_params['image_scale']+0.5))
+
+# draw outline box
+    x1 = x0
+    y1 = y0 + paddingtop
+    x2 = x1 + dgprofileRegionWidth
+    y2 = y0 + dgprofileRegionHeight - paddingbottom
+    box = [x1,y1,x2,y2]
+    draw.rectangle(box, outline='black', width=outline_width)
+    yMiddle = int(round((y1 + y2) / 2.0))
+
+# draw x, axis
+    x1 = x0
+    y1 = y0 + paddingtop + int(round(heightDrawRegion*maxDG/(maxDG-minDG)))
+    x2 = x1 + widthDrawRegion
+    y2 = y1
+    draw.line([x1, y1, x2, y2],fill="grey")
+
+    yZero = y1
+
+# draw ytics and text
+    fnt = ImageFont.truetype(g_params['font_dir']+g_params['font'], font_size)
+    fnt_label = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif", font_size)
+    step = max(0.5, round((maxDG-minDG)/5))
+    lengthtic = min(5, int(widthDrawRegion*0.01+0.5))
+    ytic = 0.0
+    while ytic <= maxDG:
+        x1 = x0 - lengthtic
+        y1 = yZero - int(round(heightDrawRegion*ytic/(maxDG-minDG))) 
+        x2 = x1 + lengthtic
+        y2 = y1
+        draw.line([x1, y1, x2, y2],fill="black")
+        text = "%.1f"%ytic
+        (textWidth,textHeight) = fnt.getsize(text)
+        draw.text((x1-textWidth-lengthtic,y1-textHeight/2), text, font=fnt,
+                fill='black')
+        ytic += step
+
+    ytic = -step
+    while ytic > minDG:
+        x1 = x0 - lengthtic
+        y1 = yZero - int(round(heightDrawRegion*ytic/(maxDG-minDG))) 
+        x2 = x1 + lengthtic
+        y2 = y1
+        draw.line([x1, y1, x2, y2],fill="black")
+        text = "%.1f"%ytic
+        (textWidth,textHeight) = fnt.getsize(text)
+        draw.text((x1-textWidth-lengthtic,y1-textHeight/2), text, font=fnt,
+                fill='black')
+        ytic -= step
+
+# draw seqID 
+    if isDrawSeqID:
+        text = seqID
+        x = 1
+        (textWidth,textHeight) = fnt.getsize(text)
+        y = yMiddle - textHeight
+        draw.text((x,y), text, font=fnt, fill='black')
+
+# draw profile
+    sizeSquare = int(g_params['image_scale']* 4+0.5)
+    pointList= []
+    papd = pointList.append
+    for (idx, dg) in aligned_dgp:
+        #print (idx, dg)
+        h = int(round(dg/(maxDG-minDG)*heightDrawRegion))
+        x1 = (x0 + int(round(widthDrawRegion*float(idx)/lengthAlignment)) -
+                sizeSquare/2)
+        y1 = yZero - h - sizeSquare/2
+        x2 = x1+sizeSquare
+        y2 = y1+sizeSquare
+        box=[x1,y1,x2,y2]
+        if line_mode == "dot":
+            draw.ellipse(box, outline='blue')
+        papd((x1+sizeSquare/2, y1+sizeSquare/2))
+    if line_mode == "line":
+        for i in xrange(0,len(pointList)-1,1):
+            draw.line([pointList[i],pointList[i+1]],fill="blue", width=line_width)
+
+
+#}}}
 def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,length): #{{{
     """Draw TM box"""
     widthAnnotation = g_params['widthAnnotation']
@@ -1706,7 +1728,7 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
     outcolor="#CCFFFF"
     outline_color = "black"
     text_color = "black"
-    outline_width = int(2*g_params['image_scale']+0.5)
+    outline_width = int(4*g_params['image_scale']+0.5)
     cnt = 0
     last=x0
     for (b, e) in posTM:
@@ -2099,25 +2121,23 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
 #             x+=(fontWidth*lengthSegment)
 #             i=j
 #}}}
-def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRation):# {{{
+def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRatio):# {{{
     """
     Calculate image parameters for the PIL method
     """
     (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
-
     (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq)
 
     histoRegionWidth = lengthAlignment * fontWidth
-    histoRegionHeight = max(50, int(round(lengthAlignment*fontHeight*widthAdjustRation* 0.15)))
+    histoRegionHeight = max(50, int(round(lengthAlignment*fontHeight*widthAdjustRatio* 0.1)), int(round(numSeq*fontHeight* 0.1)))
 
     dgprofileRegionWidth = lengthAlignment * fontWidth
-    dgprofileRegionHeight = max(30, int(round(lengthAlignment * fontHeight * widthAdjustRation*0.05)))
-
+    dgprofileRegionHeight = max(30, int(round(lengthAlignment * fontHeight * widthAdjustRatio*0.05)), int(round(numSeq * fontHeight * 0.1)))
 
     width = ((g_params['widthAnnotation'] + lengthAlignment) * (fontWidth) +
             g_params['annoSeqInterval']*fontWidthTMbox + g_params['marginX'] * 2)
     height = ( g_params['heightTMbox']*fontHeightTMbox +
-             int(g_params['heightScaleBar']*fontHeightScaleBar*widthAdjustRation*2+0.5)+
+             int(g_params['heightScaleBar']*fontHeightScaleBar*widthAdjustRatio*2+0.5)+
             sectionSepSpace*fontHeightScaleBar +
             + numSeq*fontHeight + g_params['marginY']*2 + g_params['isDrawSeprationLine'] *
             numSeprationLine * g_params['scaleSeprationLine']* fontHeight +
@@ -2135,9 +2155,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     logger = logging.getLogger(__name__)
     (idList, annotationList, topoSeqList) = myfunc.ReadFasta(inFile)
 
-    H2W_ratio = 4/3.0
-    H2W_ratio = 4/2.0
-
+    H2W_ratio = g_params['H2W_ratio']
+    widthAdjustRatio = 1.0
 
     topoSeqList = lcmp.RemoveUnnecessaryGap(topoSeqList)
     numSeq = len(idList)
@@ -2217,10 +2236,11 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     (fontWidth, fontHeight) = fnt.getsize("a")
     (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, 1.0)
 
-    if (height/float(width)>H2W_ratio):
-        widthAdjustRation = height/float(width)/H2W_ratio
-        fontWidth = int(fontWidth * H2W_ratio + 0.5)
-        (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRation)
+    if (H2W_ratio != None and height/float(width)!=H2W_ratio):
+        widthAdjustRatio = height/float(width)/H2W_ratio
+        fontWidth = int(fontWidth * widthAdjustRatio + 0.5)
+        g_params['marginY'] += int(widthAdjustRatio*10+0.5)
+        (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRatio)
 
     isDrawText = g_params['isDrawText']
     font_size = g_params['font_size']
@@ -2245,10 +2265,11 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 break
         logger.debug("height (%d) *width (%d) = %d"%(height, width, height*width))
 
-        if (height/float(width)>H2W_ratio):
-            widthAdjustRation = height/float(width)/H2W_ratio
-            fontWidth = int(fontWidth * H2W_ratio + 0.5)
-            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRation)
+        if (H2W_ratio != None and height/float(width)!=H2W_ratio):
+            widthAdjustRatio = height/float(width)/H2W_ratio
+            fontWidth = int(fontWidth * widthAdjustRatio + 0.5)
+            g_params['marginY'] += int(widthAdjustRatio*10+0.5)
+            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, widthAdjustRatio)
 
         if height*width > g_params['MAXIMAGESIZE']:
             msg = "%s: (fontWidth, fontHeight) have been reduced to (%d, %d)"\
@@ -2292,7 +2313,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     DrawScale(lengthAlignment, posindexmap, (x,y), font_size, fontWidth,
             fontHeight, draw)
 
-    y += int(g_params['heightScaleBar']*fontHeightScaleBar*widthAdjustRation*2+0.5)
+    y += int(g_params['heightScaleBar']*fontHeightScaleBar*widthAdjustRatio*2+0.5)
     y += sectionSepSpace*fontHeightScaleBar
 
     maxDistKR = g_params['maxDistKR'] 
@@ -2384,20 +2405,9 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             dgp = None
             if dgprofileDict and seqID in dgprofileDict:
                 dgp = dgprofileDict[seqID]
-            elif seqID in aaSeqDict:
+            elif seqID in aaSeqDict: #if dg profile file is not provided, calculate it
                 aaseq = aaSeqDict[seqID]
-                tmpaaseqfile = tempfile.mktemp()
-                tmpdgpfile = tempfile.mktemp()
-                tmpfp = open(tmpaaseqfile, 'w')
-                tmpfp.write(">%s\n"%seqID)
-                tmpfp.write("%s\n"%aaseq)
-                tmpfp.close()
-                os.system("%s %s -lmin 21 -lmax 21 -o %s"%(g_params['dgscanProg'],
-                    tmpaaseqfile, tmpdgpfile))
-                dgpDict = ReadInDGProfile(tmpdgpfile)
-                os.system("rm -f %s %s" %(tmpaaseqfile, tmpdgpfile))
-                if dgpDict and seqID in dgpDict:
-                    dgp = dgpDict[seqID]
+                dgp = RunDGScan(aaseq, seqID)
             if dgp:
                 idxmap_aligne2seq = lcmp.GetAlign2SeqMap(alignedTopoSeqList[i],
                         alignedTopoSeqList[i].replace(GAP,""))  
@@ -2419,11 +2429,13 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 # Add ylabel deltaG (kcal/mol)
                 fnt_label = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif-Bold", g_params['font_size_TMbox'])
                 ss =  u"\u0394G (kcal/mol)"
-                image2 = Image.new('RGBA', ((len(ss)+1)*fontWidthTMbox, fontHeightTMbox*2+5))
+                (fw_l, fh_l) = fnt_label.getsize(ss)
+                image2 = Image.new('RGBA', (int(fw_l*1.1+0.5)+5, int(fh_l*1.2+0.5)+5))
                 draw2 = ImageDraw.Draw(image2)
-                draw2.text((10, 10), text=ss, font=fnt_label, fill="black")
+                draw2.text((5, 5), text=ss, font=fnt_label, fill="black")
                 image2 = image2.rotate(90, expand=1)
-                px, py = g_params['marginX']+fontWidth*int(widthAnnotation*0.4), y-fontWidth*5
+                print ("widthAdjustRatio=", widthAdjustRatio)
+                px, py = g_params['marginX']+fontWidth*int(widthAnnotation*0.4), y + int(fw_l/widthAdjustRatio/8+0.5)
                 sx, sy = image2.size
                 newImage.paste(image2, (px, py))
                 del image2
@@ -4543,6 +4555,8 @@ def main(g_params):#{{{
                 g_params['shrinkrate_TM'], i = myfunc.my_getopt_float(argv, i)
             elif (argv[i] in ["-imagescale", "--imagescale"]):
                 g_params['image_scale'], i = myfunc.my_getopt_float(argv, i)
+            elif (argv[i] in ["-h2wratio", "--h2wratio"]):
+                g_params['H2W_ratio'], i = myfunc.my_getopt_float(argv, i)
             elif (argv[i] in ["-max-hold-loop", "--max-hold-loop"]):
                 g_params['max_hold_loop'], i = myfunc.my_getopt_int(argv, i)
             elif (argv[i] in ["-m-shrink", "--m-shrink"]):
@@ -4681,9 +4695,10 @@ def InitGlobalParameter():#{{{
     g_params['maxDistKR'] = 12
     g_params['isShrink'] = True
     g_params['aapath'] = ""
-    g_params['MAXIMAGESIZE'] = 150*1024*1024; #50M in pixels
+    g_params['MAXIMAGESIZE'] = 50*1024*1024; #50M in pixels
     g_params['marginX'] = 20; # marginX in pixels
     g_params['marginY'] = 50; # marginY in pixels
+    g_params['H2W_ratio'] = None # set the height/width ratio for PIL image
 
     # number of columns for the annotation text
     g_params['widthAnnotation'] = 30
