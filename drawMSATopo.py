@@ -697,9 +697,9 @@ def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq, specialPro
     #scaleTMBox = myfunc.FloatDivision(numSeq, 1450)+ 27.0/58.0
     scaleTMBox = 1
 
-    fs = 60
+    fs = 50
     itr = 0
-    MAX_ITR = 50
+    MAX_ITR = 300
     while 1:
         if fs < 2:
             break
@@ -723,11 +723,11 @@ def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq, specialPro
                     maxMargin = margin
                 if margin < minMargin:
                     minMargin = margin
-        print ("itr=", itr, "fs=",fs, "(minMargin,maxMargin) = ",(minMargin, maxMargin))
+        #print ("itr=", itr, "fs=",fs, "(minMargin,maxMargin, fontHeightAlign) = ",(minMargin, maxMargin, fontHeightAlign))
 
         if minMargin < fontHeightAlign/2:
             fs -= 1
-        elif minMargin > fontHeightAlign/2:
+        elif minMargin >= fontHeightAlign*2:
             fs += 1
         else:
             break
@@ -745,7 +745,7 @@ def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq, specialPro
             "DejaVuSerif", g_params['font_size_TMbox']+1)
     fnt = ImageFont.truetype(g_params['font_dir'] + g_params['font'], fs)
     #print "fs=",fs
-    return fnt.getsize("a")
+    return fnt.getsize("M")
 #}}}
 def GetPositionIdenticalAdjacentNumber(lst, start, minLength): #{{{
 # given a list of numbers 
