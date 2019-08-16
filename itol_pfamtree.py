@@ -13,6 +13,8 @@ red = Color("red")
 from itolapi import Itol
 from itolapi import ItolExport
 
+rundir = os.path.dirname(os.path.realpath(__file__))
+
 usage="""
 USAGE:  itol_pfamtree.py [-datapath DIR] -l pfamidlist [ID [ID ...]]
     Visualize phylogenetic tree of Pfam family, highlighting important features
@@ -31,6 +33,7 @@ OPTIONS:
 
   -datapath DIR   Set datapath, (default: ./)
   -treefile FILE  Set the tree file directly
+  -fastafile FILE Set the fasta file providing the annotation
   -outpath  DIR   Set outpath, (default: ./)
   -q              Quiet mode
   -h, --help      Print this help message and exit
@@ -624,7 +627,7 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
     os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
     print 'exported tree to ',pdffile
 #}}}
-def Itol_Tree_linear(treefile, outpath):# {{{
+def Itol_Tree_linear(treefile, fastafile, outpath):# {{{
     """
     Generate itol tree linear 
     """
@@ -647,11 +650,26 @@ def Itol_Tree_linear(treefile, outpath):# {{{
         os.system("mkdir -p %s"%(outpath))
 
     rootname = os.path.basename(os.path.splitext(treefile)[0])
+    rtname_fastafile = os.path.basename(os.path.splitext(fastafile)[0])
+    colorragefile = dirname + os.sep + rtname_fastafile + ".colorrage.txt"
+
+    datafileList = [colorragefile]
+
+    if os.path.exists(fastafile):
+        cmd = "python %s/fasta2colorrange.py %s %s > %s"%(rundir, fastafile, treefile,colorragefile)
+        os.system(cmd)
 
 #===================================
     itl.add_file(tree)
     itl.params['treeName'] = rootname
     itl.params['treeFormat'] = 'newick'
+
+    valid_datafileList = []
+    for datafile in datafileList:
+        if os.path.exists(datafile):
+            itl.add_file(datafile)
+            valid_datafileList.append(datafile)
+    datasets_list = [str(x) for x in range(len(valid_datafileList))]
 #===================================
 # Check parameters
 # itl.print_variables()
@@ -669,6 +687,9 @@ def Itol_Tree_linear(treefile, outpath):# {{{
     itol_exporter.set_export_param_value('format',"pdf")
     itol_exporter.set_export_param_value('display_mode',"1") #(1=normal, 2=circular, 3=unrooted)
     itol_exporter.set_export_param_value('line_width',"1")
+    #itol_exporter.set_export_param_value('align_labels',"1")
+    print ('datasets_visible',",".join(datasets_list))
+    itol_exporter.set_export_param_value('datasets_visible',",".join(datasets_list))
     #epsfile = outpath + os.sep + rootname + '.itolnormal.eps'
     pdffile = outpath + os.sep + rootname + '.itol_linear.pdf'
     print 'Exporting to pdffile %s'%(pdffile)
@@ -689,6 +710,7 @@ def main(g_params):#{{{
     idList = []
     idListFile = ''
     treefile = ""
+    fastafile = ""
 
     i = 1;
     isNonOptionArg=False
@@ -711,6 +733,9 @@ def main(g_params):#{{{
                 g_params['method'], i = myfunc.my_getopt_str(sys.argv, i)
             elif sys.argv[i] in [ "-treefile", "--treefile"]:
                 treefile = sys.argv[i+1]
+                i += 2;
+            elif sys.argv[i] in [ "-fastafile", "--fastafile"]:
+                fastafile = sys.argv[i+1]
                 i += 2;
             elif sys.argv[i] in [ "-l", "--l"]:
                 idListFile = sys.argv[i+1]
@@ -745,7 +770,7 @@ def main(g_params):#{{{
             cnt += 1
     if treefile != "":
         if g_params['method'] == "linear":
-            Itol_Tree_linear(treefile, outpath)
+            Itol_Tree_linear(treefile, fastafile, outpath)
 #}}}
 def InitGlobalParameter():#{{{
     g_params = {}
