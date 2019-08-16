@@ -4810,7 +4810,7 @@ def InitGlobalParameter():#{{{
     # font size for scale bar always set to 11 for easy reading
     g_params['font_size_scalebar'] = 11
 
-    g_params['heightTMbox'] = 2.5; # number of lines for the TM helices box
+    g_params['heightTMbox'] = 3; # number of lines for the TM helices box
     g_params['font_size_TMbox'] = 36; # size of the font for text written in TM
                                       # box
     g_params['font'] = "DejaVuSansMono.ttf"
