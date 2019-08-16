@@ -41,6 +41,8 @@ import logging
 import logging.config
 import yaml
 
+logger = logging.getLogger(__name__)
+
 # PyX
 #import pyx
 
@@ -482,6 +484,27 @@ def GetAAPath(topomsafile):#{{{
     else:
         return myfunc.my_dirname(topomsafile)
 #}}}
+def GetDGProfileFileName(inFile, seqID):# {{{
+    """
+    Auto determine the DG profile file name based on the inFile
+    """
+    DGProfileFile = ""
+    dirname_infile = myfunc.my_dirname(inFile)
+    rootname_infile = os.path.basename(os.path.splitext(inFile)[0])
+    if not os.path.exists(g_params['DGProfileFile']):
+        DGProfileFile = dirname_infile + os.sep + rootname_infile + "_dg.txt"
+        if not os.path.exists(DGProfileFile):
+            DGProfileFile = dirname_infile + os.sep + rootname_infile + "-%s"%(seqID) + "_dg.txt"
+            if not os.path.exists(DGProfileFile):
+                logger.debug("DGProfileFile not found for inFile %s"%(inFile))
+                DGProfileFile = ""
+    else:
+        DGProfileFile = g_params['DGProfileFile']
+
+    logger.debug("In function GetDGProfileFileName: seqID=%s, DGProfileFile=%s"%(seqID, DGProfileFile))
+    return DGProfileFile
+# }}}
+
 def GetAASeqDict(topomsafile):#{{{
     """
     Get the amino acid sequence dictionary, keys are seqids
@@ -689,7 +712,7 @@ def AutoSizeFontHistogram(ylabel, yticList, widthBox, heigthBox, #{{{
     return fs
     #}}}
 
-def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq, specialProIdxList, posTMList, TMnameList ): #{{{
+def AutoSizeFontTMBox(fontWidthAlign, fontHeightAlign, numSeq, specialProIdxDict, posTMList, TMnameList ): #{{{
     """Autosize the font for text written in TM box so that it fits the
        narrowest box """
 # Get the maximum allowd fontWidth for each box
@@ -698,6 +721,7 @@ def AutoSizeFontTMBox(posTM, fontWidthAlign, fontHeightAlign, numSeq, specialPro
     # scale is roughly 50 seqs -> 0.5, 1500 seqs -> 1.5
     #scaleTMBox = myfunc.FloatDivision(numSeq, 1450)+ 27.0/58.0
     scaleTMBox = 1
+    specialProIdxList = specialProIdxDict['reppro'] + specialProIdxDict['pdb'] + specialProIdxDict['final']
 
     fs = 50
     itr = 0
@@ -1663,6 +1687,7 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
         seqID, dgprofileRegionWidth, dgprofileRegionHeight, spaceToLeftBorder,
         isDrawSeqID, line_mode, draw):
     """Draw DG profile"""
+    logger.debug("Draw DG profile")
     (x0, y0) = xy0
     paddingtop = int(dgprofileRegionHeight*0.05+0.5)
     paddingbottom = int(dgprofileRegionHeight*0.05+0.5)
@@ -1674,6 +1699,7 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
     outline_width = max(1, int(4*g_params['image_scale']+0.5))
     ticline_width = max(1,  int(3*g_params['image_scale']+0.5))
     line_width = max(1, int(6*g_params['image_scale']+0.5))
+    logger.debug("(minDG, maxDG)=(%f,%f)"%(minDG, maxDG))
 
 # draw outline box
     x1 = x0
@@ -1954,6 +1980,33 @@ def GetSizeAnnotationToDraw(annotationList):#{{{
             maxSize = size
     return maxSize
 #}}}
+def GetSpecialProIndex(seqIDIndexDict):# {{{
+    """
+    Get index for special proteins
+    return a dict with keys
+    'reppro' = []
+    'pdb' = []
+    'final' = []
+    """
+    li_reppro = []
+    li_pdb = []
+    li_final = []
+
+    for seqID in sorted(seqIDIndexDict.keys()):
+        if seqID.find("rep") == 0:
+            li_reppro.append(seqIDIndexDict[seqID])
+        elif seqID.find("pdb_") == 0:
+            li_pdb.append(seqIDIndexDict[seqID])
+        elif seqID.find("final") == 0:
+            li_final.append(seqIDIndexDict[seqID])
+
+    dt = {}
+    dt['reppro'] = li_reppro
+    dt['pdb'] = li_pdb
+    dt['final'] = li_final
+    return dt
+
+# }}}
 def CalculateImageScale(numSeq):# {{{
     """
     Calculate Image Scale based on the number of sequences
@@ -2182,12 +2235,12 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
 #             x+=(fontWidth*lengthSegment)
 #             i=j
 #}}}
-def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace,specialProIdxList, posTMList, TMnameList,  widthAdjustRatio):# {{{
+def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numSeprationLine, sectionSepSpace, specialProIdxDict, posTMList, TMnameList,  widthAdjustRatio):# {{{
     """
     Calculate image parameters for the PIL method
     """
     (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
-    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq, specialProIdxList, posTMList, TMnameList)
+    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(fontWidth, fontHeight, numSeq, specialProIdxDict, posTMList, TMnameList)
 
 
     dgprofileRegionWidth = lengthAlignment * fontWidth
@@ -2202,14 +2255,14 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, posT
     width = ((g_params['widthAnnotation'] + lengthAlignment) * (fontWidth) +
             g_params['annoSeqInterval']*fontWidthTMbox + g_params['marginX'] * 2)
     height = ( g_params['marginY']*2 + 
-            int(g_params['heightTMbox']*fontHeightTMbox+0.5) +
-             int(fontHeightScaleBar*2.5+0.5)+
-            + numSeq*fontHeight + g_params['marginY']*2 + g_params['isDrawSeprationLine'] *
-            numSeprationLine * g_params['scaleSeprationLine']* fontHeight +
-            (idxPDB!=-1 or idxFinalPro!=-1)*(int(g_params['heightTMbox']*fontHeightTMbox+0.5)+sectionSepSpace*fontHeightScaleBar)+
-            (idxPDB!=-1)*(int(1.5*g_params['heightTMbox']*fontHeightTMbox+0.5))+
-            (idxFinalPro!=-1)*(int(1.5*g_params['heightTMbox']*fontHeightTMbox+0.5))+
-            g_params['isDrawDGprofile'] *(dgprofileRegionHeight+sectionSepSpace*fontHeightScaleBar)+
+            int(1.5*g_params['heightTMbox']*fontHeightTMbox*len(specialProIdxDict['reppro'])+0.5) +
+            int(fontHeightScaleBar*2.5+0.5)+
+            numSeq*fontHeight + 
+            g_params['isDrawSeprationLine'] * numSeprationLine * g_params['scaleSeprationLine']* fontHeight +
+            (len(specialProIdxDict['pdb'])+len(specialProIdxDict['final']) >0)*(int(g_params['heightTMbox']*fontHeightTMbox+0.5)+sectionSepSpace*fontHeightScaleBar)+
+            len(specialProIdxDict['pdb'])*int(1.5*g_params['heightTMbox']*fontHeightTMbox+0.5)+
+            len(specialProIdxDict['final'])*int(1.5*g_params['heightTMbox']*fontHeightTMbox+0.5)+
+            g_params['isDrawDGprofile'] *(len(specialProIdxDict['reppro'])*dgprofileRegionHeight+sectionSepSpace*fontHeightScaleBar)+
             g_params['isDrawPerMDistribution'] * (histoRegionHeight)
             )
     return (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight)
@@ -2217,7 +2270,6 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, posT
 def DrawMSATopo_PIL(inFile, g_params):#{{{
     """Draw multiple alignment of topologies using the PIL library"""
     isDrawSeqLable = True
-    logger = logging.getLogger(__name__)
     (idList, annotationList, topoSeqList) = myfunc.ReadFasta(inFile)
 
     H2W_ratio = g_params['H2W_ratio']
@@ -2275,40 +2327,19 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     #   * representative protein
     #   * topology of a PDB structure
     #   * the final topology
-    try:
-        idxRepPro = seqIDIndexDict['rep1'] 
-    except KeyError:
-        idxRepPro = 0  # use the first seq as the representative protein if not defined
+    specialProIdxDict = GetSpecialProIndex(seqIDIndexDict)
 
-    try: 
-        idxFinalPro = seqIDIndexDict['final1']
-    except KeyError:
-        idxFinalPro = -1 # if there is no final topology, set as -1
-
-    idxPDB = -1
-    for i in xrange(numSeq):
-        if idList[i].find("pdb_") != -1:
-            idxPDB = i
-
-    specialProIdxList = [idxRepPro, idxPDB, idxFinalPro]
+    specialProIdxList = specialProIdxDict['reppro'] + specialProIdxDict['pdb'] + specialProIdxDict['final']
     posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
     TMnameList = []
     for i in xrange(numSeq):
-        if i == idxRepPro:
-            TMname = []
-            if len(g_params['TMname']) > 0:
-                TMname = g_params['TMname']
-            else:
-                TMname = myfunc.GetTMnameFromAnnotation(annotationList[idxRepPro])
-            TMnameList.append(TMname)
-        elif i in [idxPDB, idxFinalPro]:
+        if i in specialProIdxList:
             TMname = myfunc.GetTMnameFromAnnotation(annotationList[i])
             TMnameList.append(TMname)
         else:
             TMnameList.append([])
 
 
-    (posTM_rep,typeTM_rep) = GetTMType(topoSeqList[idxRepPro])
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
     widthAnnotation = g_params['widthAnnotation']
     tagList = []
@@ -2321,13 +2352,13 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     fnt = ImageFont.truetype(g_params['font_dir'] + g_params['font'],
             int(g_params['image_scale']*g_params['font_size']))
     (fontWidth, fontHeight) = fnt.getsize("a")
-    (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace, specialProIdxList, posTMList, TMnameList, 1.0)
+    (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  numSeprationLine, sectionSepSpace, specialProIdxDict, posTMList, TMnameList, 1.0)
 
     if (H2W_ratio != None and height/float(width)!=H2W_ratio):
         widthAdjustRatio = height/float(width)/H2W_ratio
         fontWidth = int(fontWidth * widthAdjustRatio + 0.5)
         g_params['marginY'] += int(widthAdjustRatio*10+0.5)
-        (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace,specialProIdxList, posTMList, TMnameList,  widthAdjustRatio)
+        (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  numSeprationLine, sectionSepSpace,specialProIdxDict, posTMList, TMnameList,  widthAdjustRatio)
 
     isDrawText = g_params['isDrawText']
     font_size = g_params['font_size']
@@ -2344,7 +2375,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 if fontHeight > 1:
                     fontHeight -= 1
 
-            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace,specialProIdxList, posTMList, TMnameList,  1.0)
+            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  numSeprationLine, sectionSepSpace,specialProIdxDict, posTMList, TMnameList,  1.0)
 
             if font_size < 3:
                 isDrawText = False
@@ -2356,7 +2387,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             widthAdjustRatio = height/float(width)/H2W_ratio
             fontWidth = int(fontWidth * widthAdjustRatio + 0.5)
             g_params['marginY'] += int(widthAdjustRatio*10+0.5)
-            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  posTM_rep, numSeprationLine, idxPDB, idxFinalPro, sectionSepSpace,specialProIdxList, posTMList, TMnameList,  widthAdjustRatio)
+            (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight) = CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq,  numSeprationLine, sectionSepSpace, specialProIdxDict, posTMList, TMnameList,  widthAdjustRatio)
 
         if height*width > g_params['MAXIMAGESIZE']:
             msg = "%s: (fontWidth, fontHeight) have been reduced to (%d, %d)"\
@@ -2380,21 +2411,27 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     x = g_params['marginX']
     y = g_params['marginY']
 
-# Draw TM helices of the consensus.
-    (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(posTM_rep, fontWidth, fontHeight, numSeq, specialProIdxList, posTMList, TMnameList )
-    if g_params['isAdvTopo']: # draw topology of the representative protein
+# Draw TM helices of the consensus.(or the representative topologies)
+    if len(specialProIdxDict['reppro']) > 0:
+        idxRepProList = specialProIdxDict['reppro']
+    else:
+        idxRepProList = [0] #if reppro is not set, take the first one
+    cnt = 0
+    for idx in idxRepProList:
+        (posTM_rep,typeTM_rep) = GetTMType(topoSeqList[idx])
         if isDrawSeqLable:
             xt = g_params['marginX'] + fontWidth*g_params['widthAnnotation']*0
-            label = "Initial Topology"
+            if len(idxRepProList) == 1:
+                label = "Initial Topology"
+            else:
+                label = "Initial Topology %d"%(cnt+1)
             ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
             fg="#000000";# black
             draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
-
-        DrawTMOfConsensus2(posTM_rep, typeTM_rep, TMnameList[idxRepPro], (x,y),
+        DrawTMOfConsensus2(posTM_rep, typeTM_rep, TMnameList[idx], (x,y),
                 fontWidth, fontHeight, draw,lengthAlignment)
-    else:
-        DrawTMOfConsensus(posTM_rep, (x,y), fontWidth, fontHeight, draw)
-    y += int(g_params['heightTMbox'] * fontHeightTMbox+0.5)
+        y += int(g_params['heightTMbox'] * fontHeightTMbox*1.5+0.5)
+        cnt += 1
     #y += sectionSepSpace*fontHeightTMbox
 
 # Draw a scale bar of the residue position
@@ -2412,7 +2449,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         tagCurrent = tagList[i]
         seqID = idList[i]
 
-        if i in [idxRepPro, idxPDB, idxFinalPro]: #do not draw the topology of special proteins 
+        if i in specialProIdxList: #do not draw the topology of special proteins 
             continue
 
         if tagCurrent != tagFormer:
@@ -2457,42 +2494,53 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                     (y, height))
 
 # Draw special topologies
-    if max([idxPDB, idxFinalPro]) > -1:
+    idxPDBList = specialProIdxDict['pdb']
+    idxFinalProList = specialProIdxDict['final']
+    if len(idxPDBList)+len(idxFinalProList) > 0:
         y += int(g_params['heightTMbox']*fontHeightTMbox+0.5)
-        for idx in [idxPDB, idxFinalPro]:
+        logger.debug("idxPDBList=%s, idxFinalProList=%s", str(idxPDBList), str(idxFinalProList))
+        for idx in idxPDBList+idxFinalProList:
             if idx != -1:
                 if isDrawSeqLable:
                     xt = g_params['marginX'] + fontWidth*g_params['widthAnnotation']*0
-                    if idx == idxPDB:
-                        label = idList[idxPDB].lstrip('pdb_')
-                    elif idx == idxFinalPro:
-                        label = "Final Topology"
+                    if idx in idxPDBList:
+                        label = idList[idx].lstrip('pdb_')
+                    else:
+                        if len(idxFinalProList) == 1:
+                            label = "Final Topology"
+                        else:
+                            label = "Final Topology "+ idList[idx].lstrip("final")
                     ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
                     fg="#000000";# black
                     draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
 
                 (posTM,typeTM) = GetTMType(topoSeqList[idx])
-                if g_params['isAdvTopo']: # draw topology of the representative protein
-                    TMname = myfunc.GetTMnameFromAnnotation(annotationList[idx])
-                    DrawTMOfConsensus2(posTM, typeTM, TMname, (x,y), fontWidth,
-                            fontHeight, draw, lengthAlignment)
+                # draw topology of the representative protein
+                TMname = myfunc.GetTMnameFromAnnotation(annotationList[idx])
+                DrawTMOfConsensus2(posTM, typeTM, TMname, (x,y), fontWidth,
+                        fontHeight, draw, lengthAlignment)
 
-                    y += int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)
+                y += int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)
 
         y += sectionSepSpace*fontHeightScaleBar
 # Draw DGprofile
     if g_params['isDrawDGprofile']:
-        isDrawSeqID = False
-        dgprofileDict = None
-        if os.path.exists(g_params['DGProfileFile']):
-            dgprofileDict = ReadInDGProfile(g_params['DGProfileFile'])
-        for i in xrange(numSeq):
-            seqID = idList[i]
-            toposeq = topoSeqList[i]
+        for idx in specialProIdxDict['reppro']:
+            seqID = idList[idx]
+            toposeq = topoSeqList[idx]
             lengthAlignment = len(toposeq)
+            DGProfileFile = GetDGProfileFileName(inFile, seqID)
+            isDrawSeqID = False
+            dgprofileDict = None
+            logger.debug("seqID=%s, DGProfileFile=%s"%(seqID, DGProfileFile))
+            if os.path.exists(DGProfileFile):
+                dgprofileDict = ReadInDGProfile(DGProfileFile)
             dgp = None
-            if dgprofileDict and seqID in dgprofileDict:
-                dgp = dgprofileDict[seqID]
+            if dgprofileDict:
+                if seqID in dgprofileDict:
+                    dgp = dgprofileDict[seqID]
+                elif 'query' in dgprofileDict:
+                    dgp = dgprofileDict['query']
             elif seqID in aaSeqDict: #if dg profile file is not provided, calculate it
                 aaseq = aaSeqDict[seqID]
                 dgp = RunDGScan(aaseq, seqID)
@@ -2502,8 +2550,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 
                 aligned_dgp = MatchAlignedDGP(dgp, idxmap_aligne2seq, posindexmap, toposeq)
                 dgList = [x[1] for x in aligned_dgp]
-                minDG = min(dgList)
-                maxDG = max(dgList)
+                minDG = min(-1.0, min(dgList))
+                maxDG = max(2, max(dgList))
                 line_mode = "line"
                 x = (g_params['marginX'] + g_params['widthAnnotation'] * fontWidth +  g_params['annoSeqInterval'] *
                         fontWidthTMbox)
@@ -2521,14 +2569,14 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 draw2 = ImageDraw.Draw(image2)
                 draw2.text((5, 5), text=ylabel_DGprofile, font=fnt_label, fill="black")
                 image2 = image2.rotate(90, resample=1, expand=1)
-                print ("widthAdjustRatio=", widthAdjustRatio)
+                logger.debug ("widthAdjustRatio=%f"%widthAdjustRatio)
                 px, py = int(g_params['marginX']*1.5), y + 0*int(fw_l/2)
                 sx, sy = image2.size
                 newImage.paste(image2, (px, py), mask=image2)
                 del image2
 
                 y += dgprofileRegionHeight
-                y += sectionSepSpace*fontHeightScaleBar
+        y += sectionSepSpace*fontHeightScaleBar
 
 # draw distribution of 'M' percentage
     if g_params['isDrawPerMDistribution']:
@@ -2550,7 +2598,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 draw)
 
     if not g_params['isQuiet']:
-        print "Topology MSA is drawn and output to \"%s\"" %(outFile)
+        print ("Topology MSA is drawn and output to \"%s\"" %(outFile))
 
     del draw
     newImage.save(outFile)

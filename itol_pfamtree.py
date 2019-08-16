@@ -10,12 +10,6 @@ from colour import Color
 blue = Color("blue")
 red = Color("red")
 
-# itol_path = os.environ['HOME'] + os.sep + ".local/lib/python2.7/itol"
-# #itol_path = "/data3/downloads/itol/"
-# if not os.path.exists(itol_path):
-#     itol_path = "/afs/pdc.kth.se/home/n/nanjiang" + os.sep +  "Public/lib/python2.7/itol" 
-# sys.path.append(itol_path)
-
 from itolapi import Itol
 from itolapi import ItolExport
 
@@ -27,6 +21,7 @@ OPTIONS:
   -m, -method STR Method for visualization, (default: 0)
                   0:
                   1:
+                  linear: 
                   sd1: phylogenetic tree showing the number of the TM helices and with orientation
                        represented by either red or blue, and also color subfamilies differently
                        in the branches.
@@ -40,7 +35,7 @@ OPTIONS:
   -q              Quiet mode
   -h, --help      Print this help message and exit
 
-Created 2012-03-13, updated 2017-08-13, Nanjiang Shu 
+Created 2012-03-13, updated 2019-08-16, Nanjiang Shu 
 """
 
 def PrintHelp():#{{{
@@ -89,10 +84,10 @@ def WriteDomainColorDefFile(domain_colordef_file, domain_dict, domain_idlist, se
 #}}}
 def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
-    (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
+    tree = datapath + os.sep + pfamid + '.tree'
+    (datafile1, datafile2, datafile3, datafile4) = ("", "", "", "")
     if not os.path.exists(tree):
         print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
         return 1
@@ -102,69 +97,31 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 
     fontsize = GetFontSize(numLeave)
 
-    dataset1 = datapath + os.sep + pfamid + '.numTM_and_io.txt'
-    dataset2 = datapath + os.sep + pfamid + '.cmpclass.colordef.txt'
-#    dataset3 = datapath + os.sep + pfamid + '.ntermstate.colordef.txt'
-    dataset4 = datapath + os.sep + pfamid + '.cluster.colordef.txt'
+    datafile1 = datapath + os.sep + pfamid + '.numTM_and_io.txt'
+#    datafile2 = datapath + os.sep + pfamid + '.cmpclass.colordef.txt'
+#    datafile3 = datapath + os.sep + pfamid + '.ntermstate.colordef.txt'
+    datafile4 = datapath + os.sep + pfamid + '.cluster.colordef.txt'
 
     colordeffile = datapath + os.sep + pfamid + '.pfam.colordef.txt'
     branchlabelfile = datapath + os.sep + pfamid + '.branchlabel.txt'
 
-#===================================
-    itl.add_variable('treeFile',tree)
-    itl.add_variable('treeName','PF00854')
-    itl.add_variable('treeFormat','newick')
-    if os.path.exists(colordeffile):
-        itl.add_variable('colorDefinitionFile', colordeffile)
-    if os.path.exists(branchlabelfile):
-        itl.add_variable('branchLabelsFile', branchlabelfile)
+    datafileList = [datafile1, datafile2, datafile3, datafile4, colordeffile, branchlabelfile]
+
+    rootname = os.path.basename(os.path.splitext(tree)[0])
 
 #===================================
-    if os.path.exists(dataset1):
-        itl.add_variable('dataset1File',dataset1)
-        itl.add_variable('dataset1Label','numTM_and_io')
-        itl.add_variable('dataset1Separator','comma')
-        itl.add_variable('dataset1Type','multibar')
-        itl.add_variable('dataset1PreventOverlap','1')
-        itl.add_variable('dataset1Color','#FF0000')
+    itl.add_file(tree)
+    itl.params['treeName'] = rootname
+    itl.params['treeFormat'] = 'newick'
 
-#===================================
-    if os.path.exists(dataset2):
-        itl.add_variable('dataset2File', dataset2)
-        itl.add_variable('dataset2Label', 'cmpclass')
-        itl.add_variable('dataset2Separator','comma')
-        itl.add_variable('dataset2Type','colorstrip')
-        itl.add_variable('dataset2StripWidth','200')
-        itl.add_variable('dataset2PreventOverlap','1')
-        itl.add_variable('dataset2ColoringType','both')
-
-#===================================
-    if os.path.exists(dataset3):
-        itl.add_variable('dataset3File', dataset3)
-        itl.add_variable('dataset3Label', 'NtermState')
-        itl.add_variable('dataset3Separator','comma')
-        itl.add_variable('dataset3Type','colorstrip')
-        itl.add_variable('dataset3StripWidth','200')
-        itl.add_variable('dataset3PreventOverlap','1')
-        itl.add_variable('dataset3ColoringType','both')
-
-#===================================
-    if os.path.exists(dataset4):
-        itl.add_variable('dataset4File', dataset4)
-        itl.add_variable('dataset4Label', 'cluster')
-        itl.add_variable('dataset4Separator','comma')
-        itl.add_variable('dataset4Type','colorstrip')
-        itl.add_variable('dataset4StripWidth','200')
-        itl.add_variable('dataset4PreventOverlap','1')
-        itl.add_variable('dataset4ColoringType','both')
-        itl.add_variable('dataset4BranchColoringType','both')
-        
-#itl.add_variable('dataset1BarSizeMax','1')
-
-#===================================
+    valid_datafileList = []
+    for datafile in datafileList:
+        if os.path.exists(datafile):
+            itl.add_file(datafile)
+            valid_datafileList.append(datafile)
+    datasets_list = [str(x) for x in range(len(valid_datafileList))]
 # Check parameters
 # itl.print_variables()
-
 
 #Submit the tree
     print ''
@@ -191,29 +148,30 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
     itol_exporter = itl.get_itol_export()
 #itol_exporter = itolexport.ItolExport()
 #itol_exporter.set_export_param_value('tree','18793532031912684633930')
-    itol_exporter.set_export_param_value('format', 'eps')
-    itol_exporter.set_export_param_value('displayMode',"circular")
-    itol_exporter.set_export_param_value('showBS',"0")
-    itol_exporter.set_export_param_value('fontSize',fontsize)
-    itol_exporter.set_export_param_value('alignLabels',"1")
-    itol_exporter.set_export_param_value('datasetList','dataset1,dataset2,dataset3,dataset4')
+    itol_exporter.set_export_param_value('format', 'pdf')
+    itol_exporter.set_export_param_value('display_mode',"2")
+    #itol_exporter.set_export_param_value('current_font_size',fontsize)
+    itol_exporter.set_export_param_value('align_labels',"1")
+    itol_exporter.set_export_param_value('datasets_visible',",".join(datasets_list))
+
     epsfile = outpath + os.sep + pfamid + '-itol.eps'
     pdffile = outpath + os.sep + pfamid + '-itol.pdf'
     jpgfile = outpath + os.sep + pfamid + '-itol.jpg'
     thumbfile = outpath + os.sep + "thumb." + pfamid + '-itol.jpg'
-    itol_exporter.export(epsfile)
-    os.system("epstopdf %s" % epsfile )
-    os.system("convert %s %s" % (epsfile, jpgfile) )
+    itol_exporter.export(pdffile)
+    #os.system("epstopdf %s" % epsfile )
+    os.system("convert %s %s" % (pdffile, jpgfile) )
     os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
     print 'exported tree to ',pdffile
+
 #}}}
 def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
 # TM helices are treated as domains
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
-    (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
+    tree = datapath + os.sep + pfamid + '.tree'
+    (datafile1, datafile2, datafile3, datafile4) = ("", "", "", "")
     if not os.path.exists(tree):
         print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
         return 1
@@ -223,10 +181,10 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
 
     fontsize = GetFontSize(numLeave)
 
-    dataset1 = datapath + os.sep + pfamid + '.numTM_and_io.txt'
-    dataset2 = datapath + os.sep + pfamid + '.cmpclass.colordef.txt'
-#    dataset3 = datapath + os.sep + pfamid + '.ntermstate.colordef.txt'
-    dataset4 = datapath + os.sep + pfamid + '.cluster.colordef.txt'
+    datafile1 = datapath + os.sep + pfamid + '.numTM_and_io.txt'
+    datafile2 = datapath + os.sep + pfamid + '.cmpclass.colordef.txt'
+#    datafile3 = datapath + os.sep + pfamid + '.ntermstate.colordef.txt'
+    datafile4 = datapath + os.sep + pfamid + '.cluster.colordef.txt'
 
     colordeffile = datapath + os.sep + pfamid + '.pfam.colordef.txt'
     branchlabelfile = datapath + os.sep + pfamid + '.branchlabel.txt'
@@ -241,46 +199,46 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
         itl.add_variable('branchLabelsFile', branchlabelfile)
 
 #===================================
-    if os.path.exists(dataset1):
-        itl.add_variable('dataset1File',dataset1)
-        itl.add_variable('dataset1Label','numTM_and_io')
-        itl.add_variable('dataset1Separator','comma')
-        itl.add_variable('dataset1Type','multibar')
-        itl.add_variable('dataset1PreventOverlap','1')
-        itl.add_variable('dataset1Color','#FF0000')
+    if os.path.exists(datafile1):
+        itl.add_variable('datafile1File',datafile1)
+        itl.add_variable('datafile1Label','numTM_and_io')
+        itl.add_variable('datafile1Separator','comma')
+        itl.add_variable('datafile1Type','multibar')
+        itl.add_variable('datafile1PreventOverlap','1')
+        itl.add_variable('datafile1Color','#FF0000')
 
 #===================================
-    if os.path.exists(dataset2):
-        itl.add_variable('dataset2File', dataset2)
-        itl.add_variable('dataset2Label', 'cmpclass')
-        itl.add_variable('dataset2Separator','comma')
-        itl.add_variable('dataset2Type','colorstrip')
-        itl.add_variable('dataset2StripWidth','200')
-        itl.add_variable('dataset2PreventOverlap','1')
-        itl.add_variable('dataset2ColoringType','both')
+    if os.path.exists(datafile2):
+        itl.add_variable('datafile2File', datafile2)
+        itl.add_variable('datafile2Label', 'cmpclass')
+        itl.add_variable('datafile2Separator','comma')
+        itl.add_variable('datafile2Type','colorstrip')
+        itl.add_variable('datafile2StripWidth','200')
+        itl.add_variable('datafile2PreventOverlap','1')
+        itl.add_variable('datafile2ColoringType','both')
 
 #===================================
-    if os.path.exists(dataset3):
-        itl.add_variable('dataset3File', dataset3)
-        itl.add_variable('dataset3Label', 'NtermState')
-        itl.add_variable('dataset3Separator','comma')
-        itl.add_variable('dataset3Type','colorstrip')
-        itl.add_variable('dataset3StripWidth','200')
-        itl.add_variable('dataset3PreventOverlap','1')
-        itl.add_variable('dataset3ColoringType','both')
+    if os.path.exists(datafile3):
+        itl.add_variable('datafile3File', datafile3)
+        itl.add_variable('datafile3Label', 'NtermState')
+        itl.add_variable('datafile3Separator','comma')
+        itl.add_variable('datafile3Type','colorstrip')
+        itl.add_variable('datafile3StripWidth','200')
+        itl.add_variable('datafile3PreventOverlap','1')
+        itl.add_variable('datafile3ColoringType','both')
 
 #===================================
-    if os.path.exists(dataset4):
-        itl.add_variable('dataset4File', dataset4)
-        itl.add_variable('dataset4Label', 'cluster')
-        itl.add_variable('dataset4Separator','comma')
-        itl.add_variable('dataset4Type','colorstrip')
-        itl.add_variable('dataset4StripWidth','200')
-        itl.add_variable('dataset4PreventOverlap','1')
-        itl.add_variable('dataset4ColoringType','both')
-        itl.add_variable('dataset4BranchColoringType','both')
+    if os.path.exists(datafile4):
+        itl.add_variable('datafile4File', datafile4)
+        itl.add_variable('datafile4Label', 'cluster')
+        itl.add_variable('datafile4Separator','comma')
+        itl.add_variable('datafile4Type','colorstrip')
+        itl.add_variable('datafile4StripWidth','200')
+        itl.add_variable('datafile4PreventOverlap','1')
+        itl.add_variable('datafile4ColoringType','both')
+        itl.add_variable('datafile4BranchColoringType','both')
         
-#itl.add_variable('dataset1BarSizeMax','1')
+#itl.add_variable('datafile1BarSizeMax','1')
 
 #===================================
 # Check parameters
@@ -313,11 +271,10 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
 #itol_exporter = itolexport.ItolExport()
 #itol_exporter.set_export_param_value('tree','18793532031912684633930')
     itol_exporter.set_export_param_value('format', 'eps')
-    itol_exporter.set_export_param_value('displayMode',"circular")
-    itol_exporter.set_export_param_value('showBS',"0")
-    itol_exporter.set_export_param_value('fontSize',fontsize)
-    itol_exporter.set_export_param_value('alignLabels',"1")
-    itol_exporter.set_export_param_value('datasetList','dataset1,dataset2,dataset3,dataset4')
+    itol_exporter.set_export_param_value('display_mode',"2")
+    itol_exporter.set_export_param_value('current_font_size',fontsize)
+    itol_exporter.set_export_param_value('align_labels',"1")
+    itol_exporter.set_export_param_value('datafileList','dataset1')
     epsfile = outpath + os.sep + pfamid + '-itol.eps'
     pdffile = outpath + os.sep + pfamid + '-itol.pdf'
     jpgfile = outpath + os.sep + pfamid + '-itol.jpg'
@@ -331,7 +288,7 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
 def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     """Phylogenetic tree with numTM_io and subfamilies branch coloring
     """
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    tree = datapath + os.sep + pfamid + '.tree'
     t = Tree(tree)
     leaves = t.get_leaves()
     lst_leaves_name = []
@@ -355,16 +312,16 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     myfunc.WriteSubFamColorDef(subfam_colordef_file, subfamDict, lst_leaves_name, color_dict)
 
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
-    (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
+    (datafile1, datafile2, datafile3, datafile4) = ("", "", "", "")
     if not os.path.exists(tree):
         print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
         return 1
 
     fontsize = GetFontSize(numLeave)
 
-    dataset1 = datapath + os.sep + pfamid + '.numTM_and_io.txt'
+    datafile1 = datapath + os.sep + pfamid + '.numTM_and_io.txt'
     colordeffile = subfam_colordef_file
 
     if os.path.exists(colordeffile):
@@ -376,13 +333,13 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     itl.add_variable('treeName','SD1')
     itl.add_variable('treeFormat','newick')
 #===================================
-    if os.path.exists(dataset1):
-        itl.add_variable('dataset1File',dataset1)
-        itl.add_variable('dataset1Label','numTM_and_io')
-        itl.add_variable('dataset1Separator','comma')
-        itl.add_variable('dataset1Type','multibar')
-        itl.add_variable('dataset1PreventOverlap','1')
-        itl.add_variable('dataset1Color','#FF0000')
+    if os.path.exists(datafile1):
+        itl.add_variable('datafile1File',datafile1)
+        itl.add_variable('datafile1Label','numTM_and_io')
+        itl.add_variable('datafile1Separator','comma')
+        itl.add_variable('datafile1Type','multibar')
+        itl.add_variable('datafile1PreventOverlap','1')
+        itl.add_variable('datafile1Color','#FF0000')
 #===================================
 # Check parameters
 # itl.print_variables()
@@ -412,11 +369,10 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
 #itol_exporter = itolexport.ItolExport()
 #itol_exporter.set_export_param_value('tree','18793532031912684633930')
     itol_exporter.set_export_param_value('format', 'eps')
-    itol_exporter.set_export_param_value('displayMode',"circular")
-    itol_exporter.set_export_param_value('showBS',"0")
-    itol_exporter.set_export_param_value('fontSize',fontsize)
-    itol_exporter.set_export_param_value('alignLabels',"1")
-    itol_exporter.set_export_param_value('datasetList','dataset1')
+    itol_exporter.set_export_param_value('display_mode',"2")
+    itol_exporter.set_export_param_value('current_font_size',fontsize)
+    itol_exporter.set_export_param_value('align_labels',"1")
+    itol_exporter.set_export_param_value('datafileList','dataset1')
     extname = "-itol-sd1"
     epsfile = outpath + os.sep + pfamid + extname + '.eps'
     pdffile = outpath + os.sep + pfamid + extname + '.pdf'
@@ -430,7 +386,7 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     print 'exported tree to ',pdffile
 #}}}
 def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    tree = datapath + os.sep + pfamid + '.tree'
     t = Tree(tree)
     leaves = t.get_leaves()
     lst_leaves_name = []
@@ -450,16 +406,16 @@ def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
     WriteDomainColorDefFile(domain_colordef_file, domain_dict, domain_idlist, seqlen_dict, leaves_name_set)
 
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
-    (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
+    (datafile1, datafile2, datafile3, datafile4) = ("", "", "", "")
     if not os.path.exists(tree):
         print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
         return 1
 
     fontsize = GetFontSize(numLeave)
 
-    dataset1 = domain_colordef_file
+    datafile1 = domain_colordef_file
 #     colordeffile = subfam_colordef_file
 #     if os.path.exists(colordeffile):
 #         itl.add_variable('colorDefinitionFile', colordeffile)
@@ -469,14 +425,14 @@ def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
     itl.add_variable('treeName','SD2')
     itl.add_variable('treeFormat','newick')
 #===================================
-    if os.path.exists(dataset1):
-        itl.add_variable('dataset1File',dataset1)
-        itl.add_variable('dataset1Label','Domain architecture')
-        itl.add_variable('dataset1Separator','comma')
-        itl.add_variable('dataset1Type','domains')
-        itl.add_variable('dataset1ProtSizeMax','1000')
-        itl.add_variable('dataset1PreventOverlap','1')
-        itl.add_variable('dataset1CirclesSpacing','100')
+    if os.path.exists(datafile1):
+        itl.add_variable('datafile1File',datafile1)
+        itl.add_variable('datafile1Label','Domain architecture')
+        itl.add_variable('datafile1Separator','comma')
+        itl.add_variable('datafile1Type','domains')
+        itl.add_variable('datafile1ProtSizeMax','1000')
+        itl.add_variable('datafile1PreventOverlap','1')
+        itl.add_variable('datafile1CirclesSpacing','100')
 #===================================
 # Check parameters
 # itl.print_variables()
@@ -506,11 +462,10 @@ def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
 #itol_exporter = itolexport.ItolExport()
 #itol_exporter.set_export_param_value('tree','18793532031912684633930')
     itol_exporter.set_export_param_value('format', 'eps')
-    itol_exporter.set_export_param_value('displayMode',"circular")
-    itol_exporter.set_export_param_value('showBS',"0")
-    itol_exporter.set_export_param_value('fontSize',fontsize)
-    itol_exporter.set_export_param_value('alignLabels',"1")
-    itol_exporter.set_export_param_value('datasetList','dataset1')
+    itol_exporter.set_export_param_value('display_mode',"2")
+    itol_exporter.set_export_param_value('current_font_size',fontsize)
+    itol_exporter.set_export_param_value('align_labels',"1")
+    itol_exporter.set_export_param_value('datafileList','dataset1')
     extname = "-itol-sd2"
     epsfile = outpath + os.sep + pfamid + extname + '.eps'
     pdffile = outpath + os.sep + pfamid + extname + '.pdf'
@@ -527,7 +482,7 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
     """Phylogenetic tree with species definition
     the Kindom use branch colordefinition, and others using color strips
     """
-    tree = datapath + os.sep + pfamid + '.kalignp.fasttree'
+    tree = datapath + os.sep + pfamid + '.tree'
     t = Tree(tree)
     leaves = t.get_leaves()
     lst_leaves_name = []
@@ -575,18 +530,18 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
         myfunc.WriteSpeciesColorStripDefFile(outfile, this_speciesDict, leaves_name_set, color_dict)
 
 #Create the Itol class
-    itl = Itol.Itol()
+    itl = Itol()
 #Set the tree file
-    (dataset1, dataset2, dataset3, dataset4) = ("", "", "", "")
+    (datafile1, datafile2, datafile3, datafile4) = ("", "", "", "")
     if not os.path.exists(tree):
         print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
         return 1
 
     fontsize = GetFontSize(numLeave)
 
-    dataset1 = "%s/%s.species.level_%d.txt"%(outpath, pfamid, 1)
-    dataset2 = "%s/%s.species.level_%d.txt"%(outpath, pfamid, 2)
-    dataset3 = "%s/%s.species.level_%d.txt"%(outpath, pfamid, 3)
+    datafile1 = "%s/%s.species.level_%d.txt"%(outpath, pfamid, 1)
+    datafile2 = "%s/%s.species.level_%d.txt"%(outpath, pfamid, 2)
+    datafile3 = "%s/%s.species.level_%d.txt"%(outpath, pfamid, 3)
     colordeffile = species_colordef_file
 
     if os.path.exists(colordeffile):
@@ -598,32 +553,32 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
     itl.add_variable('treeName','SD3')
     itl.add_variable('treeFormat','newick')
 #===================================
-    if os.path.exists(dataset1):
-        itl.add_variable('dataset1File',dataset1)
-        itl.add_variable('dataset1Label','Phylum')
-        itl.add_variable('dataset1Separator','comma')
-        itl.add_variable('dataset1Type','colorstrip')
-        itl.add_variable('dataset1StripWidth','100')
-        itl.add_variable('dataset1ColoringType','both')
-        itl.add_variable('dataset1PreventOverlap','1')
+    if os.path.exists(datafile1):
+        itl.add_variable('datafile1File',datafile1)
+        itl.add_variable('datafile1Label','Phylum')
+        itl.add_variable('datafile1Separator','comma')
+        itl.add_variable('datafile1Type','colorstrip')
+        itl.add_variable('datafile1StripWidth','100')
+        itl.add_variable('datafile1ColoringType','both')
+        itl.add_variable('datafile1PreventOverlap','1')
 #===================================
-    if os.path.exists(dataset2):
-        itl.add_variable('dataset2File',dataset2)
-        itl.add_variable('dataset2Label','Class')
-        itl.add_variable('dataset2Separator','comma')
-        itl.add_variable('dataset2Type','colorstrip')
-        itl.add_variable('dataset2StripWidth','100')
-        itl.add_variable('dataset2ColoringType','both')
-        itl.add_variable('dataset2PreventOverlap','1')
+    if os.path.exists(datafile2):
+        itl.add_variable('datafile2File',datafile2)
+        itl.add_variable('datafile2Label','Class')
+        itl.add_variable('datafile2Separator','comma')
+        itl.add_variable('datafile2Type','colorstrip')
+        itl.add_variable('datafile2StripWidth','100')
+        itl.add_variable('datafile2ColoringType','both')
+        itl.add_variable('datafile2PreventOverlap','1')
 #===================================
-    if os.path.exists(dataset3):
-        itl.add_variable('dataset3File',dataset3)
-        itl.add_variable('dataset3Label','Order')
-        itl.add_variable('dataset3Separator','comma')
-        itl.add_variable('dataset3Type','colorstrip')
-        itl.add_variable('dataset3StripWidth','100')
-        itl.add_variable('dataset3ColoringType','both')
-        itl.add_variable('dataset3PreventOverlap','1')
+    if os.path.exists(datafile3):
+        itl.add_variable('datafile3File',datafile3)
+        itl.add_variable('datafile3Label','Order')
+        itl.add_variable('datafile3Separator','comma')
+        itl.add_variable('datafile3Type','colorstrip')
+        itl.add_variable('datafile3StripWidth','100')
+        itl.add_variable('datafile3ColoringType','both')
+        itl.add_variable('datafile3PreventOverlap','1')
 #===================================
 # Check parameters
 # itl.print_variables()
@@ -653,11 +608,10 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
 #itol_exporter = itolexport.ItolExport()
 #itol_exporter.set_export_param_value('tree','18793532031912684633930')
     itol_exporter.set_export_param_value('format', 'eps')
-    itol_exporter.set_export_param_value('displayMode',"circular")
-    itol_exporter.set_export_param_value('showBS',"0")
-    itol_exporter.set_export_param_value('fontSize',fontsize)
-    itol_exporter.set_export_param_value('alignLabels',"1")
-    itol_exporter.set_export_param_value('datasetList','dataset1,dataset2,dataset3')
+    itol_exporter.set_export_param_value('display_mode',"2")
+    itol_exporter.set_export_param_value('current_font_size',fontsize)
+    itol_exporter.set_export_param_value('align_labels',"1")
+    itol_exporter.set_export_param_value('datafileList','dataset1')
     extname = "-itol-sd3"
     epsfile = outpath + os.sep + pfamid + extname + '.eps'
     pdffile = outpath + os.sep + pfamid + extname + '.pdf'
@@ -722,6 +676,7 @@ def Itol_Tree_linear(treefile, outpath):# {{{
 
     print("Phylogenetic tree has been output to %s"%(pdffile))
 # }}}
+
 def main(g_params):#{{{
     argv = sys.argv
     numArgv = len(argv)

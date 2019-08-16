@@ -1403,7 +1403,7 @@ def GetNumSeqInClusterFromAnnotation(line):#{{{
 #}}}
 def GetTMnameFromAnnotation(line):#{{{
     if line:
-        beg = line.find("TMname:")
+        beg = line.find("tmname:")
         if beg == -1:
             return []
         else:
@@ -1412,7 +1412,7 @@ def GetTMnameFromAnnotation(line):#{{{
                 end = len(line)
             else:
                 end = end+beg
-            ss = line[beg:end].lstrip("TMname:").strip()
+            ss = line[beg:end].lstrip("tmname:").strip()
             TMname = ss.split(';')
             return TMname
 #}}}
