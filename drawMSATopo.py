@@ -2254,14 +2254,15 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
 
     width = ((g_params['widthAnnotation'] + lengthAlignment) * (fontWidth) +
             g_params['annoSeqInterval']*fontWidthTMbox + g_params['marginX'] * 2)
-    height = ( g_params['marginY']*2 + 
-            int(1.5*g_params['heightTMbox']*fontHeightTMbox*len(specialProIdxDict['reppro'])+0.5) +
+
+    height = ( g_params['marginY']*4 +
+            len(specialProIdxDict['reppro'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5) +
             int(fontHeightScaleBar*2.5+0.5)+
-            numSeq*fontHeight + 
+            numSeq*fontHeight +
             g_params['isDrawSeprationLine'] * numSeprationLine * g_params['scaleSeprationLine']* fontHeight +
             (len(specialProIdxDict['pdb'])+len(specialProIdxDict['final']) >0)*(int(g_params['heightTMbox']*fontHeightTMbox+0.5)+sectionSepSpace*fontHeightScaleBar)+
-            len(specialProIdxDict['pdb'])*int(1.5*g_params['heightTMbox']*fontHeightTMbox+0.5)+
-            len(specialProIdxDict['final'])*int(1.5*g_params['heightTMbox']*fontHeightTMbox+0.5)+
+            len(specialProIdxDict['pdb'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)+
+            len(specialProIdxDict['final'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)+
             g_params['isDrawDGprofile'] *(len(specialProIdxDict['reppro'])*dgprofileRegionHeight+sectionSepSpace*fontHeightScaleBar)+
             g_params['isDrawPerMDistribution'] * (histoRegionHeight)
             )
@@ -2282,6 +2283,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         return 1
 
     CalculateImageScale(numSeq)
+    logger.debug("image_scale=%g"%(g_params['image_scale']))
     g_params['marginX'] = int(g_params['marginX']*g_params['image_scale']+0.5)
     g_params['marginY'] = int(g_params['marginY']*g_params['image_scale']+0.5)
 
