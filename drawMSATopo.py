@@ -801,6 +801,7 @@ def AutoSizeFontDGProfileLabel(dgprofileRegionHeight):# {{{
             break
     g_params['fntDGprofileLable'] = fnt
     g_params['fntDGprofileTic'] = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif", max(2, int(fs*0.65)))
+    g_params['fntDGprofileLegend'] = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif", max(2, int(fs*0.7)))
 
 # }}}
 
@@ -1683,10 +1684,12 @@ def GetTMType(topo):#{{{
     return posTM,typeTM
 #}}}
 
-def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{ 
-        seqID, dgprofileRegionWidth, dgprofileRegionHeight, spaceToLeftBorder,
+def DrawDGProfile(dgpList, lengthAlignment, maxDG, minDG, xy0, #{{{ 
+        dgprofileRegionWidth, dgprofileRegionHeight, spaceToLeftBorder,
         isDrawSeqID, line_mode, draw):
-    """Draw DG profile"""
+    """Draw DG profile
+    support drawing multiple DG profiles in one box
+    """
     logger.debug("Draw DG profile")
     (x0, y0) = xy0
     paddingtop = int(dgprofileRegionHeight*0.05+0.5)
@@ -1700,6 +1703,13 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
     ticline_width = max(1,  int(3*g_params['image_scale']+0.5))
     line_width = max(1, int(6*g_params['image_scale']+0.5))
     logger.debug("(minDG, maxDG)=(%f,%f)"%(minDG, maxDG))
+
+    num_dgp = len(dgpList)
+
+    blue = Color("blue")
+    red = Color("red")
+    colorpalette = list(blue.range_to(red,num_dgp))
+
 
 # draw outline box
     x1 = x0
@@ -1749,33 +1759,61 @@ def DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG, xy0, #{{{
                 fill='black')
         ytic -= step
 
-# draw seqID 
-    if isDrawSeqID:
-        text = seqID
-        x = 1
-        (textWidth,textHeight) = fnt.getsize(text)
-        y = yMiddle - textHeight
-        draw.text((x,y), text, font=fnt, fill='black')
+    for ii in range(num_dgp):
+        seqID, dgp = dgpList[ii]
+        line_color = colorpalette[ii].get_hex_l() 
 
-# draw profile
-    sizeSquare = int(g_params['image_scale']* 4+0.5)
-    pointList= []
-    papd = pointList.append
-    for (idx, dg) in aligned_dgp:
-        #print (idx, dg)
-        h = int(round(dg/(maxDG-minDG)*heightDrawRegion))
-        x1 = (x0 + int(round(widthDrawRegion*float(idx)/lengthAlignment)) -
-                sizeSquare/2)
-        y1 = yZero - h - sizeSquare/2
-        x2 = x1+sizeSquare
-        y2 = y1+sizeSquare
-        box=[x1,y1,x2,y2]
-        if line_mode == "dot":
-            draw.ellipse(box, outline='blue')
-        papd((x1+sizeSquare/2, y1+sizeSquare/2))
-    if line_mode == "line":
-        for i in xrange(0,len(pointList)-1,1):
-            draw.line([pointList[i],pointList[i+1]],fill="blue", width=line_width)
+    # draw profile
+        sizeSquare = int(g_params['image_scale']* 4+0.5)
+        pointList= []
+        papd = pointList.append
+        for (idx, dg) in dgp:
+            #print (idx, dg)
+            h = int(round(dg/(maxDG-minDG)*heightDrawRegion))
+            x1 = (x0 + int(round(widthDrawRegion*float(idx)/lengthAlignment)) -
+                    sizeSquare/2)
+            y1 = yZero - h - sizeSquare/2
+            x2 = x1+sizeSquare
+            y2 = y1+sizeSquare
+            box=[x1,y1,x2,y2]
+            if line_mode == "dot":
+                draw.ellipse(box, outline=line_color)
+            papd((x1+sizeSquare/2, y1+sizeSquare/2))
+        if line_mode == "line":
+            for i in xrange(0,len(pointList)-1,1):
+                draw.line([pointList[i],pointList[i+1]],fill=line_color, width=line_width)
+
+    # draw legend
+    fnt = g_params['fntDGprofileLegend']
+    textWidth, textHeight = fnt.getsize("Initial Topology 1")
+    bar_width = textWidth/3
+    gap_item = textWidth/4
+    gap_text_bar = bar_width/2
+    item_width = textWidth + bar_width + gap_item + gap_text_bar
+    x_padding = int(item_width*num_dgp*0.05+0.5)
+    if isDrawSeqID and num_dgp > 1:
+        # draw outline box
+        x1 = x0
+        y1 = y0 + dgprofileRegionHeight
+        x2 = x1 + item_width*num_dgp+x_padding*2
+        y2 = y1 + textHeight*2
+        box = [x1,y1,x2,y2]
+        draw.rectangle(box, outline='black', width=outline_width)
+
+    for ii in range(num_dgp):
+        seqID, dgp = dgpList[ii]
+        line_color = colorpalette[ii].get_hex_l() 
+        text = "Initial Topology %s"%(seqID.lstrip("rep"))
+        (textWidth,textHeight) = fnt.getsize(text)
+        x = x0 + ii*item_width + x_padding
+        y = y0 + dgprofileRegionHeight + textHeight/4
+        draw.text((x,y), text, font=fnt, fill='black')
+        # draw bar
+        x1 = x + textWidth + gap_text_bar
+        y1 = y + textHeight/2
+        x2 = x1 + bar_width
+        y2 = y1
+        draw.line([x1, y1, x2, y2],fill=line_color, width=line_width*2)
 
 
 #}}}
@@ -2240,6 +2278,7 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
     Calculate image parameters for the PIL method
     """
     (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
+    fontHeightDGProfileLegend = g_params['fntDGprofileLegend'].getsize("a")[1]
     (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(fontWidth, fontHeight, numSeq, specialProIdxDict, posTMList, TMnameList)
 
 
@@ -2263,7 +2302,8 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
             (len(specialProIdxDict['pdb'])+len(specialProIdxDict['final']) >0)*(int(g_params['heightTMbox']*fontHeightTMbox+0.5)+sectionSepSpace*fontHeightScaleBar)+
             len(specialProIdxDict['pdb'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)+
             len(specialProIdxDict['final'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)+
-            g_params['isDrawDGprofile'] *(len(specialProIdxDict['reppro'])*dgprofileRegionHeight+sectionSepSpace*fontHeightScaleBar)+
+            g_params['isDrawDGprofile'] *(int(dgprofileRegionHeight*1.1+0.5)+sectionSepSpace*fontHeightScaleBar)+
+            g_params['isDrawDGprofile'] *((len(specialProIdxDict['reppro'])>1)*fontHeightDGProfileLegend*3)+
             g_params['isDrawPerMDistribution'] * (histoRegionHeight)
             )
     return (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight)
@@ -2527,12 +2567,13 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         y += sectionSepSpace*fontHeightScaleBar
 # Draw DGprofile
     if g_params['isDrawDGprofile']:
+        dgpList = []
         for idx in specialProIdxDict['reppro']:
             seqID = idList[idx]
             toposeq = topoSeqList[idx]
             lengthAlignment = len(toposeq)
             DGProfileFile = GetDGProfileFileName(inFile, seqID)
-            isDrawSeqID = False
+            isDrawSeqID = True
             dgprofileDict = None
             logger.debug("seqID=%s, DGProfileFile=%s"%(seqID, DGProfileFile))
             if os.path.exists(DGProfileFile):
@@ -2547,37 +2588,42 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 aaseq = aaSeqDict[seqID]
                 dgp = RunDGScan(aaseq, seqID)
             if dgp:
-                idxmap_aligne2seq = lcmp.GetAlign2SeqMap(alignedTopoSeqList[i],
-                        alignedTopoSeqList[i].replace(GAP,""))  
-
+                idxmap_aligne2seq = lcmp.GetAlign2SeqMap(alignedTopoSeqList[idx],
+                        alignedTopoSeqList[idx].replace(GAP,""))  
                 aligned_dgp = MatchAlignedDGP(dgp, idxmap_aligne2seq, posindexmap, toposeq)
-                dgList = [x[1] for x in aligned_dgp]
-                minDG = min(-1.0, min(dgList))
-                maxDG = max(2, max(dgList))
-                line_mode = "line"
-                x = (g_params['marginX'] + g_params['widthAnnotation'] * fontWidth +  g_params['annoSeqInterval'] *
-                        fontWidthTMbox)
-                spaceToLeftBorder = (g_params['annoSeqInterval'] * fontWidthTMbox +
-                        g_params['widthAnnotation'] * fontWidth)
-                DrawDGProfile(aligned_dgp, lengthAlignment, maxDG, minDG,
-                        (x,y), seqID, dgprofileRegionWidth,
-                        dgprofileRegionHeight, spaceToLeftBorder, isDrawSeqID,
-                        line_mode, draw)
+                dgpList.append([seqID, aligned_dgp])
+        if len(dgpList) > 0:
+            dgList = []
+            for ii in range(len(dgpList)):
+                dgp = dgpList[ii][1]
+                ldg = [x[1] for x in dgp]
+                dgList += ldg
+            minDG = min(-1.0, min(dgList))
+            maxDG = max(2, max(dgList))
+            line_mode = "line"
+            x = (g_params['marginX'] + g_params['widthAnnotation'] * fontWidth +  g_params['annoSeqInterval'] *
+                    fontWidthTMbox)
+            spaceToLeftBorder = (g_params['annoSeqInterval'] * fontWidthTMbox +
+                    g_params['widthAnnotation'] * fontWidth)
+            DrawDGProfile(dgpList, lengthAlignment, maxDG, minDG,
+                    (x,y), dgprofileRegionWidth,
+                    dgprofileRegionHeight, spaceToLeftBorder, isDrawSeqID,
+                    line_mode, draw)
 
-                # Add ylabel deltaG (kcal/mol)
-                fnt_label = g_params['fntDGprofileLable']
-                (fw_l, fh_l) = fnt_label.getsize(ylabel_DGprofile)
-                image2 = Image.new('RGBA', (int(fw_l*1.1+0.5)+5, int(fh_l*1.2+0.5)+5))
-                draw2 = ImageDraw.Draw(image2)
-                draw2.text((5, 5), text=ylabel_DGprofile, font=fnt_label, fill="black")
-                image2 = image2.rotate(90, resample=1, expand=1)
-                logger.debug ("widthAdjustRatio=%f"%widthAdjustRatio)
-                px, py = int(g_params['marginX']*1.5), y + 0*int(fw_l/2)
-                sx, sy = image2.size
-                newImage.paste(image2, (px, py), mask=image2)
-                del image2
+            # Add ylabel deltaG (kcal/mol)
+            fnt_label = g_params['fntDGprofileLable']
+            (fw_l, fh_l) = fnt_label.getsize(ylabel_DGprofile)
+            image2 = Image.new('RGBA', (int(fw_l*1.1+0.5)+5, int(fh_l*1.2+0.5)+5))
+            draw2 = ImageDraw.Draw(image2)
+            draw2.text((5, 5), text=ylabel_DGprofile, font=fnt_label, fill="black")
+            image2 = image2.rotate(90, resample=1, expand=1)
+            logger.debug ("widthAdjustRatio=%f"%widthAdjustRatio)
+            px, py = int(g_params['marginX']*1.5), y + 0*int(fw_l/2)
+            sx, sy = image2.size
+            newImage.paste(image2, (px, py), mask=image2)
+            del image2
 
-                y += dgprofileRegionHeight
+            y += dgprofileRegionHeight
         y += sectionSepSpace*fontHeightScaleBar
 
 # draw distribution of 'M' percentage
@@ -4770,6 +4816,8 @@ def main(g_params):#{{{
             g_params['font'], g_params['font_size_scalebar'])
     g_params['fntTMbox'] = ImageFont.truetype(g_params['font_dir'] +
         g_params['font'], g_params['font_size_TMbox'])
+    g_params['fntDGprofileLegend'] = ImageFont.truetype(g_params['font_dir'] +
+        g_params['font'], g_params['font_size_scalebar'])
 
     if aaSeqFile != "" and os.path.exists(aaSeqFile):
         (idList, aaSeqList) = myfunc.ReadFasta_without_annotation(aaSeqFile)
