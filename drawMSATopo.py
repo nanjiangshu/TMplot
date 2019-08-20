@@ -2294,7 +2294,7 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
     width = ((g_params['widthAnnotation'] + lengthAlignment) * (fontWidth) +
             g_params['annoSeqInterval']*fontWidthTMbox + g_params['marginX'] * 2)
 
-    height = ( g_params['marginY']*4 +
+    height = (g_params['marginY']*6 +
             len(specialProIdxDict['reppro'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5) +
             int(fontHeightScaleBar*2.5+0.5)+
             numSeq*fontHeight +
@@ -2303,7 +2303,7 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
             len(specialProIdxDict['pdb'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)+
             len(specialProIdxDict['final'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)+
             g_params['isDrawDGprofile'] *(int(dgprofileRegionHeight*1.1+0.5)+sectionSepSpace*fontHeightScaleBar)+
-            g_params['isDrawDGprofile'] *((len(specialProIdxDict['reppro'])>1)*fontHeightDGProfileLegend*3)+
+            g_params['isDrawDGprofile'] *((len(specialProIdxDict['reppro'])>1)*fontHeightDGProfileLegend*4)+
             g_params['isDrawPerMDistribution'] * (histoRegionHeight)
             )
     return (width, height, fontWidthTMbox, fontHeightTMbox, dgprofileRegionWidth, dgprofileRegionHeight, histoRegionWidth, histoRegionHeight)
