@@ -75,7 +75,7 @@ GAP = myfunc.GAP
 #    1. columns with mostly gaps and not TM regions are shrinked according to
 #    its reciprocal gap percentage.
 # ChangeLog 2011-11-24
-#    1. Bug solved for ShrinkGapInMSA. The function ShrinkGapInMSA_1 is used by
+#    1. Bug solved for ShrinkGapInMSA. The function ShrinkGapInMSA_0 is used by
 #    default now.
 # ChangeLog 2011-11-25
 #    1. Bug solved in IsSafetoDeleteTheRegion so that the beginning and end
@@ -84,7 +84,7 @@ GAP = myfunc.GAP
 #    subsequence in the block there are at most one state, it is OK to shrink
 #    the block to one column
 # ChangeLog 2011-12-01 
-#    1. Bug in ShrinkGapInMSA_1 fixed
+#    1. Bug in ShrinkGapInMSA_0 fixed
 # ChangeLog 2012-02-22
 #    1. For pairwise topology alignment, annotation is the sequence id
 # ChangeLog 2012-02-23
@@ -741,6 +741,7 @@ def AutoSizeFontTMBox(fontWidthAlign, fontHeightAlign, numSeq, specialProIdxDict
                     ss = TMname[j]
                 except IndexError:
                     ss = "TM %d"%(j+1)
+                ss = "%d"%(j+1)
                 boxWidth = fontWidthAlign * (e-b)
                 textWidth, textHeight = fnt.getsize(ss)
                 margin = boxWidth - textWidth
@@ -749,15 +750,17 @@ def AutoSizeFontTMBox(fontWidthAlign, fontHeightAlign, numSeq, specialProIdxDict
                     maxMargin = margin
                 if margin < minMargin:
                     minMargin = margin
-        #print ("itr=", itr, "fs=",fs, "(minMargin,maxMargin, fontHeightAlign) = ",(minMargin, maxMargin, fontHeightAlign))
+        #logger.debug("itr=%s"%str(itr) + " fs=%s"%str(fs)+ " (minMargin,maxMargin, fontHeightAlign) = "%(minMargin, maxMargin, fontHeightAlign))
 
-        if minMargin < fontHeightAlign/2:
+        if minMargin < 5:
             fs -= 1
         elif minMargin >= fontHeightAlign*2:
             fs += 1
         else:
             break
         itr += 1
+        if textHeight < fontHeightAlign*numSeq*0.1 and textHeight > fontHeightAlign*numSeq*0.05:
+            break
         if itr > MAX_ITR:
             break
 
@@ -770,6 +773,8 @@ def AutoSizeFontTMBox(fontWidthAlign, fontHeightAlign, numSeq, specialProIdxDict
     g_params['fntTMbox_label'] = ImageFont.truetype(g_params['font_dir'] +
             "DejaVuSerif", g_params['font_size_TMbox']+1)
     fnt = ImageFont.truetype(g_params['font_dir'] + g_params['font'], fs)
+
+    logger.debug("font_size_TMbox=%d", g_params['font_size_TMbox'])
     #print "fs=",fs
     return fnt.getsize("M")
 #}}}
@@ -1023,7 +1028,32 @@ def IsSafetoDeleteTheRegionNew(origTopoSeqList, startOrig, endOrig,#{{{
                             return False
     return True
 #}}}
+def IsAtTMregionOfSpecialPro(i, topoSeqList, specialProIdxList):# {{{
+    """
+    Check if the residue position is at TM region of the speical proteins
+    """
+    for idx in specialProIdxList:
+        if topoSeqList[idx][i] == "M":
+            return True
+    else:
+        return False
+# }}}
+def GetPosTM_MSA(posTMList, specialProIdxList):# {{{
+    """
+    Get the beginning and end position of the MSA which has TM helices
+    """
+    beg = 9999999999
+    end = -1
+    for i in range(posTMList):
+        if not i in specialProIdxList:
+            posTM = posTMList[i]
+            if posTM[0][0] < beg:
+                beg = posTM[0][0]
+            if posTM[-1][1] > end:
+                end = posTM[-1][1]
+    return (beg, end)
 
+# }}}
 def ShrinkSeq(seq, shrinkedwidth):#{{{
     """Shrink the seq to shrinkedwidth"""
     N = len(seq)
@@ -1035,7 +1065,7 @@ def ShrinkSeq(seq, shrinkedwidth):#{{{
         newseq += seq[idx]
     return newseq
 #}}}
-def ShrinkGapInMSA_0(topoSeqList):#{{{
+def ShrinkGapInMSA_0(topoSeqList, specialProIdxList=[]):#{{{
     """Shrink the gap regions
     topoSeqList will be updated and return the maparray"""
 # For columns without 'M', shrink the region of each sequencs in the block to 
@@ -1053,6 +1083,8 @@ def ShrinkGapInMSA_0(topoSeqList):#{{{
 #     For flat regions with length > 5, shrink them to  min(L, L/5*N/2)
 #     For smooth profile with a peak, take the region above 50% 
 #
+# For TM regions in specialProIdxList, do not shrink it if it is at the
+# beginning and end
     (cnt_i, cnt_o, cnt_M, cnt_GAP, 
             per_i, per_o, per_M, per_GAP) = lcmp.GetTopoStateFraction(
                     topoSeqList)
@@ -1061,7 +1093,10 @@ def ShrinkGapInMSA_0(topoSeqList):#{{{
     numSeq = len(topoSeqList)
     newList = [""]*numSeq
     posindexmap = {}
-    
+    num_specialpro = len(specialProIdxList)
+    posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
+    (begTM_MSA, endTM_MSA) = GetPosTM_MSA(posTMList, specialProIdxList)
+
     cnt = 0
     while i < lengthAlignment:
         j = 0
@@ -1112,65 +1147,72 @@ def ShrinkGapInMSA_0(topoSeqList):#{{{
                     cnt += 2
             i += j;#}}}
         else: # starts a region with M#{{{
-            sumPer_i = 0.0
-            sumPer_o + 0.0
-            while i+j < lengthAlignment and per_M[i+j] > 0.0:
-                sumPer_i += per_i[i+j]
-                sumPer_o += per_i[i+j]
-                j += 1
+            if num_specialpro > 0:
+                if (IsAtTMregionOfSpecialPro(i, topoSeqList, specialProIdxList) and
+                    (i < begTM_MSA and i>=endTM_MSA)):
+                    for iseq in xrange(numSeq):
+                        newList[iseq] =  topoSeqList[iseq][i]
+                i += 1
+            else:
+                sumPer_i = 0.0
+                sumPer_o + 0.0
+                while i+j < lengthAlignment and per_M[i+j] > 0.0:
+                    sumPer_i += per_i[i+j]
+                    sumPer_o += per_i[i+j]
+                    j += 1
 #find all flat regions with >=5 residues
 #             print cnt_M[i:i+j]
-            posFlatRegionList = GetPositionIdenticalAdjacentNumber(
-                    cnt_M[i:i+j], i, 5)
+                posFlatRegionList = GetPositionIdenticalAdjacentNumber(
+                        cnt_M[i:i+j], i, 5)
 # get the rest regions
-            posNonFlatRegionList = GetRemainingSegmentList(i, i+j,
-                    posFlatRegionList)
+                posNonFlatRegionList = GetRemainingSegmentList(i, i+j,
+                        posFlatRegionList)
 
-            mergedRegionList = []
-            for (b,e)in posFlatRegionList:
-                mergedRegionList.append(('flat', b, e))
-            for (b,e)in posNonFlatRegionList:
-                mergedRegionList.append(('nonflat', b, e))
-            mergedRegionList = sorted(mergedRegionList, key=lambda tup:tup[1])
+                mergedRegionList = []
+                for (b,e)in posFlatRegionList:
+                    mergedRegionList.append(('flat', b, e))
+                for (b,e)in posNonFlatRegionList:
+                    mergedRegionList.append(('nonflat', b, e))
+                mergedRegionList = sorted(mergedRegionList, key=lambda tup:tup[1])
 
-            for (state, b, e) in mergedRegionList:
-                if state == 'flat':
-                    shrinkedwidth = max(2, int(round((e-b)* min(1.0,
-                        per_M[b]*10))))
-                    for iseq in xrange(numSeq):
-                        newList[iseq] += ShrinkSeq(topoSeqList[iseq][b:e],
-                                shrinkedwidth)
-                    for k in xrange(cnt, cnt+shrinkedwidth):
-                        posindexmap[k] = (b +
-                            int(round((k-cnt)*(e-b)/float(shrinkedwidth-1))))
-                    cnt += shrinkedwidth
-                else:
-                    selectedPosList = []
-                    minPerM = min(per_M[b:e])
-                    maxPerM = max(per_M[b:e])
-                    middlePerM = minPerM + (maxPerM - minPerM)*0.6 
-                    for k in xrange(b,e):
-                        if per_M[k] >= middlePerM:
-                            selectedPosList.append(k)
-                    selectedPosListSet = set(selectedPosList)
-                    for k in range(b, e):
-                        if (k in selectedPosListSet or not
-                                IsSafetoDeleteTheRegion(topoSeqList, k, k+1)):
-                            for iseq in xrange(numSeq):
-                                    newList[iseq] += topoSeqList[iseq][k]
-                            posindexmap[cnt] = k
-                            cnt += 1
-            i += j
+                for (state, b, e) in mergedRegionList:
+                    if state == 'flat':
+                        shrinkedwidth = max(2, int(round((e-b)* min(1.0,
+                            per_M[b]*10))))
+                        for iseq in xrange(numSeq):
+                            newList[iseq] += ShrinkSeq(topoSeqList[iseq][b:e],
+                                    shrinkedwidth)
+                        for k in xrange(cnt, cnt+shrinkedwidth):
+                            posindexmap[k] = (b +
+                                int(round((k-cnt)*(e-b)/float(shrinkedwidth-1))))
+                        cnt += shrinkedwidth
+                    else:
+                        selectedPosList = []
+                        minPerM = min(per_M[b:e])
+                        maxPerM = max(per_M[b:e])
+                        middlePerM = minPerM + (maxPerM - minPerM)*0.6 
+                        for k in xrange(b,e):
+                            if per_M[k] >= middlePerM:
+                                selectedPosList.append(k)
+                        selectedPosListSet = set(selectedPosList)
+                        for k in range(b, e):
+                            if (k in selectedPosListSet or not
+                                    IsSafetoDeleteTheRegion(topoSeqList, k, k+1)):
+                                for iseq in xrange(numSeq):
+                                        newList[iseq] += topoSeqList[iseq][k]
+                                posindexmap[cnt] = k
+                                cnt += 1
+                i += j
 #}}}
     for iseq in xrange(numSeq):
         topoSeqList[iseq] = newList[iseq]
     return posindexmap
 
 #}}}
-def ShrinkGapInMSA_1(idList, topoSeqList): #{{{
+def ShrinkGapInMSA_0(idList, topoSeqList): #{{{
     """Shrink the gap regions
     topoSeqList will be updated and return the maparray
-    by default ShrinkGapInMSA_1 is used"""
+    by default ShrinkGapInMSA_0 is used"""
 # For columns without 'M', shrink the region of each sequencs in the block to 
 #     1. '' if there are no 'i' or 'o' in the block
 #     2. 'i' or ' ' if there is no 'o' in the block
@@ -1668,9 +1710,9 @@ def GetTMType(topo):#{{{
             if (oa==-1):
                 oa=lengthTopo
             if (ib>ob and ia>oa):
-                type="M"
+                type="M" # out -> in
             elif(ib<ob and ia<oa):
-                type="W"
+                type="W" # in -> out
             elif(ib>ob and ia<oa):
                 type="R"
             elif(ib<ob and ia>oa):
@@ -1803,7 +1845,10 @@ def DrawDGProfile(dgpList, lengthAlignment, maxDG, minDG, xy0, #{{{
     for ii in range(num_dgp):
         seqID, dgp = dgpList[ii]
         line_color = colorpalette[ii].get_hex_l() 
-        text = "Initial Topology %s"%(seqID.lstrip("rep"))
+        if (num_dgp) == 1:
+            text = "Initial Topology"
+        else:
+            text = "Initial Topology %s"%(seqID.lstrip("rep"))
         (textWidth,textHeight) = fnt.getsize(text)
         x = x0 + ii*item_width + x_padding
         y = y0 + dgprofileRegionHeight + textHeight/4
@@ -1834,10 +1879,14 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
     marginTop = 0
     marginBottom = 0
     incolor="#F2EABD"
-    outcolor="#CCFFFF"
-    outline_color = "black"
-    text_color = "black"
-    outline_width = int(4*g_params['image_scale']+0.5)
+    #outcolor="#CCFFFF"
+    incolor = g_params['loopcolor_in']
+    outcolor = g_params['loopcolor_out']
+    base_outline_color = "black"
+    base_text_color = "black"
+    base_outline_width = int(4*g_params['image_scale']+0.5)
+    loop_height = fontHeightTMbox*0.4
+
     cnt = 0
     last=x0
     for (b, e) in posTM:
@@ -1846,48 +1895,71 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
         x2 = x0 + e*fontWidth
         y2 = y0 + int(heightTMbox*fontHeightTMbox +0.5) + marginBottom
         box=[x1, y1 , x2, y2]
+
+        outline_width = base_outline_width
+        text_color = base_text_color
+        outline_color = base_outline_color
+
+        text = ""
+        try:
+            label = TMname[cnt]
+        except IndexError:
+            label = "TM %d"%(cnt+1)
+        if label.find("-") != -1:
+            tp = label.split("-")[1]
+            if tp.find("S") == 0: #scaffold
+                outline_color = "#A52A2A" # brown
+            elif tp.find("BC") == 0: #broken core
+                outline_color = "#e75480" # dark pink
+            elif tp.find("RC") == 0: # reentrant core
+                outline_color = "#008000" # green
+            outline_width = base_outline_width*2
+
+        if label.find("-RC") != -1:
+            text = "RH"
+        else:
+            text = "%d"%(cnt+1)
+
+        logger.debug("label=%s, outline_color=%s, outline_width=%d"%(label, outline_color, outline_width))
+
         if (typeTM[cnt]=="M"): # out to in
-            draw.rectangle(box, fill="grey", outline=outline_color, width=outline_width)
-            #draw.line([last,y2,x1,y2],incolor)
-            draw.rectangle([last,y2-fontHeightTMbox/5,x1,y2],fill=incolor)
+            draw.rectangle(box, fill=g_params['memcolor_out_to_in'], outline=outline_color, width=outline_width)
+            #draw.line([last,y2,x1,y2],g_params['loopcolor_in'])
+            draw.rectangle([last,y2-loop_height,x1,y2],fill=incolor)
         elif (typeTM[cnt]=="W"): # in to out
-            draw.rectangle(box, fill="white", outline=outline_color, width=outline_width)
+            draw.rectangle(box, fill=g_params['memcolor_in_to_out'], outline=outline_color, width=outline_width)
             #draw.line([last,y1,x1,y1],outcolor)
-            draw.rectangle([last,y1,x1,y1+fontHeightTMbox/5],fill=outcolor)
+            draw.rectangle([last,y1,x1,y1+loop_height],fill=outcolor)
         elif (typeTM[cnt]=="R"): # Reeentrant inside
             y1 = y0 - marginTop + int(heightTMbox*fontHeightTMbox/2.0+0.5)
             y2 = y0 + int(heightTMbox*fontHeightTMbox+0.5) + marginBottom
             box=[x1, y1 , x2, y2]
             draw.rectangle(box, fill=incolor, outline=outline_color, width=outline_width)
             #draw.line([last,y2,x1,y2],incolor)
-            draw.rectangle([last,y2-fontHeightTMbox/5,x1,y2],fill=incolor)
+            draw.rectangle([last,y2-loop_height,x1,y2],fill=incolor)
         elif (typeTM[cnt]=="r"): # Reentrant outside
             y1 = y0 - marginTop
             y2 = y0 + int(heightTMbox*fontHeightTMbox/2.0+0.5) + marginBottom
             box=[x1, y1 , x2, y2]
             draw.rectangle(box, fill=outcolor, outline=outline_color, width=outline_width)
             #draw.line([last,y1,x1,y1],outcolor)
-            draw.rectangle([last,y1,x1,y1+fontHeightTMbox/5],fill=outcolor)
+            draw.rectangle([last,y1,x1,y1+loop_height],fill=outcolor)
         else:
             draw.rectangle(box, fill="violet", outline=outline_color, width=outline_width)
         last=x2
         # draw text
-        try:
-            s = TMname[cnt]
-        except IndexError:
-            s = "TM %d"%(cnt+1)
-        (textwidth, textheight) = fntTMbox.getsize(s)
+        (textwidth, textheight) = fntTMbox.getsize(text)
         textheight+=2
         x3 = int(round((x1+x2-textwidth)/2.0))
         y3 = int(round((y1+y2-textheight)/2.0))
-        draw.text((x3, y3), s, font=fntTMbox, fill=text_color)
+        draw.text((x3, y3), text, font=fntTMbox, fill=text_color)
         cnt += 1
     if (typeTM[cnt-1]=="R" or typeTM[cnt-1]=="W"):
         #draw.line([x2,y2,x0 + length*fontWidth,y2],incolor)
-        draw.rectangle([x2,y2-fontHeightTMbox/5,x0 + length*fontWidth,y2],fill=incolor)
+        draw.rectangle([x2,y2-loop_height,x0 + length*fontWidth,y2],fill=incolor)
     elif (typeTM[cnt-1]=="r" or (typeTM[cnt-1]=="M")):
         draw.line([x2,y1,x0 + length*fontWidth,y1],outcolor)
-        draw.rectangle([x2,y1,x0 + length*fontWidth,y1+fontHeightTMbox/5],fill=outcolor)
+        draw.rectangle([x2,y1,x0 + length*fontWidth,y1+loop_height],fill=outcolor)
 #}}}
 def DrawScale(length, posindexmap, xy0, font_size_alignment, #{{{
         fontWidth, fontHeight, draw):
@@ -2187,12 +2259,24 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
         x += annoSeqInterval * fontWidthTMbox
 #}}}
 
+
     bg="#FFFFFF"; #white
+    memcolor = "#FF0000"
+
     lengthSeq = len(toposeq)
-    posTM = myfunc.GetTMPosition(toposeq)
+    (posTM, typeTM) = GetTMType(toposeq)
+    seq_typeTM = [] # seq_typeTM is a list to name the type at every TM residue
+                    # position, it defines only the types at the TM position, not loops
+    seq_typeTM = [' '] * lengthSeq
+    for jj in range(len(posTM)):
+        tp = typeTM[jj]
+        b,e = posTM[jj]
+        for kk in range(b,e):
+            seq_typeTM[kk] = tp
+
+
 # it is much faster to draw a block of text than drawing characters one by one
     i=0
-    memcolor="#FF0000"
     if g_params['isColorByKingdom']:
         if ("Eukaryota" in anno):
             memcolor="#0000FF"; #blue
@@ -2202,7 +2286,7 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
             memcolor="#FF0000"; #red
         else:  
             memcolor="#808080"; #grey
-        
+
     while i < lengthSeq:
         j=i
         while j < lengthSeq and toposeq[j] == toposeq[i]:
@@ -2210,14 +2294,20 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
         lengthSegment = j-i
 
         if toposeq[i] == "M":
-            bg=memcolor
+            if seq_typeTM[i] == "M":
+                bg=g_params['memcolor_out_to_in']
+            elif seq_typeTM[i] == "W":
+                bg = g_params['memcolor_in_to_out']
+            bg = "red"
         elif toposeq[i] == "i":
-            bg="#F2EABD"; # light yellow
+            #bg = "#F2EABD"; # light yellow
+            bg = g_params['loopcolor_in']
         elif toposeq[i] == "o":
-            bg="#CCFFFF"; # faded blue
+            #bg="#CCFFFF"; # faded blue
+            bg = g_params['loopcolor_out']
         elif toposeq[i] == "S":
-            bg="#228B22"; # forestgreen for signal peptide
-
+            #bg="#228B22"; # forestgreen for signal peptide
+            bg = g_params['spcolor']
 
         else:
             if g_params['isColorWholeTMbox'] and IsWithinTMRegion(i, posTM):
@@ -2283,7 +2373,7 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
 
 
     dgprofileRegionWidth = lengthAlignment * fontWidth
-    dgprofileRegionHeight = max(30, int(round(lengthAlignment * fontHeight * widthAdjustRatio*0.04)), int(round(numSeq * fontHeight * 0.2)), g_params['heightTMbox']*fontHeightTMbox*2)
+    dgprofileRegionHeight = max(30, int(round(lengthAlignment * fontHeight * widthAdjustRatio*0.15)), int(round(numSeq * fontHeight * 0.2)), g_params['heightTMbox']*fontHeightTMbox*2)
 
     histoRegionWidth = lengthAlignment * fontWidth
     histoRegionHeight = max(50, int(round(lengthAlignment*fontHeight*widthAdjustRatio* 0.1)), int(round(numSeq*fontHeight* 0.1)))
@@ -2360,7 +2450,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     posindexmap = {}
     if g_params['isShrink']:
         if g_params['method_shrink'] == 0:
-            posindexmap = ShrinkGapInMSA_1(idList, topoSeqList)
+            posindexmap = ShrinkGapInMSA_0(idList, topoSeqList)
         elif g_params['method_shrink'] == 1:
             posindexmap = ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList)
 
@@ -2698,7 +2788,7 @@ def DrawMSATopo_SVG(inFile, g_params):#{{{
 
     posindexmap = {}
     if g_params['isShrink']:
-        posindexmap = ShrinkGapInMSA_1(idList, topoSeqList)
+        posindexmap = ShrinkGapInMSA_0(idList, topoSeqList)
 
     posTM = myfunc.GetTMPosition(topoSeqList[0])
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
@@ -2812,7 +2902,7 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
 
     if g_params['isShrink']:
         if g_params['method_shrink'] == 0:
-            posindexmap = ShrinkGapInMSA_1(idList, topoSeqList)
+            posindexmap = ShrinkGapInMSA_0(idList, topoSeqList)
         elif g_params['method_shrink'] == 1:
             posindexmap = ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList)
 
@@ -3299,7 +3389,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
 
     if g_params['isShrink']:
         if g_params['method_shrink'] == 0:
-            posindexmap = ShrinkGapInMSA_1(idList, topoSeqList)
+            posindexmap = ShrinkGapInMSA_0(idList, topoSeqList)
         elif g_params['method_shrink'] == 1:
             posindexmap = ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList)
         elif g_params['method_shrink'] == 2:
@@ -3976,7 +4066,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
 
     if g_params['isShrink']:
         if g_params['method_shrink'] == 0:
-            posindexmap = ShrinkGapInMSA_1(idList, topoSeqList)
+            posindexmap = ShrinkGapInMSA_0(idList, topoSeqList)
         elif g_params['method_shrink'] == 1:
             posindexmap = ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList)
         elif g_params['method_shrink'] == 2:
@@ -4597,7 +4687,7 @@ def DrawMSATopo_PYX(inFile, g_params):#{{{
 
     posindexmap = {}
     if g_params['isShrink']:
-        posindexmap = ShrinkGapInMSA_1(idList, topoSeqList)
+        posindexmap = ShrinkGapInMSA_0(idList, topoSeqList)
 
     posTM = myfunc.GetTMPosition(topoSeqList[0])
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
@@ -4915,6 +5005,15 @@ def InitGlobalParameter():#{{{
     g_params['pdfcrop_margin_right']   = 10
     g_params['pdfcrop_margin_bottom']  = 5
     g_params['MAX_SIZE_ANNOTATION'] = 30 # maximum width of annotation
+
+
+    g_params['memcolor_out_to_in'] = "#DCDCDC"  #very light grey, type = M
+    g_params['memcolor_in_to_out'] = "#808080"  #grey           , type = W
+    #g_params['loopcolor_in'] = "#FFBFB3"        # light red
+    g_params['loopcolor_in'] = "#F2EABD"        # light red
+    #g_params['loopcolor_out'] = "#87CEFA"       # light sky blue
+    g_params['loopcolor_out'] = "#CCFFFF"       # faded blue
+    g_params['spcolor'] = "#000000"       # signal peptide, black
 
     g_params['method'] = 'pil' #pyx
     g_params['isPrintDebugInfo'] = False
