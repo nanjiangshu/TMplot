@@ -1741,9 +1741,9 @@ def DrawDGProfile(dgpList, lengthAlignment, maxDG, minDG, xy0, #{{{
     widthDrawRegion = dgprofileRegionWidth
 
     font_size = g_params['font_size_scalebar']
-    outline_width = max(1, int(4*g_params['image_scale']+0.5))
-    ticline_width = max(1,  int(3*g_params['image_scale']+0.5))
-    line_width = max(1, int(6*g_params['image_scale']+0.5))
+    line_width = max(1, int(dgprofileRegionHeight*0.02+0.5))
+    outline_width = max(1, int(line_width*0.75+0.5))
+    ticline_width = max(1,  int(outline_width*0.75+0.5))
     logger.debug("(minDG, maxDG)=(%f,%f)"%(minDG, maxDG))
 
     num_dgp = len(dgpList)
@@ -1910,7 +1910,7 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
             if tp.find("S") == 0: #scaffold
                 outline_color = "#A52A2A" # brown
             elif tp.find("BC") == 0: #broken core
-                outline_color = "#e75480" # dark pink
+                outline_color = "#FF0090" # 
             elif tp.find("RC") == 0 : # reentrant core
                 outline_color = "#008000" # green
             outline_width = base_outline_width*2
@@ -2297,16 +2297,16 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
 
         if toposeq[i] == "M":
             if seq_typeTM[i] == "M":
-                bg=g_params['memcolor_out_to_in']
+                bg=g_params['memcolor_out_to_in_MSA']
             elif seq_typeTM[i] == "W":
-                bg = g_params['memcolor_in_to_out']
+                bg = g_params['memcolor_in_to_out_MSA']
             #bg = "red"
         elif toposeq[i] == "i":
             #bg = "#F2EABD"; # light yellow
-            bg = g_params['loopcolor_in']
+            bg = g_params['loopcolor_in_MSA']
         elif toposeq[i] == "o":
             #bg="#CCFFFF"; # faded blue
-            bg = g_params['loopcolor_out']
+            bg = g_params['loopcolor_out_MSA']
         elif toposeq[i] == "S":
             #bg="#228B22"; # forestgreen for signal peptide
             bg = g_params['spcolor']
@@ -2373,9 +2373,11 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
     fontHeightDGProfileLegend = g_params['fntDGprofileLegend'].getsize("a")[1]
     (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(fontWidth, fontHeight, numSeq, specialProIdxDict, posTMList, TMnameList)
 
+    width = ((g_params['widthAnnotation'] + lengthAlignment) * (fontWidth) +
+            g_params['annoSeqInterval']*fontWidthTMbox + g_params['marginX'] * 2)
 
     dgprofileRegionWidth = lengthAlignment * fontWidth
-    dgprofileRegionHeight = max(30, int(round(lengthAlignment * fontHeight * widthAdjustRatio*0.15)), int(round(numSeq * fontHeight * 0.2)), g_params['heightTMbox']*fontHeightTMbox*2)
+    dgprofileRegionHeight = max(30, int(width*0.15+0.5), int(round(numSeq * fontHeight * 0.2)), g_params['heightTMbox']*fontHeightTMbox*2)
 
     histoRegionWidth = lengthAlignment * fontWidth
     histoRegionHeight = max(50, int(round(lengthAlignment*fontHeight*widthAdjustRatio* 0.1)), int(round(numSeq*fontHeight* 0.1)))
@@ -5011,10 +5013,14 @@ def InitGlobalParameter():#{{{
 
     g_params['memcolor_out_to_in'] = "#DCDCDC"  #very light grey, type = M
     g_params['memcolor_in_to_out'] = "#808080"  #grey           , type = W
+    g_params['memcolor_out_to_in_MSA'] = "#FF6666"  # light red, type M
+    g_params['memcolor_in_to_out_MSA'] = "#CC0000"  # dark red, type W
     #g_params['loopcolor_in'] = "#FFBFB3"        # light red
-    g_params['loopcolor_in'] = "#F2EABD"        # light red
+    g_params['loopcolor_in'] = "#FFFF00"        # yellow
+    g_params['loopcolor_in_MSA'] = "#F2EABD"        # yellow
     #g_params['loopcolor_out'] = "#87CEFA"       # light sky blue
-    g_params['loopcolor_out'] = "#CCFFFF"       # faded blue
+    g_params['loopcolor_out'] = "#3399FF"       # blue
+    g_params['loopcolor_out_MSA'] = "#CCFFFF"       # faded blue
     g_params['spcolor'] = "#000000"       # signal peptide, black
 
     g_params['method'] = 'pil' #pyx
