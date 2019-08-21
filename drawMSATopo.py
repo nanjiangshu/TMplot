@@ -1884,7 +1884,7 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
     outcolor = g_params['loopcolor_out']
     base_outline_color = "black"
     base_text_color = "black"
-    base_outline_width = int(4*g_params['image_scale']+0.5)
+    base_outline_width = int(fontHeightTMbox*g_params['heightTMbox']*0.06+0.5)
     loop_height = fontHeightTMbox*0.4
 
     cnt = 0
@@ -1904,21 +1904,23 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
         try:
             label = TMname[cnt]
         except IndexError:
-            label = "TM %d"%(cnt+1)
+            label = "%d"%(cnt+1)
         if label.find("-") != -1:
             tp = label.split("-")[1]
             if tp.find("S") == 0: #scaffold
                 outline_color = "#A52A2A" # brown
             elif tp.find("BC") == 0: #broken core
                 outline_color = "#e75480" # dark pink
-            elif tp.find("RC") == 0: # reentrant core
+            elif tp.find("RC") == 0 : # reentrant core
                 outline_color = "#008000" # green
             outline_width = base_outline_width*2
 
-        if label.find("-RC") != -1:
+        if label.find("RH-RC") != -1:
             text = "RH"
+        elif label.find("TM") != -1:
+            text = label.split("-")[0].lstrip("TM").strip()
         else:
-            text = "%d"%(cnt+1)
+            text = label
 
         logger.debug("label=%s, outline_color=%s, outline_width=%d"%(label, outline_color, outline_width))
 
@@ -2298,7 +2300,7 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
                 bg=g_params['memcolor_out_to_in']
             elif seq_typeTM[i] == "W":
                 bg = g_params['memcolor_in_to_out']
-            bg = "red"
+            #bg = "red"
         elif toposeq[i] == "i":
             #bg = "#F2EABD"; # light yellow
             bg = g_params['loopcolor_in']
