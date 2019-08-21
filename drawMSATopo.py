@@ -963,69 +963,72 @@ def IsSafetoDeleteTheRegionNew(origTopoSeqList, startOrig, endOrig,#{{{
 # The left side should be checked with the newTopoSeqList
 # subsequence is obtained from origTopoSeqList[i][startOrig:endOrig]
 # startNew is the position in the newTopoSeqList
-    GAP = g_params['GAP']
-    lengthAlignment = len(origTopoSeqList[0])
-    numSeq = len(origTopoSeqList)
-    stateList = 'ioM'
-    numState = len(stateList)
-    if g_params['isDrawKRBias'] and (sum(per_K[startOrig:endOrig]) +
-        sum(per_R[startOrig:endOrig])) > 0.0:
-        return False
-
-    if startOrig < 1 or endOrig >= lengthAlignment -1:
-        return False
-    for i in xrange(numSeq):
-        topoOrig = origTopoSeqList[i]
-        topoNew = newTopoSeqList[i]
-        cntFoundState = 0
-        pList = [-1]*numState
-        for j in xrange(numState):
-            pList[j] = topoOrig[startOrig:endOrig].find(stateList[j])
-            if pList[j] >= 0:
-                cntFoundState += 1
-        if cntFoundState >= 3:
+    try:
+        GAP = g_params['GAP']
+        lengthAlignment = len(origTopoSeqList[0])
+        numSeq = len(origTopoSeqList)
+        stateList = 'ioM'
+        numState = len(stateList)
+        if g_params['isDrawKRBias'] and (sum(per_K[startOrig:endOrig]) +
+            sum(per_R[startOrig:endOrig])) > 0.0:
             return False
-        elif cntFoundState >= 1:
-            gaplesssubstr = topoOrig[startOrig:endOrig].replace(GAP, '')
-            if len(gaplesssubstr) > 0:
+
+        if startOrig < 1 or endOrig >= lengthAlignment -1:
+            return False
+        for i in xrange(numSeq):
+            topoOrig = origTopoSeqList[i]
+            topoNew = newTopoSeqList[i]
+            cntFoundState = 0
+            pList = [-1]*numState
+            for j in xrange(numState):
+                pList[j] = topoOrig[startOrig:endOrig].find(stateList[j])
+                if pList[j] >= 0:
+                    cntFoundState += 1
+            if cntFoundState >= 3:
+                return False
+            elif cntFoundState >= 1:
+                gaplesssubstr = topoOrig[startOrig:endOrig].replace(GAP, '')
+                if len(gaplesssubstr) > 0:
 # get the first char and last char of the gapless substr
-                firstT = gaplesssubstr[0]
-                lastT = gaplesssubstr[len(gaplesssubstr)-1]
+                    firstT = gaplesssubstr[0]
+                    lastT = gaplesssubstr[len(gaplesssubstr)-1]
 # check the first non GAP state on the right side and left side, if both are
 # 'M', it is not safe to delete, otherwise safe 
 # scan the left side
-                j = startNew -1
-                while j >= 1:
-                    if topoNew[j] != GAP:
-                        break
-                    j -= 1
-                if j >= 0:
-                    firstLeftSideState = topoNew[j]
-                else:
-                    firstLeftSideState = 'X'
-                p1 = j
+                    j = startNew -1
+                    while j >= 1:
+                        if topoNew[j] != GAP:
+                            break
+                        j -= 1
+                    if j >= 0:
+                        firstLeftSideState = topoNew[j]
+                    else:
+                        firstLeftSideState = 'X'
+                    p1 = j
 # go the right side
-                j = endOrig
-                while j < lengthAlignment -1:
-                    if topoOrig[j] != GAP:
-                        break
-                    j += 1
-                firstRightSideState = topoOrig[j]
-                p2 = j
-        # 1. leaving the beginning and end topology state unchanged
-        # 2. do not remove the region of both sides are TM helices, otherwise,
-        # two TM helices will be merged into one
-                if (p1 < 0 or p2 == lengthAlignment-1 ):
-                    return False
-                else:
-                    if cntFoundState == 2:
-                        if not (lastT == firstRightSideState and
-                                firstT == firstLeftSideState):
-                            return False
-                    elif cntFoundState == 1:
-                        if not (lastT == firstRightSideState or
-                                firstT == firstLeftSideState):
-                            return False
+                    j = endOrig
+                    while j < lengthAlignment -1:
+                        if topoOrig[j] != GAP:
+                            break
+                        j += 1
+                    firstRightSideState = topoOrig[j]
+                    p2 = j
+            # 1. leaving the beginning and end topology state unchanged
+            # 2. do not remove the region of both sides are TM helices, otherwise,
+            # two TM helices will be merged into one
+                    if (p1 < 0 or p2 == lengthAlignment-1 ):
+                        return False
+                    else:
+                        if cntFoundState == 2:
+                            if not (lastT == firstRightSideState and
+                                    firstT == firstLeftSideState):
+                                return False
+                        elif cntFoundState == 1:
+                            if not (lastT == firstRightSideState or
+                                    firstT == firstLeftSideState):
+                                return False
+    except IndexError:
+        return False
     return True
 #}}}
 def IsAtTMregionOfSpecialPro(i, topoSeqList, specialProIdxList):# {{{
@@ -1044,7 +1047,7 @@ def GetPosTM_MSA(posTMList, specialProIdxList):# {{{
     """
     beg = 9999999999
     end = -1
-    for i in range(posTMList):
+    for i in range(len(posTMList)):
         if not i in specialProIdxList:
             posTM = posTMList[i]
             if posTM[0][0] < beg:
@@ -1065,7 +1068,7 @@ def ShrinkSeq(seq, shrinkedwidth):#{{{
         newseq += seq[idx]
     return newseq
 #}}}
-def ShrinkGapInMSA_0(topoSeqList, specialProIdxList=[]):#{{{
+def ShrinkGapInMSA_obsolete(topoSeqList, specialProIdxList=[]):#{{{
     """Shrink the gap regions
     topoSeqList will be updated and return the maparray"""
 # For columns without 'M', shrink the region of each sequencs in the block to 
@@ -1209,7 +1212,7 @@ def ShrinkGapInMSA_0(topoSeqList, specialProIdxList=[]):#{{{
     return posindexmap
 
 #}}}
-def ShrinkGapInMSA_0(idList, topoSeqList): #{{{
+def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
     """Shrink the gap regions
     topoSeqList will be updated and return the maparray
     by default ShrinkGapInMSA_0 is used"""
@@ -1232,6 +1235,12 @@ def ShrinkGapInMSA_0(idList, topoSeqList): #{{{
             per_i, per_o, per_M, per_GAP) = lcmp.GetTopoStateFraction(
                     topoSeqList)
     isDrawKRBias = g_params['isDrawKRBias']
+
+    num_specialpro = len(specialProIdxList)
+    #print ("num_specialpro=%d"%(num_specialpro))
+    posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
+    (begTM_MSA, endTM_MSA) = GetPosTM_MSA(posTMList, specialProIdxList)
+
     if isDrawKRBias:
         aaSeqDict = g_params['aaSeqDict']
         alignedSeqList = []
@@ -1357,89 +1366,101 @@ def ShrinkGapInMSA_0(idList, topoSeqList): #{{{
 
             i += j;#}}}
         else: # starts a region with M#{{{
-            sumPer_i = 0.0
-            sumPer_o + 0.0
-            while i+j < lengthAlignment and per_M[i+j] > 0.0:
-                sumPer_i += per_i[i+j]
-                sumPer_o += per_i[i+j]
-                j += 1
-            if j > 0:
+            if num_specialpro > 0:
+                if (IsAtTMregionOfSpecialPro(i, topoSeqList, specialProIdxList) 
+                    #and (i < begTM_MSA and i>=endTM_MSA)
+                    ):
+                    for iseq in xrange(numSeq):
+                        newList[iseq] +=  topoSeqList[iseq][i]
+                    posindexmap[cnt] = i
+                    cnt += 1
+                    print (i, lengthAlignment)
+                i += 1
+            else:
+                sumPer_i = 0.0
+                sumPer_o + 0.0
+                while i+j < lengthAlignment and per_M[i+j] > 0.0:
+                    sumPer_i += per_i[i+j]
+                    sumPer_o += per_i[i+j]
+                    j += 1
+                if j > 0:
 #                print "M region: (%d, %d)"%(i,i+j)
 #find all flat regions with >=5 residues
-                posFlatRegionList = GetPositionIdenticalAdjacentNumber(
-                        cnt_M[i:i+j], i, 5)
+                    posFlatRegionList = GetPositionIdenticalAdjacentNumber(
+                            cnt_M[i:i+j], i, 5)
 # get remaining regions
-                posNonFlatRegionList = GetRemainingSegmentList(i, i+j,
-                        posFlatRegionList)
-                mergedRegionList = []
-                for (b,e)in posFlatRegionList:
-                    mergedRegionList.append(('flat', b, e))
-                for (b,e)in posNonFlatRegionList:
-                    mergedRegionList.append(('nonflat', b, e))
-                mergedRegionList = sorted(mergedRegionList, key=lambda
-                        tup:tup[1])
+                    posNonFlatRegionList = GetRemainingSegmentList(i, i+j,
+                            posFlatRegionList)
+                    mergedRegionList = []
+                    for (b,e)in posFlatRegionList:
+                        mergedRegionList.append(('flat', b, e))
+                    for (b,e)in posNonFlatRegionList:
+                        mergedRegionList.append(('nonflat', b, e))
+                    mergedRegionList = sorted(mergedRegionList, key=lambda
+                            tup:tup[1])
 
 #             if i >= 1320 and i+j <= 1460:
 #                 print "region (%d, %d)"%(i, i+j)
 #                 print cnt_M[i:i+j]
 #                 print "posFlatRegionList:", posFlatRegionList
-                for (state, b, e) in mergedRegionList:
-                    if state == 'flat':
-                        if (per_GAP[b] > 0.65 and
-                                IsSafetoDeleteTheRegionNew(topoSeqList, b, e,
-                                    newList, cnt, per_K, per_R)):
-                            shrinkedwidth = 0
-                        else:
-                            shrinkedwidth = max(4, int(round((e-b)* min(1.0,
-                                per_M[b]*1.5))))
+                    for (state, b, e) in mergedRegionList:
+                        if state == 'flat':
+                            if (per_GAP[b] > 0.95 and
+                                    IsSafetoDeleteTheRegionNew(topoSeqList, b, e,
+                                        newList, cnt, per_K, per_R)):
+                                shrinkedwidth = 0
+                            else:
+                                shrinkedwidth = max(5, int(round((e-b)* min(1.0,
+                                    per_M[b]*1.5))))
 #                     if b >= 1320 and e <= 1460:
 #                         print ("per_M[b]:",per_M[b], "len(%d, %d)="%(b, e),
 #                         e-b, "shrinkedwidth=",shrinkedwidth)
-                            selectedIndexList = [b +
-                                    int(round(k*(e-b-1)/float(shrinkedwidth-1)))
-                                    for k in xrange(shrinkedwidth)]
-                            if isDrawKRBias:
-                                for pp in range(b, e):
-                                    if (per_K[pp] + per_R[pp] > 0.0):
-                                        selectedIndexList.append(pp)
-                                selectedIndexList = sorted(
-                                        list(set(selectedIndexList)))
+                                selectedIndexList = [b +
+                                        int(round(k*(e-b-1)/float(shrinkedwidth-1)))
+                                        for k in xrange(shrinkedwidth)]
+                                if isDrawKRBias:
+                                    for pp in range(b, e):
+                                        if (per_K[pp] + per_R[pp] > 0.0):
+                                            selectedIndexList.append(pp)
+                                    selectedIndexList = sorted(
+                                            list(set(selectedIndexList)))
+                                for k in xrange(b, e):
+                                    if (k in selectedIndexList or
+                                            not IsSafetoDeleteTheRegionNew(
+                                                topoSeqList, k, k+1, newList, 
+                                                cnt, per_K, per_R)):
+                                        for iseq in xrange(numSeq):
+                                            newList[iseq] += topoSeqList[iseq][k]
+                                            posindexmap[cnt] = k
+                                        cnt += 1
+                        else: #'nonflat'
+                            minPerM = min(per_M[b:e])
+                            maxPerM = max(per_M[b:e])
+                            middlePerM = minPerM + (maxPerM - minPerM)*0.5 
+                            selectedIndexList = []
+                            for k in xrange(b,e):
+                                if ((per_GAP[k] < 0.95 and per_M[k] > middlePerM) or
+                                    per_M[k] > 0.65 or
+                                    (isDrawKRBias and (per_K[k]+per_R[k])>0.0)):
+                                    selectedIndexList.append(k)
                             for k in xrange(b, e):
                                 if (k in selectedIndexList or
-                                        not IsSafetoDeleteTheRegionNew(
-                                            topoSeqList, k, k+1, newList, 
-                                            cnt, per_K, per_R)):
+                                        not IsSafetoDeleteTheRegionNew(topoSeqList,
+                                            k, k+1, newList, cnt, per_K, per_R)):
                                     for iseq in xrange(numSeq):
                                         newList[iseq] += topoSeqList[iseq][k]
                                         posindexmap[cnt] = k
                                     cnt += 1
-                    else: #'nonflat'
-                        minPerM = min(per_M[b:e])
-                        maxPerM = max(per_M[b:e])
-                        middlePerM = minPerM + (maxPerM - minPerM)*0.5 
-                        selectedIndexList = []
-                        for k in xrange(b,e):
-                            if ((per_GAP[k] < 0.6 and per_M[k] > middlePerM) or
-                                per_M[k] > 0.65 or
-                                (isDrawKRBias and (per_K[k]+per_R[k])>0.0)):
-                                selectedIndexList.append(k)
-                        for k in xrange(b, e):
-                            if (k in selectedIndexList or
-                                    not IsSafetoDeleteTheRegionNew(topoSeqList,
-                                        k, k+1, newList, cnt, per_K, per_R)):
-                                for iseq in xrange(numSeq):
-                                    newList[iseq] += topoSeqList[iseq][k]
-                                    posindexmap[cnt] = k
-                                cnt += 1
 #                 if b >= 1320 and e <= 1460:
 #                     print ("numSelectedColumn=", numSelectedColumn, maxPerM,
 #                     "len(%d, %d)=%d"%(b, e, e-b))
-                i += j
-            else:
-                i += 1
+                    i += j
+                else:
+                    i += 1
 #}}}
     for iseq in xrange(numSeq):
         topoSeqList[iseq] = newList[iseq].replace(" ", "-")
+        #print ("%10s: %s"%(idList[iseq], topoSeqList[iseq]))
     return posindexmap
 #}}}
 def ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList): #{{{
@@ -2441,22 +2462,6 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         str_krbias = ".krbias"
     outFile = "%s%s%s%s.%s"%(outpath, os.sep, rootname, str_krbias, g_params['outFormat'])
 
-# posindexmap: map of the residue position to the original MSA
-# e.g. pos[0] = 5 means the first residue is actually the 6th residue position
-# in the original MSA
-#   backup original aligned topoSeqList
-    alignedTopoSeqList = []
-    posTMList = []
-    for seq in topoSeqList:
-        alignedTopoSeqList.append(seq)
-        posTMList.append(myfunc.GetTMPosition(seq))
-
-    posindexmap = {}
-    if g_params['isShrink']:
-        if g_params['method_shrink'] == 0:
-            posindexmap = ShrinkGapInMSA_0(idList, topoSeqList)
-        elif g_params['method_shrink'] == 1:
-            posindexmap = ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList)
 
     # ============================
     # get index of special proteins
@@ -2474,6 +2479,23 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             TMnameList.append(TMname)
         else:
             TMnameList.append([])
+
+# posindexmap: map of the residue position to the original MSA
+# e.g. pos[0] = 5 means the first residue is actually the 6th residue position
+# in the original MSA
+#   backup original aligned topoSeqList
+    alignedTopoSeqList = []
+    posTMList = []
+    for seq in topoSeqList:
+        alignedTopoSeqList.append(seq)
+        posTMList.append(myfunc.GetTMPosition(seq))
+
+    posindexmap = {}
+    if g_params['isShrink']:
+        if g_params['method_shrink'] == 0:
+            posindexmap = ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[])
+        elif g_params['method_shrink'] == 1:
+            posindexmap = ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList)
 
 
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
