@@ -137,6 +137,7 @@ Options:
                    (default: yes)
   -pfm  y|n        Whether draw profile for 'M' state, (default: yes)
   -pdg  y|n        Whether draw DG profile, (default: no)
+  -pmsa y|n        Whether draw MSA region, (default: yes)
   -ptag y|n        Whether draw a vertical bar for proteins in different groups, (default: no)
   -dgpfile FILE    DG profile file produced by myscanDG.pl
   -aapath  DIR     Set path for amino acid sequence file, if set, sequence file
@@ -2441,7 +2442,7 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
     height = (g_params['marginY']*6 +
             len(specialProIdxDict['reppro'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5) +
             int(fontHeightScaleBar*2.5+0.5)+
-            numSeq*fontHeight +
+            g_params['isDrawMSA']* numSeq*fontHeight +
             g_params['isDrawSeprationLine'] * numSeprationLine * g_params['scaleSeprationLine']* fontHeight +
             (len(specialProIdxDict['pdb'])+len(specialProIdxDict['final']) >0)*(int(g_params['heightTMbox']*fontHeightTMbox+0.5)+sectionSepSpace*fontHeightScaleBar)+
             len(specialProIdxDict['pdb'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)+
@@ -2630,63 +2631,64 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     #y += sectionSepSpace*fontHeightTMbox
 
 # Draw a scale bar of the residue position
-    DrawScale(lengthAlignment, posindexmap, (x,y), font_size, fontWidth,
-            fontHeight, draw)
+    if g_params['isDrawMSA']:
+        DrawScale(lengthAlignment, posindexmap, (x,y), font_size, fontWidth,
+                fontHeight, draw)
 
-    (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
-    y += int(fontHeightScaleBar*2.5+0.5)
+        (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
+        y += int(fontHeightScaleBar*2.5+0.5)
 
-    maxDistKR = g_params['maxDistKR'] 
-    isDrawKRBias = g_params['isDrawKRBias']
+        maxDistKR = g_params['maxDistKR'] 
+        isDrawKRBias = g_params['isDrawKRBias']
 
-    tagFormer = tagList[0]
-    for i in range(numSeq):
-        tagCurrent = tagList[i]
-        seqID = idList[i]
+        tagFormer = tagList[0]
+        for i in range(numSeq):
+            tagCurrent = tagList[i]
+            seqID = idList[i]
 
-        if i in specialProIdxList: #do not draw the topology of special proteins 
-            continue
+            if i in specialProIdxList: #do not draw the topology of special proteins 
+                continue
 
-        if tagCurrent != tagFormer:
-            tagFormer = tagCurrent
-            if g_params['isDrawSeprationLine'] == True:
-                box = [x, y+1, width-marginX, y+fontHeight*scaleSeprationLine-1]
-                draw.rectangle(box, fill="grey",outline="white")
-                y += fontHeight
+            if tagCurrent != tagFormer:
+                tagFormer = tagCurrent
+                if g_params['isDrawSeprationLine'] == True:
+                    box = [x, y+1, width-marginX, y+fontHeight*scaleSeprationLine-1]
+                    draw.rectangle(box, fill="grey",outline="white")
+                    y += fontHeight
 
-        anno = annotationList[i]
-        tag = tagList[i]
-        toposeq = topoSeqList[i]
-        aaseq = ""
-        if seqID in aaSeqDict:
-            aaseq = aaSeqDict[seqID]
-            #print aaseq
-            #print origTopoSeqList[i]
-            # origTopoSeqList is the original (non-shinked MSA)
-            aaseq = MatchToAlignedSeq(aaseq, origTopoSeqList[i], seqID)
-            if posindexmap  != {}:
-                tmpaaseq = ""
-                for pp in range(len(posindexmap)):
-                    aa = aaseq[posindexmap[pp]]
-                    if (isDrawKRBias and  aa in ["K", "R"] and
-                            IsOutofMaxDistKR(posTMList[i], posindexmap[pp],
-                                maxDistKR)):
-                        aa = " "
-                        if g_params['isPrintDebugInfo']:
-                            print seqID, aa, posindexmap[pp], posTMList[i]
-                    tmpaaseq += (aa)
-                aaseq = tmpaaseq
-            if isDrawKRBias:
-                aaseq = HideNonKRResidue(aaseq)
+            anno = annotationList[i]
+            tag = tagList[i]
+            toposeq = topoSeqList[i]
+            aaseq = ""
+            if seqID in aaSeqDict:
+                aaseq = aaSeqDict[seqID]
+                #print aaseq
+                #print origTopoSeqList[i]
+                # origTopoSeqList is the original (non-shinked MSA)
+                aaseq = MatchToAlignedSeq(aaseq, origTopoSeqList[i], seqID)
+                if posindexmap  != {}:
+                    tmpaaseq = ""
+                    for pp in range(len(posindexmap)):
+                        aa = aaseq[posindexmap[pp]]
+                        if (isDrawKRBias and  aa in ["K", "R"] and
+                                IsOutofMaxDistKR(posTMList[i], posindexmap[pp],
+                                    maxDistKR)):
+                            aa = " "
+                            if g_params['isPrintDebugInfo']:
+                                print seqID, aa, posindexmap[pp], posTMList[i]
+                        tmpaaseq += (aa)
+                    aaseq = tmpaaseq
+                if isDrawKRBias:
+                    aaseq = HideNonKRResidue(aaseq)
 #        print aaseq
-        DrawTopology(anno, tag, toposeq, aaseq, (x,y), fnt, fontWidth,
-                fontHeight, isDrawText, draw)
+            DrawTopology(anno, tag, toposeq, aaseq, (x,y), fnt, fontWidth,
+                    fontHeight, isDrawText, draw)
 #       if tagCurrent == "Consensus":
 #           y+=fontHeight
-        y += fontHeight
-        if y >= height:
-            print >> sys.stderr, ("Error! position y(%d) exceeds height (%d)" %
-                    (y, height))
+            y += fontHeight
+            if y >= height:
+                print >> sys.stderr, ("Error! position y(%d) exceeds height (%d)" %
+                        (y, height))
 
 # Draw special topologies
     idxPDBList = specialProIdxDict['pdb']
@@ -4873,6 +4875,12 @@ def main(g_params):#{{{
                 else:
                     g_params['isDrawDGprofile'] = False
                 i = i + 2
+            elif (argv[i] in ["-pmsa", "--pmsa"]):
+                if (argv[i+1].lower())[0] == "y": 
+                    g_params['isDrawMSA'] = True
+                else:
+                    g_params['isDrawMSA'] = False
+                i = i + 2
             elif (argv[i] in ["-ptag", "--ptag"]):
                 if (argv[i+1].lower())[0] == "y": 
                     g_params['isDrawTagColumn'] = True
@@ -5084,6 +5092,7 @@ def InitGlobalParameter():#{{{
 
     g_params['method'] = 'pil' #pyx
     g_params['isPrintDebugInfo'] = False
+    g_params['isDrawMSA'] = True
     g_params['isDrawDGProfileLegend'] = False
     return g_params
 #}}}
