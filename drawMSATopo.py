@@ -2501,6 +2501,9 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     # get posTMList for the shink version of MSA
     posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
 
+#     for i in range(len(topoSeqList)):
+#         print ("%10s: %s" %(idList[i], topoSeqList[i]))
+
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
     widthAnnotation = g_params['widthAnnotation']
     tagList = []
