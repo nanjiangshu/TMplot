@@ -2484,11 +2484,11 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 # e.g. pos[0] = 5 means the first residue is actually the 6th residue position
 # in the original MSA
 #   backup original aligned topoSeqList
-    alignedTopoSeqList = []
-    posTMList = []
+    origTopoSeqList = []
+    origPosTMList = []
     for seq in topoSeqList:
-        alignedTopoSeqList.append(seq)
-        posTMList.append(myfunc.GetTMPosition(seq))
+        origTopoSeqList.append(seq)
+        origPosTMList.append(myfunc.GetTMPosition(seq))
 
     posindexmap = {}
     if g_params['isShrink']:
@@ -2497,6 +2497,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         elif g_params['method_shrink'] == 1:
             posindexmap = ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList)
 
+    # get posTMList for the shink version of MSA
+    posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
 
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
     widthAnnotation = g_params['widthAnnotation']
@@ -2624,9 +2626,9 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         if seqID in aaSeqDict:
             aaseq = aaSeqDict[seqID]
             #print aaseq
-            #print alignedTopoSeqList[i]
-            # alignedTopoSeqList is the original (non-shinked MSA)
-            aaseq = MatchToAlignedSeq(aaseq, alignedTopoSeqList[i], seqID)
+            #print origTopoSeqList[i]
+            # origTopoSeqList is the original (non-shinked MSA)
+            aaseq = MatchToAlignedSeq(aaseq, origTopoSeqList[i], seqID)
             if posindexmap  != {}:
                 tmpaaseq = ""
                 for pp in range(len(posindexmap)):
@@ -2704,8 +2706,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 aaseq = aaSeqDict[seqID]
                 dgp = RunDGScan(aaseq, seqID)
             if dgp:
-                idxmap_aligne2seq = lcmp.GetAlign2SeqMap(alignedTopoSeqList[idx],
-                        alignedTopoSeqList[idx].replace(GAP,""))  
+                idxmap_aligne2seq = lcmp.GetAlign2SeqMap(origTopoSeqList[idx],
+                        origTopoSeqList[idx].replace(GAP,""))  
                 aligned_dgp = MatchAlignedDGP(dgp, idxmap_aligne2seq, posindexmap, toposeq)
                 dgpList.append([seqID, aligned_dgp])
         if len(dgpList) > 0:
