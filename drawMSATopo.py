@@ -2162,9 +2162,28 @@ def VerifyTerminalStatus(topoSeqList, posTMList):# {{{
     Add i/o status before/after the TM helices if it is missing
     """
     numSeq = len(topoSeqList)
+    lengthAlignment = len(topoSeqList[0])
+    IOSTATE_LIST = ["i","o"]
     for i in range(numSeq):
+        topo = topoSeqList[i]
+        l_topo = [x for x in topo]
         posTM_Nterm = posTMList[i][0]
         posTM_Cterm = posTMList[i][-1]
+        if lcmp.Get_IOState_upstream(topo, posTM_Nterm[0]) == '':
+            io_after = lcmp.Get_IOState_downstream(topo, posTM_Nterm[1])
+            io_before = IOSTATE_LIST[(IOSTATE_LIST.index(io_after)+1)%2]
+            if posTM_Nterm[0] == 0:
+                l_topo[posTM_Nterm[0]] = io_before
+            else:
+                l_topo[posTM_Nterm[0]-1] = io_before
+        if lcmp.Get_IOState_downstream(topo, posTM_Cterm[1]) == '':
+            io_before = lcmp.Get_IOState_upstream(topo, posTM_Cterm[0])
+            io_after = IOSTATE_LIST[(IOSTATE_LIST.index(io_before)+1)%2]
+            if posTM_Cterm[1] == lengthAlignment:
+                l_topo[posTM_Cterm[1]-1] = io_after
+            else:
+                l_topo[posTM_Cterm[1]] = io_after
+        topoSeqList[i] = ''.join(l_topo)
 # }}}
 
 def GetSeqTag(anno):#{{{
