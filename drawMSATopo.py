@@ -2425,7 +2425,7 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
     (fontWidthTMbox, fontHeightTMbox) = AutoSizeFontTMBox(fontWidth, fontHeight, numSeq, specialProIdxDict, posTMList, TMnameList)
 
     width = ((g_params['widthAnnotation'] + lengthAlignment) * (fontWidth) +
-            g_params['annoSeqInterval']*fontWidthTMbox + g_params['marginX'] * 2)
+            g_params['annoSeqInterval']*fontWidthTMbox + int(widthAdjustRatio*g_params['marginX'] * 2+0.5))
 
     dgprofileRegionWidth = lengthAlignment * fontWidth
     dgprofileRegionHeight = max(30, int(width*0.15+0.5), int(round(numSeq * fontHeight * 0.2)), g_params['heightTMbox']*fontHeightTMbox*2)
@@ -2442,7 +2442,7 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
     height = (g_params['marginY']*6 +
             len(specialProIdxDict['reppro'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5) +
             int(fontHeightScaleBar*2.5+0.5)+
-            g_params['isDrawMSA']* numSeq*fontHeight +
+            numSeq*fontHeight +
             g_params['isDrawSeprationLine'] * numSeprationLine * g_params['scaleSeprationLine']* fontHeight +
             (len(specialProIdxDict['pdb'])+len(specialProIdxDict['final']) >0)*(int(g_params['heightTMbox']*fontHeightTMbox+0.5)+sectionSepSpace*fontHeightScaleBar)+
             len(specialProIdxDict['pdb'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)+
@@ -2631,11 +2631,11 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     #y += sectionSepSpace*fontHeightTMbox
 
 # Draw a scale bar of the residue position
+    (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
     if g_params['isDrawMSA']:
         DrawScale(lengthAlignment, posindexmap, (x,y), font_size, fontWidth,
                 fontHeight, draw)
 
-        (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
         y += int(fontHeightScaleBar*2.5+0.5)
 
         maxDistKR = g_params['maxDistKR'] 
