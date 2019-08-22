@@ -771,7 +771,7 @@ def AutoSizeFontTMBox(fontWidthAlign, fontHeightAlign, numSeq, specialProIdxDict
     g_params['fntTMbox'] = ImageFont.truetype(g_params['font_dir'] +
             g_params['font'], g_params['font_size_TMbox'])
     g_params['fntTMbox_label'] = ImageFont.truetype(g_params['font_dir'] +
-            "DejaVuSerif", g_params['font_size_TMbox']+1)
+            "DejaVuSerif.ttf", g_params['font_size_TMbox']+1)
     fnt = ImageFont.truetype(g_params['font_dir'] + g_params['font'], fs)
 
     logger.debug("font_size_TMbox=%d", g_params['font_size_TMbox'])
@@ -790,7 +790,7 @@ def AutoSizeFontDGProfileLabel(dgprofileRegionHeight):# {{{
     while 1:
         if fs < 2:
             break
-        fnt = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif-Bold", fs)
+        fnt = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif-Bold.ttf", fs)
         textWidth = fnt.getsize(ylabel_DGprofile)[0]
         diff = dgprofileRegionHeight - textWidth
 
@@ -805,8 +805,8 @@ def AutoSizeFontDGProfileLabel(dgprofileRegionHeight):# {{{
         if itr > MAX_ITR:
             break
     g_params['fntDGprofileLable'] = fnt
-    g_params['fntDGprofileTic'] = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif", max(2, int(fs*0.65)))
-    g_params['fntDGprofileLegend'] = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif", max(2, int(fs*0.7)))
+    g_params['fntDGprofileTic'] = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif.ttf", max(2, int(fs*0.65)))
+    g_params['fntDGprofileLegend'] = ImageFont.truetype(g_params['font_dir']+"DejaVuSerif.ttf", max(2, int(fs*0.7)))
 
 # }}}
 
@@ -2157,6 +2157,15 @@ def CalculateImageScale(numSeq):# {{{
     else:
         g_params['image_scale'] = 1.0
 # }}}
+def VerifyTerminalStatus(topoSeqList, posTMList):# {{{
+    """
+    Add i/o status before/after the TM helices if it is missing
+    """
+    numSeq = len(topoSeqList)
+    for i in range(numSeq):
+        posTM_Nterm = posTMList[i][0]
+        posTM_Cterm = posTMList[i][-1]
+# }}}
 
 def GetSeqTag(anno):#{{{
     "get sequence tag from annotation"
@@ -2481,15 +2490,17 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         else:
             TMnameList.append([])
 
+    origPosTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
+    VerifyTerminalStatus(topoSeqList, origPosTMList)
+
 # posindexmap: map of the residue position to the original MSA
 # e.g. pos[0] = 5 means the first residue is actually the 6th residue position
 # in the original MSA
 #   backup original aligned topoSeqList
     origTopoSeqList = []
-    origPosTMList = []
     for seq in topoSeqList:
         origTopoSeqList.append(seq)
-        origPosTMList.append(myfunc.GetTMPosition(seq))
+
 
     posindexmap = {}
     if g_params['isShrink']:
