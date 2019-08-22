@@ -1847,39 +1847,40 @@ def DrawDGProfile(dgpList, lengthAlignment, maxDG, minDG, xy0, #{{{
                 draw.line([pointList[i],pointList[i+1]],fill=line_color, width=line_width)
 
     # draw legend
-    fnt = g_params['fntDGprofileLegend']
-    textWidth, textHeight = fnt.getsize("Initial Topology 1")
-    bar_width = textWidth/3
-    gap_item = textWidth/4
-    gap_text_bar = bar_width/2
-    item_width = textWidth + bar_width + gap_item + gap_text_bar
-    x_padding = int(item_width*num_dgp*0.05+0.5)
-    if isDrawSeqID and num_dgp > 1:
-        # draw outline box
-        x1 = x0
-        y1 = y0 + dgprofileRegionHeight
-        x2 = x1 + item_width*num_dgp+x_padding*2
-        y2 = y1 + textHeight*2
-        box = [x1,y1,x2,y2]
-        draw.rectangle(box, outline='black', width=outline_width)
+    if g_params['isDrawDGProfileLegend']:
+        fnt = g_params['fntDGprofileLegend']
+        textWidth, textHeight = fnt.getsize("Initial Topology 1")
+        bar_width = textWidth/3
+        gap_item = textWidth/4
+        gap_text_bar = bar_width/2
+        item_width = textWidth + bar_width + gap_item + gap_text_bar
+        x_padding = int(item_width*num_dgp*0.05+0.5)
+        if isDrawSeqID and num_dgp > 1:
+            # draw outline box
+            x1 = x0
+            y1 = y0 + dgprofileRegionHeight
+            x2 = x1 + item_width*num_dgp+x_padding*2
+            y2 = y1 + textHeight*2
+            box = [x1,y1,x2,y2]
+            draw.rectangle(box, outline='black', width=outline_width)
 
-    for ii in range(num_dgp):
-        seqID, dgp = dgpList[ii]
-        line_color = colorpalette[ii].get_hex_l() 
-        if (num_dgp) == 1:
-            text = "Initial Topology"
-        else:
-            text = "Initial Topology %s"%(seqID.lstrip("rep"))
-        (textWidth,textHeight) = fnt.getsize(text)
-        x = x0 + ii*item_width + x_padding
-        y = y0 + dgprofileRegionHeight + textHeight/4
-        draw.text((x,y), text, font=fnt, fill='black')
-        # draw bar
-        x1 = x + textWidth + gap_text_bar
-        y1 = y + textHeight/2
-        x2 = x1 + bar_width
-        y2 = y1
-        draw.line([x1, y1, x2, y2],fill=line_color, width=line_width*2)
+        for ii in range(num_dgp):
+            seqID, dgp = dgpList[ii]
+            line_color = colorpalette[ii].get_hex_l() 
+            if (num_dgp) == 1:
+                text = "Initial Topology"
+            else:
+                text = "Initial Topology %s"%(seqID.lstrip("rep"))
+            (textWidth,textHeight) = fnt.getsize(text)
+            x = x0 + ii*item_width + x_padding
+            y = y0 + dgprofileRegionHeight + textHeight/4
+            draw.text((x,y), text, font=fnt, fill='black')
+            # draw bar
+            x1 = x + textWidth + gap_text_bar
+            y1 = y + textHeight/2
+            x2 = x1 + bar_width
+            y2 = y1
+            draw.line([x1, y1, x2, y2],fill=line_color, width=line_width*2)
 
 
 #}}}
@@ -2585,6 +2586,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 label = "Initial Topology"
             else:
                 label = "Initial Topology %d"%(cnt+1)
+            label = rootname
             ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
             fg="#000000";# black
             draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
@@ -5049,6 +5051,7 @@ def InitGlobalParameter():#{{{
 
     g_params['method'] = 'pil' #pyx
     g_params['isPrintDebugInfo'] = False
+    g_params['isDrawDGProfileLegend'] = False
     return g_params
 #}}}
 if __name__ == '__main__' :
