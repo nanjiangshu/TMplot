@@ -2902,6 +2902,16 @@ def IsDNASeq(seq):#{{{
         return False
 #}}}
 
+def maprange( range_from, range_to, value):# {{{
+    """Map value from range_from -> range_to
+range_from and range_to are tuples
+    """
+    (f1, f2) = range_from
+    (t1, t2) = range_to
+    new_value = t1 + ((value - f1) * (t2 - t1) / (f2 - f1))
+    return new_value
+# }}}
+
 def week_beg_end(day):#{{{
     """
     Given a date return the date of the 

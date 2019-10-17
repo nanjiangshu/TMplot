@@ -181,6 +181,12 @@ Examples:
 def PrintHelp():
     print usage
 
+def sig2(x, scale=1):
+    """ Calculate sigmoid value
+    """
+    return 1/(1+math.exp(-x/scale))
+
+
 def IsWithinTMRegion(pos, posTM):#{{{
     isWithin = False
     for (b,e) in posTM:
@@ -2441,10 +2447,12 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
     width = ((g_params['widthAnnotation'] + lengthAlignment) * (fontWidth) +
             g_params['annoSeqInterval']*fontWidthTMbox + g_params['marginX'] * 2)
 
-    height = (g_params['marginY']*6 +
+    height = (
+            g_params['marginY']* int(myfunc.maprange((0.5,1), (2,6), sig2(numSeq, scale=5))) +
+            #g_params['marginY']* 6+
             len(specialProIdxDict['reppro'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5) +
-            int(fontHeightScaleBar*2.5+0.5)+
-            numSeq*fontHeight +
+            g_params['isDrawScaleBar']*int(fontHeightScaleBar*2.5+0.5)+
+            g_params['isDrawMSA']*numSeq*fontHeight +
             g_params['isDrawSeprationLine'] * numSeprationLine * g_params['scaleSeprationLine']* fontHeight +
             (len(specialProIdxDict['pdb'])+len(specialProIdxDict['final']) >0)*(int(g_params['heightTMbox']*fontHeightTMbox+0.5)+sectionSepSpace*fontHeightScaleBar)+
             len(specialProIdxDict['pdb'])*int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)+
