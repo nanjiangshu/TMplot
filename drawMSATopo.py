@@ -138,6 +138,8 @@ Options:
   -pfm  y|n        Whether draw profile for 'M' state, (default: yes)
   -pdg  y|n        Whether draw DG profile, (default: no)
   -pmsa y|n        Whether draw MSA region, (default: yes)
+  -pscale y|n      Whether draw the residue position scale bar, (default: yes)
+                   If MSA region is not drawn, this will also be disabled.
   -ptag y|n        Whether draw a vertical bar for proteins in different groups, (default: no)
   -dgpfile FILE    DG profile file produced by myscanDG.pl
   -aapath  DIR     Set path for amino acid sequence file, if set, sequence file
@@ -2633,10 +2635,10 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 # Draw a scale bar of the residue position
     (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
     if g_params['isDrawMSA']:
-        DrawScale(lengthAlignment, posindexmap, (x,y), font_size, fontWidth,
-                fontHeight, draw)
-
-        y += int(fontHeightScaleBar*2.5+0.5)
+        if g_params['isDrawScaleBar']:
+            DrawScale(lengthAlignment, posindexmap, (x,y), font_size, fontWidth,
+                    fontHeight, draw)
+            y += int(fontHeightScaleBar*2.5+0.5)
 
         maxDistKR = g_params['maxDistKR'] 
         isDrawKRBias = g_params['isDrawKRBias']
@@ -4881,6 +4883,12 @@ def main(g_params):#{{{
                 else:
                     g_params['isDrawMSA'] = False
                 i = i + 2
+            elif (argv[i] in ["-pscale", "--pscale"]):
+                if (argv[i+1].lower())[0] == "y": 
+                    g_params['isDrawScaleBar'] = True
+                else:
+                    g_params['isDrawScaleBar'] = False
+                i = i + 2
             elif (argv[i] in ["-ptag", "--ptag"]):
                 if (argv[i+1].lower())[0] == "y": 
                     g_params['isDrawTagColumn'] = True
@@ -5093,6 +5101,7 @@ def InitGlobalParameter():#{{{
     g_params['method'] = 'pil' #pyx
     g_params['isPrintDebugInfo'] = False
     g_params['isDrawMSA'] = True
+    g_params['isDrawScaleBar'] = True
     g_params['isDrawDGProfileLegend'] = False
     return g_params
 #}}}
