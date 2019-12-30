@@ -27,4 +27,6 @@ removeUnnecessaryGap
 
 venv*/
 
+logs/
+
 
