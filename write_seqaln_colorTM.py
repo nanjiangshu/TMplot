@@ -6,27 +6,53 @@ import sys
 import argparse
 import hashlib
 import myfunc
+import Bio.SubsMat.MatrixInfo
+import libtopologycmp as lcmp
+import logging
+import logging.config
+import yaml
 
+GAP = '-'
+
+logger = logging.getLogger(__name__)
+
+def IsWithinTMRegion(pos, posTM):#{{{
+    isWithin = False
+    for (b,e) in posTM:
+        if pos >= b and pos < e:
+            return True
+    return False
+#}}}
+def CheckFileExt(choices):# {{{
+    class Act(argparse.Action):
+        def __call__(self,parser,namespace,fname,option_string=None):
+            ext = os.path.splitext(fname)[1][1:]
+            if ext not in choices:
+                option_string = '({})'.format(option_string) if option_string else ''
+                parser.error("file doesn't end with one of {}{}".format(choices,option_string))
+            else:
+                setattr(namespace,self.dest,fname)
+
+    return Act
+# }}}
 def WriteHTMLHeader(htmlheader, fpout):# {{{
     header = """
 <!DOCTYPE html>
 <html>
 <body>
-<h3>%s</h3>
-<pre>
+<h2>%s</h2>
 """%(htmlheader)
     fpout.write("%s\n"%(header))
 # }}}
-def WriteHTMLTail(htmltail, fpout):# {{{
+def WriteHTMLTail(fpout):# {{{
     tail = """
-</pre>
 </body>
 </html>
 """
     fpout.write("%s\n"%(tail))
 # }}}
 
-def WriteHTMLAlignment2(idList, annoList, alignedTopoSeqList,#{{{
+def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         originalAlignedTopoSeqList, aaSeqList, final2seq_idxMapList,
         fpout):
     logger = logging.getLogger(__name__)
@@ -52,6 +78,9 @@ def WriteHTMLAlignment2(idList, annoList, alignedTopoSeqList,#{{{
         color_nonTM = 'grey'
 
 
+    fpout.write("<p>\n")
+    fpout.write("<h4>Alignment for %s</h4>\n"%(aln_name))
+    fpout.write("<pre>\n")
     strs = [""]*numSeq
     j = 0 # iterator for the alignment position
     isStart = True
@@ -100,12 +129,13 @@ def WriteHTMLAlignment2(idList, annoList, alignedTopoSeqList,#{{{
                 strs[i] += "<font color=\"%s\">%s</font>"%(color_nonTM, aa)
         if ((cnt >= WIDTH and isWithinTMregion == False) 
                 or (j >= lengthAlignment-1)
-                or j == 190):
+                ):
             for i in xrange(numSeq):
                 strs[i] += " %4d"%(final2seq_idxMapList[i][j])
 
             fpout.write("%s\n"%(strs[0]))
-            fpout.write("%s\n"%(strs[2])) #relationship
+            if g_params['showRelationship']:
+                fpout.write("%s\n"%(strs[2])) #relationship
             fpout.write("%s\n"%(strs[1]))
             fpout.write("\n\n")
 
@@ -114,22 +144,51 @@ def WriteHTMLAlignment2(idList, annoList, alignedTopoSeqList,#{{{
             cnt = 0
         j += 1
         cnt += 1
+    fpout.write("</pre>\n")
+    fpout.write("</p>\n")
 
 #}}}
 
-def WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile):
+def WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile):# {{{
     try:
         fpout = open(outfile,"w")
     except IOError:
         print >> sys.stderr, "Failed to write to %s"%(outfile)
         return 1
-
+    WriteHTMLHeader('Alignment highlighted by <font color=%s>TM regions</font>'%('red'), fpout)
+    print("Processed alignments:")
     for alnfile in seqAlnFileList:
+        rootname_alnfile = os.path.basename(os.path.splitext(alnfile)[0])
+        topomsafile = '.'.join([os.path.splitext(alnfile)[0], extTopoMSA])
+        if not (os.path.exists(alnfile) and os.path.exists(topomsafile)):
+            if not os.path.exists(alnfile):
+                sys.stderr.write('alnfile %s does not exist\n'%(alnfile))
+            if not os.path.exists(topomsafile):
+                sys.stderr.write('topomsafile %s does not exist\n'%(topomsafile))
+            continue
+        (seqIDList, seqAnnoList, seqList) = myfunc.ReadFasta(alnfile)
+        (topoIDList, topoAnnoList, topoList) = myfunc.ReadFasta(topomsafile)
 
+        # since there is no shrinking, index map is always p->p
+        final2seq_idxMapList = []
+        for i in range(len(seqIDList)):
+            seqlength = len(seqList[i])
+            idxmap = {}
+            for j in range(seqlength):
+                idxmap[j] = j
+            final2seq_idxMapList.append(idxmap)
+
+        print ('\t'+rootname_alnfile)
+        WriteHTMLAlignment2(rootname_alnfile, seqIDList, seqAnnoList, topoList,
+                topoList, seqList, final2seq_idxMapList,
+                fpout)
+
+
+    WriteHTMLTail(fpout)
 
     fpout.close()
     return 0
-
+# }}}
 
 def main(g_params):#{{{
 #metavar='' is the text shown after then option argument
@@ -140,20 +199,37 @@ def main(g_params):#{{{
 Created 2019-12-30, updated 2019-12-30, Nanjiang Shu
 
 Examples:
-%s seqs.aln
-'''%(sys.argv[0]))
-    parser.add_argument('seq-aln-files', metavar='seqAlnFileList', type=str, nargs='+',
-                    help='Provide sequence alignment files')
-    parser.add_argument('-ext-topomsa', metavar='extTopoMSA', type=str,
-            default='topomsa', help='Set the file extension for topology msa')
-    parser.add_argument('-o, --outfile', metavar='OUTFILE', dest='outfile',
-            help='Output the result to file')
+
+    %s fam1.aln fam2.aln
+
+# do not show alignment relationship
+
+    %s fam1.aln fam2.aln -norel
+
+'''%(sys.argv[0], sys.argv[0]))
+    parser.add_argument('seqAlnFileList', metavar='seqAlnFileList', type=str,
+            nargs='+', help='Provide sequence alignment files in FASTA format')
+    parser.add_argument('-ext-topomsa', dest='extTopoMSA',
+            metavar='extTopoMSA', type=str, default='topomsa',
+            help='Set the file extension for topology msa')
+    parser.add_argument('-o', metavar='OUTFILE', dest='outfile', 
+            action=CheckFileExt({'html'}), required=True,
+            help='Output the result to THML file')
+    parser.add_argument('-ws', dest='window_size',
+            metavar='window_size', type=int, default=60,
+            help='Set the file extension for topology msa')
+    parser.add_argument('-norel', action='store_true', 
+            help='Do not show alignment relationship')
 
     args = parser.parse_args()
 
     seqAlnFileList = args.seqAlnFileList
     extTopoMSA = args.extTopoMSA
+    g_params['window_size'] = args.window_size
     outfile = args.outfile
+    if args.norel:
+        g_params['showRelationship'] = False
+
 
     WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile)
 
@@ -162,6 +238,9 @@ Examples:
 def InitGlobalParameter():#{{{
     g_params = {}
     g_params['isQuiet'] = True
+    g_params['window_size'] = 60
+    g_params['colorhtml'] = True
+    g_params['showRelationship'] = True
     return g_params
 #}}}
 if __name__ == '__main__' :
