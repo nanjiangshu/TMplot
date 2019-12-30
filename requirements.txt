@@ -13,3 +13,4 @@ matplotlib
 colour
 Pillow==6.1.0
 click
+pypandoc
