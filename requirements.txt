@@ -11,6 +11,6 @@ ete3
 biopython
 matplotlib
 colour
-Pillow==6.1.0
+Pillow==6.2.0
 click
 pypandoc
