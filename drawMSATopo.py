@@ -22,6 +22,8 @@ import subprocess
 from matplotlib.lines import *
 from colour import Color
 
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 rundir = os.path.dirname(os.path.realpath(__file__))
 # pySVG
 # import pysvg.structure
@@ -166,6 +168,7 @@ Options:
   -max-hold-loop INT    Maximal positions to keep for loop regions (default: 12)
   -imagescale FLOAT     Overal scale of the image (default: None). If not set, it will be calculated automatically
   -h2wratio FLOAT       Set the height to width ratio (default: None). If not set, it use the original ratio
+  -cleanplot       Make clean plot, works only for PIL mode
   -debug                Print debug information, (default: no)
 
 Created 2011-09-05, updated 2019-08-12, Nanjiang Shu
@@ -2503,6 +2506,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     outFile = "%s%s%s%s.%s"%(outpath, os.sep, rootname, str_krbias, g_params['outFormat'])
 
 
+
     # ============================
     # get index of special proteins
     #   * representative protein
@@ -2546,8 +2550,12 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 #         print ("%10s: %s" %(idList[i], topoSeqList[i]))
 
     g_params['widthAnnotation'] = GetSizeAnnotationToDraw(annotationList)
+    if g_params['makeCleanPlot']:
+        g_params['widthAnnotation'] = 4
+
     widthAnnotation = g_params['widthAnnotation']
     tagList = []
+
     for seqAnno in annotationList:
         tagList.append(GetSeqTag(seqAnno))
     numSeprationLine = len(set(tagList))
@@ -2626,11 +2634,14 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         (posTM_rep,typeTM_rep) = GetTMType(topoSeqList[idx])
         if isDrawSeqLable:
             xt = g_params['marginX'] + fontWidth*g_params['widthAnnotation']*0
-            if len(idxRepProList) == 1:
-                label = "Initial Topology"
+            if not g_params['makeCleanPlot']:
+                if len(idxRepProList) == 1:
+                    label = "Initial Topology"
+                else:
+                    label = "Initial Topology %d"%(cnt+1)
+                label = rootname
             else:
-                label = "Initial Topology %d"%(cnt+1)
-            label = rootname
+                label = ""
             ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
             fg="#000000";# black
             draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
@@ -2713,10 +2724,13 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                     if idx in idxPDBList:
                         label = idList[idx].lstrip('pdb_')
                     else:
-                        if len(idxFinalProList) == 1:
-                            label = "Final Topology"
+                        if g_params['makeCleanPlot']:
+                            label = alphabet[idx]
                         else:
-                            label = "Final Topology "+ idList[idx].lstrip("final")
+                            if len(idxFinalProList) == 1:
+                                label = "Final Topology"
+                            else:
+                                label = "Final Topology "+ idList[idx].lstrip("final")
                     ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
                     fg="#000000";# black
                     draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
@@ -4941,6 +4955,8 @@ def main(g_params):#{{{
                 g_params['isColorByKingdom'] = True; i += 1
             elif argv[i] in["-showTMidx", "--showTMidx"]:
                 g_params['isShowTMIndex'] = True; i += 1
+            elif argv[i] in["-cleanplot", "--cleanplot"]:
+                g_params['makeCleanPlot'] = True; i += 1
             elif argv[i] in["-debug", "--debug"]:
                 g_params['isPrintDebugInfo'] = True; i += 1
             elif argv[i] == "-q":
@@ -5086,6 +5102,7 @@ def InitGlobalParameter():#{{{
     g_params['log_config_file'] = "%s/default_log.yml"%(rundir)
     g_params['logger'] = None
     g_params['dgscanProg'] = ""
+    g_params['makeCleanPlot'] = "False"
 
     g_params['pdfcrop_margin_left']    = 20
     g_params['pdfcrop_margin_top']     = 5
