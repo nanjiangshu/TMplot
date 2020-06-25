@@ -168,6 +168,9 @@ def WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile):# {{{
             continue
         (seqIDList, seqAnnoList, seqList) = myfunc.ReadFasta(alnfile)
         (topoIDList, topoAnnoList, topoList) = myfunc.ReadFasta(topomsafile)
+        if g_params['removeUnnecessaryGap']:
+            seqList = lcmp.RemoveUnnecessaryGap(seqList)
+            topoList = lcmp.RemoveUnnecessaryGap(topoList)
 
         # since there is no shrinking, index map is always p->p
         final2seq_idxMapList = []
@@ -220,6 +223,8 @@ Examples:
             help='Set the file extension for topology msa')
     parser.add_argument('-norel', action='store_true', 
             help='Do not show alignment relationship')
+    parser.add_argument('-rmgap', action='store_true', 
+            help='Remove Unnecessary gap')
 
     args = parser.parse_args()
 
@@ -229,6 +234,8 @@ Examples:
     outfile = args.outfile
     if args.norel:
         g_params['showRelationship'] = False
+    if args.rmgap:
+        g_params['removeUnnecessaryGap'] = True
 
 
     WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile)
@@ -241,6 +248,7 @@ def InitGlobalParameter():#{{{
     g_params['window_size'] = 60
     g_params['colorhtml'] = True
     g_params['showRelationship'] = True
+    g_params['removeUnnecessaryGap'] = False
     return g_params
 #}}}
 if __name__ == '__main__' :
