@@ -13,6 +13,7 @@ import logging.config
 import yaml
 
 GAP = '-'
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 logger = logging.getLogger(__name__)
 
@@ -40,8 +41,9 @@ def WriteHTMLHeader(htmlheader, fpout):# {{{
 <!DOCTYPE html>
 <html>
 <body>
-<h2>%s</h2>
-"""%(htmlheader)
+"""
+    if not g_params['makeCleanPlot']:
+        header += "\n<h2>%s</h2>"%(htmlheader)
     fpout.write("%s\n"%(header))
 # }}}
 def WriteHTMLTail(fpout):# {{{
@@ -79,7 +81,8 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
 
 
     fpout.write("<p>\n")
-    fpout.write("<h4>Alignment for %s</h4>\n"%(aln_name))
+    if not g_params['makeCleanPlot']:
+        fpout.write("<h4>Alignment for %s</h4>\n"%(aln_name))
     fpout.write("<pre>\n")
     strs = [""]*numSeq
     j = 0 # iterator for the alignment position
@@ -89,8 +92,11 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         if isStart:
             strs = [""]*(numSeq+1)
             for i in xrange(numSeq):
+                seqlabel = annoList[i]
+                if g_params['makeCleanPlot']:
+                    seqlabel = alphabet[i]
                 try:
-                    strs[i] += "%-*s %4d "%(maxSizeAnno, annoList[i],
+                    strs[i] += "%-*s %4d "%(maxSizeAnno, seqlabel,
                             final2seq_idxMapList[i][j])
                 except KeyError:
                     logger.debug("final2seq_idxMapList error  i=%d, j=%d"%(i,j))
@@ -225,6 +231,8 @@ Examples:
             help='Do not show alignment relationship')
     parser.add_argument('-rmgap', action='store_true', 
             help='Remove Unnecessary gap')
+    parser.add_argument('-cleanplot', action='store_true', 
+            help='Make clean plot, no header text, sequences labeled as A, B')
 
     args = parser.parse_args()
 
@@ -236,6 +244,8 @@ Examples:
         g_params['showRelationship'] = False
     if args.rmgap:
         g_params['removeUnnecessaryGap'] = True
+    if args.cleanplot:
+        g_params['makeCleanPlot'] = True
 
 
     WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile)
@@ -249,6 +259,7 @@ def InitGlobalParameter():#{{{
     g_params['colorhtml'] = True
     g_params['showRelationship'] = True
     g_params['removeUnnecessaryGap'] = False
+    g_params['makeCleanPlot'] = False
     return g_params
 #}}}
 if __name__ == '__main__' :
