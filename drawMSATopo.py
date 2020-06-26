@@ -1996,24 +1996,24 @@ def DrawTMOfConsensus2(topoSeq, posTM, typeTM, TMname,xy0, fontWidth, fontHeight
         # show gap with blank, draw rectangle with fill=(0, 0, 0, 0)
         posGAP = myfunc.GetGapPosition(topoSeq)
         for (b, e) in posGAP:
+            if not lcmp.IsWithinTMRegion(b, posTM):
+                x1 = x0 + b*fontWidth
+                y1 = y0 - marginTop
+                x2 = x0 + e*fontWidth
+                y2 = y0 + int(heightTMbox*fontHeightTMbox +0.5) + marginBottom
 
-            x1 = x0 + b*fontWidth
-            y1 = y0 - marginTop
-            x2 = x0 + e*fontWidth
-            y2 = y0 + int(heightTMbox*fontHeightTMbox +0.5) + marginBottom
-
-            io_left = lcmp.Get_IOState_upstream(topoSeq, b)
-            io_right = lcmp.Get_IOState_downstream(topoSeq, e-1)
-            if io_left == 'i' or io_right == 'i':
-                loop_type = 'inside'
-                y1 = y2 - loop_height
-            else:
-                loop_type = 'outside'
-                y2 = y1 + loop_height
-            box=[x1, y1 , x2, y2]
-            #fillcolor = (0,0,0,0)
-            fillcolor = (255,255,255,255)
-            draw.rectangle(box, fill=fillcolor) # erase the gap region
+                io_left = lcmp.Get_IOState_upstream(topoSeq, b)
+                io_right = lcmp.Get_IOState_downstream(topoSeq, e-1)
+                if io_left == 'i' or io_right == 'i':
+                    loop_type = 'inside'
+                    y1 = y2 - loop_height
+                else:
+                    loop_type = 'outside'
+                    y2 = y1 + loop_height
+                box=[x1, y1 , x2, y2]
+                #fillcolor = (0,0,0,0)
+                fillcolor = (255,255,255,255)
+                draw.rectangle(box, fill=fillcolor) # erase the gap region
 
 #}}}
 def DrawScale(length, posindexmap, xy0, font_size_alignment, #{{{
