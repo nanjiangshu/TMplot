@@ -160,7 +160,7 @@ Options:
   -htmlheader STR  Set header text for HTML output
   -colorhtml       Use colorful output for HTML alignment
   -colorTMbox      Color the whole TM helix as a red rectangle, even gaps
-  -colorkingdom   Color the TM regions by kingdom (Archaea green, Bacteria Red, Eukaryota blue) as present in annotations.
+  -colorkingdom    Color the TM regions by kingdom (Archaea green, Bacteria Red, Eukaryota blue) as present in annotations.
   -advtopo         Show advanced topology at top (reentrant regions and in/out helices)
   -showTMidx       Display index of TM helix as the text for the sequence, e.g. TM1 TM2
   -shrinkrate FLOAT     Proportional shrink rate, (default: 1.0)
@@ -168,10 +168,11 @@ Options:
   -max-hold-loop INT    Maximal positions to keep for loop regions (default: 12)
   -imagescale FLOAT     Overal scale of the image (default: None). If not set, it will be calculated automatically
   -h2wratio FLOAT       Set the height to width ratio (default: None). If not set, it use the original ratio
-  -cleanplot       Make clean plot, works only for PIL mode
+  -cleanplot       Make clean plot, works only for the PIL mode
+  -showgap         Show gap as blank region, works only for the PIL mode
   -debug                Print debug information, (default: no)
 
-Created 2011-09-05, updated 2019-08-12, Nanjiang Shu
+Created 2011-09-05, updated 2020-06-26, Nanjiang Shu
 
 Examples:
 # Draw topology alignment with aligned and unaligned regions, aligned regions
@@ -1896,8 +1897,9 @@ def DrawDGProfile(dgpList, lengthAlignment, maxDG, minDG, xy0, #{{{
 
 
 #}}}
-def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,length): #{{{
-    """Draw TM box"""
+def DrawTMOfConsensus2(topoSeq, posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,length): #{{{
+    """Draw TM box, for loop regions, GAPs are shown in blank
+    """
     widthAnnotation = g_params['widthAnnotation']
     annoSeqInterval = g_params['annoSeqInterval']
     font_size_TMbox = g_params['font_size_TMbox']
@@ -1961,7 +1963,7 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
         if (typeTM[cnt]=="M"): # out to in
             draw.rectangle(box, fill=g_params['memcolor_out_to_in'], outline=outline_color, width=outline_width)
             #draw.line([last,y2,x1,y2],g_params['loopcolor_in'])
-            draw.rectangle([last,y2-loop_height,x1,y2],fill=incolor)
+            draw.rectangle([last,y2-loop_height,x1,y2],fill=incolor) #draw loop
         elif (typeTM[cnt]=="W"): # in to out
             draw.rectangle(box, fill=g_params['memcolor_in_to_out'], outline=outline_color, width=outline_width)
             #draw.line([last,y1,x1,y1],outcolor)
@@ -1972,14 +1974,14 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
             box=[x1, y1 , x2, y2]
             draw.rectangle(box, fill=incolor, outline=outline_color, width=outline_width)
             #draw.line([last,y2,x1,y2],incolor)
-            draw.rectangle([last,y2-loop_height,x1,y2],fill=incolor)
+            draw.rectangle([last,y2-loop_height,x1,y2],fill=incolor) # draw loop
         elif (typeTM[cnt]=="r"): # Reentrant outside
             y1 = y0 - marginTop
             y2 = y0 + int(heightTMbox*fontHeightTMbox/3.0*2+0.5) + marginBottom
             box=[x1, y1 , x2, y2]
             draw.rectangle(box, fill=outcolor, outline=outline_color, width=outline_width)
             #draw.line([last,y1,x1,y1],outcolor)
-            draw.rectangle([last,y1,x1,y1+loop_height],fill=outcolor)
+            draw.rectangle([last,y1,x1,y1+loop_height],fill=outcolor) # draw loop
         else:
             draw.rectangle(box, fill="violet", outline=outline_color, width=outline_width)
         last=x2
@@ -1992,10 +1994,34 @@ def DrawTMOfConsensus2(posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,le
         cnt += 1
     if (typeTM[cnt-1]=="R" or typeTM[cnt-1]=="W"):
         #draw.line([x2,y2,x0 + length*fontWidth,y2],incolor)
-        draw.rectangle([x2,y2-loop_height,x0 + length*fontWidth,y2],fill=incolor)
+        draw.rectangle([x2,y2-loop_height,x0 + length*fontWidth,y2],fill=incolor)  # loop
     elif (typeTM[cnt-1]=="r" or (typeTM[cnt-1]=="M")):
         draw.line([x2,y1,x0 + length*fontWidth,y1],outcolor)
-        draw.rectangle([x2,y1,x0 + length*fontWidth,y1+loop_height],fill=outcolor)
+        draw.rectangle([x2,y1,x0 + length*fontWidth,y1+loop_height],fill=outcolor) # loop
+
+    if g_params['isShowGap']:
+        # show gap with blank, draw rectangle with fill=(0, 0, 0, 0)
+        posGAP = myfunc.GetGapPosition(topoSeq)
+        for (b, e) in posGAP:
+
+            x1 = x0 + b*fontWidth
+            y1 = y0 - marginTop
+            x2 = x0 + e*fontWidth
+            y2 = y0 + int(heightTMbox*fontHeightTMbox +0.5) + marginBottom
+
+            io_left = lcmp.Get_IOState_upstream(topoSeq, b)
+            io_right = lcmp.Get_IOState_downstream(topoSeq, e-1)
+            if io_left == 'i' or io_right == 'i':
+                loop_type = 'inside'
+                y1 = y2 - loop_height
+            else:
+                loop_type = 'outside'
+                y2 = y1 + loop_height
+            box=[x1, y1 , x2, y2]
+            #fillcolor = (0,0,0,0)
+            fillcolor = (255,255,255,255)
+            draw.rectangle(box, fill=fillcolor) # erase the gap region
+
 #}}}
 def DrawScale(length, posindexmap, xy0, font_size_alignment, #{{{
         fontWidth, fontHeight, draw):
@@ -2625,31 +2651,34 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     y = g_params['marginY']
 
 # Draw TM helices of the consensus.(or the representative topologies)
-    if len(specialProIdxDict['reppro']) > 0:
-        idxRepProList = specialProIdxDict['reppro']
-    else:
-        idxRepProList = [0] #if reppro is not set, take the first one
-    cnt = 0
-    for idx in idxRepProList:
-        (posTM_rep,typeTM_rep) = GetTMType(topoSeqList[idx])
-        if isDrawSeqLable:
-            xt = g_params['marginX'] + fontWidth*g_params['widthAnnotation']*0
-            if not g_params['makeCleanPlot']:
-                if len(idxRepProList) == 1:
-                    label = "Initial Topology"
+# Do not draw consensus if there is only final topologies in the topology
+# alignment
+    if not len(specialProIdxDict['final']) == len(specialProIdxList):
+        if len(specialProIdxDict['reppro']) > 0:
+            idxRepProList = specialProIdxDict['reppro']
+        else:
+            idxRepProList = [0] #if reppro is not set, take the first one
+        cnt = 0
+        for idx in idxRepProList:
+            (posTM_rep,typeTM_rep) = GetTMType(topoSeqList[idx])
+            if isDrawSeqLable:
+                xt = g_params['marginX'] + fontWidth*g_params['widthAnnotation']*0
+                if not g_params['makeCleanPlot']:
+                    if len(idxRepProList) == 1:
+                        label = "Initial Topology"
+                    else:
+                        label = "Initial Topology %d"%(cnt+1)
+                    label = rootname
                 else:
-                    label = "Initial Topology %d"%(cnt+1)
-                label = rootname
-            else:
-                label = ""
-            ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
-            fg="#000000";# black
-            draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
-        DrawTMOfConsensus2(posTM_rep, typeTM_rep, TMnameList[idx], (x,y),
-                fontWidth, fontHeight, draw,lengthAlignment)
-        y += int(g_params['heightTMbox'] * fontHeightTMbox*1.5+0.5)
-        cnt += 1
-    #y += sectionSepSpace*fontHeightTMbox
+                    label = ""
+                ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
+                fg="#000000";# black
+                draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
+            DrawTMOfConsensus2(topoSeqList[idx], posTM_rep, typeTM_rep, TMnameList[idx], (x,y),
+                    fontWidth, fontHeight, draw,lengthAlignment)
+            y += int(g_params['heightTMbox'] * fontHeightTMbox*1.5+0.5)
+            cnt += 1
+        #y += sectionSepSpace*fontHeightTMbox
 
 # Draw a scale bar of the residue position
     (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
@@ -2738,7 +2767,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 (posTM,typeTM) = GetTMType(topoSeqList[idx])
                 # draw topology of the representative protein
                 TMname = myfunc.GetTMnameFromAnnotation(annotationList[idx])
-                DrawTMOfConsensus2(posTM, typeTM, TMname, (x,y), fontWidth,
+                DrawTMOfConsensus2(topoSeqList[idx], posTM, typeTM, TMname, (x,y), fontWidth,
                         fontHeight, draw, lengthAlignment)
 
                 y += int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)
@@ -4957,6 +4986,8 @@ def main(g_params):#{{{
                 g_params['isShowTMIndex'] = True; i += 1
             elif argv[i] in["-cleanplot", "--cleanplot"]:
                 g_params['makeCleanPlot'] = True; i += 1
+            elif argv[i] in["-showgap", "--showgap"]:
+                g_params['isShowGap'] = True; i += 1
             elif argv[i] in["-debug", "--debug"]:
                 g_params['isPrintDebugInfo'] = True; i += 1
             elif argv[i] == "-q":
@@ -5091,6 +5122,7 @@ def InitGlobalParameter():#{{{
     g_params['method_shrink'] = 1
     g_params['isColorWholeTMbox'] = False
     g_params['isAdvTopo'] = False
+    g_params['isShowGap'] = False
     g_params['isTMname'] = False
     g_params['TMname'] = []
     g_params['isColorByKingdom'] = False
