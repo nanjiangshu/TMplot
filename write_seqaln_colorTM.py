@@ -59,6 +59,8 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
     WIDTH = g_params['window_size']
 
     maxSizeAnno = max([len(x) for x in annoList])
+    if g_params['makeCleanPlot']:
+        maxSizeAnno = 4
     lengthAlignment = len(alignedTopoSeqList[0])
     numSeq = len(idList)
     posTMList = [myfunc.GetTMPosition(x) for x in alignedTopoSeqList]
@@ -166,7 +168,9 @@ def WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile):# {{{
                 sys.stderr.write('topomsafile %s does not exist\n'%(topomsafile))
             continue
         (seqIDList, seqAnnoList, seqList) = myfunc.ReadFasta(alnfile)
+        #print(seqIDList)
         (topoIDList, topoAnnoList, topoList) = myfunc.ReadFasta(topomsafile)
+        #print(topoIDList)
         if g_params['removeUnnecessaryGap']:
             seqList = lcmp.RemoveUnnecessaryGap(seqList)
             topoList = lcmp.RemoveUnnecessaryGap(topoList)
