@@ -2246,6 +2246,17 @@ def GetTMPosition_gapless(topo):#{{{
         posTM.append((i.start(0), i.end(0)))
     return posTM
 #}}}
+def GetGapPosition(topo, GAP = GAP):#{{{
+    """
+    Get the position of GAPs
+    The return value is a list of 2-tuples: [ (beg, end), (beg, end)...]
+    """
+    posGAP=[]
+    m=re.finditer("(%s+)"%GAP,topo)
+    for i in m:
+        posGAP.append((i.start(0), i.end(0)))
+    return posGAP
+#}}}
 def ReadSeqLengthDict(infile):#{{{
     """Input:
         seqlen file
