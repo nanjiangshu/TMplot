@@ -17,13 +17,6 @@ alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 logger = logging.getLogger(__name__)
 
-def IsWithinTMRegion(pos, posTM):#{{{
-    isWithin = False
-    for (b,e) in posTM:
-        if pos >= b and pos < e:
-            return True
-    return False
-#}}}
 def CheckFileExt(choices):# {{{
     class Act(argparse.Action):
         def __call__(self,parser,namespace,fname,option_string=None):
@@ -126,7 +119,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         strs[2] += char_rel
 
         for i in xrange(numSeq):
-            if IsWithinTMRegion(j, posTMList[i]):
+            if lcmp.IsWithinTMRegion(j, posTMList[i]):
                 aa = aaSeqList[i][j].upper()
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
                 strs[i] += "<b><font color=\"%s\">%s</font></b>"%(color_TM, aa)

@@ -191,13 +191,6 @@ def sig2(x, scale=1):
     return 1/(1+math.exp(-x/scale))
 
 
-def IsWithinTMRegion(pos, posTM):#{{{
-    isWithin = False
-    for (b,e) in posTM:
-        if pos >= b and pos < e:
-            return True
-    return False
-#}}}
 def WriteTXTAlignment(idList, annoList, alignedTopoSeqList,#{{{
         originalAlignedTopoSeqList, aaSeqList, final2seq_idxMapList,
         outfile):
@@ -226,7 +219,7 @@ def WriteTXTAlignment(idList, annoList, alignedTopoSeqList,#{{{
             isStart = False
         isWithinTMregion = False
         for i in xrange(numSeq):
-            if IsWithinTMRegion(j, posTMList[i]):
+            if lcmp.IsWithinTMRegion(j, posTMList[i]):
                 aa = aaSeqList[i][j].upper()
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
             else:
@@ -285,7 +278,7 @@ def WriteHTMLAlignment(idList, annoList, alignedTopoSeqList,#{{{
             isStart = False
         isWithinTMregion = False
         for i in xrange(numSeq):
-            if IsWithinTMRegion(j, posTMList[i]):
+            if lcmp.IsWithinTMRegion(j, posTMList[i]):
                 aa = aaSeqList[i][j].upper()
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
                 strs[i] += "<td><b><font color=\"black\">%s</font></b></td>"%(aa)
@@ -390,7 +383,7 @@ def WriteHTMLAlignment2(idList, annoList, alignedTopoSeqList,#{{{
         strs[2] += char_rel
 
         for i in xrange(numSeq):
-            if IsWithinTMRegion(j, posTMList[i]):
+            if lcmp.IsWithinTMRegion(j, posTMList[i]):
                 aa = aaSeqList[i][j].upper()
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
                 strs[i] += "<b><font color=\"%s\">%s</font></b>"%(color_TM, aa)
@@ -462,7 +455,7 @@ def WriteHTMLAlignment3(idList, annoList, alignedTopoSeqList,#{{{
             isStart = False
         isWithinTMregion = False
         for i in xrange(numSeq):
-            if IsWithinTMRegion(j, posTMList[i]):
+            if lcmp.IsWithinTMRegion(j, posTMList[i]):
                 aa = aaSeqList[i][j].upper()
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
                 strs[i] += "<b><font color=\"black\">%s</font></b>"%(aa)
@@ -905,7 +898,7 @@ def IsOutofMaxDistKR(posTM, x, maxDistKR):#{{{
     for i in xrange(numTM):
         d = CalDistPointToFragment(x, posTM[i])
         if d > 0 and d <= maxDistKR:
-            if not IsWithinTMRegion(x, posTM):
+            if not lcmp.IsWithinTMRegion(x, posTM):
                 return False
     return True
 #}}}
@@ -1582,7 +1575,7 @@ def ShrinkMSA_Method_2(topoSeqList, aaSeqList=[], posTMList=[],#{{{
             seq = aaSeqList[i]
             for j in xrange(len(seq)):
                 if (seq[j] in ["K", "R"] and
-                        (not IsWithinTMRegion(j, posTMList[i]))):
+                        (not lcmp.IsWithinTMRegion(j, posTMList[i]))):
                     array[j] = "P"
 
     #debug
@@ -2400,7 +2393,7 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
             bg = g_params['spcolor']
 
         else:
-            if g_params['isColorWholeTMbox'] and IsWithinTMRegion(i, posTM):
+            if g_params['isColorWholeTMbox'] and lcmp.IsWithinTMRegion(i, posTM):
                 bg = memcolor #"#FF0000"
             else:
                 bg = "#FFFFFF"  #white

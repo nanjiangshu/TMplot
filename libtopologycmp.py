@@ -1039,6 +1039,17 @@ def SelectAnaDIFF(ana, parameters):#{{{
         return {} 
 #}}}
 
+
+def IsWithinTMRegion(pos, posTM):#{{{
+    """Check whether a residue position is within TM region
+    """
+    isWithin = False
+    for (b,e) in posTM:
+        if pos >= b and pos < e:
+            return True
+    return False
+#}}}
+
 def GetTopoStateFraction(topoSeqList):#{{{
     """return (cnt_i, cnt_o, cntM, cnt_GAP, per_i, per_o, per_M, per_GAP)"""
     lengthAlignment=len(topoSeqList[0])
