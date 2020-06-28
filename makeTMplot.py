@@ -68,6 +68,9 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
         "--advtopo",   "-cleanplot", "-h2wratio", str(g_params["H2W_ratio"]),
         "-shrink", "no", "-showgap", basename_topAlnFile]
 
+    if g_params['verbose']:
+        print("Generating toplogy alignment figure for %s"%(rootname))
+
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
         print(t_msg)
@@ -79,6 +82,8 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
     resized_topalnfigure = "%s.s%d.png"%(rootname, g_params['figure_resize'])
     shutil.copy2(topalnfigure, resized_topalnfigure)
     cmd = ["mogrify", "-resize", str(g_params['figure_resize']), resized_topalnfigure]
+    if g_params['verbose']:
+        print("Resizing the topology alignment figure for %s"%(rootname))
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
         print(t_msg)
@@ -90,6 +95,9 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
             basename_seqAlnFile, "-ext-topomsa", ext_topAlnFile, "-ws",
             str(g_params['window_size']), "-o",
             seqaln_htmlfigure, "-cleanplot", "-rmgap"]
+
+    if g_params['verbose']:
+        print("Generating sequence alignment highlighted by TM regions for %s"%(rootname))
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
         print(t_msg)
@@ -100,6 +108,8 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
     cmd = ["wkhtmltopdf",  seqaln_htmlfigure, seqaln_pdffigure]
     if os_dist == "debian":
         cmd = ["xvfb-run"] + cmd
+    if g_params['verbose']:
+        print("Convert the html figure to PDF for sequence alignment"
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
         print(t_msg)
@@ -122,12 +132,17 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
     for i in range(len(seqIDList)):
         capList += ["-cap", "%s: %s"%(alphabet[i], seqIDList[i])]
     cmd += capList
+    if g_params['verbose']:
+        print("Merging the topology alignment figure and sequence alignment figure for %s"%(rootname))
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
         print(t_msg)
         return 1
     if os.path.exists(outfile):
         shutil.copy2(outfile, os.path.join(outpath, outfile))
+
+    if g_params['verbose']:
+        print("Copy the result to final target"%(os.path.join(outpath, outfile)))
 
 
     os.chdir(cwd)
@@ -190,6 +205,7 @@ def InitGlobalParameter():#{{{
     g_params['isQuiet'] = True
     g_params['figure_resize'] = 5000
     g_params['window_size'] = 100
+    g_params['verbose'] = True
     return g_params
 #}}}
 if __name__ == '__main__' :
