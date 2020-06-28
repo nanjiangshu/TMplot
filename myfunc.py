@@ -23,6 +23,8 @@ import logging
 import logging.config
 GAP = "-"
 BLOCK_SIZE = 100000 #set a good value for reading text file by block reading
+TZ = "Europe/Stockholm"
+FORMAT_DATETIME = "%Y-%m-%d %H:%M:%S %Z"
 logger = logging.getLogger(__name__)
 
 def myopen(filename = "", default_fp = None, mode = "w", isRaise=False):#{{{
@@ -2950,6 +2952,33 @@ def disk_usage(path):#{{{
         return (-1,-1,-1)
 #}}}
 
+def RunCmd(cmd, verbose=False):# {{{
+    """Input cmd in list
+       Run the command and also output message to logs
+    """
+    begin_time = time.time()
+
+    isCmdSuccess = False
+    cmdline = " ".join(cmd)
+    date_str = time.strftime(FORMAT_DATETIME)
+    msg = ""
+    rmsg = "" 
+    try: 
+        rmsg = subprocess.check_output(cmd)
+        if verbose:
+            msg += "[%s] workflow: %s"%(date_str, cmdline)
+        isCmdSuccess = True 
+    except subprocess.CalledProcessError as e:
+        msg += "[%s] cmdline: %s\nFailed with message \"%s\""%(date_str, cmdline, str(e))
+        isCmdSuccess = False
+        pass 
+
+    end_time = time.time()
+    runtime_in_sec = end_time - begin_time
+
+    return (isCmdSuccess, runtime_in_sec, msg)
+# }}}
+
 def setup_logging(#{{{
     default_path='log.yml',
     default_level=logging.INFO,
@@ -2969,3 +2998,4 @@ def setup_logging(#{{{
     else:
         logging.basicConfig(level=default_level)
 #}}}
+
