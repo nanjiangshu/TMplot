@@ -13,13 +13,15 @@ import logging.config
 import yaml
 import tempfile
 import shutil
-from sys import platform
+import platform
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-if platform == "linux" or platform == "linux2":
+if sys.platform == "linux" or sys.platform == "linux2":
     python_exec = "python"
-elif platform == "darwin":
+elif sys.platform == "darwin":
     python_exec = "pythonw"
+
+os_dist = platform.dist()[0]
 
 rundir = os.path.dirname(os.path.realpath(__file__))
 
@@ -96,6 +98,8 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
     # convert html to pdf
     seqaln_pdffigure = "%s.%s"%(rootname, "seqaln.pdf")
     cmd = ["wkhtmltopdf",  seqaln_htmlfigure, seqaln_pdffigure]
+    if os_dist == "debian":
+        cmd = ["xvfb-run"] + cmd
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
         print(t_msg)
