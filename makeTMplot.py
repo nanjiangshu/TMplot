@@ -109,7 +109,7 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
     if os_dist == "debian":
         cmd = ["xvfb-run"] + cmd
     if g_params['verbose']:
-        print("Convert the html figure to PDF for sequence alignment"
+        print("Convert the html figure to PDF for sequence alignment")
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
         print(t_msg)
