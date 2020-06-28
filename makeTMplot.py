@@ -142,7 +142,7 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
         shutil.copy2(outfile, os.path.join(outpath, outfile))
 
     if g_params['verbose']:
-        print("Copy the result to final target"%(os.path.join(outpath, outfile)))
+        print("Copy the result to final target %s"%(os.path.join(outpath, outfile)))
 
 
     os.chdir(cwd)
