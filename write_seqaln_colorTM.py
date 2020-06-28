@@ -60,7 +60,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
 
     maxSizeAnno = max([len(x) for x in annoList])
     if g_params['makeCleanPlot']:
-        maxSizeAnno = 4
+        maxSizeAnno = 2
     lengthAlignment = len(alignedTopoSeqList[0])
     numSeq = len(idList)
     posTMList = [myfunc.GetTMPosition(x) for x in alignedTopoSeqList]
