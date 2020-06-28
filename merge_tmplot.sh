@@ -60,7 +60,6 @@ IsPathExist(){ #{{{
 #}}}
 WriteHead(){ #{{{
 echo '\documentclass[12pt]{article}
-\usepackage{fullpage}
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{hyperref}
@@ -71,10 +70,7 @@ echo '\documentclass[12pt]{article}
 \usepackage{subfig}
 \usepackage{graphicx}
 \usepackage{grffile}
-\usepackage{sectsty}
 \usepackage[margin=0.2in]{geometry}
-\sectionfont{\large}
-\subsectionfont{\normalsize}
 \usepackage{float}
 \captionsetup{justification=raggedright,singlelinecheck=false}
 '
