@@ -2532,6 +2532,14 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     #   * topology of a PDB structure
     #   * the final topology
     specialProIdxDict = GetSpecialProIndex(seqIDIndexDict)
+    specialProIdxList = specialProIdxDict['reppro'] + specialProIdxDict['pdb'] + specialProIdxDict['final']
+    if len(specialProIdxList) == 0:
+        if g_params['makeCleanPlot']:
+            print >> sys.stderr, "FATAL ERROR! specialPro is not set, TM box can not be plotted. "\
+                    "Please check your input file %s"%(inFile)
+            return 1
+        else:
+            specialProIdxDict['reppro'] = [0]
 
     specialProIdxList = specialProIdxDict['reppro'] + specialProIdxDict['pdb'] + specialProIdxDict['final']
     posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
@@ -5127,7 +5135,7 @@ def InitGlobalParameter():#{{{
     g_params['log_config_file'] = "%s/default_log.yml"%(rundir)
     g_params['logger'] = None
     g_params['dgscanProg'] = ""
-    g_params['makeCleanPlot'] = "False"
+    g_params['makeCleanPlot'] = False
 
     g_params['pdfcrop_margin_left']    = 20
     g_params['pdfcrop_margin_top']     = 5
