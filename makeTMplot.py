@@ -138,8 +138,19 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
     if not isCmdSuccess:
         print(t_msg)
         return 1
-    if os.path.exists(outfile):
-        shutil.copy2(outfile, os.path.join(outpath, outfile))
+
+    # crop the merged PDF figure
+    cmd = ["pdfcrop", outfile]
+    (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
+    if not isCmdSuccess:
+        print(t_msg)
+        return 1
+
+    outfile_crop =  "%s.seqtopaln-crop.pdf"%(rootname)
+
+    if os.path.exists(outfile_crop):
+        final_targetfile =  os.path.join(outpath, "%s.seqtopaln.pdf"%(rootname))
+        shutil.copy2(outfile_crop, final_targetfile)
 
     if g_params['verbose']:
         print("Copy the result to final target %s"%(os.path.join(outpath, outfile)))
@@ -188,9 +199,10 @@ Examples:
     if not CheckPrerequisite():
         return 1
 
-    tmpdir = tempfile.mkdtemp()
     if not os.path.exists(outpath):
         os.mkdir(outpath)
+
+    tmpdir = tempfile.mkdtemp()
     if MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir) == 0:
         shutil.rmtree(tmpdir)
     else:
