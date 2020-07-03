@@ -153,7 +153,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
 
                 if j >= jL[i]:
-                    strs[i] += "<b><font style=\"background-color:%s; border-color:%s; \" color=\"%s\">%s</font></b>"%(bgcolor, outline_color, color_TM, aa_segment)
+                    strs[i] += "<b><font style=\"background-color:%s; border-style=solid;border-color:%s; \" color=\"%s\">%s</font></b>"%(bgcolor, outline_color, color_TM, aa_segment)
                     jL[i] = e
             else: #loop
                 #posLoop = lcmp.GetLoopBeginEnd(j, posTMList[i], lengthAlignment)
