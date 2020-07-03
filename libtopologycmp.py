@@ -1177,7 +1177,7 @@ def GetTMType(topo):#{{{
             break
     return posTM,typeTM
 #}}}
-def SetMakeTMplotColor(idxTM, TMname, posTM, typeTM, base_outline_width, base_text_color, base_outline_color, g_params):# {{{
+def SetMakeTMplotColor(idxTM, TMname, base_outline_width, base_text_color, base_outline_color, g_params):# {{{
     """Set color scheme for makeTMplot"""
     outline_width = base_outline_width
     text_color = base_text_color
@@ -1217,6 +1217,33 @@ def SetMakeTMplotColor(idxTM, TMname, posTM, typeTM, base_outline_width, base_te
     g_params['spcolor'] = "#000000"       # signal peptide, black
 
     return (text, text_color, outline_color, outline_width)
+# }}}
+def GetTMIndex(iRes, posTM):# {{{
+    """Get index of TM helix given a residue position
+    Return -1 if iRes is not within TM region
+    """
+    for i in range(len(posTM)):
+        (b, e) = posTM[i]
+        if iRes >= b and iRes < e:
+            return i
+    return -1
+    # }}}
+def GetLoopBeginEnd(iRes, posTM, lengthAlignment):# {{{
+    """Get begin end position of the loop where the current residue position is located
+    """
+    if len(posTM) == 0:
+        return (0, lengthAlignment)
+    else:
+        if iRes < posTM[0][0]:
+            return (0, posTM[0][0])
+        elif iRes >= posTM[-1][1]:
+            return (iRes, lengthAlignment)
+        else:
+            for i in range(len(posTM)-1):
+                if iRes >= posTM[i][1] and iRes < posTM[i+1][0]:
+                    return (posTM[i][1], posTM[i+1][0])
+    print("FATAL error. Unable to find boundary for iRes = %d. lengthAlignment =%d, posTM = %s"%(iRes, lengthAlignment, str(posTM)))
+    sys.exit(1)
 # }}}
 
 def ReadDGScore(infile):#{{{

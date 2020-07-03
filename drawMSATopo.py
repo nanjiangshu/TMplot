@@ -1869,10 +1869,10 @@ def DrawTMOfConsensus2(topoSeq, posTM, typeTM, TMname,xy0, fontWidth, fontHeight
         y2 = y0 + int(heightTMbox*fontHeightTMbox +0.5) + marginBottom
         box=[x1, y1 , x2, y2]
 
-        (text, text_color, outline_color, outline_width) = lcmp.SetMakeTMplotColor(
-                cnt, TMname, posTM, typeTM, base_outline_width, base_text_color, base_outline_color, g_params)
+        (text_TMlabel, text_color, outline_color, outline_width) = lcmp.SetMakeTMplotColor(
+                cnt, TMname, base_outline_width, base_text_color, base_outline_color, g_params)
 
-        logger.debug("text=%s, outline_color=%s, outline_width=%d"%(text, outline_color, outline_width))
+        logger.debug("text_TMlabel=%s, outline_color=%s, outline_width=%d"%(text_TMlabel, outline_color, outline_width))
 
         if (typeTM[cnt]=="M"): # out to in
             draw.rectangle(box, fill=g_params['memcolor_out_to_in'], outline=outline_color, width=outline_width)
@@ -1899,12 +1899,12 @@ def DrawTMOfConsensus2(topoSeq, posTM, typeTM, TMname,xy0, fontWidth, fontHeight
         else:
             draw.rectangle(box, fill="violet", outline=outline_color, width=outline_width)
         last=x2
-        # draw text
-        (textwidth, textheight) = fntTMbox.getsize(text)
+        # draw text_TMlabel
+        (textwidth, textheight) = fntTMbox.getsize(text_TMlabel)
         textheight+=2
         x3 = int(round((x1+x2-textwidth)/2.0))
         y3 = int(round((y1+y2-textheight)/2.0))
-        draw.text((x3, y3), text, font=fntTMbox, fill=text_color)
+        draw.text((x3, y3), text_TMlabel, font=fntTMbox, fill=text_color)
         cnt += 1
     if (typeTM[cnt-1]=="R" or typeTM[cnt-1]=="W"):
         #draw.line([x2,y2,x0 + length*fontWidth,y2],incolor)

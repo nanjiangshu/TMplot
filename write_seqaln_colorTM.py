@@ -34,6 +34,18 @@ def WriteHTMLHeader(htmlheader, fpout):# {{{
 <!DOCTYPE html>
 <html>
 <body>
+<style>
+.TM_Nin {
+ border-style:solid;
+ border-color:#287EC7;
+ background-color: #808080;
+}
+.TM_Nout {
+ border-style:solid;
+ border-color:#287EC7;
+ background-color: #DCDCDC;
+}
+</style>
 """
     if not g_params['makeCleanPlot']:
         header += "\n<h2>%s</h2>"%(htmlheader)
@@ -57,6 +69,9 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
     #WIDTH = 90 # but do not break in the middle of a helix, adjust 1
     #WIDTH = 60 # but do not break in the middle of a helix
     WIDTH = g_params['window_size']
+    base_outline_width = 1
+    base_text_color = 'black'
+    base_outline_color = 'black'
 
     maxSizeAnno = max([len(x) for x in annoList])
     if g_params['makeCleanPlot']:
@@ -82,19 +97,25 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         color_TM = 'black'
         color_nonTM = 'grey'
 
+    color_TM = 'black'
+    color_nonTM = 'grey'
+
 
     fpout.write("<p>\n")
     if not g_params['makeCleanPlot']:
         fpout.write("<h4>Alignment for %s</h4>\n"%(aln_name))
     fpout.write("<pre>\n")
-    strs = [""]*numSeq
     j = 0 # iterator for the alignment position
     isStart = True
     cnt = 0
+    jL = [0]*numSeq # iterator for each sequence
     while j < lengthAlignment:
-        if isStart:
+        #print("j=%d, lengthAlignment=%d"%(j, lengthAlignment))
+        if isStart: # at beginning of each line
+        # writing annotation and start index
             strs = [""]*(numSeq+1)
             for i in xrange(numSeq):
+
                 seqlabel = annoList[i]
                 if g_params['makeCleanPlot']:
                     seqlabel = alphabet[i]
@@ -106,36 +127,68 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
                     pass
             strs[2] += "%-*s %4s "%(maxSizeAnno, "", "")
             isStart = False
+
+
+        # Writing alignment
         isWithinTMregion = False
-
-        aa1 = aaSeqList[0][j].upper()
-        aa2 = aaSeqList[1][j].upper()
-        if aa1 == GAP or aa2 == GAP:
-            char_rel = " "
-        else:
-            if (aa1,aa2) in blosum62:
-                blosum_score = blosum62[(aa1,aa2)]
-            elif (aa2,aa1) in blosum62:
-                blosum_score = blosum62[(aa2,aa1)]
-            else:
-                blosum_score = -1
-
-            if aa1 == aa2:
-                char_rel =  "|"
-            elif blosum_score > 0:
-                char_rel = "."
-            else:
-                char_rel = " "
-        strs[2] += char_rel
-
         for i in xrange(numSeq):
-            if lcmp.IsWithinTMRegion(j, posTMList[i]):
-                aa = aaSeqList[i][j].upper()
+            posTM = posTMList[i]
+            typeTM = typeTMList[i]
+            TMname = TMnameList[i]
+
+            idxTM = lcmp.GetTMIndex(j, posTMList[i])
+            if idxTM >= 0:
+                (b, e) = posTMList[i][idxTM]
+                (text_TMlabel, text_color, outline_color, outline_width) = lcmp.SetMakeTMplotColor(
+                        idxTM, TMnameList[i],  base_outline_width, base_text_color, base_outline_color, g_params)
+                aa_segment = aaSeqList[i][b:e].upper()
+                if typeTM[idxTM] == 'M':
+                    bgcolor = g_params['memcolor_out_to_in']
+                elif typeTM[idxTM] == 'W':
+                    bgcolor = g_params['memcolor_in_to_out']
+                elif typeTM[idxTM] == 'R':
+                    bgcolor = g_params['loopcolor_in']
+                elif typeTM[idxTM] == 'r':
+                    bgcolor = g_params['loopcolor_out']
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
-                strs[i] += "<b><font color=\"%s\">%s</font></b>"%(color_TM, aa)
-            else:
+
+                if j >= jL[i]:
+                    strs[i] += "<b><font style=\"background-color:%s; border-color:%s; \" color=\"%s\">%s</font></b>"%(bgcolor, outline_color, color_TM, aa_segment)
+                    jL[i] = e
+            else: #loop
+                #posLoop = lcmp.GetLoopBeginEnd(j, posTMList[i], lengthAlignment)
+                #(b, e) = posLoop
+                #aa_segment = aaSeqList[i][b:e].lower()
+                #jL[i] = e
                 aa = aaSeqList[i][j].lower()
                 strs[i] += "<font color=\"%s\">%s</font>"%(color_nonTM, aa)
+                jL[i] += 1
+
+        #Writing alignment relation
+        while j < min(jL) and j < lengthAlignment:
+            aa1 = aaSeqList[0][j].upper()
+            aa2 = aaSeqList[1][j].upper()
+            if aa1 == GAP or aa2 == GAP:
+                char_rel = " "
+            else:
+                if (aa1,aa2) in blosum62:
+                    blosum_score = blosum62[(aa1,aa2)]
+                elif (aa2,aa1) in blosum62:
+                    blosum_score = blosum62[(aa2,aa1)]
+                else:
+                    blosum_score = -1
+
+                if aa1 == aa2:
+                    char_rel =  "|"
+                elif blosum_score > 0:
+                    char_rel = "."
+                else:
+                    char_rel = " "
+            strs[2] += char_rel
+            #print("j=%d, aa1=%s, aa2=%s, char_rel=%s"%(j, aa1, aa2, char_rel))
+            j += 1
+            cnt += 1
+
         if ((cnt >= WIDTH and isWithinTMregion == False) 
                 or (j >= lengthAlignment-1)
                 ):
@@ -144,15 +197,18 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
 
             fpout.write("%s\n"%(strs[0]))
             if g_params['showRelationship']:
+                #print(len(strs[2]), strs[2])
+                #print("isWithinTMregion=", isWithinTMregion)
                 fpout.write("%s\n"%(strs[2])) #relationship
             fpout.write("%s\n"%(strs[1]))
             fpout.write("\n\n")
 
+            # init
             strs = [""]*(numSeq+1)
             isStart = True
             cnt = 0
-        j += 1
-        cnt += 1
+            #j += 1
+
     fpout.write("</pre>\n")
     fpout.write("</p>\n")
 
