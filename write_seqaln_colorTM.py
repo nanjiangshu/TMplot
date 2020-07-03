@@ -65,7 +65,6 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
     logger = logging.getLogger(__name__)
 # for two sequence pairwise alignment
 # assign also the identical and similarity by using BLOSUM62
-    annoList = idList
     #WIDTH = 90 # but do not break in the middle of a helix, adjust 1
     #WIDTH = 60 # but do not break in the middle of a helix
     WIDTH = g_params['window_size']
@@ -73,7 +72,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
     base_text_color = 'black'
     base_outline_color = 'black'
 
-    maxSizeAnno = max([len(x) for x in annoList])
+    maxSizeAnno = max([len(x) for x in idList])
     if g_params['makeCleanPlot']:
         maxSizeAnno = 2
     lengthAlignment = len(alignedTopoSeqList[0])
@@ -87,8 +86,11 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         posTMList.append(posTM)
         typeTMList.append(typeTM)
         TMnameList.append(TMname)
+    print(annoList)
 
     blosum62 = Bio.SubsMat.MatrixInfo.blosum62
+    if g_params['makeCleanPlot']:
+        g_params['colorhtml'] = False
 
     if g_params['colorhtml']:
         color_TM = 'red'
@@ -97,8 +99,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         color_TM = 'black'
         color_nonTM = 'grey'
 
-    color_TM = 'black'
-    color_nonTM = 'grey'
+
 
 
     fpout.write("<p>\n")
@@ -153,7 +154,9 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
 
                 if j >= jL[i]:
-                    strs[i] += "<b><font style=\"background-color:%s; border-style=solid;border-color:%s; \" color=\"%s\">%s</font></b>"%(bgcolor, outline_color, color_TM, aa_segment)
+                    print ("outline_color=", outline_color)
+                    strs[i] += "<b><font style=\"background-color:%s; border-style:solid none solid none; border-color:%s; \" color=\"%s\">%s</font></b>"%(
+                            bgcolor, outline_color, color_TM, aa_segment)
                     jL[i] = e
             else: #loop
                 #posLoop = lcmp.GetLoopBeginEnd(j, posTMList[i], lengthAlignment)
@@ -190,10 +193,10 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
             cnt += 1
 
         if ((cnt >= WIDTH and isWithinTMregion == False) 
-                or (j >= lengthAlignment-1)
+                or (j >= lengthAlignment)
                 ):
             for i in xrange(numSeq):
-                strs[i] += " %4d"%(final2seq_idxMapList[i][j])
+                strs[i] += " %4d"%(final2seq_idxMapList[i][j]-1)
 
             fpout.write("%s\n"%(strs[0]))
             if g_params['showRelationship']:
@@ -207,7 +210,6 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
             strs = [""]*(numSeq+1)
             isStart = True
             cnt = 0
-            #j += 1
 
     fpout.write("</pre>\n")
     fpout.write("</p>\n")
@@ -249,7 +251,7 @@ def WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile):# {{{
             final2seq_idxMapList.append(idxmap)
 
         print ('\t'+rootname_alnfile)
-        WriteHTMLAlignment2(rootname_alnfile, seqIDList, seqAnnoList, topoList,
+        WriteHTMLAlignment2(rootname_alnfile, topoIDList, topoAnnoList, topoList,
                 topoList, seqList, final2seq_idxMapList,
                 fpout)
 
