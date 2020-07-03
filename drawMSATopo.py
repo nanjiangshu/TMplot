@@ -1869,33 +1869,10 @@ def DrawTMOfConsensus2(topoSeq, posTM, typeTM, TMname,xy0, fontWidth, fontHeight
         y2 = y0 + int(heightTMbox*fontHeightTMbox +0.5) + marginBottom
         box=[x1, y1 , x2, y2]
 
-        outline_width = base_outline_width
-        text_color = base_text_color
-        outline_color = base_outline_color
+        (text, text_color, outline_color, outline_width) = lcmp.SetMakeTMplotColor(
+                cnt, TMname, posTM, typeTM, base_outline_width, base_text_color, base_outline_color, g_params)
 
-        text = ""
-        try:
-            label = TMname[cnt]
-        except IndexError:
-            label = "%d"%(cnt+1)
-        if label.find("-") != -1:
-            tp = label.split("-")[1]
-            if tp.find("S") == 0: #scaffold
-                outline_color = "#A52A2A" # brown
-            elif tp.find("BC") == 0: #broken core
-                outline_color = "#FF0090" # 
-            elif tp.find("RC") == 0 : # reentrant core
-                outline_color = "#008000" # green
-            outline_width = base_outline_width*2
-
-        if label.find("RH-RC") != -1:
-            text = "RH"
-        elif label.find("TM") != -1:
-            text = label.split("-")[0].lstrip("TM").strip()
-        else:
-            text = label
-
-        logger.debug("label=%s, outline_color=%s, outline_width=%d"%(label, outline_color, outline_width))
+        logger.debug("text=%s, outline_color=%s, outline_width=%d"%(text, outline_color, outline_width))
 
         if (typeTM[cnt]=="M"): # out to in
             draw.rectangle(box, fill=g_params['memcolor_out_to_in'], outline=outline_color, width=outline_width)

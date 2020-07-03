@@ -63,7 +63,15 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         maxSizeAnno = 2
     lengthAlignment = len(alignedTopoSeqList[0])
     numSeq = len(idList)
-    posTMList = [myfunc.GetTMPosition(x) for x in alignedTopoSeqList]
+    posTMList = []
+    typeTMList = []
+    TMnameList = []
+    for i in range(numSeq):
+        (posTM,typeTM) = lcmp.GetTMType(alignedTopoSeqList[i])
+        TMname = myfunc.GetTMnameFromAnnotation(annoList[i])
+        posTMList.append(posTM)
+        typeTMList.append(typeTM)
+        TMnameList.append(TMname)
 
     blosum62 = Bio.SubsMat.MatrixInfo.blosum62
 

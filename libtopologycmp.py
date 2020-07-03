@@ -1177,7 +1177,47 @@ def GetTMType(topo):#{{{
             break
     return posTM,typeTM
 #}}}
+def SetMakeTMplotColor(idxTM, TMname, posTM, typeTM, base_outline_width, base_text_color, base_outline_color, g_params):# {{{
+    """Set color scheme for makeTMplot"""
+    outline_width = base_outline_width
+    text_color = base_text_color
+    outline_color = base_outline_color
+    text = ""
+    try:
+        label = TMname[idxTM]
+    except IndexError:
+        label = "%d"%(idxTM+1)
+    if label.find("-") != -1:
+        tp = label.split("-")[1]
+        if tp.find("S") == 0: #scaffold
+            outline_color = "#A52A2A" # brown
+        elif tp.find("BC") == 0: #broken core
+            outline_color = "#FF0090" # 
+        elif tp.find("RC") == 0 : # reentrant core
+            outline_color = "#008000" # green
+        outline_width = base_outline_width*2
 
+    if label.find("RH-RC") != -1:
+        text = "RH"
+    elif label.find("TM") != -1:
+        text = label.split("-")[0].lstrip("TM").strip()
+    else:
+        text = label
+
+    g_params['memcolor_out_to_in'] = "#DCDCDC"  #very light grey, type = M
+    g_params['memcolor_in_to_out'] = "#808080"  #grey           , type = W
+    g_params['memcolor_out_to_in_MSA'] = "#FF6666"  # light red, type M
+    g_params['memcolor_in_to_out_MSA'] = "#CC0000"  # dark red, type W
+    #g_params['loopcolor_in'] = "#FFBFB3"        # light red
+    g_params['loopcolor_in'] = "#FFFF00"        # yellow
+    g_params['loopcolor_in_MSA'] = "#F2EABD"        # yellow
+    #g_params['loopcolor_out'] = "#87CEFA"       # light sky blue
+    g_params['loopcolor_out'] = "#3399FF"       # blue
+    g_params['loopcolor_out_MSA'] = "#CCFFFF"       # faded blue
+    g_params['spcolor'] = "#000000"       # signal peptide, black
+
+    return (text, text_color, outline_color, outline_width)
+# }}}
 
 def ReadDGScore(infile):#{{{
     hdl = myfunc.ReadLineByBlock(infile)
