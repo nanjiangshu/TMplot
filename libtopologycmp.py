@@ -1122,6 +1122,60 @@ def GetTopoStateFraction_withSP(topoSeqList):#{{{
         per_GAP[j] = cnt_GAP[j]/(numSeq_float)
     return (cnt_i, cnt_o, cnt_M, cnt_SP, cnt_GAP, per_i, per_o, per_M, per_SP, per_GAP)
 #}}}
+def GetTMType(topo):#{{{
+    """Get types of TM helices given a topology
+    Return two lists posTM and typeTM
+    """
+    #    print topo
+    posTM=[]
+    typeTM=[]
+    type=''
+    lengthTopo=len(topo)
+    b=0
+    e=0
+    while 1:
+        b=topo.find('M',e)
+        if b != -1:
+            m = re.search('[io]', topo[b+1:])
+            if m != None:
+                e = m.start(0)+b+1
+            else:
+                e=lengthTopo
+            if topo[e-1] == GAP:
+                e=topo[:e-1].rfind('M')+1
+#           print (b,e)
+            if b == e:
+                print "Error topo[b-10:e+10]=", topo[b-30:e+30]
+                #sys.exit(1)
+                return []
+            posTM.append((b,e))
+            # Now we need to devide the type (can be one of four)
+            before=topo[0:b]
+            after=topo[e-1:]
+            ib=before.rfind('i')
+            ob=before.rfind('o')
+            ia=after.find('i')
+            oa=after.find('o')
+            if (ia==-1):
+                ia=lengthTopo
+            if (oa==-1):
+                oa=lengthTopo
+            if (ib>ob and ia>oa):
+                type="M" # out -> in
+            elif(ib<ob and ia<oa):
+                type="W" # in -> out
+            elif(ib>ob and ia<oa):
+                type="R"
+            elif(ib<ob and ia>oa):
+                type="r"
+            else:
+                type="X"
+            typeTM.append(type)
+            #print (before, after,ib,ob,ia,oa,type)
+        else:
+            break
+    return posTM,typeTM
+#}}}
 
 
 def ReadDGScore(infile):#{{{

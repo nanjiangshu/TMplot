@@ -1696,62 +1696,6 @@ def DrawTMOfConsensus(posTM, xy0, fontWidth, fontHeight, draw): #{{{
         cnt += 1
 #}}}
 
-def GetTMType(topo):#{{{
-    """
-    Get position of TM helices given a topology
-    this version is much faster (~25 times) than using than finditer
-    updated 2011-10-24
-    """
-    #    print topo
-    posTM=[]
-    typeTM=[]
-    type=''
-    lengthTopo=len(topo)
-    b=0
-    e=0
-    while 1:
-        b=topo.find('M',e)
-        if b != -1:
-            m = re.search('[io]', topo[b+1:])
-            if m != None:
-                e = m.start(0)+b+1
-            else:
-                e=lengthTopo
-            if topo[e-1] == GAP:
-                e=topo[:e-1].rfind('M')+1
-#           print (b,e)
-            if b == e:
-                print "Error topo[b-10:e+10]=", topo[b-30:e+30]
-                #sys.exit(1)
-                return []
-            posTM.append((b,e))
-            # Now we need to devide the type (can be one of four)
-            before=topo[0:b]
-            after=topo[e-1:]
-            ib=before.rfind('i')
-            ob=before.rfind('o')
-            ia=after.find('i')
-            oa=after.find('o')
-            if (ia==-1):
-                ia=lengthTopo
-            if (oa==-1):
-                oa=lengthTopo
-            if (ib>ob and ia>oa):
-                type="M" # out -> in
-            elif(ib<ob and ia<oa):
-                type="W" # in -> out
-            elif(ib>ob and ia<oa):
-                type="R"
-            elif(ib<ob and ia>oa):
-                type="r"
-            else:
-                type="X"
-            typeTM.append(type)
-            #print (before, after,ib,ob,ia,oa,type)
-        else:
-            break
-    return posTM,typeTM
-#}}}
 
 def DrawDGProfile(dgpList, lengthAlignment, maxDG, minDG, xy0, #{{{ 
         dgprofileRegionWidth, dgprofileRegionHeight, spaceToLeftBorder,
@@ -2347,7 +2291,7 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
     memcolor = "#FF0000"
 
     lengthSeq = len(toposeq)
-    (posTM, typeTM) = GetTMType(toposeq)
+    (posTM, typeTM) = lcmp.GetTMType(toposeq)
     seq_typeTM = [] # seq_typeTM is a list to name the type at every TM residue
                     # position, it defines only the types at the TM position, not loops
     seq_typeTM = [' '] * lengthSeq
@@ -2661,7 +2605,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             idxRepProList = [0] #if reppro is not set, take the first one
         cnt = 0
         for idx in idxRepProList:
-            (posTM_rep,typeTM_rep) = GetTMType(topoSeqList[idx])
+            (posTM_rep,typeTM_rep) = lcmp.GetTMType(topoSeqList[idx])
             if isDrawSeqLable:
                 xt = g_params['marginX'] + fontWidth*g_params['widthAnnotation']*0
                 if not g_params['makeCleanPlot']:
@@ -2765,7 +2709,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                     fg="#000000";# black
                     draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
 
-                (posTM,typeTM) = GetTMType(topoSeqList[idx])
+                (posTM,typeTM) = lcmp.GetTMType(topoSeqList[idx])
                 # draw topology of the representative protein
                 TMname = myfunc.GetTMnameFromAnnotation(annotationList[idx])
                 DrawTMOfConsensus2(topoSeqList[idx], posTM, typeTM, TMname, (x,y), fontWidth,
