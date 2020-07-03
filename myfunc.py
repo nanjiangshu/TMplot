@@ -1563,6 +1563,27 @@ def old_ReadFasta_simple(inFile):#{{{
 #}}}
 
 
+def GetAlignmentRelationship(aa1, aa2, GAP, matrix):# {{{
+    """Get symbol for the relationship of alignment
+    """
+    if aa1 == GAP or aa2 == GAP:
+        char_rel = " "
+    else:
+        if (aa1,aa2) in matrix:
+            score = matrix[(aa1,aa2)]
+        elif (aa2,aa1) in matrix:
+            score = matrix[(aa2,aa1)]
+        else:
+            score = -1
+
+        if aa1 == aa2:
+            char_rel =  "|"
+        elif score > 0:
+            char_rel = "."
+        else:
+            char_rel = " "
+    return char_rel
+# }}}
 def GetSegPos(string, keyC):#{{{
     """
     Get segment of a continue keyC state

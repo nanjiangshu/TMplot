@@ -1177,7 +1177,21 @@ def GetTMType(topo):#{{{
             break
     return posTM,typeTM
 #}}}
-def SetMakeTMplotColor(idxTM, TMname, base_outline_width, base_text_color, base_outline_color, g_params):# {{{
+def SetMakeTMplotColor_g_params(g_params):# {{{
+    g_params['memcolor_out_to_in'] = "#DCDCDC"  #very light grey, type = M
+    g_params['memcolor_in_to_out'] = "#808080"  #grey           , type = W
+    g_params['memcolor_out_to_in_MSA'] = "#FF6666"  # light red, type M
+    g_params['memcolor_in_to_out_MSA'] = "#CC0000"  # dark red, type W
+    #g_params['loopcolor_in'] = "#FFBFB3"        # light red
+    g_params['loopcolor_in'] = "#FFFF00"        # yellow
+    g_params['loopcolor_in_MSA'] = "#F2EABD"        # yellow
+    #g_params['loopcolor_out'] = "#87CEFA"       # light sky blue
+    g_params['loopcolor_out'] = "#3399FF"       # blue
+    g_params['loopcolor_out_MSA'] = "#CCFFFF"       # faded blue
+    g_params['spcolor'] = "#000000"       # signal peptide, black
+
+#}}}
+def SetMakeTMplotColor(idxTM, TMname, base_outline_width, base_text_color, base_outline_color):# {{{
     """Set color scheme for makeTMplot"""
     outline_width = base_outline_width
     text_color = base_text_color
@@ -1204,17 +1218,6 @@ def SetMakeTMplotColor(idxTM, TMname, base_outline_width, base_text_color, base_
     else:
         text = label
 
-    g_params['memcolor_out_to_in'] = "#DCDCDC"  #very light grey, type = M
-    g_params['memcolor_in_to_out'] = "#808080"  #grey           , type = W
-    g_params['memcolor_out_to_in_MSA'] = "#FF6666"  # light red, type M
-    g_params['memcolor_in_to_out_MSA'] = "#CC0000"  # dark red, type W
-    #g_params['loopcolor_in'] = "#FFBFB3"        # light red
-    g_params['loopcolor_in'] = "#FFFF00"        # yellow
-    g_params['loopcolor_in_MSA'] = "#F2EABD"        # yellow
-    #g_params['loopcolor_out'] = "#87CEFA"       # light sky blue
-    g_params['loopcolor_out'] = "#3399FF"       # blue
-    g_params['loopcolor_out_MSA'] = "#CCFFFF"       # faded blue
-    g_params['spcolor'] = "#000000"       # signal peptide, black
 
     return (text, text_color, outline_color, outline_width)
 # }}}

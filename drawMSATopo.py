@@ -1870,7 +1870,7 @@ def DrawTMOfConsensus2(topoSeq, posTM, typeTM, TMname,xy0, fontWidth, fontHeight
         box=[x1, y1 , x2, y2]
 
         (text_TMlabel, text_color, outline_color, outline_width) = lcmp.SetMakeTMplotColor(
-                cnt, TMname, base_outline_width, base_text_color, base_outline_color, g_params)
+                cnt, TMname, base_outline_width, base_text_color, base_outline_color)
 
         logger.debug("text_TMlabel=%s, outline_color=%s, outline_width=%d"%(text_TMlabel, outline_color, outline_width))
 
@@ -2408,6 +2408,7 @@ def CalculateImageParameter(fontWidth, fontHeight, lengthAlignment, numSeq, numS
 # }}}
 def DrawMSATopo_PIL(inFile, g_params):#{{{
     """Draw multiple alignment of topologies using the PIL library"""
+    lcmp.SetMakeTMplotColor_g_params(g_params)
     isDrawSeqLable = True
     (idList, annotationList, topoSeqList) = myfunc.ReadFasta(inFile)
 

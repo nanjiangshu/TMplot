@@ -12,6 +12,8 @@ import logging
 import logging.config
 import yaml
 
+blosum62 = Bio.SubsMat.MatrixInfo.blosum62
+
 GAP = '-'
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -86,9 +88,8 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         posTMList.append(posTM)
         typeTMList.append(typeTM)
         TMnameList.append(TMname)
-    print(annoList)
+    #print(annoList)
 
-    blosum62 = Bio.SubsMat.MatrixInfo.blosum62
     if g_params['makeCleanPlot']:
         g_params['colorhtml'] = False
 
@@ -97,9 +98,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         color_nonTM = 'grey'
     else:
         color_TM = 'black'
-        color_nonTM = 'grey'
-
-
+        color_nonTM = '#646464'
 
 
     fpout.write("<p>\n")
@@ -141,7 +140,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
             if idxTM >= 0:
                 (b, e) = posTMList[i][idxTM]
                 (text_TMlabel, text_color, outline_color, outline_width) = lcmp.SetMakeTMplotColor(
-                        idxTM, TMnameList[i],  base_outline_width, base_text_color, base_outline_color, g_params)
+                        idxTM, TMnameList[i],  base_outline_width, base_text_color, base_outline_color)
                 aa_segment = aaSeqList[i][b:e].upper()
                 if typeTM[idxTM] == 'M':
                     bgcolor = g_params['memcolor_out_to_in']
@@ -154,7 +153,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
 
                 if j >= jL[i]:
-                    print ("outline_color=", outline_color)
+                    #print ("outline_color=", outline_color)
                     strs[i] += "<b><font style=\"background-color:%s; border-style:solid none solid none; border-color:%s; \" color=\"%s\">%s</font></b>"%(
                             bgcolor, outline_color, color_TM, aa_segment)
                     jL[i] = e
@@ -164,31 +163,22 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
                 #aa_segment = aaSeqList[i][b:e].lower()
                 #jL[i] = e
                 aa = aaSeqList[i][j].lower()
-                strs[i] += "<font color=\"%s\">%s</font>"%(color_nonTM, aa)
+                top_aa = alignedTopoSeqList[i][j].lower()
+                if top_aa == 'i':
+                    loopcolor = g_params['loopcolor_in']
+                elif top_aa == 'o':
+                    loopcolor = g_params['loopcolor_out']
+                else:
+                    loopcolor = "none"
+                #print(loopcolor)
+                strs[i] += "<font style=\"background-color:%s\" color=\"%s\">%s</font>"%(loopcolor, color_nonTM, aa)
                 jL[i] += 1
 
         #Writing alignment relation
         while j < min(jL) and j < lengthAlignment:
             aa1 = aaSeqList[0][j].upper()
             aa2 = aaSeqList[1][j].upper()
-            if aa1 == GAP or aa2 == GAP:
-                char_rel = " "
-            else:
-                if (aa1,aa2) in blosum62:
-                    blosum_score = blosum62[(aa1,aa2)]
-                elif (aa2,aa1) in blosum62:
-                    blosum_score = blosum62[(aa2,aa1)]
-                else:
-                    blosum_score = -1
-
-                if aa1 == aa2:
-                    char_rel =  "|"
-                elif blosum_score > 0:
-                    char_rel = "."
-                else:
-                    char_rel = " "
-            strs[2] += char_rel
-            #print("j=%d, aa1=%s, aa2=%s, char_rel=%s"%(j, aa1, aa2, char_rel))
+            strs[2] += myfunc.GetAlignmentRelationship(aa1, aa2, GAP, blosum62)
             j += 1
             cnt += 1
 
@@ -200,8 +190,6 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
 
             fpout.write("%s\n"%(strs[0]))
             if g_params['showRelationship']:
-                #print(len(strs[2]), strs[2])
-                #print("isWithinTMregion=", isWithinTMregion)
                 fpout.write("%s\n"%(strs[2])) #relationship
             fpout.write("%s\n"%(strs[1]))
             fpout.write("\n\n")
@@ -310,7 +298,7 @@ Examples:
     if args.cleanplot:
         g_params['makeCleanPlot'] = True
 
-
+    lcmp.SetMakeTMplotColor_g_params(g_params)
     WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile)
 
 
