@@ -3,6 +3,7 @@
 import os
 import sys
 import myfunc
+import re
 GAP = '-'
 
 def FilterSignalPeptideInTopology(topo, sp_pos):#{{{
