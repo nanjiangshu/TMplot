@@ -121,7 +121,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
                     seqlabel = alphabet[i]
                 try:
                     strs[i] += "%-*s %4d "%(maxSizeAnno, seqlabel,
-                            final2seq_idxMapList[i][j])
+                            final2seq_idxMapList[i][j]+1)
                 except KeyError:
                     logger.debug("final2seq_idxMapList error  i=%d, j=%d"%(i,j))
                     pass
@@ -194,7 +194,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
                 ):
             for i in xrange(numSeq):
                 #print("i=%d, j=%d"%(i,j))
-                strs[i] += " %4d"%(final2seq_idxMapList[i][j-1])
+                strs[i] += " %4d"%(final2seq_idxMapList[i][j-1]+1)
 
             fpout.write("%s\n"%(strs[0]))
             if g_params['showRelationship']:
