@@ -16,8 +16,8 @@ Eamil: nanjiang.shu@scilifelab.se
 
 ## Gallery
 
-<a href="doc/MSA-PIL.md"><img src="examples/example_images/antiport.s1600.jpg" width="64"></a>
-<a href="doc/makeTMplot-PIL.md"><img src="examples/example_images/glt_hct_full.seqtopaln.png" width="64"></a>
+<a href="doc/MSA-PIL.md"><img src="examples/example_images/antiport.s1600.jpg" width="128"></a>
+<a href="doc/makeTMplot-PIL.md"><img src="examples/example_images/glt_hct_full.seqtopaln.png" width="128"></a>
 
 ## Dependencies
 
