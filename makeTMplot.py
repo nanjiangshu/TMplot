@@ -228,7 +228,7 @@ def InitGlobalParameter():#{{{
     g_params['isQuiet'] = True
     g_params['figure_resize'] = 5000
     g_params['window_size'] = 100
-    g_params['isBreakTM'] = 100
+    g_params['isBreakTM'] = False
     g_params['verbose'] = True
     return g_params
 #}}}
