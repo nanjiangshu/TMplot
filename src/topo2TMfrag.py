@@ -45,7 +45,7 @@ MAX_FASTA_AA_FILE_SIZE = 2*1024*1024*1024;  # 2GB
 BLOCK_SIZE=100000
 
 def PrintHelp():
-    print usage
+    print(usage)
 def GetTMPosition_gapless(topo):#{{{
 # Get the position of TM helices given the topology (without gaps)
 # The return value is a list of 2-tuples
@@ -57,10 +57,10 @@ def GetTMPosition_gapless(topo):#{{{
     return posTM
 #}}}
 def Topo2TMFrag(idList, topoList, aaSeqDict, processedTopoIDSet, fpout):#{{{
-    for iSeq in xrange (len(topoList)):
+    for iSeq in range (len(topoList)):
         seqID= idList[iSeq]
         if seqID not in aaSeqDict:
-            print >> sys.stderr, "Warning! not aaSeq found for ID %s"%seqID
+            print("Warning! not aaSeq found for ID %s"%seqID, file=sys.stderr)
             continue
         if seqID in  processedTopoIDSet:
             continue
@@ -74,11 +74,11 @@ def Topo2TMFrag(idList, topoList, aaSeqDict, processedTopoIDSet, fpout):#{{{
             posTM = GetTMPosition_gapless(gapless_topo)
             for (b,e) in posTM:
                 if isPrintSeqID:
-                    print >> fpout, "%s \t %s" % (seqID,aaSeq[b:e])
+                    print("%s \t %s" % (seqID,aaSeq[b:e]), file=fpout)
                 else:
-                    print >> fpout, "%s" % (aaSeq[b:e])
+                    print("%s" % (aaSeq[b:e]), file=fpout)
         else:
-            print >> sys.stderr, "length of aaSeq (%d) and topology (%d) does not match for ID %s. Ignore." %(len(aaSeq), len(gapless_topo), seqID)
+            print("length of aaSeq (%d) and topology (%d) does not match for ID %s. Ignore." %(len(aaSeq), len(gapless_topo), seqID), file=sys.stderr)
     return 0
 #}}}
 
@@ -122,49 +122,49 @@ def main():#{{{
                 outFile=sys.argv[i+1]
                 i = i + 2
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % sys.argv[i])
+                print(("Error! Wrong argument:%s" % sys.argv[i]), file=sys.stderr)
                 return 1
         else:
             inFile=sys.argv[i]
             i+=1
 
     if inFile == "":
-        print >> sys.stderr,"Error! Topology file not set."
+        print("Error! Topology file not set.", file=sys.stderr)
         return 1
     if fastaFile == "":
-        print >> sys.stderr,"Error!  amino acid fasta file not set."
+        print("Error!  amino acid fasta file not set.", file=sys.stderr)
         return 1
 
     fpout = sys.stdout
     if outFile != "":
         fpout = open(outFile,"w")
         if not fpout:
-            print >> sys.stderr, "Failed to write to outfile %s. "%(outFile)
-            print >> sys.stderr, "Reset output to stdout."
+            print("Failed to write to outfile %s. "%(outFile), file=sys.stderr)
+            print("Reset output to stdout.", file=sys.stderr)
             fpout = sys.stdout
     sizeAASeqFile = os.path.getsize(fastaFile)
 
     if sizeAASeqFile > MAX_FASTA_AA_FILE_SIZE:
-        print >> sys.stderr, ("size (%d)"%sizeAASeqFile 
+        print(("size (%d)"%sizeAASeqFile 
                 + " of fasta sequence file (%s)"%fastaFile
-                + " is over the limit (%d). Exit."% MAX_FASTA_AA_FILE_SIZE)
+                + " is over the limit (%d). Exit."% MAX_FASTA_AA_FILE_SIZE), file=sys.stderr)
         return 1
 
     (idListSeq, annotationListSeq, seqList) = myfunc.ReadFasta(fastaFile)
     if idListSeq == None:
-        print >> sys.stderr, "%s exit with error."%sys.argv[0]
+        print("%s exit with error."%sys.argv[0], file=sys.stderr)
         return 1
     elif idListSeq < 1:
-        print >> sys.stderr, ("Warning! zero aa sequences have" 
-                + " been read in for file %s" %fastaFile)
+        print(("Warning! zero aa sequences have" 
+                + " been read in for file %s" %fastaFile), file=sys.stderr)
     aaSeqDict={}
-    for i in xrange (len(idListSeq)):
+    for i in range (len(idListSeq)):
         aaSeqDict[idListSeq[i]] = seqList[i]
 
 
-    fpin = open (inFile, "rb")
+    fpin = open (inFile, "r")
     if not fpin:
-        print >> sys.stderr, "Failed to open input file %s"%(inFile)
+        print("Failed to open input file %s"%(inFile), file=sys.stderr)
         return -1
     unprocessedBuffer=""
     isEOFreached = False

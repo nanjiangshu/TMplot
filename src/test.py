@@ -23,7 +23,7 @@ usage: %s TESTMODE options
 
 numArgv = len(sys.argv)
 if numArgv <= 1:
-    print general_usage
+    print(general_usage)
     sys.exit(1)
 TESTMODE=sys.argv[1]
 

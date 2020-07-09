@@ -114,7 +114,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         if isStart: # at beginning of each line
         # writing annotation and start index
             strs = [""]*(numSeq+1)
-            for i in xrange(numSeq):
+            for i in range(numSeq):
 
                 seqlabel = annoList[i]
                 if g_params['makeCleanPlot']:
@@ -131,7 +131,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
 
         # Writing alignment
         isWithinTMregion = False
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             posTM = posTMList[i]
             typeTM = typeTMList[i]
             TMname = TMnameList[i]
@@ -192,7 +192,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
         if ((cnt >= WIDTH and (g_params['isBreakTM'] or isWithinTMregion == False)) 
                 or (j >= lengthAlignment)
                 ):
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 #print("i=%d, j=%d"%(i,j))
                 strs[i] += " %4d"%(final2seq_idxMapList[i][j-1]+1)
 
@@ -216,7 +216,7 @@ def WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile):# {{{
     try:
         fpout = open(outfile,"w")
     except IOError:
-        print >> sys.stderr, "Failed to write to %s"%(outfile)
+        print("Failed to write to %s"%(outfile), file=sys.stderr)
         return 1
     WriteHTMLHeader('Alignment highlighted by <font color=%s>TM regions</font>'%('red'), fpout)
     print("Processed alignments:")
@@ -246,7 +246,7 @@ def WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile):# {{{
                 idxmap[j] = j
             final2seq_idxMapList.append(idxmap)
 
-        print ('\t'+rootname_alnfile)
+        print(('\t'+rootname_alnfile))
         WriteHTMLAlignment2(rootname_alnfile, topoIDList, topoAnnoList, topoList,
                 topoList, seqList, final2seq_idxMapList,
                 fpout)

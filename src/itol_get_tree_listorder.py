@@ -32,7 +32,7 @@ Created 2012-03-19, updated 2018-08-20, Nanjiang Shu
 """%(progname)
 
 def PrintHelp():
-    print usage
+    print(usage)
 def GetTreeListOrder(treefile, outpath):
 #Create the Itol class
     itl = Itol()
@@ -57,10 +57,10 @@ def GetTreeListOrder(treefile, outpath):
 # Check parameters
 # itl.print_variables()
 #Submit the tree
-    print ''
+    print('')
     good_upload = itl.upload()
     if good_upload == False:
-        print 'There was an error:'+itl.comm.upload_output
+        print('There was an error:'+itl.comm.upload_output)
         return 1
 
 #Export to pdf
@@ -72,13 +72,13 @@ def GetTreeListOrder(treefile, outpath):
     itol_exporter.set_export_param_value('line_width',"1")
     #epsfile = outpath + os.sep + rootname + '.itolnormal.eps'
     pdffile = outpath + os.sep + rootname + '.itolnormal.pdf'
-    print 'Exporting to pdffile %s'%(pdffile)
+    print('Exporting to pdffile %s'%(pdffile))
     itol_exporter.export(pdffile)
     orderfile = outpath + os.sep + rootname + '.listorder.txt'
 
     os.system("pdftotext -nopgbrk %s %s" %(pdffile, orderfile))
     os.system("rm -f %s"% pdffile)
-    print 'list order output to ',orderfile    
+    print('list order output to ',orderfile)    
 
 def main(g_params):#{{{
     argv = sys.argv
@@ -109,7 +109,7 @@ def main(g_params):#{{{
             elif argv[i] == "-outpath" or argv[i] == "--outpath":
                 (outpath, i) = myfunc.my_getopt_str(argv, i)
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % argv[i])
+                print(("Error! Wrong argument:%s" % argv[i]), file=sys.stderr)
                 return(1)
         else:
             fileList.append(argv[i])
@@ -119,12 +119,12 @@ def main(g_params):#{{{
         fileList += myfunc.ReadIDList(fileListFile)
 
     if len(fileList) <= 0:
-        print >> sys.stderr, "No input set. Exit"
+        print("No input set. Exit", file=sys.stderr)
         return(1)
     else:
         cnt = 0
         for treefile in fileList:
-            print "================== ", cnt , treefile, " ===================="
+            print("================== ", cnt , treefile, " ====================")
             GetTreeListOrder(treefile, outpath)
             cnt += 1
 def InitGlobalParameter():#{{{

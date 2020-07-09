@@ -41,7 +41,7 @@ def ReadUniprotInfoTable(infile):#{{{
 
                 if taxonomic_class == "":
                     taxonomic_class = "NO_TAXO"
-                    print >> sys.stderr, accession, "no taxonomic_class, ignored."
+                    print(accession, "no taxonomic_class, ignored.", file=sys.stderr)
                     continue
                 if organism == "":
                     organism = "NO_ORGANISM"
@@ -58,7 +58,7 @@ def ReadUniprotInfoTable(infile):#{{{
         fpin.close()
         return seqid2TaxoDict
     except IOError:
-        print >> sys.stderr, "Failed to read file ",infile
+        print("Failed to read file ",infile, file=sys.stderr)
         return {}
 #}}}
 
@@ -95,7 +95,7 @@ taxoColorDict['Archaea']  = blue
 
 #print colorpalette
 def PrintHelp():
-    print usage
+    print(usage)
 def WriteTaxoColor(idList, seqid2taxoDict, fpout):
     for idd in idList:
         if idd in seqid2taxoDict:
@@ -145,25 +145,25 @@ def main(g_params):#{{{
                 g_params['isQuiet'] = True
                 i += 1
             else:
-                print >> sys.stderr, "Error! Wrong argument:", argv[i]
+                print("Error! Wrong argument:", argv[i], file=sys.stderr)
                 return 1
         else:
             infile = argv[i]
             i += 1
     if infile == "" or not os.path.exists(infile):
-        print >> sys.stderr, "Error. Infile not set. exit"
+        print("Error. Infile not set. exit", file=sys.stderr)
         return 1
     if tableinfoFile == "" or not os.path.exists(tableinfoFile):
-        print >> sys.stderr, "Error. tableinfoFile %s does not exist. exit" %(tableinfoFile)
+        print("Error. tableinfoFile %s does not exist. exit" %(tableinfoFile), file=sys.stderr)
         return 1
     seqid2TaxoDict = ReadUniprotInfoTable(tableinfoFile)
     if tableinfoFile == {}:
-        print >> sys.stderr, "Read tableinfoFile failed."
+        print("Read tableinfoFile failed.", file=sys.stderr)
         return 1
 
     (idList, topoList) = myfunc.ReadFasta_without_annotation(infile)
     if len(idList) < 1:
-        print >> sys.stderr, "Read infile failed."
+        print("Read infile failed.", file=sys.stderr)
         return 1
 
 

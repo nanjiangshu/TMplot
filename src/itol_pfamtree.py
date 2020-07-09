@@ -42,7 +42,7 @@ Created 2012-03-13, updated 2019-08-16, Nanjiang Shu
 """
 
 def PrintHelp():#{{{
-    print usage
+    print(usage)
     #}}}
 def GetFontSize(numLeave):#{{{
     fontsize = 500/math.sqrt(numLeave)
@@ -58,7 +58,7 @@ def WriteDomainColorDefFile(domain_colordef_file, domain_dict, domain_idlist, se
     default_shape = "HH"
     lst_color = list(blue.range_to(red,len(domain_idlist)))
     color_dict = {}
-    for i in xrange(len(domain_idlist)):
+    for i in range(len(domain_idlist)):
         domainid = domain_idlist[i]
         color = lst_color[i].get_hex_l()
         color_dict[domainid] = lst_color[i].get_hex_l()
@@ -81,7 +81,7 @@ def WriteDomainColorDefFile(domain_colordef_file, domain_dict, domain_idlist, se
             fpout.write("\n")
         return 0
     except IOError:
-        print >> sys.stderr, "Failed to write to file %s"%(domain_colordef_file)
+        print("Failed to write to file %s"%(domain_colordef_file), file=sys.stderr)
         return 1
 
 #}}}
@@ -92,7 +92,7 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
     tree = datapath + os.sep + pfamid + '.tree'
     (datafile1, datafile2, datafile3, datafile4) = ("", "", "", "")
     if not os.path.exists(tree):
-        print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
+        print("tree file %s does not exist. Ignore" %(tree), file=sys.stderr)
         return 1
     t = Tree(tree)
     leaves = t.get_leaves()
@@ -127,27 +127,27 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
 # itl.print_variables()
 
 #Submit the tree
-    print ''
-    print 'Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server'
+    print('')
+    print('Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server')
     good_upload = itl.upload()
     if good_upload == False:
-        print 'There was an error:'+itl.comm.upload_output
+        print('There was an error:'+itl.comm.upload_output)
         sys.exit(1)
 
 #Read the tree ID
-    print 'Tree ID: '+str(itl.comm.tree_id)
+    print('Tree ID: '+str(itl.comm.tree_id))
 
 #Read the iTOL API return statement
-    print 'iTOL output: '+str(itl.comm.upload_output)
+    print('iTOL output: '+str(itl.comm.upload_output))
 
 #Website to be redirected to iTOL tree
-    print 'Tree Web Page URL: '+itl.get_webpage()
+    print('Tree Web Page URL: '+itl.get_webpage())
 
 # Warnings associated with the upload
-    print 'Warnings: '+str(itl.comm.warnings)
+    print('Warnings: '+str(itl.comm.warnings))
 
 #Export to pdf
-    print 'Exporting to pdf'
+    print('Exporting to pdf')
     itol_exporter = itl.get_itol_export()
 #itol_exporter = itolexport.ItolExport()
 #itol_exporter.set_export_param_value('tree','18793532031912684633930')
@@ -165,7 +165,7 @@ def Itol_Tree_m0(pfamid, datapath, outpath):#{{{
     #os.system("epstopdf %s" % epsfile )
     os.system("convert %s %s" % (pdffile, jpgfile) )
     os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
-    print 'exported tree to ',pdffile
+    print('exported tree to ',pdffile)
 
 #}}}
 def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
@@ -176,7 +176,7 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
     tree = datapath + os.sep + pfamid + '.tree'
     (datafile1, datafile2, datafile3, datafile4) = ("", "", "", "")
     if not os.path.exists(tree):
-        print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
+        print("tree file %s does not exist. Ignore" %(tree), file=sys.stderr)
         return 1
     t = Tree(tree)
     leaves = t.get_leaves()
@@ -249,27 +249,27 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
 
 
 #Submit the tree
-    print ''
-    print 'Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server'
+    print('')
+    print('Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server')
     good_upload = itl.upload()
     if good_upload == False:
-        print 'There was an error:'+itl.comm.upload_output
+        print('There was an error:'+itl.comm.upload_output)
         sys.exit(1)
 
 #Read the tree ID
-    print 'Tree ID: '+str(itl.comm.tree_id)
+    print('Tree ID: '+str(itl.comm.tree_id))
 
 #Read the iTOL API return statement
-    print 'iTOL output: '+str(itl.comm.upload_output)
+    print('iTOL output: '+str(itl.comm.upload_output))
 
 #Website to be redirected to iTOL tree
-    print 'Tree Web Page URL: '+itl.get_webpage()
+    print('Tree Web Page URL: '+itl.get_webpage())
 
 # Warnings associated with the upload
-    print 'Warnings: '+str(itl.comm.warnings)
+    print('Warnings: '+str(itl.comm.warnings))
 
 #Export to pdf
-    print 'Exporting to pdf'
+    print('Exporting to pdf')
     itol_exporter = itl.get_itol_export()
 #itol_exporter = itolexport.ItolExport()
 #itol_exporter.set_export_param_value('tree','18793532031912684633930')
@@ -286,7 +286,7 @@ def Itol_Tree_m1(pfamid, datapath, outpath):#{{{
     os.system("epstopdf %s" % epsfile )
     os.system("convert %s %s" % (epsfile, jpgfile) )
     os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
-    print 'exported tree to ',pdffile
+    print('exported tree to ',pdffile)
 #}}}
 def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     """Phylogenetic tree with numTM_io and subfamilies branch coloring
@@ -308,7 +308,7 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     subfam_colordef_file = "%s/%s.subfamilies.colordef.txt"%(outpath, pfamid)
     lst_color = list(blue.range_to(red,numSubFam))
     color_dict = {}
-    for i in xrange(numSubFam):
+    for i in range(numSubFam):
         famid = subfam_idlist[i]
         color = lst_color[i].get_hex_l()
         color_dict[famid] = lst_color[i].get_hex_l()
@@ -319,7 +319,7 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
 #Set the tree file
     (datafile1, datafile2, datafile3, datafile4) = ("", "", "", "")
     if not os.path.exists(tree):
-        print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
+        print("tree file %s does not exist. Ignore" %(tree), file=sys.stderr)
         return 1
 
     fontsize = GetFontSize(numLeave)
@@ -348,24 +348,24 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
 # itl.print_variables()
 
 #Submit the tree
-    print ''
-    print 'Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server'
+    print('')
+    print('Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server')
     good_upload = itl.upload()
     if good_upload == False:
-        print 'There was an error:'+itl.comm.upload_output
+        print('There was an error:'+itl.comm.upload_output)
         sys.exit(1)
 
 #Read the tree ID
-    print 'Tree ID: '+str(itl.comm.tree_id)
+    print('Tree ID: '+str(itl.comm.tree_id))
 
 #Read the iTOL API return statement
-    print 'iTOL output: '+str(itl.comm.upload_output)
+    print('iTOL output: '+str(itl.comm.upload_output))
 
 #Website to be redirected to iTOL tree
-    print 'Tree Web Page URL: '+itl.get_webpage()
+    print('Tree Web Page URL: '+itl.get_webpage())
 
 # Warnings associated with the upload
-    print 'Warnings: '+str(itl.comm.warnings)
+    print('Warnings: '+str(itl.comm.warnings))
 
 #Export to pdf
     itol_exporter = itl.get_itol_export()
@@ -386,7 +386,7 @@ def Itol_Tree_m_sd1(pfamid, datapath, outpath):#{{{
     os.system("epstopdf %s" % epsfile )
     os.system("convert %s %s" % (epsfile, jpgfile) )
     os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
-    print 'exported tree to ',pdffile
+    print('exported tree to ',pdffile)
 #}}}
 def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
     tree = datapath + os.sep + pfamid + '.tree'
@@ -413,7 +413,7 @@ def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
 #Set the tree file
     (datafile1, datafile2, datafile3, datafile4) = ("", "", "", "")
     if not os.path.exists(tree):
-        print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
+        print("tree file %s does not exist. Ignore" %(tree), file=sys.stderr)
         return 1
 
     fontsize = GetFontSize(numLeave)
@@ -441,24 +441,24 @@ def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
 # itl.print_variables()
 
 #Submit the tree
-    print ''
-    print 'Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server'
+    print('')
+    print('Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server')
     good_upload = itl.upload()
     if good_upload == False:
-        print 'There was an error:'+itl.comm.upload_output
+        print('There was an error:'+itl.comm.upload_output)
         sys.exit(1)
 
 #Read the tree ID
-    print 'Tree ID: '+str(itl.comm.tree_id)
+    print('Tree ID: '+str(itl.comm.tree_id))
 
 #Read the iTOL API return statement
-    print 'iTOL output: '+str(itl.comm.upload_output)
+    print('iTOL output: '+str(itl.comm.upload_output))
 
 #Website to be redirected to iTOL tree
-    print 'Tree Web Page URL: '+itl.get_webpage()
+    print('Tree Web Page URL: '+itl.get_webpage())
 
 # Warnings associated with the upload
-    print 'Warnings: '+str(itl.comm.warnings)
+    print('Warnings: '+str(itl.comm.warnings))
 
 #Export to pdf
     itol_exporter = itl.get_itol_export()
@@ -479,7 +479,7 @@ def Itol_Tree_m_sd2(pfamid, datapath, outpath):#{{{
     os.system("epstopdf %s" % epsfile )
     os.system("convert %s %s" % (epsfile, jpgfile) )
     os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
-    print 'exported tree to ',pdffile
+    print('exported tree to ',pdffile)
 #}}}
 def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
     """Phylogenetic tree with species definition
@@ -507,7 +507,7 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
     for seqid in speciesDict:
         speciesname = speciesDict[seqid][0]
         this_speciesDict[seqid] = speciesname
-    for i in xrange(len(lst_kingdom)):
+    for i in range(len(lst_kingdom)):
         idd = lst_kingdom[i]
         color_dict_kingdom[idd] = lst_color_kingdom[i]
     myfunc.WriteKingdomColorDefFile(species_colordef_file, this_speciesDict, leaves_name_set, color_dict_kingdom)
@@ -522,12 +522,12 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
                 speciesname = speciesDict[seqid][level]
                 speciesIDSet.add(speciesname)
                 this_speciesDict[seqid] = speciesname
-            except IndexError, KeyError:
+            except IndexError as KeyError:
                 pass
         color_dict = {}
         lst_color = list(blue.range_to(red,len(speciesIDSet)))
         lst_speciesID = list(speciesIDSet)
-        for i in xrange(len(lst_speciesID)):
+        for i in range(len(lst_speciesID)):
             idd = lst_speciesID[i]
             color_dict[idd] = lst_color[i].get_hex_l()
         myfunc.WriteSpeciesColorStripDefFile(outfile, this_speciesDict, leaves_name_set, color_dict)
@@ -537,7 +537,7 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
 #Set the tree file
     (datafile1, datafile2, datafile3, datafile4) = ("", "", "", "")
     if not os.path.exists(tree):
-        print >> sys.stderr, "tree file %s does not exist. Ignore" %(tree)
+        print("tree file %s does not exist. Ignore" %(tree), file=sys.stderr)
         return 1
 
     fontsize = GetFontSize(numLeave)
@@ -587,24 +587,24 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
 # itl.print_variables()
 
 #Submit the tree
-    print ''
-    print 'Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server'
+    print('')
+    print('Uploading the tree.  This may take some time depending on how large the tree is and how much load there is on the itol server')
     good_upload = itl.upload()
     if good_upload == False:
-        print 'There was an error:'+itl.comm.upload_output
+        print('There was an error:'+itl.comm.upload_output)
         sys.exit(1)
 
 #Read the tree ID
-    print 'Tree ID: '+str(itl.comm.tree_id)
+    print('Tree ID: '+str(itl.comm.tree_id))
 
 #Read the iTOL API return statement
-    print 'iTOL output: '+str(itl.comm.upload_output)
+    print('iTOL output: '+str(itl.comm.upload_output))
 
 #Website to be redirected to iTOL tree
-    print 'Tree Web Page URL: '+itl.get_webpage()
+    print('Tree Web Page URL: '+itl.get_webpage())
 
 # Warnings associated with the upload
-    print 'Warnings: '+str(itl.comm.warnings)
+    print('Warnings: '+str(itl.comm.warnings))
 
 #Export to pdf
     itol_exporter = itl.get_itol_export()
@@ -625,7 +625,7 @@ def Itol_Tree_m_sd3(pfamid, datapath, outpath):#{{{
     os.system("epstopdf %s" % epsfile )
     os.system("convert %s %s" % (epsfile, jpgfile) )
     os.system("convert -thumbnail 200 %s %s" % (jpgfile, thumbfile))
-    print 'exported tree to ',pdffile
+    print('exported tree to ',pdffile)
 #}}}
 def Itol_Tree_linear(treefile, fastafile, outpath):# {{{
     """
@@ -674,10 +674,10 @@ def Itol_Tree_linear(treefile, fastafile, outpath):# {{{
 # Check parameters
 # itl.print_variables()
 #Submit the tree
-    print ''
+    print('')
     good_upload = itl.upload()
     if good_upload == False:
-        print 'There was an error:'+itl.comm.upload_output
+        print('There was an error:'+itl.comm.upload_output)
         return 1
 
 #Export to pdf
@@ -688,14 +688,14 @@ def Itol_Tree_linear(treefile, fastafile, outpath):# {{{
     itol_exporter.set_export_param_value('display_mode',"1") #(1=normal, 2=circular, 3=unrooted)
     itol_exporter.set_export_param_value('line_width',"1")
     #itol_exporter.set_export_param_value('align_labels',"1")
-    print ('datasets_visible',",".join(datasets_list))
+    print(('datasets_visible',",".join(datasets_list)))
     itol_exporter.set_export_param_value('datasets_visible',",".join(datasets_list))
     #epsfile = outpath + os.sep + rootname + '.itolnormal.eps'
     pdffile = outpath + os.sep + rootname + '.itol_linear.pdf'
-    print 'Exporting to pdffile %s'%(pdffile)
+    print('Exporting to pdffile %s'%(pdffile))
     itol_exporter.export(pdffile)
 
-    print("Phylogenetic tree has been output to %s"%(pdffile))
+    print(("Phylogenetic tree has been output to %s"%(pdffile)))
 # }}}
 
 def main(g_params):#{{{
@@ -744,7 +744,7 @@ def main(g_params):#{{{
                 outpath = sys.argv[i+1];
                 i = i + 2;
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % sys.argv[i]);
+                print(("Error! Wrong argument:%s" % sys.argv[i]), file=sys.stderr);
                 return 1
         else:
             idList.append(sys.argv[i]);
@@ -756,7 +756,7 @@ def main(g_params):#{{{
         os.system("mkdir -p %s"%outpath)
         cnt = 0
         for pfamid in idList:
-            print "================== ", cnt , pfamid, " ===================="
+            print("================== ", cnt , pfamid, " ====================")
             if g_params['method'] == "0":
                 Itol_Tree_m0(pfamid, datapath, outpath)
             elif g_params['method'] == "1":

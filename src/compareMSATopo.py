@@ -332,7 +332,7 @@ Examples:
       compareMSATopo.py test.pairaln -mode 0 -o tmp1/t1.rst
 """%(progname)
 def PrintHelp():#{{{
-    print usage
+    print(usage)
 #}}}
 def Get_IOState_upstream(topo, begin_TM):#{{{
     i = begin_TM
@@ -381,9 +381,9 @@ def WriteDetailedDIFFTopo_old(anaDIFFConsList, anaDIFFQueryList, idList,  #{{{
 #}}}
 def WriteDetailedDIFFTopo(recordList, fpout):  #{{{
     if fpout != None:
-        for i in xrange(len(recordList)):
+        for i in range(len(recordList)):
             record = recordList[i]
-            print >> fpout, "//Begin record", i+1
+            print("//Begin record", i+1, file=fpout)
             lcmp.WriteOverallInfo_pairwise(record['id1'], record['id2'],
                     INIT_SEQUENCE_IDENTITY, record['cmpclass'],
                     record['numTM1'], record['numTM2'], record['seqLength1'],
@@ -391,13 +391,13 @@ def WriteDetailedDIFFTopo(recordList, fpout):  #{{{
                     g_params['uniprot2pdbMap'], g_params['swissprotAcSet'])
             PrintMappedArray(record['mapArray1'], record['mapArray2'],
                 record['id1'], record['id2'], fpout)
-            print >> fpout, "NtermTopo1", record['NtermTopo1']
-            print >> fpout, "NtermTopo2", record['NtermTopo2']
+            print("NtermTopo1", record['NtermTopo1'], file=fpout)
+            print("NtermTopo2", record['NtermTopo2'], file=fpout)
             if 'ana1' in record and record['ana1'] != {}:
                 lcmp.WriteAna(record['ana1'], fpout, "1") 
             if 'ana2' in record and record['ana2'] != {}:
                 lcmp.WriteAna(record['ana2'], fpout, "2") 
-            print >> fpout, "//End record", i+1
+            print("//End record", i+1, file=fpout)
 #}}}
 def WritePairwiseRecord_method1(recordList, fpout):  #{{{
 # here
@@ -409,14 +409,14 @@ def WritePairwiseRecord_method1(recordList, fpout):  #{{{
                 continue
             cnt += 1
 # Write overall information
-            print >> fpout, "//Begin record", cnt
+            print("//Begin record", cnt, file=fpout)
             lcmp.WriteOverallInfo_pairwise(rd['id1'], rd['id2'],
                     seqidt_null,  rd['cmpclass'], rd['numTM1'],
                     rd['numTM2'], rd['seqLength1'], rd['seqLength2'],
                     fpout, g_params['uniprot2pdbMap'], g_params['swissprotAcSet'])
             PrintMappedArray_method1_1(rd['mapArray1'], rd['mapArray2'],
                     rd['id1'], rd['id2'], fpout)
-            print >> fpout, "//End record", cnt
+            print("//End record", cnt, file=fpout)
 #}}}
 def WriteGroupedDetailedDIFFTopo(recordList, groupList, dgScoreList, #{{{
         idxFull2OtherClass, fpout): 
@@ -424,7 +424,7 @@ def WriteGroupedDetailedDIFFTopo(recordList, groupList, dgScoreList, #{{{
         cntRecord = 0
         for grp in groupList[1:]: #groupList[0] is for the IDT group
             record = recordList[idxFull2OtherClass[grp['repIndex']]]
-            print >> fpout, "//Begin record", cntRecord + 1
+            print("//Begin record", cntRecord + 1, file=fpout)
             lcmp.WriteOverallInfo_pairwise(record['id1'], record['id2'],
                     INIT_SEQUENCE_IDENTITY, record['cmpclass'],
                     record['numTM1'], record['numTM2'], record['seqLength1'],
@@ -445,67 +445,67 @@ def WriteGroupedDetailedDIFFTopo(recordList, groupList, dgScoreList, #{{{
                         try:
                             fpout.write("%6.3f " % dgScoreList[j][k])
                         except IndexError:
-                            print >> sys.stderr, "IndexError for dgScoreList[%d][%d]"%(j,k)
+                            print("IndexError for dgScoreList[%d][%d]"%(j,k), file=sys.stderr)
                     cntMember += 1
                     fpout.write('\n')
 
             PrintMappedArray(record['mapArray1'], record['mapArray2'],
                 record['id1'], record['id2'], fpout)
-            print >> fpout, "NtermTopo1", record['NtermTopo1']
-            print >> fpout, "NtermTopo2", record['NtermTopo2']
+            print("NtermTopo1", record['NtermTopo1'], file=fpout)
+            print("NtermTopo2", record['NtermTopo2'], file=fpout)
             if 'ana1' in record and record['ana1'] != {}:
                 lcmp.WriteAna(record['ana1'], fpout, "1") 
             if 'ana2' in record and record['ana2'] != {}:
                 lcmp.WriteAna(record['ana2'], fpout, "2") 
-            print >> fpout, "//End record", cntRecord+1
+            print("//End record", cntRecord+1, file=fpout)
             cntRecord += 1
         if g_params['verbose'] > 0:
-            print ("Grouped result file output to %s" %
-                    g_params['outGroupedResultFile'])
+            print(("Grouped result file output to %s" %
+                    g_params['outGroupedResultFile']))
 #}}}
 
 
 def WriteHTMLHeader(fpout, title):#{{{
-    print >> fpout, "<HTML>"
-    print >> fpout, "<title>%s</title>"%(title)
-    print >> fpout, "<style type=\"text/css\">"
-    print >> fpout, "<!--"
-    print >> fpout, ("td {font-family: \"SansSerif\", \"SansSerif\", " + 
-            "mono; font-size: 10px; text-align: center; }")
-    print >> fpout, "-->"
-    print >> fpout, "</style>"
-    print >> fpout, "<BODY>"
-    print >> fpout, "<table border=\"1\"><tr><td>"
-    print >> fpout, ""
-    print >> fpout, ("<table border=\"0\"  cellpadding=\"0\"" +
-            " cellspacing=\"0\">  ")
+    print("<HTML>", file=fpout)
+    print("<title>%s</title>"%(title), file=fpout)
+    print("<style type=\"text/css\">", file=fpout)
+    print("<!--", file=fpout)
+    print(("td {font-family: \"SansSerif\", \"SansSerif\", " + 
+            "mono; font-size: 10px; text-align: center; }"), file=fpout)
+    print("-->", file=fpout)
+    print("</style>", file=fpout)
+    print("<BODY>", file=fpout)
+    print("<table border=\"1\"><tr><td>", file=fpout)
+    print("", file=fpout)
+    print(("<table border=\"0\"  cellpadding=\"0\"" +
+            " cellspacing=\"0\">  "), file=fpout)
 #}}}
 def WriteHTMLScaleBar(fpout, lengthMSA):#{{{
-    print >> fpout,"<tr><td colspan=\"6\"></td>"; 
+    print("<tr><td colspan=\"6\"></td>", file=fpout); 
     i=10
     while i < lengthMSA:
-        print >> fpout,"<td colspan=\"9\">%d<br>|</td><td></td> "%(i)
+        print("<td colspan=\"9\">%d<br>|</td><td></td> "%(i), file=fpout)
         i+=10
-    print >> fpout,"</tr>"; 
+    print("</tr>", file=fpout); 
 #}}}
 def WriteHTMLTail(fpout):#{{{
-    print >> fpout, "</table>"
-    print >> fpout, "</td></tr></table>"
-    print >> fpout, "</body>"
-    print >> fpout, "</html>"
+    print("</table>", file=fpout)
+    print("</td></tr></table>", file=fpout)
+    print("</body>", file=fpout)
+    print("</html>", file=fpout)
 #}}}
 def WriteHTMLColorChar(fpout, ch):#{{{
     if ch == "M":
-        print >> fpout, "<td bgcolor=\"#FF0000\">%s</td>" %(ch);# red
+        print("<td bgcolor=\"#FF0000\">%s</td>" %(ch), file=fpout);# red
     elif ch == "i":
-        print >> fpout, "<td bgcolor=\"#FFFFCC\">%s</td>" %(ch);# faded yellow
+        print("<td bgcolor=\"#FFFFCC\">%s</td>" %(ch), file=fpout);# faded yellow
     elif ch == "o":
-        print >> fpout, "<td bgcolor=\"#CCFFFF\">%s</td>" %(ch);# faded blue
+        print("<td bgcolor=\"#CCFFFF\">%s</td>" %(ch), file=fpout);# faded blue
     else:
-        print >> fpout, "<td>%s</td>" %(" ");   # faded blue
+        print("<td>%s</td>" %(" "), file=fpout);   # faded blue
 #}}}
 def WriteHTMLID(fpout, seqid):#{{{
-    print >> fpout, "<tr><td nowrap>%s&nbsp;&nbsp;</td> " % (seqid)
+    print("<tr><td nowrap>%s&nbsp;&nbsp;</td> " % (seqid), file=fpout)
 #}}}
 
 def WriteSortedOrigTopoMSA(outSortedOrigTopoMSAFile, idList,   #{{{
@@ -567,16 +567,16 @@ def WriteSortedOrigTopoMSA(outSortedOrigTopoMSAFile, idList,   #{{{
                 inFile, numIncludedSeq, numSeq) 
     try:
         fpout = open (outSortedOrigTopoMSAFile, "w")
-        for i in xrange(len(newAnnoList)):
+        for i in range(len(newAnnoList)):
             fpout.write(">%s\n" % newAnnoList[i])
             fpout.write("%s\n" % newTopoSeqList[i])
         fpout.close()
         if g_params['verbose'] > 0:
-            print ("Sorted original Topology MSA file output to %s" %
-                    (outSortedOrigTopoMSAFile))
+            print(("Sorted original Topology MSA file output to %s" %
+                    (outSortedOrigTopoMSAFile)))
         return 0
     except IOError:
-        print >> sys.stderr, "Failed to write to file %s"%outSortedOrigTopoMSAFile
+        print("Failed to write to file %s"%outSortedOrigTopoMSAFile, file=sys.stderr)
         return -1
 
 #}}}
@@ -605,11 +605,11 @@ def WriteSortedClusteredTopoMSA(clusterFile, consensusFile, #{{{
         maxCnt = max(cntIDTTopo)
         maxIndex = cntIDTTopo.index(maxCnt)
         clusterList.append([])
-        for j in xrange(numSeq):
+        for j in range(numSeq):
             if tmpMcmp[maxIndex][j] == 1:
                 clusterList[cntCluster].append(j)
                 markArray[j] = 0
-                for i in xrange(numSeq):
+                for i in range(numSeq):
                     tmpMcmp[i][j] = 0
         cntCluster += 1
         if sum(markArray) == 0:
@@ -622,14 +622,14 @@ def WriteSortedClusteredTopoMSA(clusterFile, consensusFile, #{{{
 
     newAnnoList = []
     newTopoSeqList = []
-    for i in xrange(len(clusterList)):
+    for i in range(len(clusterList)):
         for idx in clusterList[i]:
             newAnnoList.append("%s, nTM=%d ClusterNo=%d numSeqInCluster=%d"%(idList[idx],
                 len(posTMList[idx]), i+1, len(clusterList[i])))
             newTopoSeqList.append(topoSeqList[idx])
     try:
         fpout = open (clusterFile, "w")
-        for i in xrange(len(newAnnoList)):
+        for i in range(len(newAnnoList)):
             fpout.write(">%s\n" % newAnnoList[i])
             fpout.write("%s\n" % newTopoSeqList[i])
         fpout.close()
@@ -637,16 +637,16 @@ def WriteSortedClusteredTopoMSA(clusterFile, consensusFile, #{{{
             sys.stdout.write(("Clustered sorted original Topology MSA file " +
                 "output to %s\n" % (clusterFile)))
     except IOError:
-        print >> sys.stderr, ("Failed to write to file %s" % clusterFile)
+        print(("Failed to write to file %s" % clusterFile), file=sys.stderr)
 
 # get consensus topo of each cluster
     try:
         fpout = open(consensusFile, "w")
     except IOError:
-        print >> sys.stderr, "Failed to write to file %s"%(consensusFile)
+        print("Failed to write to file %s"%(consensusFile), file=sys.stderr)
         fpout = None
 
-    for i in xrange(len(clusterList)):
+    for i in range(len(clusterList)):
         idtSeqIDList = []
         idtTopoSeqList = []
         idtPosTMList = []
@@ -680,20 +680,20 @@ def WriteSortedClusteredTopoMSA(clusterFile, consensusFile, #{{{
         try:
             fpout = open(pairwisetopoalnfile, "w")
         except IOError:
-            print >> sys.stderr, "Failed to write to file %s"%(pairwisetopoalnfile)
+            print("Failed to write to file %s"%(pairwisetopoalnfile), file=sys.stderr)
             fpout = None
 
         (consIDList, consAnnoList, consTopoList) = myfunc.ReadFasta(consensusFile)
         numSeqInClusterList = []
-        for i in xrange(len(consIDList)):
+        for i in range(len(consIDList)):
             numSeqInCluster = myfunc.GetNumSeqInClusterFromAnnotation(consAnnoList[i])
             try:
                 numSeqInClusterList.append(int(numSeqInCluster))
             except:
                 numSeqInClusterList.append(0)
         numCluster = len(consIDList)
-        for i in xrange(numCluster):
-            for j in xrange(i+1, numCluster):
+        for i in range(numCluster):
+            for j in range(i+1, numCluster):
                 pair = (i,j)
                 if numSeqInClusterList[pair[0]] <= 1 or numSeqInClusterList[pair[1]] <= 1:
                     continue
@@ -734,11 +734,11 @@ def WriteInvertedTopologyGroup_MSA(outfile, #{{{
         maxIndex = cntIDTTopo.index(maxCnt)
         clusterList.append([])
         tmpCluster = []
-        for j in xrange(numSeq):
+        for j in range(numSeq):
             if tmpMcmp[maxIndex][j] == 1:
                 tmpCluster.append(j)
                 markArray[j] = 0
-                for i in xrange(numSeq):
+                for i in range(numSeq):
                     tmpMcmp[i][j] = 0
         cntCluster += 1
         if sum(markArray) == 0:
@@ -750,14 +750,14 @@ def WriteInvertedTopologyGroup_MSA(outfile, #{{{
 
     newAnnoList = []
     newTopoSeqList = []
-    for i in xrange(len(clusterList)):
+    for i in range(len(clusterList)):
         for idx in clusterList[i]:
             newAnnoList.append("%s, nTM=%d ClusterNo=%d numSeqInCluster=%d"%(idList[idx],
                 len(posTMList[idx]), i+1, len(clusterList[i])))
             newTopoSeqList.append(topoSeqList[idx])
     try:
         fpout = open (outfile, "w")
-        for i in xrange(len(newAnnoList)):
+        for i in range(len(newAnnoList)):
             fpout.write(">%s\n" % newAnnoList[i])
             fpout.write("%s\n" % newTopoSeqList[i])
         fpout.close()
@@ -765,7 +765,7 @@ def WriteInvertedTopologyGroup_MSA(outfile, #{{{
             sys.stdout.write(("Clustered sorted original Topology MSA file " +
                 "output to %s\n" % (filename)))
     except IOError:
-        print >> sys.stderr, ("Failed to write to file %s" % filename)
+        print(("Failed to write to file %s" % filename), file=sys.stderr)
 
 
 #}}}
@@ -781,8 +781,8 @@ def WriteInvertedTopologyPairwise_MSA(outfile, #{{{
     numAllpair = numSeq*(numSeq-1)/2
     pairIdxList = []
     uniq_inv_idset = set([])
-    for i in xrange (numSeq):
-        for j in xrange(i+1, numSeq):
+    for i in range (numSeq):
+        for j in range(i+1, numSeq):
             if Mcmp[i][j] == 1:
                 pairIdxList.append((i,j))
                 uniq_inv_idset.add(idList[i])
@@ -803,7 +803,7 @@ def WriteInvertedTopologyPairwise_MSA(outfile, #{{{
                 seqLenList[tup[0]], seqLenList[tup[1]]))
         fpout.close()
     except IOError:
-        print >> sys.stderr, "Failed to write to file %s"%outfile
+        print("Failed to write to file %s"%outfile, file=sys.stderr)
         pass
     outfile2 = outfile + ".INVseq.idlist"
     try:
@@ -812,7 +812,7 @@ def WriteInvertedTopologyPairwise_MSA(outfile, #{{{
             fpout.write("%s\n"%(idd))
         fpout.close()
     except IOError:
-        print >> sys.stderr, "Failed to write to file %s"%outfile2
+        print("Failed to write to file %s"%outfile2, file=sys.stderr)
         pass
     
 #}}}
@@ -832,7 +832,7 @@ def WriteGroupedSortedOrigTopoMSA(filename, groupList, idList,  #{{{
     for cmpclass in comparisonClassNameList:
         cnt = 0
         numGroup = len(groupList)
-        for i in xrange(1, numGroup):
+        for i in range(1, numGroup):
             grp = groupList[i]
             if grp['cmpclass'] == cmpclass:
                 tmpanno = (">%s %s %d nTM=%d " % (idList[grp['repIndex']],
@@ -850,7 +850,7 @@ def WriteGroupedSortedOrigTopoMSA(filename, groupList, idList,  #{{{
 #     print newAnnoList
     try:
         fpout = open (filename, "w")
-        for i in xrange(len(newAnnoList)):
+        for i in range(len(newAnnoList)):
             fpout.write(">%s\n" % newAnnoList[i])
             fpout.write("%s\n" % newTopoSeqList[i])
         fpout.close()
@@ -858,7 +858,7 @@ def WriteGroupedSortedOrigTopoMSA(filename, groupList, idList,  #{{{
             sys.stdout.write(("Grouped sorted original Topology MSA file " +
                 "output to %s\n" % (filename)))
     except IOError:
-        print >> sys.stderr, ("Failed to write to file %s" % filename)
+        print(("Failed to write to file %s" % filename), file=sys.stderr)
 #}}}
 def WriteGroupedTopoAnaResult(numSeq, cmpToConsRecordList, groupList, #{{{
         numTM_IDT, indexClass, indexIDTTopo, dgScoreList,
@@ -934,11 +934,11 @@ def WriteSortedTrimmedTopoMSA(outSortedTrimmedTopoMSAFile, idList,   #{{{
                     % (numIncludedSeq, numSeq)) 
         fpout.close()
         if g_params['verbose'] > 0:
-            print ("Sorted Trimmed Topology MSA file output to \"%s\""
-                    %(outSortedTrimmedTopoMSAFile))
+            print(("Sorted Trimmed Topology MSA file output to \"%s\""
+                    %(outSortedTrimmedTopoMSAFile)))
     except IOError:
-        print >> sys.stderr, ("Failed to write file %s" %
-                outSortedTrimmedTopoMSAFile)
+        print(("Failed to write file %s" %
+                outSortedTrimmedTopoMSAFile), file=sys.stderr)
 #}}}
 def WriteSortedTrimmedTopoMSAHTML(outSortedTrimmedTopoMSAFileHTML, #{{{
         lengthAlignment, idList, topoSeqList, indexIDTTopo):
@@ -965,17 +965,17 @@ def WriteSortedTrimmedTopoMSAHTML(outSortedTrimmedTopoMSAFileHTML, #{{{
         WriteHTMLTail(fpout)
         fpout.close()
         if verbose > 0:
-            print ("Sorted Trimmed Topology MSA HTML file output to \"%s\""  %
-                    (outSortedTrimmedTopoMSAFileHTML))
+            print(("Sorted Trimmed Topology MSA HTML file output to \"%s\""  %
+                    (outSortedTrimmedTopoMSAFileHTML)))
     except IOError:
-        print >> sys.stderr, ("Failed to write to file %s" %
-                outSortedTrimmedTopoMSAFileHTML)
+        print(("Failed to write to file %s" %
+                outSortedTrimmedTopoMSAFileHTML), file=sys.stderr)
 #}}}
 def WriteIdenticalTopMatrixFile(outIdenticalTopFile, idList, Mcmp):
     dt = {}
     numSeq = len(idList)
-    for i in xrange(numSeq):
-        for j in xrange(i+1, numSeq):
+    for i in range(numSeq):
+        for j in range(i+1, numSeq):
             dt[(idList[i] + "\t"+ idList[j])] = Mcmp[i][j]
     with open (outIdenticalTopFile, "w") as fpout:
         json.dump(dt, fpout)
@@ -1006,11 +1006,11 @@ def WriteSortedOrigTopoMSAHTML(outSortedTrimmedTopoMSAFileHTML,  #{{{
         WriteHTMLTail(fpout)
         fpout.close()
         if verbose > 0:
-            print ("Sorted original Topology MSA HTML file output to \"%s\""
-                    % (outSortedOrigTopoMSAFileHTML))
+            print(("Sorted original Topology MSA HTML file output to \"%s\""
+                    % (outSortedOrigTopoMSAFileHTML)))
     except IOError:
-        print >> sys.stderr, ("Failed to write to file %s" %
-                outSortedOrigTopoMSAFileHTML)
+        print(("Failed to write to file %s" %
+                outSortedOrigTopoMSAFileHTML), file=sys.stderr)
 #}}}
 
 def PrintMappedArray(mapArray1, mapArray2, seqID1, seqID2, fpout):#{{{
@@ -1068,10 +1068,10 @@ def PrintMappedArray(mapArray1, mapArray2, seqID1, seqID2, fpout):#{{{
         else:
             sys.stderr.write("Error! alignList1 and alignList2 " 
                     + "not the same size for %s and %s\n" % (seqID1, seqID2))
-            print >> sys.stderr, "alignList1:", alignList1
-            print >> sys.stderr, "alignList2:", alignList2
-            print >> sys.stderr, "mapArray1:",mapArray1 
-            print >> sys.stderr, "mapArray2:", mapArray2
+            print("alignList1:", alignList1, file=sys.stderr)
+            print("alignList2:", alignList2, file=sys.stderr)
+            print("mapArray1:",mapArray1, file=sys.stderr) 
+            print("mapArray2:", mapArray2, file=sys.stderr)
 #}}}
 def PrintMappedArray_method1(mapArray1, mapArray2, seqID1, seqID2, fpout):#{{{
 # Print the mapped arry in unaligned form
@@ -1262,7 +1262,7 @@ def ExtractFromSeqWithAnno(seqWithAnno):#{{{
         for s in strs:
             try:
                 dgscore.append(float(s))
-            except ValueError, TypeError:
+            except ValueError as TypeError:
                 pass
 
     seq = seqWithAnno[posAnnoEnd+1:]
@@ -1280,10 +1280,10 @@ def ReadTopoWithDGScore(infile, BLOCK_SIZE=100000): #{{{
     recordList = []; #recordList is a list of n-tuples
     fpin = None
     try:
-        fpin=open(infile,"rb")
+        fpin=open(infile,"r")
     except IOError:
         msg = "Failed to read fastaWithDGScore file %s"
-        print >> sys.stderr, msg%(infile)
+        print(msg%(infile), file=sys.stderr)
         return []
     buff = fpin.read(BLOCK_SIZE)
     brokenSeqWithAnnoLine=""; ##for the annotation line broken by BLOCK read
@@ -1369,7 +1369,7 @@ def ReadSeqPathMapDict(infile):#{{{
         fpin.close()
         return seqPathMapDict
     except IOError:
-        print >> sys.stderr, "Failed to read infile %s"%infile
+        print("Failed to read infile %s"%infile, file=sys.stderr)
         return {}
 #}}}
 
@@ -1425,10 +1425,10 @@ def GetUnAlignedString(alnseq1, alnseq2):#{{{
     # for local alignment
     sslist = []
     if len(alnseq1) != len(alnseq2):
-        print >> sys.stderr, "alnseq1 and alnseq2 length not matched"
+        print("alnseq1 and alnseq2 length not matched", file=sys.stderr)
         return ""
     else:
-        for j in xrange(len(alnseq1)):
+        for j in range(len(alnseq1)):
             if alnseq1[j].islower() or alnseq2[j].islower():
                 sslist.append('0')
             else:
@@ -1444,7 +1444,7 @@ def VerifyUnalignedRegion_obsolete(topo1, topo2, unaligned_str):#{{{
     alignedPosList = myfunc.GetSegPos(unaligned_str, "1")
     lengthAln = len(topo1)
     if len(alignedPosList) != 1:
-        print >> sys.stderr, "aligned region not equal 1 for %s %s"%(id1,id2)
+        print("aligned region not equal 1 for %s %s"%(id1,id2), file=sys.stderr)
         return unaligned_str
     else:
         alignedPos = alignedPosList[0]
@@ -1526,7 +1526,7 @@ def CountCommonM_Aligned(alignedPos, topo1, topo2, helix1, helix2):#{{{
     common_b = max(alignedPos[0], helix1[0], helix2[0])
     common_e = min(alignedPos[1], helix1[1], helix2[1])
     cnt_TM_common = 0
-    for i in xrange(common_b, common_e):
+    for i in range(common_b, common_e):
         if topo1[i] == "M" and topo2[i] == "M":
             cnt_TM_common += 1
     return cnt_TM_common
@@ -1537,7 +1537,7 @@ def CountSEQ_Aligned(alignedPos, topo1, topo2, helix):#{{{
     b = max(alignedPos[0], helix[0])
     e = min(alignedPos[1], helix[1])
     cntSEQ = 0
-    for i in xrange(b, e):
+    for i in range(b, e):
         if topo1[i] == "M" and topo2[i] in ["i", "o"]:
             cntSEQ += 1
     return cntSEQ
@@ -1548,7 +1548,7 @@ def CountTM2SEQRes_Aligned(alignedPos, sp_pos2, topo1, topo2, helix):#{{{
     b = max(alignedPos[0], helix[0])
     e = min(alignedPos[1], helix[1])
     cnt = 0
-    for i in xrange(b, e):
+    for i in range(b, e):
         if topo1[i] == "M" and topo2[i] in ["i", "o"] and i < sp_pos2:
             cnt += 1
     return cnt
@@ -1557,7 +1557,7 @@ def CountNumberOf_TM2SEQ_residues_at_borders(helix, alignedPos, alingedTopo):#{{
     b = max(alignedPos[0], helix[0])
     e = min(alignedPos[1], helix[1])
     cnt = 0
-    for i in xrange(b,e):
+    for i in range(b,e):
         if alingedTopo[i] not in ["-", "M"]:
             cnt += 1
     return cnt
@@ -1825,7 +1825,7 @@ def VerifyUnalignedRegion(topo1, topo2, unaligned_str, id1, id2):#{{{
     alignedPosList = myfunc.GetSegPos(unaligned_str, "1")
     lengthAln = len(topo1)
     if len(alignedPosList) != 1:
-        print >> sys.stderr, "aligned region not equal 1 for %s %s, unaligned_str=\"%s\""%(id1,id2, unaligned_str)
+        print("aligned region not equal 1 for %s %s, unaligned_str=\"%s\""%(id1,id2, unaligned_str), file=sys.stderr)
         return unaligned_str
     else:
         alignedPos = alignedPosList[0]
@@ -1875,7 +1875,7 @@ def VerifyUnalignedRegion3(topo1, topo2, sp_pos1, sp_pos2,  #{{{
     alignedPosList = myfunc.GetSegPos(unaligned_str, "1")
     lengthAln = len(topo1)
     if len(alignedPosList) != 1:
-        print >> sys.stderr, "aligned region not equal 1 for %s %s, unaligned_str=\"%s\""%(id1,id2, unaligned_str)
+        print("aligned region not equal 1 for %s %s, unaligned_str=\"%s\""%(id1,id2, unaligned_str), file=sys.stderr)
         return unaligned_str
     else:
         alignedPos = alignedPosList[0]
@@ -1933,7 +1933,7 @@ def MapAlignedTMregionForward( posTM1, posTM2, commonMarray, seqID1 = "", seqID2
     #for (b2,e2) in posTM2:
         ## Note: lengthOrigTM is always 21 for SCAMPI
         #lengthOrigTMList.append(len(topo2[b2:e2].replace(GAP,''))); 
-    for i in xrange (numTM1):
+    for i in range (numTM1):
         (b1,e1) = posTM1[i]
         overlapTMList=[]; # list of tuples [(index: fraction),...]
         for j in range (numTM2):
@@ -1953,9 +1953,9 @@ def MapAlignedTMregionForward( posTM1, posTM2, commonMarray, seqID1 = "", seqID2
                 overlapTMList.append((j, freq))
 
             if DEBUG_TMMAPPING and fpLog :
-                print >> fpLog, ("%s - %s "%(seqID1, seqID2), "TM1", (b1,e1),
+                print(("%s - %s "%(seqID1, seqID2), "TM1", (b1,e1),
                         "TM2", (b2,e2), "coverage", (covb,cove), "numCommomM=",
-                        numCommomM)
+                        numCommomM), file=fpLog)
 
         if len(overlapTMList) > 0:
              ## sort in descending order
@@ -1963,9 +1963,9 @@ def MapAlignedTMregionForward( posTM1, posTM2, commonMarray, seqID1 = "", seqID2
             (idxTM, fraction) = overlapTMList[0]
             mapToIndexList[i] = idxTM
             if DEBUG_TMMAPPING and fpLog != None:
-                print >> fpLog, ("%s - %s , TM %d -> %d ," % 
+                print(("%s - %s , TM %d -> %d ," % 
                         (seqID1, seqID2, i, idxTM) + 
-                        " overlap fraction = %.3f"% (fraction)) 
+                        " overlap fraction = %.3f"% (fraction)), file=fpLog) 
     return mapToIndexList
 
 #}}}
@@ -2053,9 +2053,9 @@ def MapAlignedTMregion(posTM1, posTM2, topo2, mapArray1, mapArray2, #{{{
                 #overlapTMList.append((j, myfunc.FloatDivision(numCommomM, 21)))
 
             if DEBUG_TMMAPPING and fpLog != None:
-                print >> fpLog, ("%s - %s "%(seqID1, seqID2), "TM1", (b1,e1),
+                print(("%s - %s "%(seqID1, seqID2), "TM1", (b1,e1),
                         "TM2", (b2,e2), "coverage", (covb,cove), "numCommomM=",
-                        numCommomM)
+                        numCommomM), file=fpLog)
 
         if len(overlapTMList) > 0:
             ## sort in descending order
@@ -2065,10 +2065,10 @@ def MapAlignedTMregion(posTM1, posTM2, topo2, mapArray1, mapArray2, #{{{
                     mapArray1[i] = _DIRECT_MAPPED
                     mapArray2[idxTM] = _DIRECT_MAPPED
                     if DEBUG_TMMAPPING and fpLog != None:
-                        print >> fpLog, ("%s - %s TM %d of topo1 "%(seqID1,
-                            seqID2, i), "indexMaxFrac=", idxTM)
-                        print >> fpLog, ("%s - %s TM %d of topo1 "%(seqID1,
-                            seqID2, i), "maxFrac %4.3f"%(fraction))
+                        print(("%s - %s TM %d of topo1 "%(seqID1,
+                            seqID2, i), "indexMaxFrac=", idxTM), file=fpLog)
+                        print(("%s - %s TM %d of topo1 "%(seqID1,
+                            seqID2, i), "maxFrac %4.3f"%(fraction)), file=fpLog)
                     break
     return (mapArray1, mapArray2)
 #}}}
@@ -2154,7 +2154,7 @@ def MapAlignedTopo_method1_obsolete1(topo1, topo2, posTM1, posTM2,   #{{{
             cntSeq = 0
             cntUnaligned = 0
             cntAligned = 0
-            for j in xrange(b,e):
+            for j in range(b,e):
                 if topo1[j] == 'M':
                     segList2.append(topo2[j])
                     if isLocalAlignment and unaligned_str[j] == '0':
@@ -2180,11 +2180,11 @@ def MapAlignedTopo_method1_obsolete1(topo1, topo2, posTM1, posTM2,   #{{{
                 freqUnaligned = 0.0
 
             if cntUnaligned > 5:
-                print "cntUnaligned = %2d / %2d = %5.1f %21s #M=%d #GAP=%d #SEQ=%d"%(
+                print("cntUnaligned = %2d / %2d = %5.1f %21s #M=%d #GAP=%d #SEQ=%d"%(
                         cntUnaligned,
                         sizeSeg, freqUnaligned*100, "".join(segList2),
                         segList2.count('M'), segList2.count('-'),
-                        sizeSeg-(segList2.count('M')+segList2.count('-')))
+                        sizeSeg-(segList2.count('M')+segList2.count('-'))))
             #if cntUnaligned / float(sizeSeg) >= 0.5:
             if freqUnaligned >= 1- threshold_TM2TM:
                 cls = _UNALIGNED
@@ -2223,7 +2223,7 @@ def MapAlignedTopo_method1_obsolete2(topo1, topo2, posTM1, posTM2,   #{{{
             cntUnaligned = 0
             cntAligned = 0
             begin_aligned_segment = -1
-            for j in xrange(b,e):
+            for j in range(b,e):
                 if topo1[j] == 'M':
                     segList2.append(topo2[j])
                     if isLocalAlignment and unaligned_str[j] == '0':
@@ -2245,11 +2245,11 @@ def MapAlignedTopo_method1_obsolete2(topo1, topo2, posTM1, posTM2,   #{{{
             freqSeq = myfunc.FloatDivision(cntSeq , cntAligned)
             freqUnaligned = myfunc.FloatDivision(cntUnaligned, sizeSeg)
             if cntUnaligned > 5 and 0:
-                print "cntUnaligned = %2d / %2d = %5.1f %21s #M=%d #GAP=%d #SEQ=%d"%(
+                print("cntUnaligned = %2d / %2d = %5.1f %21s #M=%d #GAP=%d #SEQ=%d"%(
                         cntUnaligned,
                         sizeSeg, freqUnaligned*100, "".join(segList2),
                         segList2.count('M'), segList2.count('-'),
-                        sizeSeg-(segList2.count('M')+segList2.count('-')))
+                        sizeSeg-(segList2.count('M')+segList2.count('-'))))
             #if cntUnaligned / float(sizeSeg) >= 0.5:
             str_segment = "".join(aligned_segList2)
             seg_posTM = myfunc.GetTMPosition(str_segment)
@@ -2271,8 +2271,8 @@ def MapAlignedTopo_method1_obsolete2(topo1, topo2, posTM1, posTM2,   #{{{
                         new_str_segment = str_segment[seg_posTM[0][1]:]
 
                     if g_params['verbose'] >= 2:
-                        print "SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
-                                seqID2, str_segment, new_str_segment, cntUnaligned)
+                        print("SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
+                                seqID2, str_segment, new_str_segment, cntUnaligned))
                 else:
                     cntM1 = str_segment[seg_posTM[0][0]:seg_posTM[0][1]].count("M")
                     cntM2 = str_segment[seg_posTM[1][0]:seg_posTM[1][1]].count("M")
@@ -2289,8 +2289,8 @@ def MapAlignedTopo_method1_obsolete2(topo1, topo2, posTM1, posTM2,   #{{{
                         else:
                             new_str_segment = str_segment[seg_posTM[0][1]:]
                     if g_params['verbose'] >= 2:
-                        print "MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
-                                str_segment, new_str_segment, cntUnaligned)
+                        print("MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
+                                str_segment, new_str_segment, cntUnaligned))
 
                 (cntTM, cntGap, cntSeq, freqTM, freqGap, freqSeq) = StatIOMFreq(
                         new_str_segment)
@@ -2336,7 +2336,7 @@ def MapAlignedTopo_method1(topo1, topo2, posTM1, posTM2,   #{{{
             cntUnaligned = 0
             cntAligned = 0
             begin_aligned_segment = -1
-            for j in xrange(b,e):
+            for j in range(b,e):
                 if topo1[j] == 'M':
                     segList2.append(topo2[j])
                     if isLocalAlignment and unaligned_str[j] == '0':
@@ -2359,11 +2359,11 @@ def MapAlignedTopo_method1(topo1, topo2, posTM1, posTM2,   #{{{
             freqUnaligned = myfunc.FloatDivision(cntUnaligned, sizeSeg)
             if cntUnaligned > 5 and 0:
                 if g_params['verbose'] >= 2:
-                    print "cntUnaligned = %2d / %2d = %5.1f %21s #M=%d #GAP=%d #SEQ=%d"%(
+                    print("cntUnaligned = %2d / %2d = %5.1f %21s #M=%d #GAP=%d #SEQ=%d"%(
                             cntUnaligned,
                             sizeSeg, freqUnaligned*100, "".join(segList2),
                             segList2.count('M'), segList2.count('-'),
-                            sizeSeg-(segList2.count('M')+segList2.count('-')))
+                            sizeSeg-(segList2.count('M')+segList2.count('-'))))
             #if cntUnaligned / float(sizeSeg) >= 0.5:
             str_segment = "".join(aligned_segList2)
             seg_posTM = myfunc.GetTMPosition(str_segment)
@@ -2386,8 +2386,8 @@ def MapAlignedTopo_method1(topo1, topo2, posTM1, posTM2,   #{{{
                         new_str_segment = str_segment[seg_posTM[0][1]:]
 
                     if g_params['verbose'] >= 2:
-                        print "SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
-                                seqID2, str_segment, new_str_segment, cntUnaligned)
+                        print("SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
+                                seqID2, str_segment, new_str_segment, cntUnaligned))
                 else:
                     cntM1 = str_segment[seg_posTM[0][0]:seg_posTM[0][1]].count("M")
                     cntM2 = str_segment[seg_posTM[1][0]:seg_posTM[1][1]].count("M")
@@ -2404,8 +2404,8 @@ def MapAlignedTopo_method1(topo1, topo2, posTM1, posTM2,   #{{{
                         else:
                             new_str_segment = str_segment[seg_posTM[0][1]:]
                     if g_params['verbose'] >= 2:
-                        print "MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
-                                str_segment, new_str_segment, cntUnaligned)
+                        print("MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
+                                str_segment, new_str_segment, cntUnaligned))
                 (cntTM, cntGap, cntSeq, freqTM, freqGap, freqSeq) = StatIOMFreq(
                         new_str_segment)
             if cntUnaligned > sizeSeg - min_TM_overlap:
@@ -2442,7 +2442,7 @@ def MapAlignedTopo_method3(topo1, topo2, posTM1, posTM2,   #{{{
                 unaligned_str, seqID1, seqID2)
 #       unaligned_str = VerifyUnalignedRegion_obsolete(topo1, topo2, unaligned_str)
 
-    for iTM in xrange(len(posTM1)):
+    for iTM in range(len(posTM1)):
         (b,e) = posTM1[iTM]
         segList2 = []
         aligned_segList2 = []
@@ -2453,7 +2453,7 @@ def MapAlignedTopo_method3(topo1, topo2, posTM1, posTM2,   #{{{
         cntUnaligned = 0
         cntAligned = 0
         begin_aligned_segment = -1
-        for j in xrange(b,e):
+        for j in range(b,e):
             if topo1[j] == 'M':
                 segList2.append(topo2[j])
                 if isLocalAlignment and unaligned_str[j] == '0':
@@ -2479,11 +2479,11 @@ def MapAlignedTopo_method3(topo1, topo2, posTM1, posTM2,   #{{{
         freqSeq = myfunc.FloatDivision(cntSeq , cntAligned)
         freqUnaligned = myfunc.FloatDivision(cntUnaligned, sizeSeg)
         if cntUnaligned > 5 and 0:
-            print "cntUnaligned = %2d / %2d = %5.1f %21s #M=%d #GAP=%d #SEQ=%d"%(
+            print("cntUnaligned = %2d / %2d = %5.1f %21s #M=%d #GAP=%d #SEQ=%d"%(
                     cntUnaligned,
                     sizeSeg, freqUnaligned*100, "".join(segList2),
                     segList2.count('M'), segList2.count('-'),
-                    sizeSeg-(segList2.count('M')+segList2.count('-')))
+                    sizeSeg-(segList2.count('M')+segList2.count('-'))))
         #if cntUnaligned / float(sizeSeg) >= 0.5:
         str_segment = "".join(aligned_segList2)
         seg_posTM = myfunc.GetTMPosition(str_segment)
@@ -2506,8 +2506,8 @@ def MapAlignedTopo_method3(topo1, topo2, posTM1, posTM2,   #{{{
                     new_str_segment = str_segment[seg_posTM[0][1]:]
 
                 if g_params['verbose'] >= 2:
-                    print "SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
-                            seqID2, str_segment, new_str_segment, cntUnaligned)
+                    print("SAME_DIRECTION: %s %s %21s %21s %5d"%(seqID1,
+                            seqID2, str_segment, new_str_segment, cntUnaligned))
             else:
                 cntM1 = str_segment[seg_posTM[0][0]:seg_posTM[0][1]].count("M")
                 cntM2 = str_segment[seg_posTM[1][0]:seg_posTM[1][1]].count("M")
@@ -2524,8 +2524,8 @@ def MapAlignedTopo_method3(topo1, topo2, posTM1, posTM2,   #{{{
                     else:
                         new_str_segment = str_segment[seg_posTM[0][1]:]
                 if g_params['verbose'] >= 2:
-                    print "MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
-                            str_segment, new_str_segment, cntUnaligned)
+                    print("MAX: %s %s %21s %21s %5d"%(seqID1, seqID2,
+                            str_segment, new_str_segment, cntUnaligned))
             (cntTM, cntGap, cntSeq, freqTM, freqGap, freqSeq) = StatIOMFreq(
                     new_str_segment)
         #if cntUnaligned > 11:
@@ -2543,15 +2543,15 @@ def MapAlignedTopo_method3(topo1, topo2, posTM1, posTM2,   #{{{
             cls = _TM2SEQ
 # debuging
         if sp_pos2 != -1 and b < sp_pos2 and g_params['verbose'] >= 2:
-            print "TM - SP (%s - %s), cls=%d, cntSP=%d"%(seqID1, seqID2, cls, cntSP)
+            print("TM - SP (%s - %s), cls=%d, cntSP=%d"%(seqID1, seqID2, cls, cntSP))
             tmpli = []
             for jj in range(b,e):
                 if jj < sp_pos2 and topo2[jj] != GAP:
                     tmpli.append("P")
                 else:
                     tmpli.append(topo2[jj])
-            print "%s: %s"%(seqID1, topo1[b:e])
-            print "%s: %s"%(seqID2, "".join(tmpli))
+            print("%s: %s"%(seqID1, topo1[b:e]))
+            print("%s: %s"%(seqID2, "".join(tmpli)))
 # debuging
         mapArray.append(cls)
     return mapArray
@@ -2594,7 +2594,7 @@ def MapAlignedSP(topo1, topo2, posTM1, posTM2,   #{{{
     cntUnaligned = 0
     cntAligned = 0
     begin_aligned_segment = -1
-    for j in xrange(0, aligned_sp1):
+    for j in range(0, aligned_sp1):
         segList2.append(topo2[j])
         if isLocalAlignment and unaligned_str[j] == '0':
             cntUnaligned += 1
@@ -2649,7 +2649,7 @@ def GetGapSequenceConsensus(origTopoMSASeqList, indexIDTTopo):#{{{
     lengthAlignment = len(origTopoMSASeqList[0]); 
     cntGapList=[0] * lengthAlignment
     numIDTTopo = len(indexIDTTopo)
-    for i in xrange(0, numIDTTopo):
+    for i in range(0, numIDTTopo):
         topo=origTopoMSASeqList[indexIDTTopo[i]]
         j=0
         for s in topo:
@@ -2657,7 +2657,7 @@ def GetGapSequenceConsensus(origTopoMSASeqList, indexIDTTopo):#{{{
                 cntGapList[j] += 1
             j+=1
     gapSeqCons=[]
-    for j in xrange(0,lengthAlignment):
+    for j in range(0,lengthAlignment):
         try:
             freq = cntGapList[j]/float(numIDTTopo)
         except ZeroDivisionError:
@@ -2671,9 +2671,9 @@ def GetGapSequenceConsensus_old(origTopoMSASeqList, indexIDTTopo):#{{{
     apd=gapSeqCons.append
     lengthAlignment = len(origTopoMSASeqList[0]); 
     numIDTTopo = len(indexIDTTopo)
-    for i in xrange(0, lengthAlignment):
+    for i in range(0, lengthAlignment):
         cntGap=0
-        for j in xrange(0, numIDTTopo):
+        for j in range(0, numIDTTopo):
             if origTopoMSASeqList[indexIDTTopo[j]][i] == '-':
                 cntGap += 1
         try:
@@ -2689,11 +2689,11 @@ def GetDGvalueTMconsensus(dgScoreList, indexIDTTopo, numTM_IDT):#{{{
     numIDTTopo = len(indexIDTTopo)
     sumDGList = [0.0] * numTM_IDT
     cntTopoWithValidDGScore = 0
-    for i in xrange(numIDTTopo):
+    for i in range(numIDTTopo):
         dglist = dgScoreList[indexIDTTopo[i]]
         if dglist and len(dglist) == numTM_IDT:
             cntTopoWithValidDGScore += 1
-            for j in xrange(numTM_IDT):
+            for j in range(numTM_IDT):
                 sumDGList[j] += dgScoreList[indexIDTTopo[i]][j]
     if cntTopoWithValidDGScore > 0:
         DGvalueTMcons = [x/float(cntTopoWithValidDGScore) for x in sumDGList]
@@ -2804,7 +2804,7 @@ def MappingTM_method1(posTM1, posTM2, topo1, topo2, seqID1, seqID2):#{{{
             unaligned_str = rd[2]
         except KeyError:
             msg = "Failed to find local alignment for (%s,%s)"
-            print >> sys.stderr, msg%(seqID1, seqID2)
+            print(msg%(seqID1, seqID2), file=sys.stderr)
             unaligned_str = ""
 
     mapArray1 = MapAlignedTopo_method1(topo1, topo2, posTM1, posTM2,
@@ -2854,7 +2854,7 @@ def MappingTM_method3(posTM1, posTM2, topo1, topo2, sp_pos1, sp_pos2, #{{{
             unaligned_str = rd[2]
         except KeyError:
             msg = "Failed to find local alignment for (%s,%s)"
-            print >> sys.stderr, msg%(seqID1, seqID2)
+            print(msg%(seqID1, seqID2), file=sys.stderr)
             unaligned_str = ""
 
     mapArray1 = MapAlignedTopo_method3(topo1, topo2, posTM1, posTM2,
@@ -2897,8 +2897,8 @@ def CompareTrimmedToposGlobally(strTop1, strTop2, strProtein1, strProtein2):#{{{
     if len(strTop1) <= 0 and len(strTop2) <=0:
         return ("DIFF", 0,0 )
     elif len(strTop1)*len(strTop2) == 0 and len(strTop1)+len(strTop2) > 0:
-        print >> sys.stderr, ("%s %s global length does not match" %
-                (strProtein1, strProtein2))
+        print(("%s %s global length does not match" %
+                (strProtein1, strProtein2)), file=sys.stderr)
         sys.exit(1)
     (intNumMem1,Nterm1)=ct.counttopo(strTop1)
     (intNumMem2,Nterm2)=ct.counttopo(strTop2)
@@ -3112,8 +3112,8 @@ def ClassifyTopoComparison_pairwise_method1(mapArray1, mapArray2, Nterm1,#{{{
         aligned_mapArray1 = mapArray1
         aligned_mapArray2 = mapArray2
     else:
-        aligned_mapArray1 = filter(lambda a:  a!= _UNALIGNED, mapArray1)
-        aligned_mapArray2 = filter(lambda a:  a!= _UNALIGNED, mapArray2)
+        aligned_mapArray1 = [a for a in mapArray1 if a!= _UNALIGNED]
+        aligned_mapArray2 = [a for a in mapArray2 if a!= _UNALIGNED]
         aligned_numTM1 = len(aligned_mapArray1)
         aligned_numTM2 = len(aligned_mapArray2)
         (numTM_unaligned_Nterm1, numTM_unaligned_Cterm1
@@ -3130,7 +3130,7 @@ def ClassifyTopoComparison_pairwise_method1(mapArray1, mapArray2, Nterm1,#{{{
     if (aligned_numTM1 <= 0 or aligned_numTM2 <= 0 or
             aligned_mapArray1.count(_TM2TM) !=
             aligned_mapArray2.count(_TM2TM)):
-        print >> g_params['fpout_badmap'], "Bad TM mapping %s - %s"%(seqID1, seqID2)
+        print("Bad TM mapping %s - %s"%(seqID1, seqID2), file=g_params['fpout_badmap'])
         PrintMappedArray_method1_1(mapArray1, mapArray2, seqID1, seqID2,
                 g_params['fpout_badmap'])
         if(aligned_numTM1 <= 0 or aligned_numTM2 <= 0):
@@ -3154,7 +3154,7 @@ def ClassifyTopoComparison_pairwise_method1(mapArray1, mapArray2, Nterm1,#{{{
             elif _TM2SEQ in uniqMergedSet:
                 cls_aligned_region =  "TM2SEQ"
             else:
-                print >> g_params['fpout_badmap'], "Bad TM mapping %s - %s"%(seqID1, seqID2)
+                print("Bad TM mapping %s - %s"%(seqID1, seqID2), file=g_params['fpout_badmap'])
                 PrintMappedArray_method1_1(mapArray1, mapArray2, seqID1, seqID2,
                         g_params['fpout_badmap'])
                 cls_aligned_region = "UNKNOWN"
@@ -3218,8 +3218,8 @@ def ClassifyTopoComparison_pairwise_method3(mapArray1, mapArray2, Nterm1,#{{{
         aligned_mapArray1 = mapArray1
         aligned_mapArray2 = mapArray2
     else:
-        aligned_mapArray1 = filter(lambda a:  a!= _UNALIGNED, mapArray1)
-        aligned_mapArray2 = filter(lambda a:  a!= _UNALIGNED, mapArray2)
+        aligned_mapArray1 = [a for a in mapArray1 if a!= _UNALIGNED]
+        aligned_mapArray2 = [a for a in mapArray2 if a!= _UNALIGNED]
         aligned_numTM1 = len(aligned_mapArray1)
         aligned_numTM2 = len(aligned_mapArray2)
         (numTM_unaligned_Nterm1, numTM_unaligned_Cterm1
@@ -3236,7 +3236,7 @@ def ClassifyTopoComparison_pairwise_method3(mapArray1, mapArray2, Nterm1,#{{{
     if (aligned_numTM1 <= 0 or aligned_numTM2 <= 0 or
             aligned_mapArray1.count(_TM2TM) !=
             aligned_mapArray2.count(_TM2TM)):
-        print >> g_params['fpout_badmap'], "Bad TM mapping %s - %s"%(seqID1, seqID2)
+        print("Bad TM mapping %s - %s"%(seqID1, seqID2), file=g_params['fpout_badmap'])
         PrintMappedArray_method1_1(mapArray1, mapArray2, seqID1, seqID2,
                 g_params['fpout_badmap'])
         if(aligned_numTM1 <= 0 or aligned_numTM2 <= 0):
@@ -3374,14 +3374,14 @@ def AnaDIFFTopology1(mapArray ):#{{{
         (b,e)=posUnmappedTM[i]
         if b == 0:
             ana["Nterm"]["numTMunmapped"] = e-b
-            ana["Nterm"]["index"]=range(b,e)
+            ana["Nterm"]["index"]=list(range(b,e))
         elif e == numTM  :
             ana["Cterm"]["numTMunmapped"] = e-b
-            ana["Cterm"]["index"]=range(b,e)
+            ana["Cterm"]["index"]=list(range(b,e))
         else:
             ana["internal"].append({})
             ana["internal"][cntinter]["numTMunmapped"] = e-b
-            ana["internal"][cntinter]["index"] = range(b,e)
+            ana["internal"][cntinter]["index"] = list(range(b,e))
             cntinter +=1
     return ana
 #}}}
@@ -3461,10 +3461,10 @@ def GetTopoStateFraction_slow(idtTopoSeqList):#{{{
         binaryMatrix=[]
         apd=binaryMatrix.append
         state=statestr[kk]
-        for i in xrange(numIDTTopo):
+        for i in range(numIDTTopo):
             apd ([(s==state) for s in idtTopoSeqList[i]]); 
-        cntState=[sum( [binaryMatrix[i][j] for i in xrange(numIDTTopo)]) for j
-                in xrange(lengthAlignment)]; 
+        cntState=[sum( [binaryMatrix[i][j] for i in range(numIDTTopo)]) for j
+                in range(lengthAlignment)]; 
         perStateList.append(  [x/numIDTTopo_float for x in cntState ] ); 
 
     return (perStateList[0], perStateList[1], perStateList[2], perStateList[3])
@@ -3551,9 +3551,9 @@ def GetConsensusTopo(idtTopoSeqList, idtPosTMList, method_consensus):#{{{
         numTM = len(idtPosTMList[0]);#{{{
         posTMCons=[]; # 2-tuple list
         cntTMpos=0
-        for i in xrange(numTM):
-            posBegs = [idtPosTMList[j][i][0] for j in xrange(numIDTTopo)]
-            posEnds = [idtPosTMList[j][i][1] for j in xrange(numIDTTopo)]
+        for i in range(numTM):
+            posBegs = [idtPosTMList[j][i][0] for j in range(numIDTTopo)]
+            posEnds = [idtPosTMList[j][i][1] for j in range(numIDTTopo)]
             posBegs.sort()
             posEnds.sort()
             idxTMPosToBeUsed_begin = 0
@@ -3573,15 +3573,15 @@ def GetConsensusTopo(idtTopoSeqList, idtPosTMList, method_consensus):#{{{
             if len(posTMCons) > 0 and avgBeg <= posTMCons[cntTMpos-1][1]:
                 avgBeg = posTMCons[i-1][1] + 1
             if avgEnd <= avgBeg:
-                print >> sys.stderr, ("TM %d is overlapping and neglected." %
-                        (i+1))
+                print(("TM %d is overlapping and neglected." %
+                        (i+1)), file=sys.stderr)
             else:
                 posTMCons.append((avgBeg, avgEnd))
                 cntTMpos += 1
         NtermStateCons = lcmp.GetNtermState(idtTopoSeqList[0])
         if not NtermStateCons in ['i','o']:
-            print >> sys.stderr, ("GetNtermState failed when "
-                    + "making consensusTopo. NtermStateCons=%s. idtTopoSeqList[0]=%s"%(NtermStateCons, idtTopoSeqList[0]))
+            print(("GetNtermState failed when "
+                    + "making consensusTopo. NtermStateCons=%s. idtTopoSeqList[0]=%s"%(NtermStateCons, idtTopoSeqList[0])), file=sys.stderr)
             return (None, None)
 # assign 'M' state and 'i' 'o' sate at the beginnings and ends of TM
 # regions for the consensus 
@@ -3611,7 +3611,7 @@ def GetConsensusTopo(idtTopoSeqList, idtPosTMList, method_consensus):#{{{
         # proof reading the consensus topology, the i,o sate between two TM
         # helices should be consistent.
         state_index= stateiostr.index(NtermStateCons)
-        for i in xrange(numTM+1):
+        for i in range(numTM+1):
             beg = 0
             end = 0
             if i > 0:
@@ -3623,7 +3623,7 @@ def GetConsensusTopo(idtTopoSeqList, idtPosTMList, method_consensus):#{{{
             else:
                 end = lengthAlignment -1
             correctState =  stateiostr[state_index]; 
-            for j in xrange(beg, end):
+            for j in range(beg, end):
                 if strlist[j] != GAP and strlist[j] != correctState:
                     strlist[j] == correctState
             state_index = (state_index+1)%2
@@ -3638,7 +3638,7 @@ def GetIDTTopoGroup(idList,topoSeqList):#{{{
 # 1 for identical
     numSeq=len(idList)
     # Initialize a unit matrix of the size (numSeq x numSeq)
-    Mcmp= [[0]*numSeq for x in xrange(numSeq)]
+    Mcmp= [[0]*numSeq for x in range(numSeq)]
     for i in range(numSeq): 
         Mcmp[i][i]=1
     # All-to-all comparison
@@ -3686,7 +3686,7 @@ def GetIDTTopoGroup(idList,topoSeqList):#{{{
     # get the most common element in the list
     counter={}
     for i in numTMList: counter[i] = counter.get(i, 0) + 1
-    (maxcnt, numTM_IDT) = sorted([(cnt, num) for num,cnt in counter.items()],
+    (maxcnt, numTM_IDT) = sorted([(cnt, num) for num,cnt in list(counter.items())],
             reverse=True)[0]
     numTMcons = myfunc.CountTM(consensusTopo)
     if numTMcons != numTM_IDT:
@@ -3701,26 +3701,26 @@ def GetIDTTopoGroup(idList,topoSeqList):#{{{
             for j in range(numSeq):
                 fpLog.write("%d "%Mcmp[i][j])
             fpLog.write("\n")
-        print >> fpLog, "numIDTTopo=",numIDTTopo
-        print >> fpLog, "indexIDTTopo:\n",indexIDTTopo
-        print >> fpLog
+        print("numIDTTopo=",numIDTTopo, file=fpLog)
+        print("indexIDTTopo:\n",indexIDTTopo, file=fpLog)
+        print(file=fpLog)
         for i in range (numIDTTopo):
-            print >> fpLog, topoSeqList[indexIDTTopo[i]]
-        print >> fpLog, "ConsensusTopo:"
-        print >> fpLog, consensusTopo
+            print(topoSeqList[indexIDTTopo[i]], file=fpLog)
+        print("ConsensusTopo:", file=fpLog)
+        print(consensusTopo, file=fpLog)
 
         conf_o=[max(0,int(x*10)-1) for x in per_o]; 
         conf_M=[max(0,int(x*10)-1) for x in per_M]; 
         conf_i=[max(0,int(x*10)-1) for x in per_i]; 
-        print >> fpLog, ''.join(["%d"%x for x in conf_M])
-        print >> fpLog, ''.join(["%d"%x for x in conf_o])
-        print >> fpLog, ''.join(["%d"%x for x in conf_i])
+        print(''.join(["%d"%x for x in conf_M]), file=fpLog)
+        print(''.join(["%d"%x for x in conf_o]), file=fpLog)
+        print(''.join(["%d"%x for x in conf_i]), file=fpLog)
 
-        print >> fpLog, conf_o
-        print >> fpLog, conf_M
-        print >> fpLog, conf_i
-        print >> fpLog, "numTMcons=", numTMcons
-        print >> fpLog, "numTM_largestgroup=", numTM_IDT
+        print(conf_o, file=fpLog)
+        print(conf_M, file=fpLog)
+        print(conf_i, file=fpLog)
+        print("numTMcons=", numTMcons, file=fpLog)
+        print("numTM_largestgroup=", numTM_IDT, file=fpLog)
 #debug code
     return (consensusTopo, indexIDTTopo,  numTM_IDT, Mcmp)
 #}}}
@@ -3734,16 +3734,16 @@ def GetIDTTopoGroup1(topoSeqList, NtermStateList, posTMList):#{{{
 
     # Initialize a unit matrix of the size (numSeq x numSeq)
 #   Mcmp = [ [(i==j) for i in xrange(numSeq)] for j in xrange(numSeq) ]  
-    Mcmp= [[0]*numSeq for x in xrange(numSeq)]
-    for i in xrange(numSeq): 
+    Mcmp= [[0]*numSeq for x in range(numSeq)]
+    for i in range(numSeq): 
         Mcmp[i][i]=1
     # All-to-all comparison
     if g_params['method_comparison'] == 2: # modified 2012-11-22 
         min_TM_overlap = int(g_params['threshold_TM2TM']*21+0.5)
     else:
         min_TM_overlap = g_params['min_TM_overlap']
-    for i in xrange (numSeq):
-        for j in xrange(i+1, numSeq):
+    for i in range (numSeq):
+        for j in range(i+1, numSeq):
             #if lcmp.IsIdenticalTopology(NtermStateList[i], NtermStateList[j], numTMList[i], numTMList[j], posTMList[i], posTMList[j]):
             if lcmp.IsIdenticalTopology(NtermStateList[i], NtermStateList[j],
                     numTMList[i], numTMList[j], posTMList[i], posTMList[j],
@@ -3752,8 +3752,8 @@ def GetIDTTopoGroup1(topoSeqList, NtermStateList, posTMList):#{{{
             else:
                 Mcmp[i][j] = 0
     #copy the symmetric matrix
-    for i in xrange (numSeq):
-        for j in xrange(i+1, numSeq):
+    for i in range (numSeq):
+        for j in range(i+1, numSeq):
             Mcmp[j][i]=Mcmp[i][j]
 
     #get the largest group with the identical topology, bug fixed 2011-09-19 22:26:53 Monday Week 38
@@ -3790,16 +3790,16 @@ def GetIDTTopoGroup1(topoSeqList, NtermStateList, posTMList):#{{{
             for j in range(numSeq):
                 fpLog.write("%d "%Mcmp[i][j])
             fpLog.write("\n")
-        print >> fpLog, "numIDTTopo=",numIDTTopo
-        print >> fpLog, "indexIDTTopo:\n",indexIDTTopo
-        print >> fpLog
+        print("numIDTTopo=",numIDTTopo, file=fpLog)
+        print("indexIDTTopo:\n",indexIDTTopo, file=fpLog)
+        print(file=fpLog)
         for i in range (numIDTTopo):
-            print >> fpLog, topoSeqList[indexIDTTopo[i]]
-        print >> fpLog, "ConsensusTopo:"
-        print >> fpLog, consensusTopo
+            print(topoSeqList[indexIDTTopo[i]], file=fpLog)
+        print("ConsensusTopo:", file=fpLog)
+        print(consensusTopo, file=fpLog)
 
-        print >> fpLog, "numTMcons=", numTMcons
-        print >> fpLog, "numTM_largestgroup=", numTM_IDT
+        print("numTMcons=", numTMcons, file=fpLog)
+        print("numTM_largestgroup=", numTM_IDT, file=fpLog)
 #debug code ends#}}}
 
     return (consensusTopo, indexIDTTopo,  gapSeqCons, numTM_IDT, Mcmp)
@@ -3813,11 +3813,11 @@ def GetInvertedTopologyMatrix(topoSeqList, NtermStateList, posTMList):#{{{
     numTMList=[ len (posTM) for posTM in posTMList]
     # Initialize a unit matrix of the size (numSeq x numSeq)
 #   Mcmp = [ [(i==j) for i in xrange(numSeq)] for j in xrange(numSeq) ]  
-    Mcmp= [[0]*numSeq for x in xrange(numSeq)]
+    Mcmp= [[0]*numSeq for x in range(numSeq)]
     # All-to-all comparison
     min_TM_overlap = 5
-    for i in xrange (numSeq):
-        for j in xrange(i+1, numSeq):
+    for i in range (numSeq):
+        for j in range(i+1, numSeq):
             if lcmp.IsInvertedTopology(NtermStateList[i], NtermStateList[j],
                     numTMList[i], numTMList[j], posTMList[i], posTMList[j],
                     topoSeqList[i], topoSeqList[j], min_TM_overlap):
@@ -3893,7 +3893,7 @@ def CompareToConsensus(topoSeqList, indexIDTTopo,consensusTopo, idList, #{{{
     # get the occurrence of each element in the list
     counter={}
     for i in cmpClassOtherTopoList: counter[i] = counter.get(i, 0) + 1
-    sortedOccurrence1=sorted([(status, cnt) for status,cnt in counter.items()], reverse=True)
+    sortedOccurrence1=sorted([(status, cnt) for status,cnt in list(counter.items())], reverse=True)
     cntOccu=[0]*numCmpClass
     for i in range(numCmpClass):
         for j in range(len(sortedOccurrence1)):
@@ -3992,8 +3992,8 @@ def CompareToConsensus1(topoSeqList, NtermStateList, #{{{
 
     DGvalueTMcons = GetDGvalueTMconsensus(dgScoreList, indexIDTTopo, numTM_IDT)
     if g_params['isPrintDGCons']:
-        print "DGvalueTMcons (%d) =" % len(DGvalueTMcons), ["%.3f"%x for x in
-                DGvalueTMcons]
+        print("DGvalueTMcons (%d) =" % len(DGvalueTMcons), ["%.3f"%x for x in
+                DGvalueTMcons])
     numCmpClass = len(comparisonClassNameList); #number of defined classes
 
     # Get length of un-aligned sequences
@@ -4016,7 +4016,7 @@ def CompareToConsensus1(topoSeqList, NtermStateList, #{{{
 
     Ntermcons = lcmp.GetNtermState(consensusTopo)
 
-    for i in xrange(numOtherTopo):
+    for i in range(numOtherTopo):
 
         cmpToConsRecordList.append({})
         cmprecord = cmpToConsRecordList[i]
@@ -4042,16 +4042,16 @@ def CompareToConsensus1(topoSeqList, NtermStateList, #{{{
         class_global = ClassifyTopoComparison(mapArraycons, mapArrayquery,
                 Ntermcons, Ntermquery)
         if len(mapArraycons) != len(mapArrayquery) and class_global == "OK":
-            print seqID, mapArrayquery
-            print "cons", mapArraycons
+            print(seqID, mapArrayquery)
+            print("cons", mapArraycons)
 
         cmpClassOtherTopoList.append(class_global)
         idx = comparisonClassNameList.index(class_global)
 
         if DEBUG_CONSENSUS and fpLog != None:
-            print >> fpLog, "SeqID", seqID, "class=", class_global, "idx=", idx
-            print >> fpLog, ("SeqID %s: %s"%(idList[indexOtherTopo[i]],
-                    class_global)) 
+            print("SeqID", seqID, "class=", class_global, "idx=", idx, file=fpLog)
+            print(("SeqID %s: %s"%(idList[indexOtherTopo[i]],
+                    class_global)), file=fpLog) 
             PrintMappedArray(mapArraycons, mapArrayquery,
                     "Consensus",idList[indexOtherTopo[i]], fpLog)
 
@@ -4093,8 +4093,8 @@ def CompareToConsensus1(topoSeqList, NtermStateList, #{{{
 
     if DEBUG_CONSENSUS and fpLog != None:
         for icls in range(len(comparisonClassNameList)):
-            print >> fpLog, ("%-10s" % (comparisonClassNameList[icls]),
-                    indexClass[icls])
+            print(("%-10s" % (comparisonClassNameList[icls]),
+                    indexClass[icls]), file=fpLog)
 
 # Write overall information
     fpout.write("//Begin CMPMSA\n")
@@ -4143,8 +4143,8 @@ def CompareToConsensus2(topoSeqList, NtermStateList, #{{{
 
     DGvalueTMcons = GetDGvalueTMconsensus(dgScoreList, indexIDTTopo, numTM_IDT)
     if g_params['isPrintDGCons']:
-        print "DGvalueTMcons (%d) =" % len(DGvalueTMcons), ["%.3f"%x for x in
-                DGvalueTMcons]
+        print("DGvalueTMcons (%d) =" % len(DGvalueTMcons), ["%.3f"%x for x in
+                DGvalueTMcons])
     numCmpClass = len(comparisonClassNameList); #number of defined classes
 
     # Get length of un-aligned sequences
@@ -4160,7 +4160,7 @@ def CompareToConsensus2(topoSeqList, NtermStateList, #{{{
 
     Ntermcons = lcmp.GetNtermState(consensusTopo)
 
-    for i in xrange(numOtherTopo):
+    for i in range(numOtherTopo):
 
         cmpToConsRecordList.append({})
         cmprecord = cmpToConsRecordList[i]
@@ -4196,9 +4196,9 @@ def CompareToConsensus2(topoSeqList, NtermStateList, #{{{
         idx = comparisonClassNameList.index(class_global)
 
         if DEBUG_CONSENSUS and fpLog != None:
-            print >> fpLog, "SeqID", seqID, "class=", class_global, "idx=", idx
-            print >> fpLog, ("SeqID %s: %s"%(idList[indexOtherTopo[i]],
-                    class_global)) 
+            print("SeqID", seqID, "class=", class_global, "idx=", idx, file=fpLog)
+            print(("SeqID %s: %s"%(idList[indexOtherTopo[i]],
+                    class_global)), file=fpLog) 
             PrintMappedArray(mapArraycons, mapArrayquery,
                     "Consensus",idList[indexOtherTopo[i]], fpLog)
 
@@ -4218,8 +4218,8 @@ def CompareToConsensus2(topoSeqList, NtermStateList, #{{{
 
     if DEBUG_CONSENSUS and fpLog != None:
         for icls in range(len(comparisonClassNameList)):
-            print >> fpLog, ("%-10s" % (comparisonClassNameList[icls]),
-                    indexClass[icls])
+            print(("%-10s" % (comparisonClassNameList[icls]),
+                    indexClass[icls]), file=fpLog)
 
 # Write overall information
     fpout.write("//Begin CMPMSA\n")
@@ -4267,7 +4267,7 @@ def CompareSignalPeptide(seqID1, seqID2, topo1, topo2, posTM1, posTM2,#{{{
             unaligned_str = rd[2]
         except KeyError:
             msg = "Failed to find local alignment for (%s,%s)"
-            print >> sys.stderr, msg%(seqID1, seqID2)
+            print(msg%(seqID1, seqID2), file=sys.stderr)
             unaligned_str = ""
     sp1 = -1
     sp2 = -1
@@ -4295,7 +4295,7 @@ def CompareSignalPeptide(seqID1, seqID2, topo1, topo2, posTM1, posTM2,#{{{
 
         li = [cls1, cls2]
         li = myfunc.uniquelist(li)
-        li = filter(None, li)
+        li = [_f for _f in li if _f]
         cls = "|".join(li)
     return cls
 #}}}
@@ -4316,7 +4316,7 @@ def GetGroupedTopoMSA(numSeq, idList, topoSeqList, dgScoreList, #{{{
 #check
     if len(cmpToConsRecordList) != numOtherTopo:
         msg = "Error! len(cmpToConsRecordList) ({}) != numOtherTopo ({})",
-        print >> sys.stderr, msg.format(len(cmpToConsRecordList), numOtherTopo)
+        print(msg.format(len(cmpToConsRecordList), numOtherTopo), file=sys.stderr)
     groupList = []
     cnt = 0
 #groupList[0] is the largest identical group
@@ -4339,7 +4339,7 @@ def GetGroupedTopoMSA(numSeq, idList, topoSeqList, dgScoreList, #{{{
 
     maxDGdifference = g_params['maxDGdifference']
     if fpLog and DEBUG_GROUPING:
-        print >> fpLog, "maxDGdifference = ", maxDGdifference
+        print("maxDGdifference = ", maxDGdifference, file=fpLog)
     for icls in range(len(comparisonClassNameList)):
         indexThisClass = indexClass[icls]
         if len(indexThisClass) < 1: 
@@ -4397,11 +4397,11 @@ def GetGroupedTopoMSA(numSeq, idList, topoSeqList, dgScoreList, #{{{
             groupedIndexSet.update(largestGroup)
 
             if fpLog and DEBUG_GROUPING:
-                print >> fpLog, "cmpclass=", comparisonClassNameList[icls]
+                print("cmpclass=", comparisonClassNameList[icls], file=fpLog)
                 for i in range(len(similarTopoForEach)):
-                    print >> fpLog, "similarTopoForEach[%d]"%i, similarTopoForEach[i]
-                print >> fpLog, "largestGroup=", largestGroup
-                print >> fpLog
+                    print("similarTopoForEach[%d]"%i, similarTopoForEach[i], file=fpLog)
+                print("largestGroup=", largestGroup, file=fpLog)
+                print(file=fpLog)
 
 # remove the items that are already grouped
             largestGroupSet = set(largestGroup)
@@ -4422,7 +4422,7 @@ def PairwiseTopologyComparison(topoRecordList, g_params):#{{{
     elif cmpmethod == 3:
         return PairwiseTopologyComparison_method3(topoRecordList, g_params)
     else:
-        print >> sys.stderr, "Wrong method %d"%(cmpmethod)
+        print("Wrong method %d"%(cmpmethod), file=sys.stderr)
         return 1
 #}}}
 
@@ -4460,7 +4460,7 @@ def PairwiseTopologyComparison_method0(topoRecordList, g_params):#{{{
 
     DGvalueTMList = []
     gapSeqList=[]
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         topo = topoSeqList[i]
         dglist=dgScoreList[i]
         numTM = numTMList[i]
@@ -4471,21 +4471,21 @@ def PairwiseTopologyComparison_method0(topoRecordList, g_params):#{{{
         gapSeqList.append ([(s==GAP) for s in topo]); 
 
 
-    for i in xrange (numPair):
+    for i in range (numPair):
         idx1 = 2*i
         idx2 = 2*i+1
         if alignSeqLenList[idx1] != alignSeqLenList[idx2]:
-            print >> sys.stderr, ("Length of aligned topology for %s (%d) " % 
+            print(("Length of aligned topology for %s (%d) " % 
                     (idList[idx1], alignSeqLenList[idx1]) 
                     + "and %s (%d) not equal.  Ignore." 
-                    % (idList[idx2], alignSeqLenList[idx2]))
+                    % (idList[idx2], alignSeqLenList[idx2])), file=sys.stderr)
             continue
         if numTMList[idx1] < 1 or numTMList[idx2] < 1:
-            print >> sys.stderr, ("numTM of aligned topology for %s (%d) or %s (%d) < 1. Ignore." % (idList[idx1], numTMList[idx1],
-                        idList[idx2], numTMList[idx2]))
+            print(("numTM of aligned topology for %s (%d) or %s (%d) < 1. Ignore." % (idList[idx1], numTMList[idx1],
+                        idList[idx2], numTMList[idx2])), file=sys.stderr)
             continue
         if seqIdentityList[idx1] != seqIdentityList[idx2]:
-            print >> sys.stderr, "%s - %s: sequence identity inconsistent. %.2f - %.2f. Ignore."%(idList[idx1], idList[idx2], seqIdentityList[idx1], seqIdentityList[idx2])
+            print("%s - %s: sequence identity inconsistent. %.2f - %.2f. Ignore."%(idList[idx1], idList[idx2], seqIdentityList[idx1], seqIdentityList[idx2]), file=sys.stderr)
             continue
         commonMarray = [ (topoSeqList[idx1][j] == 'M' and 
             topoSeqList[idx2][j] == 'M') for j in
@@ -4527,7 +4527,7 @@ def PairwiseTopologyComparison_method0(topoRecordList, g_params):#{{{
 # not implemented yet
 
 # Write overall information
-        print >> fpout, "//Begin record", g_params['cntOutputPair']+1
+        print("//Begin record", g_params['cntOutputPair']+1, file=fpout)
         lcmp.WriteOverallInfo_pairwise(idList[idx1], idList[idx2],
                 seqIdentityList[idx1],  class_global, numTMList[idx1],
                 numTMList[idx2], seqLenList[idx1], seqLenList[idx2],  fpout,
@@ -4542,11 +4542,11 @@ def PairwiseTopologyComparison_method0(topoRecordList, g_params):#{{{
         if  ana2 != {}:
             lcmp.WriteAna(ana2,fpout, "2") 
 
-        print >> fpout, "//End record", g_params['cntOutputPair']+1
+        print("//End record", g_params['cntOutputPair']+1, file=fpout)
         g_params['cntOutputPair'] += 1
 
 # remove records that are already compared
-    for i in xrange (numPair):
+    for i in range (numPair):
         topoRecordList.pop(0)
         topoRecordList.pop(0)
 
@@ -4597,7 +4597,7 @@ def PairwiseTopologyComparison_method1(topoRecordList, g_params):#{{{
 
     DGvalueTMList = []
     gapSeqList=[]
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         topo = topoSeqList[i]
         dglist=dgScoreList[i]
         numTM = numTMList[i]
@@ -4608,25 +4608,25 @@ def PairwiseTopologyComparison_method1(topoRecordList, g_params):#{{{
         gapSeqList.append ([(s==GAP) for s in topo]); 
 
 
-    for i in xrange (numPair):
+    for i in range (numPair):
         idx1 = 2*i
         idx2 = 2*i+1
         if alignSeqLenList[idx1] != alignSeqLenList[idx2]:
-            print >> sys.stderr, ("Length of aligned topology for %s (%d) " % 
+            print(("Length of aligned topology for %s (%d) " % 
                     (idList[idx1], alignSeqLenList[idx1]) 
                     + "and %s (%d) not equal.  Ignore." 
-                    % (idList[idx2], alignSeqLenList[idx2]))
+                    % (idList[idx2], alignSeqLenList[idx2])), file=sys.stderr)
             continue
         if numTMList[idx1] < 1 or numTMList[idx2] < 1:
-            print >> sys.stderr, ("numTM of aligned topology for %s (%d) "%(
+            print(("numTM of aligned topology for %s (%d) "%(
                 idList[idx1], numTMList[idx1]) +
-                "or %s (%d) < 1. Ignore." % (idList[idx2], numTMList[idx2]))
+                "or %s (%d) < 1. Ignore." % (idList[idx2], numTMList[idx2])), file=sys.stderr)
             continue
         if seqIdentityList[idx1] != seqIdentityList[idx2]:
-            print >> sys.stderr, ("%s - %s: sequence identity inconsistent. "%(
+            print(("%s - %s: sequence identity inconsistent. "%(
                 idList[idx1], idList[idx2]) +
                 "%.2f - %.2f. Ignore."%(seqIdentityList[idx1],
-                    seqIdentityList[idx2]))
+                    seqIdentityList[idx2])), file=sys.stderr)
             continue
         commonMarray = [ (topoSeqList[idx1][j] == 'M' and 
             topoSeqList[idx2][j] == 'M') for j in
@@ -4657,7 +4657,7 @@ def PairwiseTopologyComparison_method1(topoRecordList, g_params):#{{{
         ana2={}
         if class_global != "":
 # Write overall information
-            print >> fpout, "//Begin record", g_params['cntOutputPair']+1
+            print("//Begin record", g_params['cntOutputPair']+1, file=fpout)
             lcmp.WriteOverallInfo_pairwise(idList[idx1], idList[idx2],
                     seqIdentityList[idx1],  class_global, numTMList[idx1],
                     numTMList[idx2], seqLenList[idx1], seqLenList[idx2],  fpout,
@@ -4672,11 +4672,11 @@ def PairwiseTopologyComparison_method1(topoRecordList, g_params):#{{{
             if  ana2 != {}:
                 lcmp.WriteAna(ana2,fpout, "2") 
 
-            print >> fpout, "//End record", g_params['cntOutputPair']+1
+            print("//End record", g_params['cntOutputPair']+1, file=fpout)
             g_params['cntOutputPair'] += 1
 
 # remove records that are already compared
-    for i in xrange (numPair):
+    for i in range (numPair):
         topoRecordList.pop(0)
         topoRecordList.pop(0)
 
@@ -4730,7 +4730,7 @@ def PairwiseTopologyComparison_method2(topoRecordList, g_params):#{{{
 
     DGvalueTMList = []
     gapSeqList=[]
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         topo = topoSeqList[i]
         dglist=dgScoreList[i]
         numTM = numTMList[i]
@@ -4741,25 +4741,25 @@ def PairwiseTopologyComparison_method2(topoRecordList, g_params):#{{{
         gapSeqList.append ([(s==GAP) for s in topo]); 
 
 
-    for i in xrange (numPair):
+    for i in range (numPair):
         idx1 = 2*i
         idx2 = 2*i+1
         if alignSeqLenList[idx1] != alignSeqLenList[idx2]:
-            print >> sys.stderr, ("Length of aligned topology for %s (%d) " % 
+            print(("Length of aligned topology for %s (%d) " % 
                     (idList[idx1], alignSeqLenList[idx1]) 
                     + "and %s (%d) not equal.  Ignore." 
-                    % (idList[idx2], alignSeqLenList[idx2]))
+                    % (idList[idx2], alignSeqLenList[idx2])), file=sys.stderr)
             continue
         if numTMList[idx1] < 1 or numTMList[idx2] < 1:
-            print >> sys.stderr, ("numTM of aligned topology for %s (%d) "%(
+            print(("numTM of aligned topology for %s (%d) "%(
                 idList[idx1], numTMList[idx1]) +
-                "or %s (%d) < 1. Ignore." % (idList[idx2], numTMList[idx2]))
+                "or %s (%d) < 1. Ignore." % (idList[idx2], numTMList[idx2])), file=sys.stderr)
             continue
         if seqIdentityList[idx1] != seqIdentityList[idx2]:
-            print >> sys.stderr, ("%s - %s: sequence identity inconsistent. "%(
+            print(("%s - %s: sequence identity inconsistent. "%(
                 idList[idx1], idList[idx2]) +
                 "%.2f - %.2f. Ignore."%(seqIdentityList[idx1],
-                    seqIdentityList[idx2]))
+                    seqIdentityList[idx2])), file=sys.stderr)
             continue
         commonMarray = [ (topoSeqList[idx1][j] == 'M' and 
             topoSeqList[idx2][j] == 'M') for j in
@@ -4782,7 +4782,7 @@ def PairwiseTopologyComparison_method2(topoRecordList, g_params):#{{{
         ana2={}
         if class_global != "":
 # Write overall information
-            print >> fpout, "//Begin record", g_params['cntOutputPair']+1
+            print("//Begin record", g_params['cntOutputPair']+1, file=fpout)
             lcmp.WriteOverallInfo_pairwise(idList[idx1], idList[idx2],
                     seqIdentityList[idx1],  class_global, numTMList[idx1],
                     numTMList[idx2], seqLenList[idx1], seqLenList[idx2],  fpout,
@@ -4797,11 +4797,11 @@ def PairwiseTopologyComparison_method2(topoRecordList, g_params):#{{{
             if  ana2 != {}:
                 lcmp.WriteAna(ana2,fpout, "2") 
 
-            print >> fpout, "//End record", g_params['cntOutputPair']+1
+            print("//End record", g_params['cntOutputPair']+1, file=fpout)
             g_params['cntOutputPair'] += 1
 
 # remove records that are already compared
-    for i in xrange (numPair):
+    for i in range (numPair):
         topoRecordList.pop(0)
         topoRecordList.pop(0)
 
@@ -4854,7 +4854,7 @@ def PairwiseTopologyComparison_method3(topoRecordList, g_params):#{{{
 
     DGvalueTMList = []
     gapSeqList=[]
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         topo = topoSeqList[i]
         dglist=dgScoreList[i]
         numTM = numTMList[i]
@@ -4865,25 +4865,25 @@ def PairwiseTopologyComparison_method3(topoRecordList, g_params):#{{{
         gapSeqList.append ([(s==GAP) for s in topo]); 
 
 
-    for i in xrange (numPair):
+    for i in range (numPair):
         idx1 = 2*i
         idx2 = 2*i+1
         if alignSeqLenList[idx1] != alignSeqLenList[idx2]:
-            print >> sys.stderr, ("Length of aligned topology for %s (%d) " % 
+            print(("Length of aligned topology for %s (%d) " % 
                     (idList[idx1], alignSeqLenList[idx1]) 
                     + "and %s (%d) not equal.  Ignore." 
-                    % (idList[idx2], alignSeqLenList[idx2]))
+                    % (idList[idx2], alignSeqLenList[idx2])), file=sys.stderr)
             continue
         if numTMList[idx1] < 1 or numTMList[idx2] < 1:
-            print >> sys.stderr, ("numTM of aligned topology for %s (%d) "%(
+            print(("numTM of aligned topology for %s (%d) "%(
                 idList[idx1], numTMList[idx1]) +
-                "or %s (%d) < 1. Ignore." % (idList[idx2], numTMList[idx2]))
+                "or %s (%d) < 1. Ignore." % (idList[idx2], numTMList[idx2])), file=sys.stderr)
             continue
         if seqIdentityList[idx1] != seqIdentityList[idx2]:
-            print >> sys.stderr, ("%s - %s: sequence identity inconsistent. "%(
+            print(("%s - %s: sequence identity inconsistent. "%(
                 idList[idx1], idList[idx2]) +
                 "%.2f - %.2f. Ignore."%(seqIdentityList[idx1],
-                    seqIdentityList[idx2]))
+                    seqIdentityList[idx2])), file=sys.stderr)
             continue
         commonMarray = [ (topoSeqList[idx1][j] == 'M' and 
             topoSeqList[idx2][j] == 'M') for j in
@@ -4909,7 +4909,7 @@ def PairwiseTopologyComparison_method3(topoRecordList, g_params):#{{{
                 else:
                     seqidt = pairalnStat[keystr]['seqidt']
             except KeyError:
-                print >> sys.stderr, "%s not found in tableinfo"%(keystr)
+                print("%s not found in tableinfo"%(keystr), file=sys.stderr)
                 seqidt = INIT_SEQUENCE_IDENTITY
         else:
             seqidt = seqIdentityList[idx1]
@@ -4930,13 +4930,13 @@ def PairwiseTopologyComparison_method3(topoRecordList, g_params):#{{{
             try:
                 sp_pos1 = seq2alignMap1[sp_pos1]
             except KeyError:
-                print >> sys.stderr, "idx %d not in seq2alignMap1 for %s"%(sp_pos1, idList[idx1])
+                print("idx %d not in seq2alignMap1 for %s"%(sp_pos1, idList[idx1]), file=sys.stderr)
                 pass
         if sp_pos2 != -1:
             try:
                 sp_pos2 = seq2alignMap2[sp_pos2]
             except KeyError:
-                print >> sys.stderr, "idx %d not in seq2alignMap1 for %s"%(sp_pos2, idList[idx2])
+                print("idx %d not in seq2alignMap1 for %s"%(sp_pos2, idList[idx2]), file=sys.stderr)
                 pass
 
         (mapArray1, mapArray2) = MappingTM_method3(posTMList[idx1], posTMList[idx2],
@@ -4952,7 +4952,7 @@ def PairwiseTopologyComparison_method3(topoRecordList, g_params):#{{{
         ana2={}
         if class_global != "":
 # Write overall information
-            print >> fpout, "//Begin record", g_params['cntOutputPair']+1
+            print("//Begin record", g_params['cntOutputPair']+1, file=fpout)
             lcmp.WriteOverallInfo_pairwise(idList[idx1], idList[idx2], seqidt,
                     class_global, numTMList[idx1], numTMList[idx2],
                     seqLenList[idx1], seqLenList[idx2], fpout,
@@ -4967,25 +4967,25 @@ def PairwiseTopologyComparison_method3(topoRecordList, g_params):#{{{
             if  ana2 != {}:
                 lcmp.WriteAna(ana2,fpout, "2") 
 
-            print >> fpout, "//End record", g_params['cntOutputPair']+1
+            print("//End record", g_params['cntOutputPair']+1, file=fpout)
             g_params['cntOutputPair'] += 1
 
 # remove records that are already compared
-    for i in xrange (numPair):
+    for i in range (numPair):
         topoRecordList.pop(0)
         topoRecordList.pop(0)
 
     return 0
 #}}}
 def MultipleTopologyComparison(topoRecordList, g_params):#{{{
-    print "method_topology_comparison=", g_params['method_topology_comparison']
+    print("method_topology_comparison=", g_params['method_topology_comparison'])
     if g_params['method_topology_comparison'] == 0:
         return MultipleTopologyComparison_alignment(topoRecordList, g_params)
     elif g_params['method_topology_comparison'] == 9:
         return MultipleTopologyComparison_numTM(topoRecordList, g_params)
     else:
-        print >> sys.stderr, "Wrong method_topology_comparison = %d"%(
-                g_params['method_topology_comparison'])
+        print("Wrong method_topology_comparison = %d"%(
+                g_params['method_topology_comparison']), file=sys.stderr)
         return 1
 #}}}
 def MultipleTopologyComparison_numTM(topoRecordList, g_params):#{{{
@@ -4998,7 +4998,7 @@ def MultipleTopologyComparison_numTM(topoRecordList, g_params):#{{{
     posTMList = [myfunc.GetTMPosition(topo) for topo in topoSeqList]
     numTMList = [myfunc.CountTM(topo) for topo in topoSeqList]
 
-    Mcmp= [[0]*numSeq for x in xrange(numSeq)]
+    Mcmp= [[0]*numSeq for x in range(numSeq)]
     for i in range(numSeq): 
         Mcmp[i][i] = 1
     # All-to-all comparison
@@ -5044,8 +5044,8 @@ def MultipleTopologyComparison_alignment(topoRecordList, g_params):#{{{
 
     alignSeqLenList = [len(topo) for topo in topoSeqList ]
     if min(alignSeqLenList) != max(alignSeqLenList):
-        print >> sys.stderr, "Length of aligned topologies are not equal."
-        print >> sys.stderr, "You should probably run pairwise comparison."
+        print("Length of aligned topologies are not equal.", file=sys.stderr)
+        print("You should probably run pairwise comparison.", file=sys.stderr)
         return -1
 
     idList = [r[0] for r in topoRecordList ]
@@ -5057,8 +5057,8 @@ def MultipleTopologyComparison_alignment(topoRecordList, g_params):#{{{
 
     if g_params['method_getIDTgroup'] == 0:
         if not IsTrimmedMSA(topoSeqList):
-            print >> sys.stderr,("MSA are with gaps, when method_getIDTgroup" 
-                    + "= 0, they should be trimmed. Exit.")
+            print(("MSA are with gaps, when method_getIDTgroup" 
+                    + "= 0, they should be trimmed. Exit."), file=sys.stderr)
             return 1
         (consensusTopo, indexIDTTopo,  numTM_IDT, 
                 Mcmp) = GetIDTTopoGroup(idList,topoSeqList)
@@ -5076,17 +5076,17 @@ def MultipleTopologyComparison_alignment(topoRecordList, g_params):#{{{
 
     if numTMCons <= 0:
     #if numTMCons != numTM_IDT:
-        print >> sys.stderr, "Error! numTMCons (%d) <= 0. Exit." %numTMCons
-        print >> sys.stderr, "\"%s\""%consensusTopo
+        print("Error! numTMCons (%d) <= 0. Exit." %numTMCons, file=sys.stderr)
+        print("\"%s\""%consensusTopo, file=sys.stderr)
         return 1
 
     method_comparison = g_params['method_comparison']
     if method_comparison == 0:
         if not IsTrimmedMSA(topoSeqList):
-            print >> sys.stderr, ("method_comparison accept only trimmed "
+            print(("method_comparison accept only trimmed "
                     + "topology MSA, but topology MSA in file %s " %
                     g_params['inFile'] 
-                    + "are with gaps. Exit.")
+                    + "are with gaps. Exit."), file=sys.stderr)
             return 1
         (indexClass, infoDIFF) = CompareToConsensus(topoSeqList,
                 indexIDTTopo,consensusTopo, idList, numTM_IDT,
@@ -5119,10 +5119,10 @@ def MultipleTopologyComparison_alignment(topoRecordList, g_params):#{{{
     lengthAlignment=len(topoSeqList[0])
 
     if g_params['isPrintIndexIDTGroup']: 
-        print ("There are %d sequences in the IDTgroup, indeces are:" %
-                len(indexIDTTopo))
+        print(("There are %d sequences in the IDTgroup, indeces are:" %
+                len(indexIDTTopo)))
         for i in indexIDTTopo:
-            print i
+            print(i)
 
     if g_params['outIdenticalTopFile'] != "":
         WriteIdenticalTopMatrixFile(g_params['outIdenticalTopFile'], idList,
@@ -5300,7 +5300,7 @@ def main(g_params):#{{{
                 g_params['DEBUG_GROUPING'] = True
                 i += 1
             else:
-                print >> sys.stderr,"Error! Wrong argument:%s" % (argv[i])
+                print("Error! Wrong argument:%s" % (argv[i]), file=sys.stderr)
                 return 1
         else:
             g_params['inFile'] = argv[i]
@@ -5318,15 +5318,15 @@ def main(g_params):#{{{
 
 
     if g_params['inFile'] == "" or not os.path.exists(g_params['inFile']):
-        print >> sys.stderr, ("input file %s not set or does not exist. Exit %s."
-                % (g_params['inFile'], argv[0]))
+        print(("input file %s not set or does not exist. Exit %s."
+                % (g_params['inFile'], argv[0])), file=sys.stderr)
         return -1
 
     if g_params['isCompareSP'] == True and g_params['signalpfile'] == "":
-        print >> sys.stderr, "signalpfile not set while -cmpsp is enabled. Exit."
+        print("signalpfile not set while -cmpsp is enabled. Exit.", file=sys.stderr)
         return 1
     if g_params['isCompareDup'] == True and g_params['dupfile'] == "":
-        print >> sys.stderr, "dupfile not set while -cmpdup is enabled. Exit."
+        print("dupfile not set while -cmpdup is enabled. Exit.", file=sys.stderr)
         return 1
 
     rootname = os.path.basename(os.path.splitext(g_params['inFile'])[0])
@@ -5364,13 +5364,13 @@ def main(g_params):#{{{
 
     if (g_params['pairwise_comparison_method'] == 3 
             and g_params['signalpDict'] == {}):
-        print >> sys.stderr, "signalp is not set while mp is 3. Exit."
+        print("signalp is not set while mp is 3. Exit.", file=sys.stderr)
         return 1
 
 
     if g_params['isRemoveSignalP'] and g_params['signalpDict'] == {}:
         msg = "RMSP is enabled, but the signalp definition is empty. Exit."
-        print >> sys.stderr, msg
+        print(msg, file=sys.stderr)
         return 1
 
     if g_params['outpath'] != "":
@@ -5378,8 +5378,8 @@ def main(g_params):#{{{
             cmd = ["mkdir", "-p", g_params['outpath']]
             try:
                 subprocess.check_call(cmd)
-            except subprocess.CalledProcessError, e:
-                print e
+            except subprocess.CalledProcessError as e:
+                print(e)
                 g_params['outpath'] = ""
 
 # read in the topology msa file (can be with dg scores)
@@ -5391,7 +5391,7 @@ def main(g_params):#{{{
                     seqListLocal) = myfunc.ReadFasta(g_params['localalnfile'])
             nump = len(idListLocal)/2
             if nump > 0:
-                for ii in xrange(nump):
+                for ii in range(nump):
                     id1 = idListLocal[2*ii]
                     id2 = idListLocal[2*ii+1]
                     unaligned_str = GetUnAlignedString(seqListLocal[2*ii],
@@ -5401,10 +5401,10 @@ def main(g_params):#{{{
                                 [seqListLocal[2*ii], seqListLocal[2*ii+1], unaligned_str]
 
         try:
-            fpin = open (g_params['inFile'], "rb")
+            fpin = open (g_params['inFile'], "r")
         except IOError:
             msg =  "Failed to open input file %s. Exit."
-            print >> sys.stderr,  msg%(g_params['inFile'])
+            print(msg%(g_params['inFile']), file=sys.stderr)
             return -1
         unprocessedBuffer=""
         topoRecordList=[]
@@ -5432,7 +5432,7 @@ def main(g_params):#{{{
         topoFileSize = os.path.getsize(g_params['inFile'])
         if topoFileSize > g_params['MAX_ALIGN_FILE_SIZE']:
             msg =  "Size of MSA is over the limit (%d). Exit."
-            print >> sys.stderr, msg%(g_params['MAX_ALIGN_FILE_SIZE'])
+            print(msg%(g_params['MAX_ALIGN_FILE_SIZE']), file=sys.stderr)
             return -1
 
         topoRecordList = ReadTopoWithDGScore(g_params['inFile'])
@@ -5448,12 +5448,12 @@ def main(g_params):#{{{
         numSeq = len(topoRecordList)
         if numSeq < 2:
             msg = "Too few sequences (%d). No comparison can be made. Exit."
-            print >> sys.stderr, msg%(numSeq)
+            print(msg%(numSeq), file=sys.stderr)
             return -1
         return MultipleTopologyComparison(topoRecordList, g_params) #debug
     else:
         msg = "mode %d has not been implemented yet. Exit %s."
-        print >> sys.stderr, msg%(g_params['mode_comparison'], argv[0])
+        print(msg%(g_params['mode_comparison'], argv[0]), file=sys.stderr)
         return -1
 
     myfunc.myclose(g_params['fpout'])

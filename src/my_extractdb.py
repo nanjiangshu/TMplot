@@ -4,7 +4,7 @@ import os
 import sys
 import myfunc
 from array import array
-from mydb_common import *
+from .mydb_common import *
 #import numpy as np
 #import cProfile
 
@@ -70,7 +70,7 @@ Examples:
 """%(progname, wspace, wspace, wspace, wspace)
 
 def PrintHelp():
-    print usage
+    print(usage)
 
 def ReadNumRecord_binary(indexfile):#{{{
 # return numRecord
@@ -90,7 +90,7 @@ def ReadNumRecord_binary(indexfile):#{{{
         return numRecord;
     except IOError:
         msg = "{}: Failed to read indexfile {}"
-        print >> sys.stderr, msg.format(sys.argv[0],indexfile);
+        print(msg.format(sys.argv[0],indexfile), file=sys.stderr);
         raise;
 #}}}
 def ReadRecordNumber(indexfile):#{{{
@@ -156,13 +156,13 @@ def ExtractDBForEachIDWithIndexDict(idList, origext, origprefix, #{{{
             if isSplit or isSplitAll:
                 fpout.close()
                 if not isQuiet:
-                    print >> sys.stdout, "%s output"%(outfile);
+                    print("%s output"%(outfile), file=sys.stdout);
         except (KeyError, IndexError):
             msg = "{}: ID {} not found in the index file {}"
-            print >> sys.stderr, msg.format(sys.argv[0], idd, indexfile );
+            print(msg.format(sys.argv[0], idd, indexfile ), file=sys.stderr);
         except IOError:
             msg = "{}: Failed to read or write record {}"
-            print >> sys.stderr, msg.format(sys.argv[0], idd);
+            print(msg.format(sys.argv[0], idd), file=sys.stderr);
 #}}}
 def ExtractDBForEachIDWithIndexList(idList, origext, origprefix, #{{{
         indexList, fpdbList, indexfile, fpout):
@@ -194,13 +194,13 @@ def ExtractDBForEachIDWithIndexList(idList, origext, origprefix, #{{{
             if isSplit or isSplitAll:
                 fpout.close()
                 if not isQuiet:
-                    print >> sys.stdout, "%s output"%(outfile);
+                    print("%s output"%(outfile), file=sys.stdout);
         except ValueError:
             msg = "{}: ID {} not found in the index file {}"
-            print >> sys.stderr, msg.format(sys.argv[0], idd, indexfile );
+            print(msg.format(sys.argv[0], idd, indexfile ), file=sys.stderr);
         except IOError:
             msg = "{}: Failed to read or write record {}"
-            print >> sys.stderr, msg.format(sys.argv[0], idd);
+            print(msg.format(sys.argv[0], idd), file=sys.stderr);
 #}}}
 def ExtractDB(idList, g_params, fpout):#{{{
     dbname = g_params['dbname'];
@@ -209,7 +209,7 @@ def ExtractDB(idList, g_params, fpout):#{{{
     g_params['formatindex'] = formatindex
     if indexfile == "":
         msg = "{}: can not find indexfile for database {}. Exit" 
-        print >> sys.stderr, msg.format(sys.argv[0],dbname);
+        print(msg.format(sys.argv[0],dbname), file=sys.stderr);
         return 1;
 
     (indexList, headerinfo, dbfileindexList) = ReadIndex(indexfile)
@@ -217,7 +217,7 @@ def ExtractDB(idList, g_params, fpout):#{{{
     numRecord = len(indexList[0])
     if numRecord <= 0:
         msg = "{}: Read index file {} failed. Exit."
-        print >> sys.stderr, msg.format(sys.argv[0],indexfile);
+        print(msg.format(sys.argv[0],indexfile), file=sys.stderr);
         return 1;
     if g_params['isSplitAll']:
         idList = indexList[0]
@@ -229,7 +229,7 @@ def ExtractDB(idList, g_params, fpout):#{{{
             fpdbList.append(open(dbfile,"rb"));
         except IOError:
             msg = "{}: Failed to read dbfile {}"
-            print >> sys.stderr, msg.format(sys.argv[0],dbfile);
+            print(msg.format(sys.argv[0],dbfile), file=sys.stderr);
             raise
 
     if g_params['typeindex'] == TYPE_LIST:
@@ -238,7 +238,7 @@ def ExtractDB(idList, g_params, fpout):#{{{
     else:
         indexDict = {}
         #t = np.arange(0, numRecord, 1, dtype=np.int32)
-        for i in xrange(numRecord):
+        for i in range(numRecord):
             indexDict[indexList[0][i]] = i
         ExtractDBForEachIDWithIndexDict(idList, origext, origprefix, indexList,
                 indexDict, fpdbList, indexfile, fpout);
@@ -313,28 +313,28 @@ def main(g_params):#{{{
                 g_params['isQuiet']=True;
                 i += 1;
             else:
-                print >> sys.stderr, "Error! Wrong argument:", sys.argv[i];
+                print("Error! Wrong argument:", sys.argv[i], file=sys.stderr);
                 return 1;
         else:
             idList.append(sys.argv[i])
             i += 1
 
     if g_params['dbname']=="":
-        print >> sys.stderr, "dbname is not set. Exit.";
+        print("dbname is not set. Exit.", file=sys.stderr);
         return 1;
     elif g_params['isShowNumRecord'] == True:
         (indexfile, g_params['formatindex']) = GetIndexFile(g_params['dbname'],
                 g_params['formatindex']);
         if indexfile == "":
             msg = "{}: can not find indexfile for database {}. Exit"
-            print >> sys.stderr, msg.format(sys.argv[0],g_params['dbname'])
+            print(msg.format(sys.argv[0],g_params['dbname']), file=sys.stderr)
             return 1
         else:
             numRecord = ReadRecordNumber(indexfile);
             if numRecord < 0:
                 return 1;
             else :
-                print numRecord;
+                print(numRecord);
                 return 0;
     else:
         if idListFile != "":
@@ -343,9 +343,9 @@ def main(g_params):#{{{
                 idList+=fp.read().split();
                 fp.close();
             except IOError:
-                print >> sys.stderr, "Failed to read idlistfile %s."%(idListFile)
+                print("Failed to read idlistfile %s."%(idListFile), file=sys.stderr)
         if (not g_params['isSplitAll']) and len(idList) <= 0:
-            print >> sys.stderr,"no ID has been set, Exit." ;
+            print("no ID has been set, Exit.", file=sys.stderr) ;
             return 1;
         if g_params['isSplit'] or g_params['isSplitAll']:
             os.system("mkdir -p %s"%(g_params['outpath']));
@@ -360,7 +360,7 @@ def main(g_params):#{{{
             g_params['typeindex']=TYPE_LIST;
 
         if ExtractDB(idList, g_params, fpout) != 0:
-            print >> sys.stderr, "ExtractDB failed.";
+            print("ExtractDB failed.", file=sys.stderr);
         myfunc.myclose(fpout)
         return 0
 #}}}

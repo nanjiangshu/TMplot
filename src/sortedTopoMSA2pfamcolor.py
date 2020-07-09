@@ -42,7 +42,7 @@ colorpalette = [
 
 #print colorpalette
 def PrintHelp():
-    print usage
+    print(usage)
 def WritePfamColorDef(idList, seqid2pfamidDict, fpout):
     pfamidList = []
     for idd in idList:
@@ -55,12 +55,12 @@ def WritePfamColorDef(idList, seqid2pfamidDict, fpout):
     numColor = len(colorpalette)
     numfam = len(pfamidList)
     colorDict = {}
-    for i in xrange(numfam):
+    for i in range(numfam):
         if i < numColor:
             colorDict[pfamidList[i]] = colorpalette[i]
-            print colorpalette[i], pfamidList[i]
+            print(colorpalette[i], pfamidList[i])
         else:
-            print black, pfamidList[i]
+            print(black, pfamidList[i])
 
 #    print "len(colorDict)", len(colorDict)
 #    print "len(idList)", len(idList)
@@ -115,25 +115,25 @@ def main(g_params):#{{{
                 g_params['isQuiet'] = True
                 i += 1
             else:
-                print >> sys.stderr, "Error! Wrong argument:", argv[i]
+                print("Error! Wrong argument:", argv[i], file=sys.stderr)
                 return 1
         else:
             infile = argv[i]
             i += 1
     if infile == "" or not os.path.exists(infile):
-        print >> sys.stderr, "Error. Infile not set. exit"
+        print("Error. Infile not set. exit", file=sys.stderr)
         return 1
     if seqid2pfamidFile == "" or not os.path.exists(seqid2pfamidFile):
-        print >> sys.stderr, "Error. seqid2pfamidFile does not exist. exit"
+        print("Error. seqid2pfamidFile does not exist. exit", file=sys.stderr)
         return 1
     seqid2pfamidDict = myfunc.ReadFam2SeqidMap(seqid2pfamidFile)
     if seqid2pfamidFile == {}:
-        print >> sys.stderr, "Read seqid2pfamidFile failed."
+        print("Read seqid2pfamidFile failed.", file=sys.stderr)
         return 1
 
     (idList, topoList) = myfunc.ReadFasta_without_annotation(infile)
     if len(idList) < 1:
-        print >> sys.stderr, "Read infile failed."
+        print("Read infile failed.", file=sys.stderr)
         return 1
 
 

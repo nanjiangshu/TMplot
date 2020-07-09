@@ -12,14 +12,14 @@ GAP = '-'
 
 # read in taxonomy def
 if not os.path.exists(infile):
-    print >> sys.stderr, "Error! file infile (%s) does not exist." %infile;
+    print("Error! file infile (%s) does not exist." %infile, file=sys.stderr);
     sys.exit(1)
 
 (idList, seqList) = myfunc.ReadFasta_without_annotation(infile)
 
 # write out taxdef
 numSeq = len(idList)
-for i in xrange(numSeq):
+for i in range(numSeq):
     gid = idList[i]
     if gid != 'Consensus':
         color = red

@@ -18,7 +18,7 @@ Created 2010-08-20, updated 2012-06-07, Nanjiang
 """
 
 def PrintHelp():
-    print usage
+    print(usage)
 
 def GetFastaID(infile, fpout):#{{{
     fpin = open(infile, "r")
@@ -27,7 +27,7 @@ def GetFastaID(infile, fpout):#{{{
         line = line.rstrip('\n').strip()
         if line and line[0] == ">":
             idd = myfunc.GetSeqIDFromAnnotation(line)
-            print >> fpout, idd
+            print(idd, file=fpout)
         line = fpin.readline()
     fpin.close()
     return 0
@@ -49,7 +49,7 @@ def GetFastaID2(infile, fpout):#{{{
                     line = line.lstrip(">").rstrip("\n")
                     idd=myfunc.GetSeqIDFromAnnotation(line)
                     if not isPrintAnnoLine:
-                        print >> fpout, idd
+                        print(idd, file=fpout)
                     else:
                         fpout.write("%s\t%s\n"%(idd, line))
                     brokenAnnoLine = ""
@@ -66,7 +66,7 @@ def GetFastaID2(infile, fpout):#{{{
                     line = line.lstrip(">").rstrip("\n")
                     idd=myfunc.GetSeqIDFromAnnotation(line)
                     if not isPrintAnnoLine:
-                        print >> fpout, idd
+                        print(idd, file=fpout)
                     else:
                         fpout.write("%s\t%s\n"%(idd, line))
                     beg=end
@@ -116,17 +116,17 @@ def main(g_params):#{{{
             elif sys.argv[i] == "-m" or sys.argv[i] == "--method" or sys.argv[i] == "-method":
                 method=int(sys.argv[i+1])
                 if method < 1 or method > 2:
-                    print >> sys.stderr,"Error! method should be 1 or 2"
+                    print("Error! method should be 1 or 2", file=sys.stderr)
                     return 1
                 i = i + 2
             elif sys.argv[i] == "-bs" or sys.argv[i] == "--block-size" or sys.argv[i] == "-block-size":
                 BLOCK_SIZE=int(sys.argv[i+1])
                 if BLOCK_SIZE < 0:
-                    print >> sys.stderr,"Error! BLOCK_SIZE should >0"
+                    print("Error! BLOCK_SIZE should >0", file=sys.stderr)
                     return 1
                 i = i + 2
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % sys.argv[i])
+                print(("Error! Wrong argument:%s" % sys.argv[i]), file=sys.stderr)
                 return 1
         else:
             infile = sys.argv[i]
@@ -134,10 +134,10 @@ def main(g_params):#{{{
            
 
     if infile == "":
-        print >> sys.stderr,"Error! Input file not set."
+        print("Error! Input file not set.", file=sys.stderr)
         return 1
     elif not os.path.exists(infile):
-        print >> sys.stderr,"Error! input file %s does not exist." %(infile)
+        print("Error! input file %s does not exist." %(infile), file=sys.stderr)
         return 1
 
 

@@ -25,7 +25,7 @@ Examples:
 BLOCK_SIZE=100000
 
 def PrintHelp():
-    print usage
+    print(usage)
 
 def ReadMapFile(infile):#{{{
     mapDict = {}
@@ -81,14 +81,14 @@ def main(g_params):#{{{
                 mapfile =sys.argv[i+1]
                 i = i + 2
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % sys.argv[i])
+                print(("Error! Wrong argument:%s" % sys.argv[i]), file=sys.stderr)
                 return 1
         else:
             infile = sys.argv[i]
             i+=1
 
     if infile == "":
-        print >> sys.stderr,"Error! Topology file not set."
+        print("Error! Topology file not set.", file=sys.stderr)
         return 1
 
 
@@ -101,7 +101,7 @@ def main(g_params):#{{{
     fpout = myfunc.myopen(outfile, sys.stdout, "w", False)
 
     try: 
-        fpin = open (infile, "rb")
+        fpin = open (infile, "r")
         unprocessedBuffer=""
         isEOFreached = False
         processedTopoIDSet = set([])
@@ -125,14 +125,14 @@ def main(g_params):#{{{
                             fpout.write(">%s %s\n"%(renamedID, rd[1]))
                         except KeyError:
                             msg = "ID %s not found in mapDict"
-                            print >> sys.stderr, msg%(rd[0])
+                            print(msg%(rd[0]), file=sys.stderr)
                             fpout.write(">%s\n"%(rd[1]))
                     fpout.write("%s\n"%(rd[2]))
             if isEOFreached == True:
                 break
         fpin.close()
     except IOError:
-        print >> sys.stderr, "Failed to read input file %s"%(infile)
+        print("Failed to read input file %s"%(infile), file=sys.stderr)
         return 1
 
     myfunc.myclose(fpout)

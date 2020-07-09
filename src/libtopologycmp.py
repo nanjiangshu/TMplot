@@ -42,22 +42,22 @@ def RemoveUnnecessaryGap_old(seqList): #{{{
 
     lengthList = [len(seq) for seq in seqList]
     if max(lengthList) != min(lengthList):
-        print >> sys.stderr, "Error! seqList with un-equal length."
+        print("Error! seqList with un-equal length.", file=sys.stderr)
         return seqList
     lengthAlignment = lengthList[0]
     cnt_GAP = [0]*lengthAlignment
 
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seq = seqList[i]
-        for j in xrange(lengthAlignment):
+        for j in range(lengthAlignment):
             if seq[j] == GAP:
                 cnt_GAP[j] += 1
 
     newSeqList = []
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seq = seqList[i]
         newseqli = []
-        for j in xrange(lengthAlignment):
+        for j in range(lengthAlignment):
             if cnt_GAP[j] < numSeq:
                 newseqli.append(seq[j])
         newseq = "".join(newseqli)
@@ -75,14 +75,14 @@ def RemoveUnnecessaryGap(seqList): #{{{
 
     lengthList = [len(seq) for seq in seqList]
     if max(lengthList) != min(lengthList):
-        print >> sys.stderr, "Error! seqList with un-equal length."
+        print("Error! seqList with un-equal length.", file=sys.stderr)
         return seqList
     lengthAlignment = lengthList[0]
 
     #cnt_GAP = [0]*lengthAlignment
     allGapPosSet = set(range(lengthAlignment))
 
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seq = seqList[i]
         nonGapPosList = []
         for j in allGapPosSet:
@@ -91,7 +91,7 @@ def RemoveUnnecessaryGap(seqList): #{{{
         allGapPosSet = allGapPosSet - set(nonGapPosList)
 
     isAllGapList = []
-    for j in xrange(lengthAlignment):
+    for j in range(lengthAlignment):
         if j in allGapPosSet:
             isAllGapList.append(True)
         else:
@@ -110,7 +110,7 @@ def RemoveUnnecessaryGap(seqList): #{{{
             j += 1
 
     newSeqList = []
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seq = seqList[i]
         slist = [seq[p[0]:p[1]] for p in trimmedSeqPosList]
         trimmedseq = "".join(slist)
@@ -198,10 +198,10 @@ def Get_IOState_downstream(topo, end_TM):#{{{
 def WriteUnmappedRecord(record, prefix, text, fpout):#{{{
     fpout.write("%-12s : %2d "%("%s%s"%(prefix, text), record["numTMunmapped"]))
     fpout.write(" | index ")
-    for j in xrange(record["numTMunmapped"]):
+    for j in range(record["numTMunmapped"]):
         fpout.write(" %2d " %(record["index"][j]))
     fpout.write(" | gap ")
-    for j in xrange(record["numTMunmapped"]):
+    for j in range(record["numTMunmapped"]):
         fpout.write(" %6.3f " %(record["gapFraction"][j]))
     fpout.write(" | DG ")
     for j in range(record["numTMunmapped"]):
@@ -281,9 +281,9 @@ def WriteOverallInfo_pairwise(id1, id2, seqIdentity, class_global, numTM1, #{{{
                 else:
                     fpout.write("ONE_PDB")
                 if numPDBID1 > 0:
-                    fpout.write(" Num_PDB_1=%d 1st=%s"%(numPDBID1, dt1.keys()[0]))
+                    fpout.write(" Num_PDB_1=%d 1st=%s"%(numPDBID1, list(dt1.keys())[0]))
                 if numPDBID2 > 0:
-                    fpout.write(" Num_PDB_2=%d 1st=%s"%(numPDBID2, dt2.keys()[0]))
+                    fpout.write(" Num_PDB_2=%d 1st=%s"%(numPDBID2, list(dt2.keys())[0]))
 
         fpout.write("\n")
 #}}}
@@ -330,27 +330,27 @@ def WritePairCmpRecord(recordList,cntTotalOutputRecord, fpout):#{{{
     if recordList == None or recordList == []:
         return (1, cntTotalOutputRecord)
     numRecord = len(recordList)
-    for i in xrange(numRecord):
+    for i in range(numRecord):
         record=recordList[i]
         if record == {}:
             continue
-        print >> fpout, "//Begin record", cntTotalOutputRecord+1
+        print("//Begin record", cntTotalOutputRecord+1, file=fpout)
         if 'general_info_line' in record and record['general_info_line'] != "":
-            print >> fpout, record['general_info_line']
+            print(record['general_info_line'], file=fpout)
         else:
             WriteOverallInfo_pairwise(record['id1'], record['id2'],
                     record['seqidt1'], record['cmpclass'], record['numTM1'],
                     record['numTM2'], record['seqLength1'],
                     record['seqLength2'], fpout)
-        print >> fpout, record['mapTMline'][0]
-        print >> fpout, record['mapTMline'][1]
+        print(record['mapTMline'][0], file=fpout)
+        print(record['mapTMline'][1], file=fpout)
         if  record['ana1'] != {}:
             #print record['ana1']
             WriteAna(record['ana1'],fpout, "1") 
         if  record['ana2'] != {}:
             #print record['ana2']
             WriteAna(record['ana2'],fpout, "2") 
-        print >> fpout, "//End record", cntTotalOutputRecord+1
+        print("//End record", cntTotalOutputRecord+1, file=fpout)
         cntTotalOutputRecord += 1
     return (0, cntTotalOutputRecord)
 #}}}
@@ -411,7 +411,7 @@ def ReadDupPairDict(infile):#{{{
                         dt[key]['isDup'] = 'y'
                         li = []
                         strs1 = line.split('|')
-                        for j in xrange(1, len(strs1)):
+                        for j in range(1, len(strs1)):
                             hit = ParseDupHit(strs1[j].strip()) # hit is a list of 
                                                                 # two segments
                                                                 # from query
@@ -442,7 +442,7 @@ def ReadPfamDefFile(infile):#{{{
 
                 clanid = strs[1]
                 clanDefShort = strs[2]
-                if clanid != "\N":
+                if clanid != r"\N":
                     dtClan[clanid] = clanDefShort
                 else:
                     dtClan[pfamid] = pfamDefShort
@@ -481,20 +481,20 @@ def GetSeqIDT(record, seqidttype):#{{{
         if 'seqidt' in record:
             seqidt = record['seqidt']
         else:
-            print >> sys.stderr, "%s %s, no seqidt info" % (
-                    record['id1'], record['id2'])
+            print("%s %s, no seqidt info" % (
+                    record['id1'], record['id2']), file=sys.stderr)
     elif seqidttype == 1:
         if 'seqidt1' in record:
             seqidt = record['seqidt1']
         else:
-            print >> sys.stderr, "%s %s, no seqidt1 info" % (
-                    record['id1'], record['id2'])
+            print("%s %s, no seqidt1 info" % (
+                    record['id1'], record['id2']), file=sys.stderr)
     elif seqidttype == 2:
         if 'seqidt2' in record:
             seqidt = record['seqidt2']
         else:
-            print >> sys.stderr, "%s %s, no seqidt2 info" % (
-                    record['id1'], record['id2'])
+            print("%s %s, no seqidt2 info" % (
+                    record['id1'], record['id2']), file=sys.stderr)
     return seqidt
 #}}}
 
@@ -569,7 +569,7 @@ def IsIdenticalTopology(Nterm1, Nterm2, numTM1, numTM2, posTM1, posTM2, #{{{
                     return False
                 else:
                     cntCommonM = 0
-                    for j in xrange(common_b, common_e):
+                    for j in range(common_b, common_e):
                         if topo1[j] == 'M' and topo2[j] == 'M':
                             cntCommonM += 1
                         if cntCommonM >= min_TM_overlap:
@@ -611,7 +611,7 @@ def IsIdenticalTopology_simple( topo1, topo2, min_TM_overlap = 5):#{{{
                     return False
                 else:
                     cntCommonM = 0
-                    for j in xrange(common_b, common_e):
+                    for j in range(common_b, common_e):
                         if topo1[j] == 'M' and topo2[j] == 'M':
                             cntCommonM += 1
                         if cntCommonM >= min_TM_overlap:
@@ -643,7 +643,7 @@ def IsInvertedTopology(Nterm1, Nterm2, numTM1, numTM2, posTM1, posTM2, #{{{
                 return False
             else:
                 cntCommonM = 0
-                for j in xrange(common_b, common_e):
+                for j in range(common_b, common_e):
                     if topo1[j] == 'M' and topo2[j] == 'M':
                         cntCommonM += 1
                     if cntCommonM >= min_TM_overlap:
@@ -675,7 +675,7 @@ def MatchTopology(targetTopo, topoList, min_TM_overlap = 5, seqid = ""):#{{{
     NtermStateTarget = GetNtermState(targetTopo)
     posTMtarget = myfunc.GetTMPosition(targetTopo)
     numTMtarget = len(posTMtarget)
-    for i in xrange(numList):
+    for i in range(numList):
         if topoList[i] == "":
             matchList.append(-1)
         else:
@@ -701,7 +701,7 @@ def GetSeq2AlignMap(seq, alignedseq):#{{{
     """
     mp = {}
     j = 0
-    for i in xrange(len(alignedseq)):
+    for i in range(len(alignedseq)):
         if alignedseq[i] != GAP:
             mp[j] = i
             j += 1
@@ -715,7 +715,7 @@ def GetAlign2SeqMap(alignedseq, seq):#{{{
     """
     mp = {}
     j = 0
-    for i in xrange(len(alignedseq)):
+    for i in range(len(alignedseq)):
         if alignedseq[i] != GAP:
             mp[i] = j
             j += 1
@@ -730,14 +730,14 @@ def MatchToAlignedSeq(unalignedseq, alignedseq, seqID): #{{{
     return alignedseq at failure"""
     newseq = ""
     j = 0
-    for i in xrange(len(alignedseq)):
+    for i in range(len(alignedseq)):
         if alignedseq[i] != GAP:
             newseq += unalignedseq[j]
             j += 1
         else:
             newseq += GAP
     if len(newseq) != len(alignedseq):
-        print >> sys.stderr, "failed to match sequence for ID %s" %seqID
+        print("failed to match sequence for ID %s" %seqID, file=sys.stderr)
         return alignedseq
     else:
         return newseq
@@ -757,7 +757,7 @@ def GetAlignmentFactorFromPairAlignment(seq1,seq2, isLocalAlignment):#{{{
         cntLocalLen1 = 0
         cntLocalLen2 = 0
         cntLocalUnAligned = 0
-        for i in xrange(alnLength):
+        for i in range(alnLength):
             if ((seq1[i].isalpha() and seq1[i].islower()) or (seq2[i].isalpha()
                 and seq2[i].islower())):
                 cntLocalUnAligned += 1
@@ -789,7 +789,7 @@ def GetAlignmentFactorFromPairAlignment(seq1,seq2, isLocalAlignment):#{{{
         len2 = len(seq2.replace("-", ""))
         cntIDT = 0
         cntGap = 0
-        for i in xrange(alnLength):
+        for i in range(alnLength):
             if seq1[i] == seq2[i]:
                 cntIDT += 1
             elif seq1[i] == "-" or seq2[i] == "-":
@@ -814,7 +814,7 @@ def ExtractFromPairCmpRecordContent(recordContent):#{{{
     record = {}
     lines = recordContent.split('\n')
     if len(lines) <= 1: # record is empty
-        print >> sys.stderr, "record is empty\n", recordContent
+        print("record is empty\n", recordContent, file=sys.stderr)
         return {}
 
     record['mapTMline']=[]
@@ -937,7 +937,7 @@ def ScanfOverallInfo_pairwise(line, cmpRecord):#{{{
         cmpRecord['seqLength2'] = int(strs[8])
         return 0
     except (IndexError, ValueError):
-        print >> sys.stderr, "Bad paircmp line, \"%s\""%(line)
+        print("Bad paircmp line, \"%s\""%(line), file=sys.stderr)
         return 1
 #}}}
 
@@ -997,12 +997,12 @@ def SelectAnaDIFF(ana, parameters):#{{{
     if 'minGapFraction' in parameters:
         gapFracThreshold  = parameters['minGapFraction']
     else:
-        print >> sys.stderr, "minGapFraction not set in parameters, set to 0.0"
+        print("minGapFraction not set in parameters, set to 0.0", file=sys.stderr)
         gapFracThreshold = 0.0
     if 'maxDGvalue' in parameters:
         DGvalueThreshold = parameters['maxDGvalue']
     else:
-        print >> sys.stderr, "DGvalueThreshold not set in parameters, set to 10.0"
+        print("DGvalueThreshold not set in parameters, set to 10.0", file=sys.stderr)
         DGvalueThreshold = 10.0
     selecttype = 'all'
     if 'selecttype' in parameters:
@@ -1059,9 +1059,9 @@ def GetTopoStateFraction(topoSeqList):#{{{
     cnt_o = [0]*lengthAlignment
     cnt_M = [0]*lengthAlignment
     cnt_GAP = [0]*lengthAlignment
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         topo = topoSeqList[i]
-        for j in xrange(lengthAlignment):
+        for j in range(lengthAlignment):
             s = topo[j]
             if s == GAP:
                 cnt_GAP[j] += 1
@@ -1077,7 +1077,7 @@ def GetTopoStateFraction(topoSeqList):#{{{
     per_M = [0.0]*lengthAlignment
     per_i = [0.0]*lengthAlignment
     numSeq_float = float(numSeq)
-    for j in xrange(lengthAlignment):
+    for j in range(lengthAlignment):
         per_o[j] = cnt_o[j]/(numSeq_float)
         per_M[j] = cnt_M[j]/(numSeq_float)
         per_i[j] = cnt_i[j]/(numSeq_float)
@@ -1094,9 +1094,9 @@ def GetTopoStateFraction_withSP(topoSeqList):#{{{
     cnt_M = [0]*lengthAlignment
     cnt_SP = [0]*lengthAlignment
     cnt_GAP = [0]*lengthAlignment
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         topo = topoSeqList[i]
-        for j in xrange(lengthAlignment):
+        for j in range(lengthAlignment):
             s = topo[j]
             if s == GAP:
                 cnt_GAP[j] += 1
@@ -1115,7 +1115,7 @@ def GetTopoStateFraction_withSP(topoSeqList):#{{{
     per_SP = [0.0]*lengthAlignment
     per_i = [0.0]*lengthAlignment
     numSeq_float = float(numSeq)
-    for j in xrange(lengthAlignment):
+    for j in range(lengthAlignment):
         per_o[j] = cnt_o[j]/(numSeq_float)
         per_M[j] = cnt_M[j]/(numSeq_float)
         per_SP[j] = cnt_SP[j]/(numSeq_float)
@@ -1146,7 +1146,7 @@ def GetTMType(topo):#{{{
                 e=topo[:e-1].rfind('M')+1
 #           print (b,e)
             if b == e:
-                print "Error topo[b-10:e+10]=", topo[b-30:e+30]
+                print("Error topo[b-10:e+10]=", topo[b-30:e+30])
                 #sys.exit(1)
                 return []
             posTM.append((b,e))
@@ -1245,7 +1245,7 @@ def GetLoopBeginEnd(iRes, posTM, lengthAlignment):# {{{
             for i in range(len(posTM)-1):
                 if iRes >= posTM[i][1] and iRes < posTM[i+1][0]:
                     return (posTM[i][1], posTM[i+1][0])
-    print("FATAL error. Unable to find boundary for iRes = %d. lengthAlignment =%d, posTM = %s"%(iRes, lengthAlignment, str(posTM)))
+    print(("FATAL error. Unable to find boundary for iRes = %d. lengthAlignment =%d, posTM = %s"%(iRes, lengthAlignment, str(posTM))))
     sys.exit(1)
 # }}}
 
@@ -1253,7 +1253,7 @@ def ReadDGScore(infile):#{{{
     hdl = myfunc.ReadLineByBlock(infile)
     if hdl.failure:
         msg = "Failed to read file %s in function %s"
-        print >> sys.stderr, msg%(infile, sys._getframe().f_code.co_name)
+        print(msg%(infile, sys._getframe().f_code.co_name), file=sys.stderr)
         return {}
     dgScoreDict = {}
     lines = hdl.readlines()
@@ -1282,7 +1282,7 @@ def ReadRLTYInfo(infile):#{{{
     hdl = myfunc.ReadLineByBlock(infile)
     if hdl.failure:
         msg = "Failed to read file %s in function %s"
-        print >> sys.stderr, msg%(infile, sys._getframe().f_code.co_name)
+        print(msg%(infile, sys._getframe().f_code.co_name), file=sys.stderr)
         return {}
     rltyDict = {}
     lines = hdl.readlines()
@@ -1305,7 +1305,7 @@ def ReadPairAlnTableInfo(infile):#{{{
     hdl = myfunc.ReadLineByBlock(infile)
     if hdl.failure:
         msg = "Failed to read file %s in function %s"
-        print >> sys.stderr, msg%(infile, sys._getframe().f_code.co_name)
+        print(msg%(infile, sys._getframe().f_code.co_name), file=sys.stderr)
         return {}
     pairalnStat = {}
     lines = hdl.readlines()

@@ -13,7 +13,7 @@ GAP = '-'
 
 # read in taxonomy def
 if not os.path.exists(infile):
-    print >> sys.stderr, "Error! file infile (%s) does not exist." %infile;
+    print("Error! file infile (%s) does not exist." %infile, file=sys.stderr);
     sys.exit(1)
 
 
@@ -59,7 +59,7 @@ WIDTH\t1000
 #always show internal values; if set, values associated to internal nodes will be displayed even if these nodes are not collapsed. It could cause overlapping in the dataset display.
 #SHOW_INTERNAL\t0
 
-#bar height factor; Default bar height will be slightly less than the available space between leaves, but you can set a multiplication factor here to increase/decrease it (values from 0 to 1 will decrease it, values above 1 will increase it)
+#bar height factor; Default bar height will be slightly less than the available space between leaves, but you can set a multiplication factor here to increase/decrease it (values to 1 will decrease it, values above 1 will increase it)
 #HEIGHT_FACTOR\t1
 
 #Bars are aligned to the node lines by default. Using BAR_SHIFT, you can move them all up/down by a fixed amount
@@ -84,7 +84,7 @@ DATA
 fpout.write(dataset_settings)
 
 
-for i in xrange(numSeq):
+for i in range(numSeq):
     gid = idList[i]
     if gid != 'Consensus':
         n_i = 0

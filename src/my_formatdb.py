@@ -35,7 +35,7 @@
 import os
 import sys
 from array import array
-from mydb_common import *
+from .mydb_common import *
 import myfunc
 
 progname =  os.path.basename(sys.argv[0])
@@ -77,7 +77,7 @@ MODE_NEW=0
 MODE_APPEND=1
 
 def PrintHelp():
-    print usage
+    print(usage)
 def WriteDBForEachID(idd, origIdListSet, datapath, dataext, dataprefix, #{{{
         cntdbfile, size_dbfile, dbname, fpdb, indexList):
     isQuiet = g_params['isQuiet']
@@ -85,15 +85,15 @@ def WriteDBForEachID(idd, origIdListSet, datapath, dataext, dataprefix, #{{{
     dbfile = dbname+"%d.db"%(cntdbfile)
     if idd in origIdListSet:
         msg = "ID {} already exists in the database. Ignore."
-        print >> sys.stderr, msg.format(idd)
+        print(msg.format(idd), file=sys.stderr)
     elif not os.path.exists(datafile):
-        print >> sys.stderr,"datafile %s does not exist. Ignore." % (datafile)
+        print("datafile %s does not exist. Ignore." % (datafile), file=sys.stderr)
     else:
         try:
             if fpdb == None:
                 fpdb=open(dbfile, "wb")
                 if not isQuiet:
-                    print "dbfile %s is created."%dbfile
+                    print("dbfile %s is created."%dbfile)
             fpin=open(datafile,"rb")
             data=fpin.read()
             fpin.close()
@@ -106,7 +106,7 @@ def WriteDBForEachID(idd, origIdListSet, datapath, dataext, dataprefix, #{{{
             indexList[3].append(sizeblock)
 #            indexList.append((idd,cntdbfile, offset, sizeblock))
 
-            print >> fpdb, data
+            print(data, file=fpdb)
             size_dbfile += sizeblock
             if size_dbfile >= MAXDBFILESIZE:
                 fpdb.close()
@@ -115,7 +115,7 @@ def WriteDBForEachID(idd, origIdListSet, datapath, dataext, dataprefix, #{{{
                 size_dbfile = 0
         except IOError:
             msg = "{}: Failed to write to dbfile {}"
-            print >> sys.stderr, msg.format(sys.argv[0],datafile)
+            print(msg.format(sys.argv[0],datafile), file=sys.stderr)
             raise
     return (fpdb, cntdbfile, size_dbfile)
 #}}}
@@ -144,7 +144,7 @@ def CreateNewFormattedDB(idList,datapath,dataext, dataprefix, #{{{
     fpdb=open(dbfile,"wb")
     indexList = []
     if not isQuiet:
-        print "dbfile %s is created."%dbfile
+        print("dbfile %s is created."%dbfile)
 
     indexFileHeaderText=["DEF_VERSION %s"%version, "DEF_DBNAME %s"%dbname,
             "DEF_EXTENSION %s"%dataext,"DEF_PREFIX %s"%dataprefix ]
@@ -157,8 +157,8 @@ def CreateNewFormattedDB(idList,datapath,dataext, dataprefix, #{{{
     fpindex.close()
     if not isQuiet:
         msg = "{} records have been added to the database {}."
-        print msg.format(len(indexList[0]), dbname)
-        print "indexfile %s output."%(indexfile)
+        print(msg.format(len(indexList[0]), dbname))
+        print("indexfile %s output."%(indexfile))
 #}}}
 def AppendFormattedDB(idList,datapath,dataext, dataprefix, #{{{
         indexfile,dbname):
@@ -181,7 +181,7 @@ def AppendFormattedDB(idList,datapath,dataext, dataprefix, #{{{
         lastDBFileIndex = indexList[1][len(indexList[0])-1]
     if lastDBFileIndex < 0:
         msg = "Fatal: Read index file {} failed in function {}. Exit."
-        print >> sys.stderr, msg.format(indexfile, sys._getframe().f_code.co_name)
+        print(msg.format(indexfile, sys._getframe().f_code.co_name), file=sys.stderr)
         return 1
 
     numOrigRecord = len(indexList[0])
@@ -204,7 +204,7 @@ def AppendFormattedDB(idList,datapath,dataext, dataprefix, #{{{
         fpindex.close()
         if not isQuiet:
             msg = "%d records have been appended to the database %s"
-            print msg.format(len(indexList[0])-numOrigRecord, dbname)
+            print(msg.format(len(indexList[0])-numOrigRecord, dbname))
 #}}}
 
 def FormatDB(idList, datapath, dataext, dataprefix, dbname):#{{{
@@ -225,8 +225,8 @@ def FormatDB(idList, datapath, dataext, dataprefix, dbname):#{{{
         AppendFormattedDB(idList,datapath,dataext,dataprefix, indexfile,
                 dbname)
     else:
-        print >> sys.stderr,("%s: Unrecognized mode (%d). Exit." %
-                (sys.argv[0],mode))
+        print(("%s: Unrecognized mode (%d). Exit." %
+                (sys.argv[0],mode)), file=sys.stderr)
 
 #}}}
 
@@ -291,20 +291,20 @@ def main(g_params):#{{{
                 g_params['isPrintWarning'] = True
                 i += 1
             else:
-                print >> sys.stderr, "Error! Wrong argument:", sys.argv[i]
+                print("Error! Wrong argument:", sys.argv[i], file=sys.stderr)
                 return 1
         else:
             idList.append(sys.argv[i])
             i += 1
 
     if dbname=="":
-        print >> sys.stderr, "dbname is not set. Exit."
+        print("dbname is not set. Exit.", file=sys.stderr)
         return -1
 #     if dataext=="":
 #         print >> sys.stderr, "dataext is not set. Exit."
 #         sys.exit()
     if datapath == "" or not os.path.exists(datapath):
-        print >> sys.stderr, "datapath is not set or not existing. Exit."
+        print("datapath is not set or not existing. Exit.", file=sys.stderr)
         return -1
 
     if idListFile != "":
@@ -313,10 +313,10 @@ def main(g_params):#{{{
             idList+=fp.read().split()
             fp.close()
         except IOError:
-            print >> sys.stderr, "Failed to read idListFile %s"%idListFile
+            print("Failed to read idListFile %s"%idListFile, file=sys.stderr)
             pass
     if len(idList) <= 0:
-        print >> sys.stderr,"no ID has been set, Exit." 
+        print("no ID has been set, Exit.", file=sys.stderr) 
         return -1
     idList = myfunc.uniquelist(idList)
     FormatDB(idList, datapath, dataext, dataprefix, dbname)

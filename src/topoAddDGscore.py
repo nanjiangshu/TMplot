@@ -47,11 +47,11 @@ Created 2010-09-03, updated 2012-12-12,  Nanjiang Shu
 """%(progname)
 
 def PrintHelp():
-    print usage
+    print(usage)
 
 def TopoAddDGscore(idListTopo, annotationListTopo, topoList, dgScoreDict, #{{{
         fpTopoDG):
-    for iSeq in xrange (len(topoList)):
+    for iSeq in range (len(topoList)):
         seqID=idListTopo[iSeq]
         topo=topoList[iSeq]
         annoLine=annotationListTopo[iSeq]
@@ -64,8 +64,8 @@ def TopoAddDGscore(idListTopo, annotationListTopo, topoList, dgScoreDict, #{{{
             dglist = dgScoreDict[seqID]
             numDGscore = len(dglist)
             if numDGscore != numTM: 
-                print >> sys.stderr, ("num DGscores for seqID %s (%d) "%(seqID,numDGscore)
-                + "!= numTM (%d) for the topology. dglist = "%(numTM)), dglist
+                print(("num DGscores for seqID %s (%d) "%(seqID,numDGscore)
+                + "!= numTM (%d) for the topology. dglist = "%(numTM)), dglist, file=sys.stderr)
             else:
                 for i in range(numTM):
                     fpTopoDG.write("%s "%dglist[i])
@@ -104,7 +104,7 @@ def main():#{{{
                 outpath=sys.argv[i+1]
                 i = i + 2
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % sys.argv[i])
+                print(("Error! Wrong argument:%s" % sys.argv[i]), file=sys.stderr)
                 return 1
         else:
             inFile=sys.argv[i]
@@ -112,16 +112,16 @@ def main():#{{{
            
 
     if inFile == "":
-        print >> sys.stderr,"Error! Topology file not set."
+        print("Error! Topology file not set.", file=sys.stderr)
         return 1
     if dgFile == "":
-        print >> sys.stderr,"Error!  dgFile not set."
+        print("Error!  dgFile not set.", file=sys.stderr)
         return 1
 
     os.system("mkdir -p %s" % outpath)
     dgScoreDict = lcmp.ReadDGScore(dgFile)
     if dgScoreDict == {}:
-        print >> sys.stderr, "Read DG score failed. exit"
+        print("Read DG score failed. exit", file=sys.stderr)
         return 1
 
     rootname = os.path.basename(os.path.splitext(inFile)[0])
@@ -131,9 +131,9 @@ def main():#{{{
     if fpTopoDG == None:
         return 1
 
-    fpin = open (inFile, "rb")
+    fpin = open (inFile, "r")
     if not fpin:
-        print >> sys.stderr, "Failed to open input file %s"%(inFile)
+        print("Failed to open input file %s"%(inFile), file=sys.stderr)
         return -1
     unprocessedBuffer=""
     isEOFreached = False
@@ -153,7 +153,7 @@ def main():#{{{
         if isEOFreached == True:
             break
     myfunc.myclose(fpTopoDG)
-    print  outFileTopoDG, "output"
+    print(outFileTopoDG, "output")
 #}}}
 
 if __name__ == '__main__' :

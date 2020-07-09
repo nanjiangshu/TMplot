@@ -69,7 +69,7 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
         "-shrink", "no", "-showgap", basename_topAlnFile]
 
     if g_params['verbose']:
-        print("Generating toplogy alignment figure for %s"%(rootname))
+        print(("Generating toplogy alignment figure for %s"%(rootname)))
 
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
@@ -83,7 +83,7 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
     shutil.copy2(topalnfigure, resized_topalnfigure)
     cmd = ["mogrify", "-resize", str(g_params['figure_resize']), resized_topalnfigure]
     if g_params['verbose']:
-        print("Resizing the topology alignment figure for %s"%(rootname))
+        print(("Resizing the topology alignment figure for %s"%(rootname)))
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
         print(t_msg)
@@ -99,7 +99,7 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
         cmd += ["-breakTM"]
 
     if g_params['verbose']:
-        print("Generating sequence alignment highlighted by TM regions for %s"%(rootname))
+        print(("Generating sequence alignment highlighted by TM regions for %s"%(rootname)))
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
         print(t_msg)
@@ -135,7 +135,7 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
         capList += ["-cap", "%s: %s"%(alphabet[i], seqIDList[i])]
     cmd += capList
     if g_params['verbose']:
-        print("Merging the topology alignment figure and sequence alignment figure for %s"%(rootname))
+        print(("Merging the topology alignment figure and sequence alignment figure for %s"%(rootname)))
     (isCmdSuccess, t_runtime, t_msg) = myfunc.RunCmd(cmd)
     if not isCmdSuccess:
         print(t_msg)
@@ -160,7 +160,7 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
         shutil.copy2(outfile_crop, final_targetfile)
 
     if g_params['verbose']:
-        print("Copy the result to final target %s"%(os.path.join(outpath, outfile)))
+        print(("Copy the result to final target %s"%(os.path.join(outpath, outfile))))
 
 
     os.chdir(cwd)
@@ -217,8 +217,8 @@ Examples:
     if MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir) == 0:
         shutil.rmtree(tmpdir)
     else:
-        print("makeplot failed for (%s, %s) "%(seqAlnFile, topAlnFile))
-        print("temporary results can be found at %s"%(tmpdir))
+        print(("makeplot failed for (%s, %s) "%(seqAlnFile, topAlnFile)))
+        print(("temporary results can be found at %s"%(tmpdir)))
 
     return 0
 

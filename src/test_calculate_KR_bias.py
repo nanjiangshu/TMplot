@@ -35,7 +35,7 @@ Created 2009-06-08, updated 2014-11-05, Nanjiang Shu
 """%(progname)
 
 def PrintHelp():
-    print usage
+    print(usage)
 def GetKRPos(seq, b, e):
     pos = []
     for j in range(b,e):
@@ -54,7 +54,7 @@ def CalKRBias(seq, topo, flank_win, max_dist):
     if numTM >= 1:
         sum_KR_odd = 0
         sum_KR_even = 0
-        for i in xrange(numTM+1):
+        for i in range(numTM+1):
             if i == 0 or i == numTM:
                 if i == 0:
                     b = max(0, posTM[i][0] - max_dist)
@@ -92,7 +92,7 @@ def CalKRBias(seq, topo, flank_win, max_dist):
 
 def WriteResult(idd, cmpclass, seq, numTM, kr_bias, KR_pos_list, fpout):
     fpout.write("%-5s %20s (%+d): "%(idd, cmpclass, kr_bias))
-    for i in xrange(numTM+1):
+    for i in range(numTM+1):
         if i > 0:
             fpout.write(" %s%d%s "%("MMMM", i, "MMMM"))
         for j in KR_pos_list[i]:
@@ -148,7 +148,7 @@ def main(g_params):#{{{
                 g_params['isDEBUG'] = True
                 i += 1
             else:
-                print >> sys.stderr, "Error! Wrong argument:", argv[i]
+                print("Error! Wrong argument:", argv[i], file=sys.stderr)
                 return 1
         else:
             idList.append(argv[i])
@@ -159,13 +159,13 @@ def main(g_params):#{{{
     numSeq = len(idListSeq)
     numTopo = len(idListTopo)
     if numSeq < 1 or numTopo < 1: 
-        print >> sys.stderr, "No seq set"
+        print("No seq set", file=sys.stderr)
         return 1
     seqDict = {}
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seqDict[idListSeq[i]] = seqList[i]
     topoDict = {}
-    for i in xrange(numTopo):
+    for i in range(numTopo):
         topoDict[idListTopo[i]] = topoList[i]
 
     cmpclassDict = {}
@@ -186,16 +186,16 @@ def main(g_params):#{{{
 
     for idd in idListSeq:
         if g_params['isDEBUG']:
-            print "seqid: %s"%(idd)
+            print("seqid: %s"%(idd))
         try:
             topo = topoDict[idd]
         except KeyError:
-            print >> sys.stderr, "no topo for %s"%idd
+            print("no topo for %s"%idd, file=sys.stderr)
             continue
         try:
             seq = seqDict[idd]
         except KeyError:
-            print >> sys.stderr, "no seq for %s"%idd
+            print("no seq for %s"%idd, file=sys.stderr)
             continue
         try:
             cmpclass = cmpclassDict[idd]

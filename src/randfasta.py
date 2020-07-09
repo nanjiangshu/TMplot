@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Filename: randfasta.py
 # Description:
-#   output a number of randomly selected sequences from a fasta file
+#   output a number of randomly selected sequences fasta file
 # Author:
 #   Nanjiang Shu  nanjiang.shu@scilifelab.se
 import os
@@ -15,7 +15,7 @@ usage="""
 Usage:  randfasta.py [-i] fastafile  [-n INT ] 
 
 Description: 
-    output a number of randomly selected sequences from a fasta file 
+    output a number of randomly selected sequences fasta file 
 
 OPTIONS:
   -i    FILE  Set the input file
@@ -33,20 +33,20 @@ Examples:
 """
 
 def PrintHelp():#{{{
-    print usage
+    print(usage)
 #}}}
 def RandFasta(inFile,N,rand_seed, fpout):#{{{
     (idList,annotationList, seqList) = myfunc.ReadFasta(inFile, BLOCK_SIZE)
     if idList == None:
-        print >> sys.stderr, "Failed to read fastafile %s. Exit."%inFile
+        print("Failed to read fastafile %s. Exit."%inFile, file=sys.stderr)
         return -1
     random.seed(rand_seed)
     Nseq=len(idList)
     if N > Nseq:
         N=Nseq
-    idxArray=range(Nseq)
+    idxArray=list(range(Nseq))
     idxSample=random.sample(idxArray,N)
-    for i in xrange(N):
+    for i in range(N):
         idx = idxSample[i]
         fpout.write(">%s\n"% annotationList[idx])
         fpout.write("%s\n"% seqList[idx])
@@ -88,10 +88,10 @@ def main():#{{{
             elif sys.argv[i] in [ "-bs" ,  "--block-size" ,  "-block-size"]:
                 BLOCK_SIZE, i = myfunc.my_getopt_int(sys.argv, i)
                 if BLOCK_SIZE < 0:
-                    print >> sys.stderr,"Error! BLOCK_SIZE should >0"
+                    print("Error! BLOCK_SIZE should >0", file=sys.stderr)
                     return 1
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % sys.argv[i])
+                print(("Error! Wrong argument:%s" % sys.argv[i]), file=sys.stderr)
                 return 1
         else:
             inFile = sys.argv[i]

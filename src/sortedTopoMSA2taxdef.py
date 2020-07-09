@@ -8,12 +8,12 @@ infile = sys.argv[1]
 
 # read in taxonomy def
 if not os.path.exists(infile):
-    print >> sys.stderr, "Error! file infile (%s) does not exist." %infile;
+    print("Error! file infile (%s) does not exist." %infile, file=sys.stderr);
     sys.exit(1)
 
 
 if not os.path.exists(seqDefFile):
-    print >> sys.stderr, "Error! file seqDefFile (%s) does not exist." %seqDefFile;
+    print("Error! file seqDefFile (%s) does not exist." %seqDefFile, file=sys.stderr);
     sys.exit(1)
 fpin = open(seqDefFile,"r")
 seqInfoDict = {}

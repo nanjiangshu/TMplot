@@ -53,7 +53,7 @@ nodename = os.uname()[1]
 colorList = ["red", "blue", "green", "cyan","pink"]
 colorList_DG_profile = ["red", "black", "green", "cyan", "yellow"]
 
-ylabel_DGprofile =  u"\u0394G (kcal/mol)"
+ylabel_DGprofile =  "\u0394G (kcal/mol)"
 
 PIL_user_path = os.environ['HOME'] + "/usr/lib64/python2.6/site-packages/PIL"
 if nodename.find("uppmax") != -1:
@@ -183,7 +183,7 @@ Examples:
 
 """%(sys.argv[0])
 def PrintHelp():
-    print usage
+    print(usage)
 
 def sig2(x, scale=1):
     """ Calculate sigmoid value
@@ -209,16 +209,16 @@ def WriteTXTAlignment(idList, annoList, alignedTopoSeqList,#{{{
     while j < lengthAlignment:
         if isStart:
             strs = [""]*numSeq
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 try:
                     strs[i] += "%-*s %4d "%(maxSizeAnno, annoList[i],
                             final2seq_idxMapList[i][j])
                 except KeyError:
-                    print "final2seq_idxMapList error  i=%d, j=%d"%(i,j)
+                    print("final2seq_idxMapList error  i=%d, j=%d"%(i,j))
                     pass
             isStart = False
         isWithinTMregion = False
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             if lcmp.IsWithinTMRegion(j, posTMList[i]):
                 aa = aaSeqList[i][j].upper()
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
@@ -226,9 +226,9 @@ def WriteTXTAlignment(idList, annoList, alignedTopoSeqList,#{{{
                 aa = aaSeqList[i][j].lower()
             strs[i] += aa
         if (cnt >= WIDTH and isWithinTMregion == False) or (j >= lengthAlignment-1):
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 strs[i] += " %4d"%(final2seq_idxMapList[i][j])
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 fpout.write("%s\n"%(strs[i]))
             fpout.write("\n")
             fpout.write("\n")
@@ -262,7 +262,7 @@ def WriteHTMLAlignment(idList, annoList, alignedTopoSeqList,#{{{
 </html>
     
 """
-    print >> fpout, header
+    print(header, file=fpout)
 
 
     strs = [""]*numSeq
@@ -272,12 +272,12 @@ def WriteHTMLAlignment(idList, annoList, alignedTopoSeqList,#{{{
     while j < lengthAlignment:
         if isStart:
             strs = [""]*numSeq
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 strs[i] += "<tr><td>%s</td><td>%d</td>"%(annoList[i],
                         final2seq_idxMapList[i][j])
             isStart = False
         isWithinTMregion = False
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             if lcmp.IsWithinTMRegion(j, posTMList[i]):
                 aa = aaSeqList[i][j].upper()
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
@@ -286,9 +286,9 @@ def WriteHTMLAlignment(idList, annoList, alignedTopoSeqList,#{{{
                 aa = aaSeqList[i][j].lower()
                 strs[i] += "<td><font color=\"grey\">%s</font></td>"%(aa)
         if (cnt >= WIDTH and isWithinTMregion == False) or (j >= lengthAlignment-1):
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 strs[i] += "<td>%d</td></tr>"%(final2seq_idxMapList[i][j])
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 fpout.write("%s\n"%(strs[i]))
             fpout.write("\n")
             strs = [""]*numSeq
@@ -297,7 +297,7 @@ def WriteHTMLAlignment(idList, annoList, alignedTopoSeqList,#{{{
         j += 1
         cnt += 1
 
-    print >> fpout, tail
+    print(tail, file=fpout)
 
     fpout.close()
     #}}}
@@ -340,7 +340,7 @@ def WriteHTMLAlignment2(idList, annoList, alignedTopoSeqList,#{{{
 </html>
     
 """
-    print >> fpout, header
+    print(header, file=fpout)
 
 
 
@@ -351,7 +351,7 @@ def WriteHTMLAlignment2(idList, annoList, alignedTopoSeqList,#{{{
     while j < lengthAlignment:
         if isStart:
             strs = [""]*(numSeq+1)
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 try:
                     strs[i] += "%-*s %4d "%(maxSizeAnno, annoList[i],
                             final2seq_idxMapList[i][j])
@@ -382,7 +382,7 @@ def WriteHTMLAlignment2(idList, annoList, alignedTopoSeqList,#{{{
                 char_rel = " "
         strs[2] += char_rel
 
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             if lcmp.IsWithinTMRegion(j, posTMList[i]):
                 aa = aaSeqList[i][j].upper()
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
@@ -393,7 +393,7 @@ def WriteHTMLAlignment2(idList, annoList, alignedTopoSeqList,#{{{
         if ((cnt >= WIDTH and isWithinTMregion == False) 
                 or (j >= lengthAlignment-1)
                 or j == 190):
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 strs[i] += " %4d"%(final2seq_idxMapList[i][j])
 
             fpout.write("%s\n"%(strs[0]))
@@ -407,7 +407,7 @@ def WriteHTMLAlignment2(idList, annoList, alignedTopoSeqList,#{{{
         j += 1
         cnt += 1
 
-    print >> fpout, tail
+    print(tail, file=fpout)
 
     fpout.close()
     #}}}
@@ -435,7 +435,7 @@ def WriteHTMLAlignment3(idList, annoList, alignedTopoSeqList,#{{{
 </html>
     
 """
-    print >> fpout, header
+    print(header, file=fpout)
 
 
     strs = [""]*numSeq
@@ -445,7 +445,7 @@ def WriteHTMLAlignment3(idList, annoList, alignedTopoSeqList,#{{{
     while j < lengthAlignment:
         if isStart:
             strs = [""]*numSeq
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 try:
                     strs[i] += "%-*s %4d "%(maxSizeAnno, annoList[i],
                             final2seq_idxMapList[i][j])
@@ -454,7 +454,7 @@ def WriteHTMLAlignment3(idList, annoList, alignedTopoSeqList,#{{{
                     pass
             isStart = False
         isWithinTMregion = False
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             if lcmp.IsWithinTMRegion(j, posTMList[i]):
                 aa = aaSeqList[i][j].upper()
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
@@ -466,9 +466,9 @@ def WriteHTMLAlignment3(idList, annoList, alignedTopoSeqList,#{{{
         if ((cnt >= WIDTH and isWithinTMregion == False) 
                 or (j >= lengthAlignment-1)
                 or j == 190):
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 strs[i] += " %4d"%(final2seq_idxMapList[i][j])
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 fpout.write("%s\n"%(strs[i]))
             fpout.write("\n")
             strs = [""]*numSeq
@@ -477,7 +477,7 @@ def WriteHTMLAlignment3(idList, annoList, alignedTopoSeqList,#{{{
         j += 1
         cnt += 1
 
-    print >> fpout, tail
+    print(tail, file=fpout)
 
     fpout.close()
     #}}}
@@ -560,9 +560,9 @@ def GetKRStateFraction(alignedSeqList):#{{{
     numSeq = len(alignedSeqList)
     cnt_K = [0]*lengthAlignment
     cnt_R = [0]*lengthAlignment
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         alignedSeq = alignedSeqList[i]
-        for j in xrange(lengthAlignment):
+        for j in range(lengthAlignment):
             s = alignedSeq[j]
             if s == 'K':
                 cnt_K[j] += 1
@@ -572,7 +572,7 @@ def GetKRStateFraction(alignedSeqList):#{{{
     per_K = [0.0]*lengthAlignment
     per_R = [0.0]*lengthAlignment
     numSeq_float = float(numSeq)
-    for j in xrange(lengthAlignment):
+    for j in range(lengthAlignment):
         per_K[j] = cnt_K[j]/(numSeq_float)
         per_R[j] = cnt_R[j]/(numSeq_float)
     return (cnt_K, cnt_R, per_K, per_R)
@@ -585,7 +585,7 @@ def MatchToAlignedSeq(unalignedseq, alignedseq, seqID): #{{{
     newseq = ""
     j = 0
     GAP = g_params['GAP']
-    for i in xrange(len(alignedseq)):
+    for i in range(len(alignedseq)):
         if alignedseq[i] != GAP:
             newseq += unalignedseq[j]
             j += 1
@@ -615,7 +615,7 @@ def ReadInDGProfile(infile):#{{{
             elif line.find("#Number of sliding windows") == 0:
                 numWin = int(line.split(':')[1])
                 dgp = []
-                for j in xrange(numWin):
+                for j in range(numWin):
                     strs = lines[i+j+1].split()
                     if len(strs) != 2:
                         logger.debug("dgscan file error. strs=%s"%(str(strs)))
@@ -627,7 +627,7 @@ def ReadInDGProfile(infile):#{{{
         #print (dgpDict)
         return dgpDict
     except IOError:
-        print >> sys.stderr, "Failed to read dgprofile", infile
+        print("Failed to read dgprofile", infile, file=sys.stderr)
 #}}}
 
 def MatchAlignedDGP(dgp, idxmap_aligne2seq, posindexmap, aligned_toposeq):#{{{
@@ -650,7 +650,7 @@ def MatchAlignedDGP(dgp, idxmap_aligne2seq, posindexmap, aligned_toposeq):#{{{
     for (idx, dg) in dgp:
         dgp_dt[idx] = dg
 
-    for j in xrange(lenAlignedSeq):
+    for j in range(lenAlignedSeq):
         if aligned_toposeq[j] != '-':
             if isShrink:
                 j_origseq = idxmap_aligne2seq[posindexmap[j]]
@@ -858,7 +858,7 @@ def GetRemainingSegmentList(start, end, posListToRemove):#{{{
     for (b, e) in posListToRemove:
         b1 = max(0, b-start)
         e1 = max(0, e-start)
-        for i in xrange(b1, e1):
+        for i in range(b1, e1):
             lst[i] = 0
 #     print lst
 #     print "====================="
@@ -895,7 +895,7 @@ def CalDistPointToFragment(x, fragment):#{{{
 #}}}
 def IsOutofMaxDistKR(posTM, x, maxDistKR):#{{{
     numTM = len(posTM)
-    for i in xrange(numTM):
+    for i in range(numTM):
         d = CalDistPointToFragment(x, posTM[i])
         if d > 0 and d <= maxDistKR:
             if not lcmp.IsWithinTMRegion(x, posTM):
@@ -912,11 +912,11 @@ def IsSafetoDeleteTheRegion(topoSeqList, start, end):#{{{
     numState = len(stateList)
     if start < 1 or end >= lengthAlignment -1:
         return False
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         topo = topoSeqList[i]
         cntFoundState = 0
         pList = [-1]*numState
-        for j in xrange(numState):
+        for j in range(numState):
             pList[j] = topo[start:end].find(stateList[j])
             if pList[j] >= 0:
                 cntFoundState += 1
@@ -981,12 +981,12 @@ def IsSafetoDeleteTheRegionNew(origTopoSeqList, startOrig, endOrig,#{{{
 
         if startOrig < 1 or endOrig >= lengthAlignment -1:
             return False
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             topoOrig = origTopoSeqList[i]
             topoNew = newTopoSeqList[i]
             cntFoundState = 0
             pList = [-1]*numState
-            for j in xrange(numState):
+            for j in range(numState):
                 pList[j] = topoOrig[startOrig:endOrig].find(stateList[j])
                 if pList[j] >= 0:
                     cntFoundState += 1
@@ -1069,7 +1069,7 @@ def ShrinkSeq(seq, shrinkedwidth):#{{{
     if N <= shrinkedwidth:
         return seq
     newseq = ""
-    for i in xrange(shrinkedwidth):
+    for i in range(shrinkedwidth):
         idx = int(round(i/float(shrinkedwidth-1)*(N-1)))
         newseq += seq[idx]
     return newseq
@@ -1118,7 +1118,7 @@ def ShrinkGapInMSA_obsolete(topoSeqList, specialProIdxList=[]):#{{{
         if j >= 1:  #{{{
             if sumPer_i > 0.0 or sumPer_o > 0.0:
                 if sumPer_i == 0.0:
-                    for iseq in xrange(numSeq):
+                    for iseq in range(numSeq):
                         if topoSeqList[iseq][i:i+j].find("o") >= 0:
                             newList[iseq] += 'o'
                         else:
@@ -1126,7 +1126,7 @@ def ShrinkGapInMSA_obsolete(topoSeqList, specialProIdxList=[]):#{{{
                     posindexmap[cnt] = i+j-1
                     cnt += 1
                 elif sumPer_o == 0.0:
-                    for iseq in xrange(numSeq):
+                    for iseq in range(numSeq):
                         if topoSeqList[iseq][i:i+j].find("i") >= 0:
                             newList[iseq] += 'i'
                         else:
@@ -1134,7 +1134,7 @@ def ShrinkGapInMSA_obsolete(topoSeqList, specialProIdxList=[]):#{{{
                     posindexmap[cnt] = i+j-1
                     cnt += 1
                 else:
-                    for iseq in xrange(numSeq):
+                    for iseq in range(numSeq):
                         ss = topoSeqList[iseq][i:i+j]
                         p1 = ss.find('i')
                         p2 = ss.find('o')
@@ -1159,7 +1159,7 @@ def ShrinkGapInMSA_obsolete(topoSeqList, specialProIdxList=[]):#{{{
             if num_specialpro > 0:
                 if (IsAtTMregionOfSpecialPro(i, topoSeqList, specialProIdxList) and
                     (i < begTM_MSA and i>=endTM_MSA)):
-                    for iseq in xrange(numSeq):
+                    for iseq in range(numSeq):
                         newList[iseq] =  topoSeqList[iseq][i]
                 i += 1
             else:
@@ -1188,10 +1188,10 @@ def ShrinkGapInMSA_obsolete(topoSeqList, specialProIdxList=[]):#{{{
                     if state == 'flat':
                         shrinkedwidth = max(2, int(round((e-b)* min(1.0,
                             per_M[b]*10))))
-                        for iseq in xrange(numSeq):
+                        for iseq in range(numSeq):
                             newList[iseq] += ShrinkSeq(topoSeqList[iseq][b:e],
                                     shrinkedwidth)
-                        for k in xrange(cnt, cnt+shrinkedwidth):
+                        for k in range(cnt, cnt+shrinkedwidth):
                             posindexmap[k] = (b +
                                 int(round((k-cnt)*(e-b)/float(shrinkedwidth-1))))
                         cnt += shrinkedwidth
@@ -1200,20 +1200,20 @@ def ShrinkGapInMSA_obsolete(topoSeqList, specialProIdxList=[]):#{{{
                         minPerM = min(per_M[b:e])
                         maxPerM = max(per_M[b:e])
                         middlePerM = minPerM + (maxPerM - minPerM)*0.6 
-                        for k in xrange(b,e):
+                        for k in range(b,e):
                             if per_M[k] >= middlePerM:
                                 selectedPosList.append(k)
                         selectedPosListSet = set(selectedPosList)
                         for k in range(b, e):
                             if (k in selectedPosListSet or not
                                     IsSafetoDeleteTheRegion(topoSeqList, k, k+1)):
-                                for iseq in xrange(numSeq):
+                                for iseq in range(numSeq):
                                         newList[iseq] += topoSeqList[iseq][k]
                                 posindexmap[cnt] = k
                                 cnt += 1
                 i += j
 #}}}
-    for iseq in xrange(numSeq):
+    for iseq in range(numSeq):
         topoSeqList[iseq] = newList[iseq]
     return posindexmap
 
@@ -1250,7 +1250,7 @@ def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
     if isDrawKRBias:
         aaSeqDict = g_params['aaSeqDict']
         alignedSeqList = []
-        for i  in xrange(len(idList)):
+        for i  in range(len(idList)):
             toposeq = topoSeqList[i]
             seqid = idList[i]
             try:
@@ -1291,7 +1291,7 @@ def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
                     # otherwise, just delete this region
                     if isDrawKRBias:
                         repStatList = [] # state to be replaced
-                        for iseq in xrange(numSeq):
+                        for iseq in range(numSeq):
                             subseq = topoSeqList[iseq][i:i+j].replace('-','')
                             if len(subseq) == 0:
                                 repStatList.append(' ')
@@ -1301,20 +1301,20 @@ def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
                         tmpcnt = 0
                         for pp in range(i, i+j):
                             if per_K[pp] > 0.0 or per_R[pp] > 0.0:
-                                for iseq in xrange(numSeq):
+                                for iseq in range(numSeq):
                                     newList[iseq] += repStatList[iseq]
                                 posindexmap[cnt] = pp
                                 cnt += 1
                                 tmpcnt += 1
                         if tmpcnt == 0:
                             pp = i
-                            for iseq in xrange(numSeq):
+                            for iseq in range(numSeq):
                                 newList[iseq] += repStatList[iseq]
                             posindexmap[cnt] = pp
                             cnt += 1
                     else:
                         if sumPer_i == 0.0 or sumPer_o == 0.0:#{{{
-                            for iseq in xrange(numSeq):
+                            for iseq in range(numSeq):
                                 segment = topoSeqList[iseq][i:i+j]
                                 if segment.find('o') >= 0:
                                     newList[iseq] += 'o'
@@ -1327,7 +1327,7 @@ def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
                         else:
                             stateList = 'io'
                             maxCntFoundState = 0
-                            for iseq in xrange(numSeq):
+                            for iseq in range(numSeq):
                                 cntFoundState = 0
                                 segment = topoSeqList[iseq][i:i+j]
                                 for state in stateList:
@@ -1338,7 +1338,7 @@ def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
                                 if maxCntFoundState >= 2:
                                     break
                             if maxCntFoundState == 2:
-                                for iseq in xrange(numSeq):
+                                for iseq in range(numSeq):
                                     ss = topoSeqList[iseq][i:i+j]
                                     p1 = ss.find('i')
                                     p2 = ss.find('o')
@@ -1359,7 +1359,7 @@ def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
                                 posindexmap[cnt+1] = i+j-1
                                 cnt += 2
                             else:
-                                for iseq in xrange(numSeq):
+                                for iseq in range(numSeq):
                                     segment = topoSeqList[iseq][i:i+j]
                                     if segment.find('o') >= 0:
                                         newList[iseq] += 'o'
@@ -1376,11 +1376,11 @@ def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
                 if (IsAtTMregionOfSpecialPro(i, topoSeqList, specialProIdxList) 
                     #and (i < begTM_MSA and i>=endTM_MSA)
                     ):
-                    for iseq in xrange(numSeq):
+                    for iseq in range(numSeq):
                         newList[iseq] +=  topoSeqList[iseq][i]
                     posindexmap[cnt] = i
                     cnt += 1
-                    print (i, lengthAlignment)
+                    print((i, lengthAlignment))
                 i += 1
             else:
                 sumPer_i = 0.0
@@ -1423,19 +1423,19 @@ def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
 #                         e-b, "shrinkedwidth=",shrinkedwidth)
                                 selectedIndexList = [b +
                                         int(round(k*(e-b-1)/float(shrinkedwidth-1)))
-                                        for k in xrange(shrinkedwidth)]
+                                        for k in range(shrinkedwidth)]
                                 if isDrawKRBias:
                                     for pp in range(b, e):
                                         if (per_K[pp] + per_R[pp] > 0.0):
                                             selectedIndexList.append(pp)
                                     selectedIndexList = sorted(
                                             list(set(selectedIndexList)))
-                                for k in xrange(b, e):
+                                for k in range(b, e):
                                     if (k in selectedIndexList or
                                             not IsSafetoDeleteTheRegionNew(
                                                 topoSeqList, k, k+1, newList, 
                                                 cnt, per_K, per_R)):
-                                        for iseq in xrange(numSeq):
+                                        for iseq in range(numSeq):
                                             newList[iseq] += topoSeqList[iseq][k]
                                             posindexmap[cnt] = k
                                         cnt += 1
@@ -1444,16 +1444,16 @@ def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
                             maxPerM = max(per_M[b:e])
                             middlePerM = minPerM + (maxPerM - minPerM)*0.5 
                             selectedIndexList = []
-                            for k in xrange(b,e):
+                            for k in range(b,e):
                                 if ((per_GAP[k] < 0.95 and per_M[k] > middlePerM) or
                                     per_M[k] > 0.65 or
                                     (isDrawKRBias and (per_K[k]+per_R[k])>0.0)):
                                     selectedIndexList.append(k)
-                            for k in xrange(b, e):
+                            for k in range(b, e):
                                 if (k in selectedIndexList or
                                         not IsSafetoDeleteTheRegionNew(topoSeqList,
                                             k, k+1, newList, cnt, per_K, per_R)):
-                                    for iseq in xrange(numSeq):
+                                    for iseq in range(numSeq):
                                         newList[iseq] += topoSeqList[iseq][k]
                                         posindexmap[cnt] = k
                                     cnt += 1
@@ -1464,7 +1464,7 @@ def ShrinkGapInMSA_0(idList, topoSeqList, specialProIdxList=[]): #{{{
                 else:
                     i += 1
 #}}}
-    for iseq in xrange(numSeq):
+    for iseq in range(numSeq):
         topoSeqList[iseq] = newList[iseq].replace(" ", "-")
         #print ("%10s: %s"%(idList[iseq], topoSeqList[iseq]))
     return posindexmap
@@ -1516,28 +1516,28 @@ def ShrinkGapInMSA_exclude_TMregion(idList, topoSeqList): #{{{
             #if ((sumPer_i > 0.0 and sumPer_o == 0.0) or (sumPer_o > 0.0 and sumPer_i == 0.0)):
             if (sumPer_i > 0.0 or sumPer_o > 0.0):
                 if i == 0:
-                    poslist_to_keep = range(max(i+j-halfMargin,0), i+j)
+                    poslist_to_keep = list(range(max(i+j-halfMargin,0), i+j))
                 else:
-                    poslist_to_keep = range(i,min(i+halfMargin,
-                        lengthAlignment))+range(max(i+j-halfMargin,0),i+j)
+                    poslist_to_keep = list(range(i,min(i+halfMargin,
+                        lengthAlignment)))+list(range(max(i+j-halfMargin,0),i+j))
             else:
-                poslist_to_keep = range(i, i+j)
+                poslist_to_keep = list(range(i, i+j))
             i += j
         else:
-            poslist_to_keep = range(i, i+1)
+            poslist_to_keep = list(range(i, i+1))
             i += 1
 
         poslist_to_keep = sorted(set(poslist_to_keep), reverse=False)
         for pp in poslist_to_keep:
-            for iseq in xrange(numSeq):
+            for iseq in range(numSeq):
                 try:
                     newList[iseq] += topoSeqList[iseq][pp]
                     posindexmap[cnt] = pp
                 except IndexError:
-                    print "Error! iseq=%d, pp=%d, lengthAlignment=%d"%(iseq, pp, lengthAlignment)
+                    print("Error! iseq=%d, pp=%d, lengthAlignment=%d"%(iseq, pp, lengthAlignment))
             cnt += 1
 
-    for iseq in xrange(numSeq):
+    for iseq in range(numSeq):
         topoSeqList[iseq] = newList[iseq].replace(" ", "-")
     return posindexmap
 #}}}
@@ -1568,20 +1568,20 @@ def ShrinkMSA_Method_2(topoSeqList, aaSeqList=[], posTMList=[],#{{{
                                   # M -- common TM region
     for posTM in posTMList:
         for tup in posTM:
-            for j in xrange(tup[0], tup[1]):
+            for j in range(tup[0], tup[1]):
                 array[j] = "M"
     if isDrawKRBias:
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             seq = aaSeqList[i]
-            for j in xrange(len(seq)):
+            for j in range(len(seq)):
                 if (seq[j] in ["K", "R"] and
                         (not lcmp.IsWithinTMRegion(j, posTMList[i]))):
                     array[j] = "P"
 
     #debug
     if g_params['isPrintDebugInfo']:
-        print "array for KR and TM regions, (l: loop, P: K or R, M, TM region)"
-        print "%s"%("".join(array))
+        print("array for KR and TM regions, (l: loop, P: K or R, M, TM region)")
+        print("%s"%("".join(array)))
 
     poslist_to_keep  = []
     i = 0
@@ -1592,7 +1592,7 @@ def ShrinkMSA_Method_2(topoSeqList, aaSeqList=[], posTMList=[],#{{{
                 j+=1
             length_segment = j
             shrinked_len_seg = max(2, int(round(length_segment/shrinkrate_TM)))
-            for k in xrange(shrinked_len_seg):
+            for k in range(shrinked_len_seg):
                 poslist_to_keep.append(i +
                     int(round((length_segment-1)*k/float(shrinked_len_seg-1))))
             i += j
@@ -1602,9 +1602,9 @@ def ShrinkMSA_Method_2(topoSeqList, aaSeqList=[], posTMList=[],#{{{
                 j+=1
             length_segment = j
             if length_segment < max_hold_loop:
-                poslist_to_keep += range(i,i+j)
+                poslist_to_keep += list(range(i,i+j))
             else:
-                for k in xrange(i,i+j):
+                for k in range(i,i+j):
                     if (k-i < max_hold_loop/2 or 
                             i+j-k < max_hold_loop or
                             (isDrawKRBias and array[k] == "P")):
@@ -1618,7 +1618,7 @@ def ShrinkMSA_Method_2(topoSeqList, aaSeqList=[], posTMList=[],#{{{
 #     for i in xrange(len(poslist_to_keep)):
 #         print "ss[ %d ] = %s"%(i, ss[i])
 # end debug
-    for i  in xrange(len(poslist_to_keep)):
+    for i  in range(len(poslist_to_keep)):
         pp = poslist_to_keep[i]
         idxmap_align2shrink[pp] = i
         idxmap_shrink2align[i] = pp
@@ -1627,15 +1627,15 @@ def ShrinkMSA_Method_2(topoSeqList, aaSeqList=[], posTMList=[],#{{{
     cnt = 0
     newList = [""]*numSeq
     for pp in poslist_to_keep:
-        for iseq in xrange(numSeq):
+        for iseq in range(numSeq):
             try:
                 newList[iseq] += topoSeqList[iseq][pp]
             except IndexError:
-                print "Error! iseq=%d, pp=%d, lengthAlignment=%d"%(iseq, pp,
-                        lengthAlignment)
+                print("Error! iseq=%d, pp=%d, lengthAlignment=%d"%(iseq, pp,
+                        lengthAlignment))
         cnt += 1
 
-    for iseq in xrange(numSeq):
+    for iseq in range(numSeq):
         topoSeqList[iseq] = newList[iseq].replace(" ", "-")
     return (idxmap_align2shrink, idxmap_shrink2align)
 #}}}
@@ -1793,7 +1793,7 @@ def DrawDGProfile(dgpList, lengthAlignment, maxDG, minDG, xy0, #{{{
                 draw.ellipse(box, outline=line_color)
             papd((x1+sizeSquare/2, y1+sizeSquare/2))
         if line_mode == "line":
-            for i in xrange(0,len(pointList)-1,1):
+            for i in range(0,len(pointList)-1,1):
                 draw.line([pointList[i],pointList[i+1]],fill=line_color, width=line_width)
 
     # draw legend
@@ -2327,7 +2327,8 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
     if isDrawText:
         x = x0
         y = y0
-        ss = string.ljust(anno[0:widthAnnotation], widthAnnotation, " ")
+        #ss = string.ljust(anno[0:widthAnnotation], widthAnnotation, " ")
+        ss = label[0:widthAnnotation].ljust(widthAnnotation, " ")
 #    print "ss=%s, anno=%s" %(ss, anno)
         fg="#000000";# black
         draw.text((x,y), ss, font=fnt, fill=fg)
@@ -2338,12 +2339,12 @@ def DrawTopology(anno, tag, toposeq, aaseq, xy0, fnt, fontWidth, #{{{
 # it is much faster to draw a block of text than drawing characters one by one
         if g_params['isShowTMIndex']: # show TM1 TM2 TM3 ... in the middle of the TMbox
             tmpli = [' ']*lengthSeq
-            for kk in xrange(len(posTM)):
+            for kk in range(len(posTM)):
                 (bb, ee) = posTM[kk]
                 tmpstr = "TM%d"%(kk+1)
                 mid = (bb+ee)/2
                 bb1 = min(mid - len(tmpstr)/2, lengthSeq - len(tmpstr)-1)
-                for jj in xrange(len(tmpstr)):
+                for jj in range(len(tmpstr)):
                     tmpli[bb1+jj] = tmpstr[jj]
             seq = "".join(tmpli)
         else:
@@ -2418,7 +2419,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     topoSeqList = lcmp.RemoveUnnecessaryGap(topoSeqList)
     numSeq = len(idList)
     if numSeq < 1:
-        print >> sys.stderr, "No sequence in the file %s. Ignore." %(inFile)
+        print("No sequence in the file %s. Ignore." %(inFile), file=sys.stderr)
         return 1
 
     CalculateImageScale(numSeq)
@@ -2427,7 +2428,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     g_params['marginY'] = int(g_params['marginY']*g_params['image_scale']+0.5)
 
     seqIDIndexDict = {}
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seqIDIndexDict[idList[i]] = i
 
     (fontWidthScaleBar, fontHeightScaleBar) = g_params['fntScaleBar'].getsize("a")
@@ -2457,8 +2458,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     specialProIdxList = specialProIdxDict['reppro'] + specialProIdxDict['pdb'] + specialProIdxDict['final']
     if len(specialProIdxList) == 0:
         if g_params['makeCleanPlot']:
-            print >> sys.stderr, "FATAL ERROR! specialPro is not set, TM box can not be plotted. "\
-                    "Please check your input file %s"%(inFile)
+            print("FATAL ERROR! specialPro is not set, TM box can not be plotted. "\
+                    "Please check your input file %s"%(inFile), file=sys.stderr)
             return 1
         else:
             specialProIdxDict['reppro'] = [0]
@@ -2466,7 +2467,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     specialProIdxList = specialProIdxDict['reppro'] + specialProIdxDict['pdb'] + specialProIdxDict['final']
     posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
     TMnameList = []
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         if i in specialProIdxList:
             TMname = myfunc.GetTMnameFromAnnotation(annotationList[i])
             TMnameList.append(TMname)
@@ -2555,12 +2556,12 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
             msg = "%s: (fontWidth, fontHeight) have been reduced to (%d, %d)"\
                   ", but the image size is still too big (%dM)"%(
                           inFile, fontWidth, fontHeight, height*width/1024/1024)
-            print msg
+            print(msg)
         else:
             msg = "font is autosized to %d, isDrawText = %s, "\
                     "(fontWidth, fontHeight) = (%d, %d)"%(
                             font_size,isDrawText, fontWidth, fontHeight)
-            print msg.format(font_size, isDrawText, fontWidth, fontHeight)
+            print(msg.format(font_size, isDrawText, fontWidth, fontHeight))
 
 
     bg_color="#FFFFFF"; # white
@@ -2594,7 +2595,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                     label = rootname
                 else:
                     label = ""
-                ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
+                #ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
+                ss = label[0:widthAnnotation].ljust(widthAnnotation, " ")
                 fg="#000000";# black
                 draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
             DrawTMOfConsensus2(topoSeqList[idx], posTM_rep, typeTM_rep, TMnameList[idx], (x,y),
@@ -2648,7 +2650,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                                     maxDistKR)):
                             aa = " "
                             if g_params['isPrintDebugInfo']:
-                                print seqID, aa, posindexmap[pp], posTMList[i]
+                                print(seqID, aa, posindexmap[pp], posTMList[i])
                         tmpaaseq += (aa)
                     aaseq = tmpaaseq
                 if isDrawKRBias:
@@ -2660,8 +2662,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 #           y+=fontHeight
             y += fontHeight
             if y >= height:
-                print >> sys.stderr, ("Error! position y(%d) exceeds height (%d)" %
-                        (y, height))
+                print(("Error! position y(%d) exceeds height (%d)" %
+                        (y, height)), file=sys.stderr)
 
 # Draw special topologies
     idxPDBList = specialProIdxDict['pdb']
@@ -2683,7 +2685,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                                 label = "Final Topology"
                             else:
                                 label = "Final Topology "+ idList[idx].lstrip("final")
-                    ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
+                    #ss = string.ljust(label[0:widthAnnotation], widthAnnotation, " ")
+                    ss = label[0:widthAnnotation].ljust(widthAnnotation, " ")
                     fg="#000000";# black
                     draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
 
@@ -2762,9 +2765,9 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
         (cnt_i, cnt_o, cnt_M, cnt_GAP, per_i, per_o, per_M, per_GAP) =\
                 lcmp.GetTopoStateFraction( topoSeqList)
 # histoList is a list of 2-tuples (width, height) where height is a value
-# ranging from 0 to 1, and sum of width equals 1.
+# ranging to 1, and sum of width equals 1.
         histoList = []
-        for i in xrange(lengthAlignment):
+        for i in range(lengthAlignment):
             histoList.append((1.0/lengthAlignment, per_M[i]))
         x = (g_params['marginX'] + g_params['widthAnnotation'] * fontWidth +  g_params['annoSeqInterval'] *
                 fontWidthTMbox)
@@ -2777,7 +2780,7 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 draw)
 
     if not g_params['isQuiet']:
-        print ("Topology MSA is drawn and output to \"%s\"" %(outFile))
+        print(("Topology MSA is drawn and output to \"%s\"" %(outFile)))
 
     del draw
     newImage.save(outFile)
@@ -2788,7 +2791,7 @@ def DrawMSATopo_SVG(inFile, g_params):#{{{
     topoSeqList = lcmp.RemoveUnnecessaryGap(topoSeqList)
     numSeq = len(idList)
     if numSeq < 1:
-        print >> sys.stderr, "No sequence in the file %s. Ignore." %(inFile)
+        print("No sequence in the file %s. Ignore." %(inFile), file=sys.stderr)
         return 1
 
     marginX = g_params['marginX']
@@ -2859,33 +2862,33 @@ def DrawMSATopo_SVG(inFile, g_params):#{{{
     
     
     newAnnoList = []
-    for i in xrange(len(topoSeqList)):
+    for i in range(len(topoSeqList)):
         newAnnoList.append("%s %s"%(idList[i], tagList[i]))
     maxSizeAnno = max([len(x) for x in newAnnoList])
 
-    print "maxSizeAnno=",maxSizeAnno
+    print("maxSizeAnno=",maxSizeAnno)
 
     x0 = 10
     y0 = 10
-    for i in xrange(len(topoSeqList)):
+    for i in range(len(topoSeqList)):
         y = y0 + (i)*20
         string = "%-*s %s"%(maxSizeAnno+5, newAnnoList[i], topoSeqList[i])
         #print len(string)
-        print string
+        print(string)
         t1 = pysvg.text.text(string, x=x0, y=y)
         t1.set_style(myStyle.getStyle())
         svg_document.addElement(t1)
     svg_document.save(svgfile)
     cmd = "svg2pdf %s %s"%(svgfile, pdffile)
     os.system(cmd)
-    print "%s output"%(pdffile)
+    print("%s output"%(pdffile))
 
 #}}}
 def DrawMSATopo_MAT(inFile, g_params):#{{{
     (idList, annotationList, topoSeqList) = myfunc.ReadFasta(inFile)
     numSeq = len(idList)
     if numSeq < 1:
-        print >> sys.stderr, "No sequence in the file %s. Ignore." %(inFile)
+        print("No sequence in the file %s. Ignore." %(inFile), file=sys.stderr)
         return 1
     topoSeqList = lcmp.RemoveUnnecessaryGap(topoSeqList)
 
@@ -2958,11 +2961,11 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
     lengthAlignment = len(topoSeqList[0])
 
     newAnnoList = []
-    for i in xrange(len(topoSeqList)):
+    for i in range(len(topoSeqList)):
         newAnnoList.append("%s %s"%(myfunc.GetFirstWord(annotationList[i]), tagList[i]))
     maxSizeAnno = max([len(x) for x in newAnnoList])
 
-    print "maxSizeAnno=",maxSizeAnno
+    print("maxSizeAnno=",maxSizeAnno)
     fonttype = 'monospace'
 
     numSeq = len(topoSeqList)
@@ -2970,7 +2973,7 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
     aaSeqList = [] # list of amino acid sequences, aligned and shrinked if enabled
     final2seq_idxMapList = [] # the index map from the final (shrinked or not)
                               # sequence to the orignal unaligned sequence.
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seqID = idList[i]
         idxmap_aligne2seq = lcmp.GetAlign2SeqMap(alignedTopoSeqList[i],
                 alignedTopoSeqList[i].replace(GAP,""))  
@@ -2991,7 +2994,7 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
                                 maxDistKR)):
                         aa = " "
                         if g_params['isPrintDebugInfo']:
-                            print seqID, aa, posindexmap[pp], posTMList[i]
+                            print(seqID, aa, posindexmap[pp], posTMList[i])
                     tmpaaseq += (aa)
                 aaseq = tmpaaseq
             else:
@@ -3027,19 +3030,19 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
     bb = pth.get_extents(transform=None)
     widthSingleCharInPixel =  float(bb.width)/len(ss)
     heightSingleCharInPixel = float(bb.height)
-    print "charwidth, charheight", widthSingleCharInPixel, heightSingleCharInPixel
+    print("charwidth, charheight", widthSingleCharInPixel, heightSingleCharInPixel)
 
 
 
     widthAnnoInPixel = 0
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         ss = newAnnoList[i]
         pth = matplotlib.textpath.TextPath((x, y), ss, prop=fp_anno)
         bb = pth.get_extents(transform=None)
         wtd =  float(bb.width)/len(ss.replace(" ",""))*len(ss)
         if wtd > widthAnnoInPixel:
             widthAnnoInPixel = wtd
-    print "widthAnnoInPixel=", widthAnnoInPixel
+    print("widthAnnoInPixel=", widthAnnoInPixel)
 
 # set aspect ratio
     if g_params['isDrawDGprofile']:
@@ -3048,17 +3051,17 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
     else:
         heightRatios = [1]
 
-    print "heightRatios=", heightRatios
+    print("heightRatios=", heightRatios)
 
     sumTextHeightInPixel = (heightSingleCharInPixel + linespaceInPixel)*(numSeq+1)
     sumTextWidthInPixel = (widthSingleCharInPixel)*(lengthAlignment+1)
 #    sumTextWidthAnnotationInPixel = widthSingleCharInPixel*(maxSizeAnno+5)
     sumTextWidthAnnotationInPixel = widthAnnoInPixel+20
 
-    print "lengthAlignment=", lengthAlignment
-    print "sumTextWidthAnnotationInPixel=", sumTextWidthAnnotationInPixel
-    print "sumTextWidthInPixel=", sumTextWidthInPixel
-    print "sumTextHeightInPixel=", sumTextHeightInPixel
+    print("lengthAlignment=", lengthAlignment)
+    print("sumTextWidthAnnotationInPixel=", sumTextWidthAnnotationInPixel)
+    print("sumTextWidthInPixel=", sumTextWidthInPixel)
+    print("sumTextHeightInPixel=", sumTextHeightInPixel)
 
 
     widthUnitFigureInPixel = 8*80
@@ -3069,10 +3072,10 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
     adjust_left = (adjust_right) * (sumTextWidthAnnotationInPixel/(sumTextWidthAnnotationInPixel+lengthAlignment*widthSingleCharInPixel))
     adjust_top = max(1.0 - float(2)/numSeq, 0.7)
     adjust_bottom = min(float(2)/numSeq,0.3)
-    print "adjust_left=",adjust_left
-    print "adjust_right=",adjust_right
-    print "adjust_top=",adjust_top
-    print "adjust_bottom=",adjust_bottom
+    print("adjust_left=",adjust_left)
+    print("adjust_right=",adjust_right)
+    print("adjust_top=",adjust_top)
+    print("adjust_bottom=",adjust_bottom)
 
     subplot1_width_ratio = (adjust_right-adjust_left)
     subplot1_height_ratio = float(heightRatios[0])/sum(heightRatios)*(adjust_top-adjust_bottom)
@@ -3082,21 +3085,21 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
 
     widthscale = float(sumTextWidthInPixel)/widthUnitSubplot1InPixel+0.00
     heightscale = float(sumTextHeightInPixel)/heightUnitSubplot1InPixel+0.02
-    print "sumTextWidthInPixel, sumTextHeightInPixel=", (sumTextWidthInPixel, sumTextHeightInPixel)
-    print "scale=",(widthscale, heightscale)
+    print("sumTextWidthInPixel, sumTextHeightInPixel=", (sumTextWidthInPixel, sumTextHeightInPixel))
+    print("scale=",(widthscale, heightscale))
 
     widthSubplot1InPixel = widthUnitSubplot1InPixel * widthscale
     heightSubplot1InPixel = heightUnitSubplot1InPixel * heightscale
 
-    print "widthSubplot1InPixel=",widthSubplot1InPixel
-    print "heightSubplot1InPixel", heightSubplot1InPixel
+    print("widthSubplot1InPixel=",widthSubplot1InPixel)
+    print("heightSubplot1InPixel", heightSubplot1InPixel)
 
     widthSingleCharInAxes = float(widthSingleCharInPixel)/widthSubplot1InPixel
     heightSingleCharInAxes = float(heightSingleCharInPixel)/heightSubplot1InPixel
     widthAnnotationInAxes = float(sumTextWidthAnnotationInPixel)/widthSubplot1InPixel
     linespaceInAxes = float(linespaceInPixel)/heightSubplot1InPixel
 
-    print "widthSingleCharInAxes, heightSingleCharInAxes=", (widthSingleCharInAxes, heightSingleCharInAxes)
+    print("widthSingleCharInAxes, heightSingleCharInAxes=", (widthSingleCharInAxes, heightSingleCharInAxes))
     
 
 # create figure object
@@ -3116,7 +3119,7 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
     loc_xtics = []
     label_xtics = []
     if posindexmap != {}:
-        for jj in xrange(0, lengthAlignment, 10):
+        for jj in range(0, lengthAlignment, 10):
             loc_xtics.append(jj)
             label_xtics.append(posindexmap[jj])
 
@@ -3136,7 +3139,7 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
 # make a plot of sequence indexes
     l1 = []
     l2 = []
-    for j in xrange(lengthAlignment):
+    for j in range(lengthAlignment):
         if posindexmap != {}:
             idxAlignedSeq = posindexmap[j]
         else:
@@ -3152,7 +3155,7 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
     y = y0
     yshift=0
 
-    for i in xrange(len(topoSeqList)):
+    for i in range(len(topoSeqList)):
         y -= yshift
         anno = "%-*s"%(maxSizeAnno+5, newAnnoList[i])
         x = x0 - widthAnnotationInAxes
@@ -3183,7 +3186,7 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
             for (b, e) in posTM:
                 li.append(b)
                 li.append(e)
-            for j in xrange(len(li)+1):
+            for j in range(len(li)+1):
                 if j == 0:
                     begin = 0
                 else:
@@ -3239,7 +3242,7 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
         dgprofileDict = {} #{{{
         if os.path.exists(g_params['DGProfileFile']):
             dgprofileDict = ReadInDGProfile(g_params['DGProfileFile'])
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             seqID = idList[i]
             toposeq = topoSeqList[i]
             lengthAlignment = len(toposeq)
@@ -3267,13 +3270,13 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
         ax.set_ylabel(r"${\Delta}G$", fontsize=16)
         if posindexmap != {}:
             plt.xticks(np.array(loc_xtics), np.array(label_xtics))
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             seqid = idList[i]
             alignedTopoOriginal = alignedTopoSeqList[i]
             align2seqMap = lcmp.GetAlign2SeqMap(alignedTopoOriginal,
                     alignedTopoOriginal.replace(GAP,""))
             #print "dgprofileDict[%s]"%seqid, dgprofileDict[seqid]
-            print "align2seqMap=", align2seqMap
+            print("align2seqMap=", align2seqMap)
             try: 
                 dgp = dgprofileDict[seqid]
                 dt = {}
@@ -3282,7 +3285,7 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
 
                 x = []
                 y = []
-                for j in xrange(lengthAlignment):
+                for j in range(lengthAlignment):
                     if posindexmap != {}:
                         try:
                             idxAlignedSeq = posindexmap[j]
@@ -3317,11 +3320,11 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
                 plt.hlines(0, 0, lengthAlignmentOriginal)
                 plt.legend()
             except KeyError:
-                print "no dgprofile for %s"%(seqid)
+                print("no dgprofile for %s"%(seqid))
                 pass
 
     plt.savefig(pdffile)
-    print "%s output"%(pdffile)
+    print("%s output"%(pdffile))
     cmd = "pdfcrop --margins '%d %d %d %d' --clip %s"%(pdfcrop_margin_left,
             pdfcrop_margin_top, pdfcrop_margin_right, pdfcrop_margin_bottom,
             pdffile)
@@ -3337,9 +3340,9 @@ def DrawMSATopo_MAT(inFile, g_params):#{{{
         #WriteHTMLAlignment2(idList, newAnnoList, topoSeqList,
         #        alignedTopoSeqList, aaSeqList, final2seq_idxMapList, htmlfile)
         tmpmapList = []
-        for i in xrange(len(alignedTopoSeqList)):
+        for i in range(len(alignedTopoSeqList)):
             tmpmap = {}
-            for j in xrange(len(alignedTopoSeqList[i])):
+            for j in range(len(alignedTopoSeqList[i])):
                 tmpmap[j] = j
             tmpmapList.append(tmpmap)
         WriteHTMLAlignment2(idList, newAnnoList, alignedTopoSeqList,
@@ -3418,7 +3421,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
 #         method_shrink = 1
 
     aaSeqAlignList = [] # list of original aligned aa seq list
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seqid = idList[i]
         try:
             aaseq = aaSeqDict[seqid]
@@ -3462,7 +3465,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
 
 
     newAnnoList = []
-    for i in xrange(len(topoSeqList)):
+    for i in range(len(topoSeqList)):
         try:
             anno = myfunc.GetFirstWord(annotationList[i])
         except:
@@ -3480,7 +3483,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
     final2seq_idxMapList = [] # the index map from the final (shrinked or not)
                               # sequence to the orignal unaligned sequence.
     krSeqList = []  # seqlist for positively charged residues, KR
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seqID = idList[i]
         idxmap_aligne2seq = lcmp.GetAlign2SeqMap(alignedTopoSeqList[i],
                 alignedTopoSeqList[i].replace(GAP,""))  
@@ -3493,7 +3496,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
             aaseq = MatchToAlignedSeq(aaseq, alignedTopoSeqList[i], seqID)
             tmpaaseq = ""
             tmpKRseq = ""
-            for pp in xrange(lengthAlignment):
+            for pp in range(lengthAlignment):
                 if posindexmap != {}:
                     jseq = posindexmap[pp]
                 else:
@@ -3507,7 +3510,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
                                 maxDistKR)):
                         tmpKRseq += aa
                         if g_params['isPrintDebugInfo']:
-                            print seqID, aa, jseq, posTMList[i]
+                            print(seqID, aa, jseq, posTMList[i])
                     else:
                         tmpKRseq += " "
             aaSeqList.append(tmpaaseq)
@@ -3519,10 +3522,10 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
 
     # debug
     if g_params['isPrintDebugInfo'] and g_params['isDrawKRBias']:
-        print "print shrinked toposeq and krseq"
+        print("print shrinked toposeq and krseq")
         for k in range(numSeq):
-            print "%s\t%s"%(idList[k], topoSeqList[k])
-            print "%s\t%s"%(idList[k], krSeqList[k])
+            print("%s\t%s"%(idList[k], topoSeqList[k]))
+            print("%s\t%s"%(idList[k], krSeqList[k]))
         sys.stdout.flush()
 # setting font properties
     #ffam = "monospace"
@@ -3554,7 +3557,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
 
 
     widthAnnoInPixel = 0
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         ss = newAnnoList[i]+ "M"*2 # leave 3 letters' space
         pth = matplotlib.textpath.TextPath((x, y), ss, prop=fp_anno)
         bb = pth.get_extents(transform=None)
@@ -3647,11 +3650,11 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
     loc_xtics = []
     label_xtics = []
     if posindexmap != {}:
-        for jj in xrange(0, lengthAlignmentShrinked, 10):
+        for jj in range(0, lengthAlignmentShrinked, 10):
             loc_xtics.append(jj)
             label_xtics.append(posindexmap[int(jj*shrinkrate)])
     else:
-        for jj in xrange(0, lengthAlignmentShrinked, 10):
+        for jj in range(0, lengthAlignmentShrinked, 10):
             loc_xtics.append(jj)
             label_xtics.append(int(jj*shrinkrate))
 
@@ -3694,17 +3697,17 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
 # grey box TM helix (In -> out)
 # white box TM helix (Out -> In)
 
-    line1 = Line2D(range(1), range(1), color="red", marker='', markersize=5, markerfacecolor="red")
-    line2 = Line2D(range(1), range(1), color="blue", marker='', markersize=5, markerfacecolor="blue")
-    line3 = Line2D(range(1), range(1), color="white", marker='s', markersize=20, markerfacecolor="grey")
-    line4 = Line2D(range(1), range(1), color="white", marker='s', markersize=20,markerfacecolor="white")
+    line1 = Line2D(list(range(1)), list(range(1)), color="red", marker='', markersize=5, markerfacecolor="red")
+    line2 = Line2D(list(range(1)), list(range(1)), color="blue", marker='', markersize=5, markerfacecolor="blue")
+    line3 = Line2D(list(range(1)), list(range(1)), color="white", marker='s', markersize=20, markerfacecolor="grey")
+    line4 = Line2D(list(range(1)), list(range(1)), color="white", marker='s', markersize=20,markerfacecolor="white")
     legend = plt.legend((line1,line2,line3,line4),('Inside loop','Outside loop', 'TM helix (In -> Out)',
         'TM helix (Out -> In)'),numpoints=1, loc='upper center', bbox_to_anchor=(0.5,
             2.0), ncol=4, fancybox=False, shadow=False)
     legend.draw_frame(False)
 
 
-    for i in xrange(len(topoSeqList)):
+    for i in range(len(topoSeqList)):
         # write sequence description
         anno = "%-*s"%(maxSizeAnno+5, newAnnoList[i])
         x = x0 - widthAnnotationInAxes
@@ -3733,7 +3736,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
             for (b, e) in posTM: # get list of segment borders
                 li.append(b)
                 li.append(e)
-            for j in xrange(len(li)+1):
+            for j in range(len(li)+1):
                 # for TM helices, j-1 is even, j is odd
                 if j == 0:
                     # ignore the N-terminal gaps
@@ -3751,7 +3754,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
 
                 if isDrawKRBias: # draw positively charged K and R if enabled
                     y = y0 - row_height*i
-                    for jpos in xrange(begin, end):
+                    for jpos in range(begin, end):
                         char = seq[jpos]
                         if char in ["K", "R"]:
                             x = x0 + jpos*widthSingleCharInAxes/shrinkrate
@@ -3806,7 +3809,7 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
         dgprofileDict = {} #{{{
         if os.path.exists(g_params['DGProfileFile']):
             dgprofileDict = ReadInDGProfile(g_params['DGProfileFile'])
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             seqID = idList[i]
             toposeq = topoSeqList[i]
             lengthAlignment = len(toposeq)
@@ -3822,18 +3825,18 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
                 cmd =  [g_params['dgscanProg'], tmpaaseqfile,  "-lmin", "21", "-lmax",
                         "21", "-o", tmpdgpfile]
                 cmdline = " ".join(cmd)
-                print cmdline
+                print(cmdline)
                 try:
                     subprocess.check_output(cmd)
-                except subprocess.CalledProcessError, e:
-                    print e
+                except subprocess.CalledProcessError as e:
+                    print(e)
                 tmpDGPDict = ReadInDGProfile(tmpdgpfile)
                 os.remove(tmpaaseqfile)
                 os.remove(tmpdgpfile)
                 for seqid in tmpDGPDict:
                     dgprofileDict[seqid] = tmpDGPDict[seqid]
                 if g_params['isPrintDebugInfo']:
-                    print dgprofileDict
+                    print(dgprofileDict)
         #}}}
         ax = fig.add_subplot(gs[1])
         #ax.set_xlim(0, lengthAlignmentOriginal)
@@ -3842,13 +3845,13 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
         ax.set_ylabel(r"${\Delta}G$ (kJ/mol)", fontsize=fontsize_label)
         plt.xticks(np.array(loc_xtics), np.array(label_xtics), fontsize=fontsize_tics)
         plt.tick_params(labelsize=fontsize_tics, direction='out', pad=10)
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             seqid = idList[i]
             alignedTopoOriginal = alignedTopoSeqList[i]
             align2seqMap = lcmp.GetAlign2SeqMap(alignedTopoOriginal,
                     alignedTopoOriginal.replace(GAP,""))
             #print "align2seqMap=", align2seqMap
-            print "posindexmap=", posindexmap
+            print("posindexmap=", posindexmap)
             #print "dgprofileDict[%s]"%seqid, dgprofileDict[seqid]
             try: 
                 dgp = dgprofileDict[seqid]
@@ -3858,12 +3861,12 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
 
                 x = []
                 y = []
-                for j in xrange(lengthAlignmentShrinked):
+                for j in range(lengthAlignmentShrinked):
                     if posindexmap != {}:
                         try:
                             idxAlignedSeq = posindexmap[int(j*shrinkrate+0.5)]
                         except KeyError:
-                            print "j=%d not in posindexmap"%j
+                            print("j=%d not in posindexmap"%j)
                             pass
                     else:
                         idxAlignedSeq = int(j*shrinkrate)
@@ -3884,8 +3887,8 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
                 else:
                     color = 'none'
                 if g_params['isPrintDebugInfo']:
-                    print "DG-x:",x
-                    print "DG-y:",y
+                    print("DG-x:",x)
+                    print("DG-y:",y)
 # plot by line
                 plt.plot(x,y, label=seqid, color=color)
 # plot with '+' symbol
@@ -3893,11 +3896,11 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
                 plt.hlines(0, 0, lengthAlignmentOriginal)
                 plt.legend()
             except KeyError:
-                print "no dgprofile for %s"%(seqid)
+                print("no dgprofile for %s"%(seqid))
                 pass
 
     plt.savefig(pdffile)
-    print "%s output"%(pdffile)
+    print("%s output"%(pdffile))
     cmd = "pdfcrop --margins '%d %d %d %d' --clip %s"%(pdfcrop_margin_left,
             pdfcrop_margin_top, pdfcrop_margin_right, pdfcrop_margin_bottom,
             pdffile)
@@ -3908,14 +3911,14 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
     cmd = ["convert", pdffile, pngfile] 
     try:
         subprocess.check_output(cmd)
-    except subprocess.CalledProcessError, e:
-        print e
+    except subprocess.CalledProcessError as e:
+        print(e)
 
     cmd = ["convert", "-thumbnail", "100", pngfile, thumb_pngfile] 
     try:
         subprocess.check_output(cmd)
-    except subprocess.CalledProcessError, e:
-        print e
+    except subprocess.CalledProcessError as e:
+        print(e)
 
 #   Write Txtformat alignment
     #print final2seq_idxMapList
@@ -3926,9 +3929,9 @@ def DrawMSATopo_MAT2(inFile, g_params):#{{{
         #WriteHTMLAlignment2(idList, newAnnoList, topoSeqList,
         #        alignedTopoSeqList, aaSeqList, final2seq_idxMapList, htmlfile)
         tmpmapList = []
-        for i in xrange(len(alignedTopoSeqList)):
+        for i in range(len(alignedTopoSeqList)):
             tmpmap = {}
-            for j in xrange(len(alignedTopoSeqList[i])):
+            for j in range(len(alignedTopoSeqList[i])):
                 tmpmap[j] = j
             tmpmapList.append(tmpmap)
         WriteHTMLAlignment2(idList, newAnnoList, alignedTopoSeqList,
@@ -3944,10 +3947,10 @@ def GetAlignedRegion(annotationList, topoSeqList):#{{{
 
 return a list of tuples [(beg, end)], starting from 0
 
-In the annotation line, starting from 1 and both indeces are included
+In the annotation line, starting and both indeces are included
     """
     li = []
-    for i in xrange (len(annotationList)):
+    for i in range (len(annotationList)):
         aligned_region = myfunc.GetAlignedRegionFromAnnotation(annotationList[i], method=0)
         if aligned_region[0] == -1:
             logger.debug("seqNo %d, aligned_region bad format, desp=\"\""%(i+1, annotationList[i]))
@@ -3974,7 +3977,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
     topoSeqList = []
     lst_unalignedNterm = []
     lst_unalignedCterm = []
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         (beg, end) = lst_aligned_region[i]
         topoSeqList.append(orig_topoSeqList[i][beg:end])
         lst_unalignedNterm.append(orig_topoSeqList[i][0:beg])
@@ -4095,7 +4098,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
     method_shrink = g_params['method_shrink']
 
     aaSeqAlignList = [] # list of original aligned aa seq list
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seqid = idList[i]
         try:
             aaseq = aaSeqDict[seqid]
@@ -4146,7 +4149,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
     maxlen_unaligned_nterm_shrinked = int(maxlen_unaligned_nterm/shrinkrate+0.5)
 
     newAnnoList = []
-    for i in xrange(len(topoSeqList)):
+    for i in range(len(topoSeqList)):
         try:
             anno = myfunc.GetFirstWord(annotationList[i]).split('|')[0]
         except:
@@ -4169,7 +4172,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
     final2seq_idxMapList = [] # the index map from the final (shrinked or not)
                               # sequence to the orignal unaligned sequence.
     krSeqList = []  # seqlist for positively charged residues, KR
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         seqID = idList[i]
         idxmap_aligne2seq = lcmp.GetAlign2SeqMap(alignedTopoSeqList[i],
                 alignedTopoSeqList[i].replace(GAP,""))  
@@ -4182,7 +4185,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
             aaseq = MatchToAlignedSeq(aaseq, alignedTopoSeqList[i], seqID)
             tmpaaseq = ""
             tmpKRseq = ""
-            for pp in xrange(lengthAlignment):
+            for pp in range(lengthAlignment):
                 if posindexmap != {}:
                     jseq = posindexmap[pp]
                 else:
@@ -4196,7 +4199,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
                                 maxDistKR)):
                         tmpKRseq += aa
                         if g_params['isPrintDebugInfo']:
-                            print seqID, aa, jseq, posTMList[i]
+                            print(seqID, aa, jseq, posTMList[i])
                     else:
                         tmpKRseq += " "
             aaSeqList.append(tmpaaseq)
@@ -4208,10 +4211,10 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
 
     # debug
     if g_params['isPrintDebugInfo']:
-        print "print shrinked toposeq and krseq"
+        print("print shrinked toposeq and krseq")
         for k in range(numSeq):
-            print "%s\t%s"%(idList[k], topoSeqList[k])
-            print "%s\t%s"%(idList[k], krSeqList[k])
+            print("%s\t%s"%(idList[k], topoSeqList[k]))
+            print("%s\t%s"%(idList[k], krSeqList[k]))
         sys.stdout.flush()
 # setting font properties
     #ffam = "monospace"
@@ -4243,7 +4246,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
 
 
     widthAnnoInPixel = 0
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         ss = newAnnoList[i]+ "M"*2 # leave 3 letters' space
         pth = matplotlib.textpath.TextPath((x, y), ss, prop=fp_anno)
         bb = pth.get_extents(transform=None)
@@ -4337,11 +4340,11 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
     loc_xtics = []
     label_xtics = []
     if posindexmap != {}:
-        for jj in xrange(0, lengthAlignmentShrinked, 10):
+        for jj in range(0, lengthAlignmentShrinked, 10):
             loc_xtics.append(jj)
             label_xtics.append(posindexmap[int(jj*shrinkrate)])
     else:
-        for jj in xrange(0, lengthAlignmentShrinked, 10):
+        for jj in range(0, lengthAlignmentShrinked, 10):
             loc_xtics.append(jj)
             label_xtics.append(int(jj*shrinkrate))
 
@@ -4375,8 +4378,8 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
 # grey box TM helix (In -> out)
 # white box TM helix (Out -> In)
 
-    line1 = Line2D(range(1), range(1), color="red", marker='', markersize=5, markerfacecolor="red")
-    line2 = Line2D(range(1), range(1), color="blue", marker='', markersize=5, markerfacecolor="blue")
+    line1 = Line2D(list(range(1)), list(range(1)), color="red", marker='', markersize=5, markerfacecolor="red")
+    line2 = Line2D(list(range(1)), list(range(1)), color="blue", marker='', markersize=5, markerfacecolor="blue")
     #line3 = Line2D(range(1), range(1), color="white", marker='s', markersize=20, markerfacecolor="grey")
     #line4 = Line2D(range(1), range(1), color="white", marker='s', markersize=20,markerfacecolor="white")
 #     legend = plt.legend((line1,line2,line3,line4),('Inside loop','Outside loop', 'TM helix (In -> Out)',
@@ -4403,7 +4406,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
             height, alpha=0.6, linewidth=3, linestyle="solid", facecolor=facecolor,
             edgecolor=edgecolor, transform=ax.transAxes)
     ax.add_patch(rec)
-    for i in xrange(numSeq):
+    for i in range(numSeq):
         # write sequence description
         anno = "%-*s"%(maxSizeAnno+5, newAnnoList[i])
         x = x0 - widthAnnotationInAxes
@@ -4448,7 +4451,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
                 for (b, e) in posTM: # get list of segment borders
                     li.append(b)
                     li.append(e)
-                for j in xrange(len(li)+1):
+                for j in range(len(li)+1):
                     # for TM helices, j-1 is even, j is odd
                     numTM_unalignedNterm = len(myfunc.GetTMPosition(lst_unalignedNterm[i]))
                     if item == "unaligned_N_term":
@@ -4484,7 +4487,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
 
                     if isDrawKRBias: # draw positively charged K and R if enabled
                         y = y0 - row_height*i
-                        for jpos in xrange(begin, end):
+                        for jpos in range(begin, end):
                             char = seq[jpos]
                             if char in ["K", "R"]:
                                 x = x0 + jpos*widthSingleCharInAxes/shrinkrate
@@ -4551,7 +4554,7 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
         dgprofileDict = {} #{{{
         if os.path.exists(g_params['DGProfileFile']):
             dgprofileDict = ReadInDGProfile(g_params['DGProfileFile'])
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             seqID = idList[i]
             toposeq = topoSeqList[i]
             lengthAlignment = len(toposeq)
@@ -4567,18 +4570,18 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
                 cmd =  [g_params['dgscanProg'], tmpaaseqfile,  "-lmin", "21", "-lmax",
                         "21", "-o", tmpdgpfile]
                 cmdline = " ".join(cmd)
-                print cmdline
+                print(cmdline)
                 try:
                     subprocess.check_output(cmd)
-                except subprocess.CalledProcessError, e:
-                    print e
+                except subprocess.CalledProcessError as e:
+                    print(e)
                 tmpDGPDict = ReadInDGProfile(tmpdgpfile)
                 os.remove(tmpaaseqfile)
                 os.remove(tmpdgpfile)
                 for seqid in tmpDGPDict:
                     dgprofileDict[seqid] = tmpDGPDict[seqid]
                 if g_params['isPrintDebugInfo']:
-                    print dgprofileDict
+                    print(dgprofileDict)
         #}}}
         ax = fig.add_subplot(gs[1])
         #ax.set_xlim(0, lengthAlignmentOriginal)
@@ -4587,13 +4590,13 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
         ax.set_ylabel(r"${\Delta}G$ (kJ/mol)", fontsize=fontsize_label)
         plt.xticks(np.array(loc_xtics), np.array(label_xtics), fontsize=fontsize_tics)
         plt.tick_params(labelsize=fontsize_tics, direction='out', pad=10)
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             seqid = idList[i]
             alignedTopoOriginal = alignedTopoSeqList[i]
             align2seqMap = lcmp.GetAlign2SeqMap(alignedTopoOriginal,
                     alignedTopoOriginal.replace(GAP,""))
             #print "align2seqMap=", align2seqMap
-            print "posindexmap=", posindexmap
+            print("posindexmap=", posindexmap)
             #print "dgprofileDict[%s]"%seqid, dgprofileDict[seqid]
             try: 
                 dgp = dgprofileDict[seqid]
@@ -4603,12 +4606,12 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
 
                 x = []
                 y = []
-                for j in xrange(lengthAlignmentShrinked):
+                for j in range(lengthAlignmentShrinked):
                     if posindexmap != {}:
                         try:
                             idxAlignedSeq = posindexmap[int(j*shrinkrate+0.5)]
                         except KeyError:
-                            print "j=%d not in posindexmap"%j
+                            print("j=%d not in posindexmap"%j)
                             pass
                     else:
                         idxAlignedSeq = int(j*shrinkrate)
@@ -4629,8 +4632,8 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
                 else:
                     color = 'none'
                 if g_params['isPrintDebugInfo']:
-                    print "DG-x:",x
-                    print "DG-y:",y
+                    print("DG-x:",x)
+                    print("DG-y:",y)
 # plot by line
                 plt.plot(x,y, label=seqid, color=color)
 # plot with '+' symbol
@@ -4638,11 +4641,11 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
                 plt.hlines(0, 0, lengthAlignmentOriginal)
                 plt.legend()
             except KeyError:
-                print "no dgprofile for %s"%(seqid)
+                print("no dgprofile for %s"%(seqid))
                 pass
 
     plt.savefig(pdffile)
-    print "%s output"%(pdffile)
+    print("%s output"%(pdffile))
     cmd = "pdfcrop --margins '%d %d %d %d' --clip %s"%(pdfcrop_margin_left,
             pdfcrop_margin_top, pdfcrop_margin_right, pdfcrop_margin_bottom,
             pdffile)
@@ -4653,14 +4656,14 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
     cmd = ["convert", pdffile, pngfile] 
     try:
         subprocess.check_output(cmd)
-    except subprocess.CalledProcessError, e:
-        print e
+    except subprocess.CalledProcessError as e:
+        print(e)
 
     cmd = ["convert", "-thumbnail", "100", pngfile, thumb_pngfile] 
     try:
         subprocess.check_output(cmd)
-    except subprocess.CalledProcessError, e:
-        print e
+    except subprocess.CalledProcessError as e:
+        print(e)
 
 #   Write Txtformat alignment
     #print final2seq_idxMapList
@@ -4668,9 +4671,9 @@ def DrawMSATopo_MAT_Core_unalign_rainbow(inFile, g_params):#{{{
         htmlfile = "%s%s%s%s.%s"%(outpath, os.sep, rootname, str_krbias, 'html')
         if len(idList) == 2:
             tmpmapList = []
-            for i in xrange(len(alignedTopoSeqList)):
+            for i in range(len(alignedTopoSeqList)):
                 tmpmap = {}
-                for j in xrange(len(alignedTopoSeqList[i])):
+                for j in range(len(alignedTopoSeqList[i])):
                     tmpmap[j] = j
                 tmpmapList.append(tmpmap)
             WriteHTMLAlignment2(idList, newAnnoList, alignedTopoSeqList,
@@ -4686,7 +4689,7 @@ def DrawMSATopo_PYX(inFile, g_params):#{{{
     topoSeqList = lcmp.RemoveUnnecessaryGap(topoSeqList)
     numSeq = len(idList)
     if numSeq < 1:
-        print >> sys.stderr, "No sequence in the file %s. Ignore." %(inFile)
+        print("No sequence in the file %s. Ignore." %(inFile), file=sys.stderr)
         return 1
 
     marginX = g_params['marginX']
@@ -4741,21 +4744,21 @@ def DrawMSATopo_PYX(inFile, g_params):#{{{
     lengthAlignment = len(topoSeqList[0])
 
     newAnnoList = []
-    for i in xrange(len(topoSeqList)):
+    for i in range(len(topoSeqList)):
         newAnnoList.append("%s %s"%(idList[i], tagList[i]))
     maxSizeAnno = max([len(x) for x in newAnnoList])
 
-    print "maxSizeAnno=",maxSizeAnno
+    print("maxSizeAnno=",maxSizeAnno)
     fonttype = 'monospace'
 
     x0 = 10
     y0 = 10
     pyx.unit.set(xscale=1)
-    for i in xrange(len(topoSeqList)):
+    for i in range(len(topoSeqList)):
         y = y0 + (i)*20
         ss = r"%-*s %s"%(maxSizeAnno+5, newAnnoList[i], topoSeqList[i])
         ss = ss.replace("_", "\\_")
-        print ss
+        print(ss)
         #ss = r"Boxed text"
         #ss = r"%s %s"%("Boxed text new strings -- -- -----", " ".join(["one"]*20))
         #ss = r"Q81HG1 TM2SEQ                  --    -o ---oMMMMMMMMMMMMMMMMMMMMMiiiiiMMMMMMMMMMMMMMMMMMoMMMMMMMMMMMMMMMMMMMMMiiiiiiiiiiiiiiiiiiiiiii - -- --"
@@ -4767,7 +4770,7 @@ def DrawMSATopo_PYX(inFile, g_params):#{{{
         c.insert(tbox)
 
     c.writePDFfile(stemname)
-    print "%s output"%(pdffile)
+    print("%s output"%(pdffile))
 
 #}}}
 
@@ -4916,7 +4919,7 @@ def main(g_params):#{{{
             elif argv[i] == "-q":
                 g_params['isQuiet'] = True; i +=  1
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % argv[i])
+                print(("Error! Wrong argument:%s" % argv[i]), file=sys.stderr)
                 return 1
         else:
             filelist.append(argv[i])
@@ -4955,9 +4958,9 @@ def main(g_params):#{{{
             filelist += fp.read().split()
             fp.close()
         except IOError:
-            print >> sys.stderr, "file %s does not exist." %(filelistfile)
+            print("file %s does not exist." %(filelistfile), file=sys.stderr)
     if len(filelist) < 1:
-        print >> sys.stderr,"Error! Input file not set."
+        print("Error! Input file not set.", file=sys.stderr)
 
     g_params['fntScaleBar'] = ImageFont.truetype(g_params['font_dir'] +
             g_params['font'], g_params['font_size_scalebar'])
@@ -4969,11 +4972,11 @@ def main(g_params):#{{{
     if aaSeqFile != "" and os.path.exists(aaSeqFile):
         (idList, aaSeqList) = myfunc.ReadFasta_without_annotation(aaSeqFile)
         dd = {}
-        for i in xrange(len(idList)):
+        for i in range(len(idList)):
             dd[idList[i]] = aaSeqList[i].replace("-", "") # gapless aaseq
         g_params['aaSeqDict'] = dd
         if g_params['isDrawKRBias'] and len(aaSeqList) < 1:
-            print >> sys.stderr, "aaSeq must be set when krbias is enabled"
+            print("aaSeq must be set when krbias is enabled", file=sys.stderr)
             return 1
 
 

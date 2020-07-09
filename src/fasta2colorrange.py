@@ -18,10 +18,10 @@ GAP = '-'
 
 # read in taxonomy def
 if not os.path.exists(fastafile):
-    print >> sys.stderr, "Error! file fastafile (%s) does not exist." %fastafile;
+    print("Error! file fastafile (%s) does not exist." %fastafile, file=sys.stderr);
     sys.exit(1)
 if not os.path.exists(treefile):
-    print >> sys.stderr, "Error! file treefile (%s) does not exist." %treefile;
+    print("Error! file treefile (%s) does not exist." %treefile, file=sys.stderr);
     sys.exit(1)
 
 
@@ -80,7 +80,7 @@ colorDict = {
 taxoList = ["Archaea", "Bacteria", "Eukaryota"]
 
 
-for i in xrange(numSeq):
+for i in range(numSeq):
     seqID = idList[i]
     anno = annotationList[i]
     taxo = anno.split(',')[0].split('|')[-1]

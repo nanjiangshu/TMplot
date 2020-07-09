@@ -39,7 +39,7 @@ def DetectFileFormat(inFile):#{{{
             line = fpin.readline()
         fpin.close()
     except:
-        print >> sys.stderr, "Except for the input file ", inFile, "in the function", sys._getframe().f_code.co_name
+        print("Except for the input file ", inFile, "in the function", sys._getframe().f_code.co_name, file=sys.stderr)
     return fileFormat
 #}}}
 def counttopo(strTop) :#{{{
@@ -343,15 +343,15 @@ def CompareToposGloballyNew(strTop1, strTop2, strProtein1, strProtein2, fpLog):#
     strTop1 = filterTopo(strTop1)
     strTop2 = filterTopo(strTop2)
     if fpLog != 0:
-        print >> fpLog, "Global"
-        print >> fpLog, "%-20s:%s"%(strProtein1, strTop1)
-        print >> fpLog, "%-20s:%s"%(strProtein2, strTop2)
-        print >> fpLog
+        print("Global", file=fpLog)
+        print("%-20s:%s"%(strProtein1, strTop1), file=fpLog)
+        print("%-20s:%s"%(strProtein2, strTop2), file=fpLog)
+        print(file=fpLog)
 
     if len(strTop1) <= 0 and len(strTop2) <=0:
         return ("DIFF", 0,0 )
     elif len(strTop1)*len(strTop2) == 0 and len(strTop1)+len(strTop2) > 0:
-        print >> sys.stderr,"%s %s global length does not match" % (strProtein1, strProtein2)
+        print("%s %s global length does not match" % (strProtein1, strProtein2), file=sys.stderr)
         sys.exit(1)
 
     (intNumMem1,Nterm1)=counttopo(strTop1)
@@ -362,10 +362,10 @@ def CompareToposGaplesslyNew(strTop1, strTop2, strProtein1, strProtein2, fpLog):
 # iiiiii--MMMMoo    / iMMMMoo
     [strTop1, strTop2] = lcmp.RemoveUnnecessaryGap([strTop1, strTop2])
     if fpLog != 0:
-        print >> fpLog, "Unnecessary gaps removed"
-        print >> fpLog, "%-20s:%s"%(strProtein1, strTop1)
-        print >> fpLog, "%-20s:%s"%(strProtein2, strTop2)
-        print >> fpLog
+        print("Unnecessary gaps removed", file=fpLog)
+        print("%-20s:%s"%(strProtein1, strTop1), file=fpLog)
+        print("%-20s:%s"%(strProtein2, strTop2), file=fpLog)
+        print(file=fpLog)
     strNewTop1 = ''
     strNewTop2 = ''
     for i in range(len(strTop1)) :
@@ -375,15 +375,15 @@ def CompareToposGaplesslyNew(strTop1, strTop2, strProtein1, strProtein2, fpLog):
     strNewTop1 = filterTopo(strNewTop1)
     strNewTop2 = filterTopo(strNewTop2)
     if fpLog != 0:
-        print >> fpLog, "Gapless"
-        print >> fpLog, "%-20s:%s"%(strProtein1, strNewTop1)
-        print >> fpLog, "%-20s:%s"%(strProtein2, strNewTop2)
-        print >> fpLog
+        print("Gapless", file=fpLog)
+        print("%-20s:%s"%(strProtein1, strNewTop1), file=fpLog)
+        print("%-20s:%s"%(strProtein2, strNewTop2), file=fpLog)
+        print(file=fpLog)
 
     if len(strNewTop1) <= 0 and len(strNewTop2) <=0:
         return ("DIFF", 0,0 )
     elif len(strNewTop1)*len(strNewTop2) == 0 and len(strNewTop1)+len(strNewTop2) > 0:
-        print >> sys.stderr,"%s %s gapless length does not match" % (strProtein1, strProtein2)
+        print("%s %s gapless length does not match" % (strProtein1, strProtein2), file=sys.stderr)
         sys.exit(1)
     (intMems1,N1) = counttopo(strNewTop1)
     (intMems2,N2) = counttopo(strNewTop2)
@@ -424,15 +424,15 @@ def CompareToposLocallyNew(strTop1, strTop2, strProtein1, strProtein2, fpLog):#{
     strNewTop2 = filterTopo(strNewTop2)
 
     if fpLog != 0:
-        print >> fpLog, "Locally"
-        print >> fpLog, "%-20s:%s"%(strProtein1, strNewTop1)
-        print >> fpLog, "%-20s:%s"%(strProtein2, strNewTop2)
-        print >> fpLog
+        print("Locally", file=fpLog)
+        print("%-20s:%s"%(strProtein1, strNewTop1), file=fpLog)
+        print("%-20s:%s"%(strProtein2, strNewTop2), file=fpLog)
+        print(file=fpLog)
 
     if len(strNewTop1) <= 0 and len(strNewTop2) <=0:
         return ("DIFF", 0,0 )
     elif len(strNewTop1)*len(strNewTop2) == 0 and len(strNewTop1)+len(strNewTop2) > 0:
-        print >> sys.stderr,"%s %s local length does not match" % (strProtein1, strProtein2)
+        print("%s %s local length does not match" % (strProtein1, strProtein2), file=sys.stderr)
         sys.exit(1)
 
     (intMems1,N1) = counttopo(strNewTop1)
@@ -465,16 +465,16 @@ def compareTopologiesCategories(strTop1,strTop2) :#{{{
             return "INV"
     return "DIFF";#}}}
 def compareToposGlobally(strAlitopFile) :#{{{
-    print "########\nCompareToposGlobally"; #debug
+    print("########\nCompareToposGlobally"); #debug
     (strTop1, strTop2) = readAliTopo(strAlitopFile)
     [strTop1, strTop2] = lcmp.RemoveUnnecessaryGap([strTop1, strTop2])
-    print "strTop1:%s" % (strTop1); #debug
-    print "strTop2:%s" % (strTop2); #debug
+    print("strTop1:%s" % (strTop1)); #debug
+    print("strTop2:%s" % (strTop2)); #debug
     strTop1 = trimTopo(strTop1)
     strTop2 = trimTopo(strTop2)
-    print "After trimming";#debug
-    print "strTop1:%s" % (strTop1); #debug
-    print "strTop2:%s" % (strTop2); #debug
+    print("After trimming");#debug
+    print("strTop1:%s" % (strTop1)); #debug
+    print("strTop2:%s" % (strTop2)); #debug
     strTop1 = filterTopo(strTop1)
     strTop2 = filterTopo(strTop2)
     (intNumMem1,Nterm1)=counttopo(strTop1)
@@ -490,12 +490,12 @@ def compareToposGaplessly(strAlitopFile) :#{{{
 # that is 
 # -----iiiMMMooo ___\ iMMMooo
 # iiiiii--MMMMoo    / iMMMMoo
-    print "##########\nCompareToposGaplessly\n"; #debug
+    print("##########\nCompareToposGaplessly\n"); #debug
     (strTop1, strTop2) = readAliTopo(strAlitopFile)
     [strTop1, strTop2] = lcmp.RemoveUnnecessaryGap([strTop1, strTop2])
 
-    print "strTop1:%s" % (strTop1); #debug
-    print "strTop2:%s" % (strTop2); #debug
+    print("strTop1:%s" % (strTop1)); #debug
+    print("strTop2:%s" % (strTop2)); #debug
 
     strNewTop1 = ''
     strNewTop2 = ''
@@ -504,9 +504,9 @@ def compareToposGaplessly(strAlitopFile) :#{{{
             strNewTop1 += strTop1[i]
             strNewTop2 += strTop2[i]
 
-    print "After Gapless treatment\n";#debug
-    print "strTop1:%s" % (strNewTop1); #debug
-    print "strTop2:%s" % (strNewTop2); #debug
+    print("After Gapless treatment\n");#debug
+    print("strTop1:%s" % (strNewTop1)); #debug
+    print("strTop2:%s" % (strNewTop2)); #debug
 
     strNewTop1 = filterTopo(strNewTop1)
     strNewTop2 = filterTopo(strNewTop2)
@@ -519,12 +519,12 @@ def compareToposLocally(strAlitopFile) :#{{{
 # compareToposLocally, that is 
 # -----iiiMMMooo-- ___\ iiiMMMooo
 # iiiiii--MMMMoooo    / i--MMMMoo
-    print "###########\nCompareToposLocally\n"; #debug
+    print("###########\nCompareToposLocally\n"); #debug
     (strTop1, strTop2) = readAliTopo(strAlitopFile)
 
     [strTop1, strTop2] = lcmp.RemoveUnnecessaryGap([strTop1, strTop2])
-    print "strTop1:%s" % (strTop1); #debug
-    print "strTop2:%s" % (strTop2); #debug
+    print("strTop1:%s" % (strTop1)); #debug
+    print("strTop2:%s" % (strTop2)); #debug
 
 # 1. treat the beginning
     nbegin=0
@@ -551,9 +551,9 @@ def compareToposLocally(strAlitopFile) :#{{{
             strNewTop1 += tmpStrTop1[i]
             strNewTop2 += tmpStrTop2[i]
 
-    print "After local treatment\n";#debug
-    print "strTop1:%s" % (strNewTop1); #debug
-    print "strTop2:%s" % (strNewTop2); #debug
+    print("After local treatment\n");#debug
+    print("strTop1:%s" % (strNewTop1)); #debug
+    print("strTop2:%s" % (strNewTop2)); #debug
 
     strNewTop1 = trimTopo(strNewTop1); #after local treatment, gaps may still exist in the alignment, use the function trimTopo to remove these gaps
     strNewTop2 = trimTopo(strNewTop2)
@@ -569,6 +569,6 @@ if __name__ == '__main__' :
     if len(sys.argv) == 2:
         strTop1 = trimTopo(readTopo(sys.argv[1]))
         strTop1 = filterTopo(strTop1)
-        print "%s\t%s" % counttopo(strTop1)
+        print("%s\t%s" % counttopo(strTop1))
     else:
-        print compareToposGlobally(sys.argv[1])
+        print(compareToposGlobally(sys.argv[1]))

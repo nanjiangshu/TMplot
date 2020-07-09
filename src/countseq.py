@@ -25,7 +25,7 @@ Examples:
 """%(progname, wspace, progname)
 
 def PrintHelp():
-    print usage
+    print(usage)
 
 def CountSeq(inFile, fpout):#{{{
 # The faster version
@@ -54,7 +54,7 @@ def CountSeq(inFile, fpout):#{{{
         fpout.write("%d\n"%(cntSeq))
         return cntSeq
     except IOError:
-        print >> sys.stderr, "Failed to read file %s"%(inFile)
+        print("Failed to read file %s"%(inFile), file=sys.stderr)
         return -1
 #}}}
 
@@ -87,7 +87,7 @@ def main(g_params):#{{{
                     outFile = sys.argv[i+1]
                 except IndexError:
                     msg = "option %s should be followed by a string"
-                    print >> sys.stderr, msg%(sys.argv[i])
+                    print(msg%(sys.argv[i]), file=sys.stderr)
                     return 1
                 i += 2
             elif sys.argv[i] in [ "-nf", "--nf"]:
@@ -99,11 +99,11 @@ def main(g_params):#{{{
             elif sys.argv[i] in [ "-bs" ,  "--block-size" , "-block-size"]:
                 BLOCK_SIZE = int(sys.argv[i+1])
                 if BLOCK_SIZE < 0:
-                    print >> sys.stderr,"Error! BLOCK_SIZE should >0"
+                    print("Error! BLOCK_SIZE should >0", file=sys.stderr)
                     return 1
                 i = i + 2
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % sys.argv[i])
+                print(("Error! Wrong argument:%s" % sys.argv[i]), file=sys.stderr)
                 return 1
         else:
             fileList.append(sys.argv[i])
@@ -113,7 +113,7 @@ def main(g_params):#{{{
         fileList += myfunc.ReadListFile(listFile, "\n")
 
     if len(fileList) <= 0:
-        print >> sys.stderr,"Error! No input set."
+        print("Error! No input set.", file=sys.stderr)
         return 1
 
 

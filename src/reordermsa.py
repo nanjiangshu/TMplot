@@ -25,7 +25,7 @@ Examples:
 """
 
 def PrintHelp():
-    print usage
+    print(usage)
 
 def ReadOrderList(infile):#{{{
     try:
@@ -39,7 +39,7 @@ def ReadOrderList(infile):#{{{
                 orderlist.append(line.strip())
         return orderlist
     except IOError:
-        print >> sys.stderr, "Failed to read orderlist file ", infile
+        print("Failed to read orderlist file ", infile, file=sys.stderr)
         return []
 #}}}
 def main(g_params):
@@ -81,22 +81,22 @@ def main(g_params):
                 outformat = sys.argv[i+1].lower()
                 i += 2
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % sys.argv[i])
+                print(("Error! Wrong argument:%s" % sys.argv[i]), file=sys.stderr)
                 return 1
         else:
             msafile = sys.argv[i]
             i+=1
 
     if not outformat in ["anno", "fasta"]:
-        print >> sys.stderr, "Unrecognized outformat \"%s\","%(
-                outformat) + " should be either \"anno\" or \"fasta\"."
+        print("Unrecognized outformat \"%s\","%(
+                outformat) + " should be either \"anno\" or \"fasta\".", file=sys.stderr)
         return 1
 
     if orderlistfile == "":
-        print >> sys.stderr, "orderlist file not set. Exit"
+        print("orderlist file not set. Exit", file=sys.stderr)
         return 1
     if msafile == "":
-        print >> sys.stderr, "msafile not set. Exit"
+        print("msafile not set. Exit", file=sys.stderr)
     orderList = ReadOrderList(orderlistfile)  
     (idList, annoList, seqList) = myfunc.ReadFasta(msafile)
 
@@ -107,10 +107,10 @@ def main(g_params):
         seqDict = {}
         annoDict = {}
         numSeq = len(idList)
-        for i in xrange(numSeq):
+        for i in range(numSeq):
             annoDict[idList[i]] = annoList[i]
         if outformat != "anno":
-            for i in xrange(numSeq):
+            for i in range(numSeq):
                 seqDict[idList[i]] = seqList[i]
         for sid in orderList:
             if sid in annoDict:
@@ -118,8 +118,8 @@ def main(g_params):
                 if outformat != "anno":
                     fpout.write("%s\n"%seqDict[sid])
             else:
-                print >> sys.stderr, "seqid %s not in msafile %s"%(
-                        sid, msafile)
+                print("seqid %s not in msafile %s"%(
+                        sid, msafile), file=sys.stderr)
         myfunc.myclose(fpout)
 
     return 0

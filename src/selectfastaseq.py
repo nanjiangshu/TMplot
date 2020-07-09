@@ -27,7 +27,7 @@ Examples:
 
 
 def PrintHelp():
-    print usage
+    print(usage)
 
 def main(g_params):#{{{
     numArgv = len(sys.argv)
@@ -72,17 +72,17 @@ def main(g_params):#{{{
                 g_params['isEvalueSet'] = True
                 i = i + 2
             else:
-                print >> sys.stderr,("Error! Wrong argument:%s" % sys.argv[i])
+                print(("Error! Wrong argument:%s" % sys.argv[i]), file=sys.stderr)
                 return 1
         else:
             idList.append(sys.argv[i])
             i+=1
 
     if fastaFile == "":
-        print >> sys.stderr,"Fatal!  fasta file not set. Exit."
+        print("Fatal!  fasta file not set. Exit.", file=sys.stderr)
         return 1
     elif not os.path.exists(fastaFile):
-        print >> sys.stderr,"Fatal! fasta file %s does not exist. Exit."%(fastaFile)
+        print("Fatal! fasta file %s does not exist. Exit."%(fastaFile), file=sys.stderr)
         return 1
 
     if os.path.exists(idListFile):
@@ -94,15 +94,15 @@ def main(g_params):#{{{
         isIDSet = False
         
     if not g_params['isEvalueSet'] and not isIDSet:
-        print >> sys.stderr, "Error! no ID nor evalue threshold is set. Eixt" 
+        print("Error! no ID nor evalue threshold is set. Eixt", file=sys.stderr) 
         return 1
 
     idListSet = set(idList)
     fpout = myfunc.myopen(filename= outFile, default_fp = sys.stdout, mode="w", isRaise=False); 
 
-    fpin = open (fastaFile, "rb")
+    fpin = open (fastaFile, "r")
     if not fpin:
-        print >> sys.stderr, "Failed to open fastafile %s"%(fastaFile)
+        print("Failed to open fastafile %s"%(fastaFile), file=sys.stderr)
         return -1
     unprocessedBuffer=""
     isEOFreached = False

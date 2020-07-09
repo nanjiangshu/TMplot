@@ -41,13 +41,13 @@ Examples:
 """%(progname)
 
 def PrintHelp(fpout=sys.stdout):#{{{
-    print >> fpout, usage_short
-    print >> fpout, usage_ext
-    print >> fpout, usage_exp#}}}
+    print(usage_short, file=fpout)
+    print(usage_ext, file=fpout)
+    print(usage_exp, file=fpout)#}}}
 def GetTopoDict(topofile):#{{{
     (idList, topoList) = myfunc.ReadFasta_without_annotation(topofile)
     topoDict = {}
-    for i in xrange(len(idList)):
+    for i in range(len(idList)):
         topoDict[idList[i]] = topoList[i]
     return topoDict
 #}}}
@@ -62,7 +62,7 @@ def MatchSeqToTopo(alignedseq, topo, method_match):
     if method_match == 0:
         j = 0 
         topoAliList = []
-        for i in xrange(lengthAlignedSeq):
+        for i in range(lengthAlignedSeq):
             if alignedseq[i] == GAP:
                 topoAliList.append(GAP)
             else:
@@ -82,7 +82,7 @@ def MatchSeqToTopo(alignedseq, topo, method_match):
             if gapPosList[0][0] > 0:
                 topoAliList.append(topo[jTopo:(jTopo+gapPosList[0][0])])
                 jTopo += gapPosList[0][0]
-            for i in xrange(num-1):
+            for i in range(num-1):
                 topoAliList.append(GAP*(gapPosList[i][1] - gapPosList[i][0]))
                 topoAliList.append(topo[jTopo:(jTopo + gapPosList[i+1][0] - gapPosList[i][1])])
                 jTopo += (gapPosList[i+1][0] - gapPosList[i][1])
@@ -106,12 +106,12 @@ def MatchMSATopo_using_topofile(msafile, topofile, isIgnoreBadseq, #{{{
             try:
                 topo = topoDict[rd.seqid]
             except KeyError:
-                print >> sys.stderr, "topo not found for ID %s"%(rd.seqid)
+                print("topo not found for ID %s"%(rd.seqid), file=sys.stderr)
                 topo = ""
             matchedtopo = MatchSeqToTopo(rd.seq, topo, method_match)
             if not (matchedtopo == "BADSEQ" and isIgnoreBadseq):
-                print >> fpout, ">%s"%(rd.description)
-                print >> fpout, "%s"%(matchedtopo)
+                print(">%s"%(rd.description), file=fpout)
+                print("%s"%(matchedtopo), file=fpout)
         recordList = hdl.readseq()
 
     myfunc.myclose(fpout)
@@ -138,12 +138,12 @@ def MatchMSATopo_using_topodb(msafile, topodb, isIgnoreBadseq, #{{{
             if topowithanno != None:
                 (topoid, topoanno, topo) = myfunc.ExtractFromSeqWithAnno(topowithanno)
             else:
-                print >> sys.stderr, "topo not found for ID %s"%(rd.seqid)
+                print("topo not found for ID %s"%(rd.seqid), file=sys.stderr)
                 topo = ""
             matchedtopo = MatchSeqToTopo(rd.seq, topo, method_match)
             if not (matchedtopo == "BADSEQ" and isIgnoreBadseq):
-                print >> fpout, ">%s"%(rd.description)
-                print >> fpout, "%s"%(matchedtopo)
+                print(">%s"%(rd.description), file=fpout)
+                print("%s"%(matchedtopo), file=fpout)
         recordList = hdl.readseq()
 
     myfunc.myclose(fpout)
@@ -171,7 +171,7 @@ def main(g_params):#{{{
     isNonOptionArg=False
     while i < numArgv:
         if isNonOptionArg == True:
-            print >> sys.stderr, "Error! Wrong argument:", argv[i]
+            print("Error! Wrong argument:", argv[i], file=sys.stderr)
             return 1
             isNonOptionArg = False
             i += 1
@@ -191,7 +191,7 @@ def main(g_params):#{{{
             elif argv[i] in ["-m", "--m"]:
                 (method_match, i) = myfunc.my_getopt_int(argv, i)
                 if method_match not in [0,1]:
-                    print >> sys.stderr, "method_match %d not in [0,1]"%method_match
+                    print("method_match %d not in [0,1]"%method_match, file=sys.stderr)
                     return 1
             elif argv[i] in ["-topodb", "--topodb"]:
                 (topodb, i) = myfunc.my_getopt_str(argv, i)
@@ -205,10 +205,10 @@ def main(g_params):#{{{
                 g_params['isQuiet'] = True
                 i += 1
             else:
-                print >> sys.stderr, "Error! Wrong argument:", argv[i]
+                print("Error! Wrong argument:", argv[i], file=sys.stderr)
                 return 1
         else:
-            print >> sys.stderr, "Error! Wrong argument:", argv[i]
+            print("Error! Wrong argument:", argv[i], file=sys.stderr)
             return 1
 
     if myfunc.checkfile(msafile) != 0:
@@ -216,19 +216,19 @@ def main(g_params):#{{{
 
     if topodb != "":
         if not os.path.exists(topodb+'0.db'):
-            print >> sys.stderr, "topodb %s does not exist"%(topodb)
+            print("topodb %s does not exist"%(topodb), file=sys.stderr)
             return 1
         else:
             return MatchMSATopo_using_topodb(msafile, topodb, isIgnoreBadseq,
                     method_match, outfile)
     elif topofile != "":
         if not os.path.exists(topofile):
-            print >> sys.stderr, "topofile %s does not exist"%(topofile)
+            print("topofile %s does not exist"%(topofile), file=sys.stderr)
             return 1
         else:
             return MatchMSATopo_using_topofile(msafile, topofile, isIgnoreBadseq, method_match, outfile)
     else:
-        print >> sys.stderr, "neither topofile nor topodb is set. exit"
+        print("neither topofile nor topodb is set. exit", file=sys.stderr)
         return 1
 
     return 0

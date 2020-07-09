@@ -13,7 +13,7 @@ GAP = '-'
 
 # read in taxonomy def
 if not os.path.exists(infile):
-    print >> sys.stderr, "Error! file infile (%s) does not exist." %infile;
+    print("Error! file infile (%s) does not exist." %infile, file=sys.stderr);
     sys.exit(1)
 
 
@@ -38,7 +38,7 @@ numSeq = len(idList)
 
 countDict = {}
 maxNumTM = 0
-for i in xrange(numSeq):
+for i in range(numSeq):
     gid = idList[i]
     if gid != 'Consensus':
         NtermState = lcmp.GetNtermState(seqList[i])
@@ -60,7 +60,7 @@ minCount = 10
 # o : -1
 # non-determined: 0
 
-for i in xrange(1, maxNumTM+1):
+for i in range(1, maxNumTM+1):
     try:
         (n1, n2) = (countDict[i][0], countDict[i][1])
     except (KeyError, IndexError):
@@ -79,7 +79,7 @@ isAlternate = IsAlternate(liStatus, numAltSerie)
 #write the result
 fpout.write("#isAlternate: %d\n"%(isAlternate))
 fpout.write("%6s %8s %8s\n"%("#numTM", "i(Nterm)",  "o(Nterm)"))
-for i in xrange(1, maxNumTM+1):
+for i in range(1, maxNumTM+1):
     try:
         (n1, n2) = (countDict[i][0], countDict[i][1])
     except (KeyError, IndexError):

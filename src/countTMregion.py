@@ -14,7 +14,7 @@ Created 2011-03-31, updated 2012-06-10, Nanjiang Shu
 """
 
 def PrintHelp():
-    print usage
+    print(usage)
 
 def main(g_params):#{{{
     numArgv=len(sys.argv)
@@ -50,24 +50,24 @@ def main(g_params):#{{{
                 isPrintIDName=False
                 i = i + 1
             else:
-                print "Error! Wrong argument:", sys.argv[i]
+                print("Error! Wrong argument:", sys.argv[i])
                 return 1
         else:
             topofile = sys.argv[i]
             i = i + 1
 
     if topofile == "":
-        print >> sys.stderr , "topofile not set. Exit."
+        print("topofile not set. Exit.", file=sys.stderr)
         return 1
     elif not os.path.exists(topofile):
-        print >> sys.stderr , "topofile %s doe not exist. Exit." %topofile
+        print("topofile %s doe not exist. Exit." %topofile, file=sys.stderr)
         return 1
 
     fpout = myfunc.myopen(outfile, sys.stdout, "w", False)
 
-    fpin = open (topofile, "rb")
+    fpin = open (topofile, "r")
     if not fpin:
-        print >> sys.stderr, "Failed to open input file %s"%(topofile)
+        print("Failed to open input file %s"%(topofile), file=sys.stderr)
         return 1
     unprocessedBuffer=""
     isEOFreached = False
