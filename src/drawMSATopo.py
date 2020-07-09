@@ -5001,7 +5001,7 @@ def InitGlobalParameter():#{{{
     g_params['outFormat'] = "png"
     g_params['mode'] = "P"
     g_params['image_scale'] = None   #overal image scale, set it to a higher value to increase the DPI
-    g_params['font_dir'] = "%s/fonts/truetype/ttf-dejavu/"%(rundir)
+    g_params['font_dir'] = "%s/../fonts/truetype/ttf-dejavu/"%(rundir)
     g_params['font_size'] = 16
 
     # font size for scale bar always set to 11 for easy reading

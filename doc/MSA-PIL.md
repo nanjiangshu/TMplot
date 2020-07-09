@@ -6,7 +6,7 @@
 
 ### Command
 
-    python drawMSATopo.py -m-shrink 0 -method pil -pfm no -text n  -pdg y -showTMidx  -ptag y -sep n  examples/antiport.fam_topomfaspall -h2wratio 0.67
+    python src/drawMSATopo.py -m-shrink 0 -method pil -pfm no -text n  -pdg y -showTMidx  -ptag y -sep n  examples/antiport.fam_topomfaspall -h2wratio 0.67
 
 
 The result will be output to `antiport.png`. The image might be too large to be

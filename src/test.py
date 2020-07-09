@@ -30,7 +30,7 @@ TESTMODE=sys.argv[1]
 g_params = {}
 
 if TESTMODE == "loadpil":
-    g_params['font_dir'] = "%s/fonts/truetype/ttf-dejavu/"%(rundir)
+    g_params['font_dir'] = "%s/../fonts/truetype/ttf-dejavu/"%(rundir)
     g_params['font_size'] = 16
     fontpath = g_params['font_dir'] + "DejaVuSerif.ttf"
     print (fontpath)
