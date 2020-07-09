@@ -6,13 +6,14 @@
 ### Requirements
 
 In order to run the script, you will need to install the following tools apart
-from the packages in the [requirements](../requirements.txt)
+from packages listed in [requirements](../requirements.txt)
 
-* `wkhtmltopdf` with patched QT
-    for Debian, you will need to install `xvfb`
-    for MacOS, it is fine to install wkhtmltopdf just by Homebrew
+1. `wkhtmltopdf` with patched QT
 
-*  Imagemagick
+    * for Debian, you will need to install `xvfb`
+    * for MacOS, it is fine to install wkhtmltopdf just by Homebrew
+
+2.  Imagemagick
 
    Note that on Ubuntu 18, you will need to change the default proxy, that is
 
@@ -31,7 +32,7 @@ from the packages in the [requirements](../requirements.txt)
     ```
     in the file `/etc/ImageMagick-6/policy.xml`
 
-*  pdflatex
+3.  pdflatex
 
 ### Command
 
