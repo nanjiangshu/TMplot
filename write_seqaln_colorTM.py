@@ -181,12 +181,14 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
             strs[2] += myfunc.GetAlignmentRelationship(aa1, aa2, GAP, blosum62)
             j += 1
             cnt += 1
+            #print("++ i=%d, j=%d"%(i,j))
 
         if ((cnt >= WIDTH and isWithinTMregion == False) 
                 or (j >= lengthAlignment)
                 ):
             for i in xrange(numSeq):
-                strs[i] += " %4d"%(final2seq_idxMapList[i][j]-1)
+                #print("i=%d, j=%d"%(i,j))
+                strs[i] += " %4d"%(final2seq_idxMapList[i][j-1])
 
             fpout.write("%s\n"%(strs[0]))
             if g_params['showRelationship']:
