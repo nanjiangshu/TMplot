@@ -95,6 +95,8 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
             basename_seqAlnFile, "-ext-topomsa", ext_topAlnFile, "-ws",
             str(g_params['window_size']), "-o",
             seqaln_htmlfigure, "-cleanplot", "-rmgap"]
+    if g_params['isBreakTM']:
+        cmd += ["-breakTM"]
 
     if g_params['verbose']:
         print("Generating sequence alignment highlighted by TM regions for %s"%(rootname))
@@ -189,6 +191,8 @@ Examples:
     parser.add_argument('-outpath', '--outpath', metavar='OUTPATH', dest='outpath',
             required=True,
             help='Output the result to outpath')
+    parser.add_argument('-breakTM', action='store_true', 
+            help='Break the TM helices to make equal length of each aligned line')
     parser.add_argument('-h2wratio', dest='H2W_ratio',
             metavar='H2W_ratio', type=float, default=0.08,
             help='Set the H2W ratio')
@@ -200,6 +204,8 @@ Examples:
     g_params['H2W_ratio'] = args.H2W_ratio
     outpath = args.outpath
     outpath = os.path.abspath(outpath)
+    if args.breakTM:
+        g_params['isBreakTM'] = True
 
     if not CheckPrerequisite():
         return 1
@@ -222,6 +228,7 @@ def InitGlobalParameter():#{{{
     g_params['isQuiet'] = True
     g_params['figure_resize'] = 5000
     g_params['window_size'] = 100
+    g_params['isBreakTM'] = 100
     g_params['verbose'] = True
     return g_params
 #}}}

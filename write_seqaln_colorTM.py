@@ -121,7 +121,7 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
                     seqlabel = alphabet[i]
                 try:
                     strs[i] += "%-*s %4d "%(maxSizeAnno, seqlabel,
-                            final2seq_idxMapList[i][j])
+                            final2seq_idxMapList[i][j]+1)
                 except KeyError:
                     logger.debug("final2seq_idxMapList error  i=%d, j=%d"%(i,j))
                     pass
@@ -152,11 +152,17 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
                     bgcolor = g_params['loopcolor_out']
                 isWithinTMregion = True # if hit TM region of any sequence, set as TRUE
 
-                if j >= jL[i]:
-                    #print ("outline_color=", outline_color)
+                if g_params['isBreakTM']:
+                    jL[i] += 1
+                    aa = aaSeqList[i][j].upper()
                     strs[i] += "<b><font style=\"background-color:%s; border-style:solid none solid none; border-color:%s; \" color=\"%s\">%s</font></b>"%(
-                            bgcolor, outline_color, color_TM, aa_segment)
-                    jL[i] = e
+                            bgcolor, outline_color, color_TM, aa)
+                else:
+                    if j >= jL[i]:
+                        #print ("outline_color=", outline_color)
+                        strs[i] += "<b><font style=\"background-color:%s; border-style:solid none solid none; border-color:%s; \" color=\"%s\">%s</font></b>"%(
+                                bgcolor, outline_color, color_TM, aa_segment)
+                        jL[i] = e
             else: #loop
                 #posLoop = lcmp.GetLoopBeginEnd(j, posTMList[i], lengthAlignment)
                 #(b, e) = posLoop
@@ -183,12 +189,12 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
             cnt += 1
             #print("++ i=%d, j=%d"%(i,j))
 
-        if ((cnt >= WIDTH and isWithinTMregion == False) 
+        if ((cnt >= WIDTH and (g_params['isBreakTM'] or isWithinTMregion == False)) 
                 or (j >= lengthAlignment)
                 ):
             for i in xrange(numSeq):
                 #print("i=%d, j=%d"%(i,j))
-                strs[i] += " %4d"%(final2seq_idxMapList[i][j-1])
+                strs[i] += " %4d"%(final2seq_idxMapList[i][j-1]+1)
 
             fpout.write("%s\n"%(strs[0]))
             if g_params['showRelationship']:
@@ -284,6 +290,8 @@ Examples:
             help='Do not show alignment relationship')
     parser.add_argument('-rmgap', action='store_true', 
             help='Remove Unnecessary gap')
+    parser.add_argument('-breakTM', action='store_true', 
+            help='Break the TM helices to make equal length of each aligned line')
     parser.add_argument('-cleanplot', action='store_true', 
             help='Make clean plot, no header text, sequences labeled as A, B')
 
@@ -299,6 +307,8 @@ Examples:
         g_params['removeUnnecessaryGap'] = True
     if args.cleanplot:
         g_params['makeCleanPlot'] = True
+    if args.breakTM:
+        g_params['isBreakTM'] = True
 
     lcmp.SetMakeTMplotColor_g_params(g_params)
     WriteSeqAlnHTML(seqAlnFileList, extTopoMSA, outfile)
@@ -313,6 +323,7 @@ def InitGlobalParameter():#{{{
     g_params['showRelationship'] = True
     g_params['removeUnnecessaryGap'] = False
     g_params['makeCleanPlot'] = False
+    g_params['isBreakTM'] = False
     return g_params
 #}}}
 if __name__ == '__main__' :
