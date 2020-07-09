@@ -1,18 +1,16 @@
-## Visualize multiple alignment of transmembrane protein family sulfate symporter transmembrane region
+## Visualize alignment of TM proteins with both TM alignment and sequence alignment
 
 ### Input file
-    * Multiple alignment of membrane topology [antiport.fam_topomfaspall](../examples/antiport.fam_topomfaspall)
-    * DeltaG values for the representative protein of the family [antiport_dg.txt](../examples/antiport_dg.txt)
+    * Pairwise alignment of membrane topology [glt_hct_full.topomfa](../test/glt_hct_full.topomfa) and corresponding sequences [glt_hct_full.aln](../test/glt_hct_full.aln)
 
 ### Command
 
-    python src/drawMSATopo.py -m-shrink 0 -method pil -pfm no -text n  -pdg y -showTMidx  -ptag y -sep n  examples/antiport.fam_topomfaspall -h2wratio 0.67
+    python src/makeTMplot.py -seqaln test/glt_hct_full.aln -topaln test/glt_hct_full.topomfa -breakTM -outpath test/outdir
 
 
-The result will be output to `antiport.png`. The image might be too large to be
-display and thus you may need to resize the image by using e.g. [mogrify](https://imagemagick.org/script/mogrify.php) 
+The result will be output to `test/outdir/glt_hct_full.seqtopaln.pdf`.
 
-<img src="../examples/example_images/antiport.s1600.jpg">
+<img src="../examples/example_images/glt_hct_full.seqtopaln.png">
 
 
 
