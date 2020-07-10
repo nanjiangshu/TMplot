@@ -24,6 +24,9 @@ test/PF*/
 test/logs
 removeUnnecessaryGap
 *bak1*
+*.py.bak
+test/out*
+test/t[0-9].*
 
 venv*/
 

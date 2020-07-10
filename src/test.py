@@ -41,4 +41,10 @@ if TESTMODE == "getgapposition":
     posGAP = myfunc.GetGapPosition(topo)
     print(posGAP)
 
+if TESTMODE == "readfasta":
+    seqfile = sys.argv[2]
+    (idList, annoList, seqList) = myfunc.ReadFasta(seqfile)
+    print(idList)
+    print(seqList)
+
 
