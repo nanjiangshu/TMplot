@@ -14,6 +14,7 @@ import yaml
 import tempfile
 import shutil
 import platform
+import distro
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 if sys.platform == "linux" or sys.platform == "linux2":
@@ -21,7 +22,7 @@ if sys.platform == "linux" or sys.platform == "linux2":
 elif sys.platform == "darwin":
     python_exec = "pythonw"
 
-os_dist = platform.dist()[0]
+os_dist = distro.linux_distribution()[0]
 
 rundir = os.path.dirname(os.path.realpath(__file__))
 
@@ -108,7 +109,7 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
     # convert html to pdf
     seqaln_pdffigure = "%s.%s"%(rootname, "seqaln.pdf")
     cmd = ["wkhtmltopdf",  seqaln_htmlfigure, seqaln_pdffigure]
-    if os_dist == "debian":
+    if os_dist.lower() in ["debian", "ubuntu"]:
         cmd = ["xvfb-run"] + cmd
     if g_params['verbose']:
         print("Convert the html figure to PDF for sequence alignment")
