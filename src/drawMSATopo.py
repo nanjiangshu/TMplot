@@ -2458,9 +2458,11 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
     specialProIdxList = specialProIdxDict['reppro'] + specialProIdxDict['pdb'] + specialProIdxDict['final']
     if len(specialProIdxList) == 0:
         if g_params['makeCleanPlot']:
-            print("FATAL ERROR! specialPro is not set, TM box can not be plotted. "\
-                    "Please check your input file %s"%(inFile), file=sys.stderr)
-            return 1
+            # make all as final proteins for Sudha's case
+            specialProIdxDict['final'] = list(range(len(idList)))
+#             print("FATAL ERROR! specialPro is not set, TM box can not be plotted. "\
+#                     "Please check your input file %s"%(inFile), file=sys.stderr)
+#             return 1
         else:
             specialProIdxDict['reppro'] = [0]
 
