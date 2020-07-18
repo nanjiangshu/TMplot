@@ -127,10 +127,15 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
     seqaln_pdffigure_crop =  "%s.%s"%(rootname, "seqaln-crop.pdf")
 
     # merge figures
-    (seqIDList, seqAnnoList, seqList) = myfunc.ReadFasta(basename_topAlnFile)
+    (seqIDList, seqAnnoList, seqList) = myfunc.ReadFasta(basename_seqAlnFile)
+    str_evalue = ""
+    if len(seqAnnoList) > 0:
+        str_evalue = seqAnnoList[0].split('/')[-1]
+
     outfile = "%s.seqtopaln.pdf"%(rootname)
     cmd = ["bash", os.path.join(rundir, "merge_tmplot.sh"),
-            resized_topalnfigure, seqaln_pdffigure_crop, "-cap", rootname, "-o", outfile]
+            resized_topalnfigure, seqaln_pdffigure_crop, "-cap", 
+            "%s: %s (E-value)"%(rootname, str_evalue), "-o", outfile]
     capList = []
     for i in range(len(seqIDList)):
         capList += ["-cap", "%s: %s"%(alphabet[i], seqIDList[i])]
