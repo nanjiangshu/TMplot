@@ -135,7 +135,7 @@ def MakeTMplot(seqAlnFile, topAlnFile, outpath, tmpdir):# {{{
     outfile = "%s.seqtopaln.pdf"%(rootname)
     cmd = ["bash", os.path.join(rundir, "merge_tmplot.sh"),
             resized_topalnfigure, seqaln_pdffigure_crop, "-cap", 
-            "%s: %s (E-value)"%(rootname, str_evalue), "-o", outfile]
+            "%s"%(rootname), "-o", outfile]
     capList = []
     for i in range(len(seqIDList)):
         capList += ["-cap", "%s: %s"%(alphabet[i], seqIDList[i])]
