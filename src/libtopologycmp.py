@@ -1191,8 +1191,13 @@ def SetMakeTMplotColor_g_params(g_params):# {{{
     g_params['spcolor'] = "#000000"       # signal peptide, black
 
 #}}}
-def SetMakeTMplotColor(idxTM, TMname, base_outline_width, base_text_color, base_outline_color):# {{{
-    """Set color scheme for makeTMplot"""
+def SetMakeTMplotColor(idxTM, TMname, foldType, base_outline_width, base_text_color, base_outline_color):# {{{
+    """Set color scheme for makeTMplot
+
+    1. If foldType is labelled 5B, please colour BC1 and BC2 "Purple" (#600080)
+    2. If foldType is labelled 7B, please colour BC1 and BC2 "Dark pink"
+    3. If foldType is labelled 6R, please colour RC1 and RC2 "Green"
+    """
     outline_width = base_outline_width
     text_color = base_text_color
     outline_color = base_outline_color
@@ -1206,7 +1211,10 @@ def SetMakeTMplotColor(idxTM, TMname, base_outline_width, base_text_color, base_
         if tp.find("S") == 0: #scaffold
             outline_color = "#A52A2A" # brown
         elif tp.find("BC") == 0: #broken core
-            outline_color = "#FF0090" # 
+            if foldType.upper() == "5B":
+                outline_color = "#600080" # Purple
+            else:
+                outline_color = "#FF0090" # Dark pink
         elif tp.find("RC") == 0 : # reentrant core
             outline_color = "#008000" # green
         outline_width = base_outline_width*2

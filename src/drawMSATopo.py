@@ -1834,7 +1834,7 @@ def DrawDGProfile(dgpList, lengthAlignment, maxDG, minDG, xy0, #{{{
 
 
 #}}}
-def DrawTMOfConsensus2(topoSeq, posTM, typeTM, TMname,xy0, fontWidth, fontHeight, draw,length): #{{{
+def DrawTMOfConsensus2(topoSeq, posTM, typeTM, TMname, foldType, xy0, fontWidth, fontHeight, draw,length): #{{{
     """Draw TM box, for loop regions, GAPs are shown in blank
     """
     widthAnnotation = g_params['widthAnnotation']
@@ -1870,7 +1870,7 @@ def DrawTMOfConsensus2(topoSeq, posTM, typeTM, TMname,xy0, fontWidth, fontHeight
         box=[x1, y1 , x2, y2]
 
         (text_TMlabel, text_color, outline_color, outline_width) = lcmp.SetMakeTMplotColor(
-                cnt, TMname, base_outline_width, base_text_color, base_outline_color)
+                cnt, TMname, foldType, base_outline_width, base_text_color, base_outline_color)
 
         logger.debug("text_TMlabel=%s, outline_color=%s, outline_width=%d"%(text_TMlabel, outline_color, outline_width))
 
@@ -2468,13 +2468,17 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 
     specialProIdxList = specialProIdxDict['reppro'] + specialProIdxDict['pdb'] + specialProIdxDict['final']
     posTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
-    TMnameList = []
+    TMnameList = [] # note that TMname is also a list, TMnameList is a list of list
+    foldTypeList = []
     for i in range(numSeq):
         if i in specialProIdxList:
-            TMname = myfunc.GetTMnameFromAnnotation(annotationList[i])
+            TMname = myfunc.GetTMnameFromAnnotation(annotationList[i]) # annotation from the file topomsa
+            foldType = myfunc.GetFoldTypeFromAnnotation(annotationList[i])
             TMnameList.append(TMname)
+            foldTypeList.append(foldType)
         else:
             TMnameList.append([])
+            foldTypeList.append("")
 
     origPosTMList = [myfunc.GetTMPosition(x) for x in topoSeqList]
     VerifyTerminalStatus(topoSeqList, origPosTMList)
@@ -2601,7 +2605,9 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
                 ss = label[0:widthAnnotation].ljust(widthAnnotation, " ")
                 fg="#000000";# black
                 draw.text((xt,y), ss, font=g_params['fntTMbox_label'], fill=fg)
-            DrawTMOfConsensus2(topoSeqList[idx], posTM_rep, typeTM_rep, TMnameList[idx], (x,y),
+
+            DrawTMOfConsensus2(topoSeqList[idx], posTM_rep, typeTM_rep,
+                    TMnameList[idx], foldTypeList[idx], (x,y),
                     fontWidth, fontHeight, draw,lengthAlignment)
             y += int(g_params['heightTMbox'] * fontHeightTMbox*1.5+0.5)
             cnt += 1
@@ -2694,8 +2700,8 @@ def DrawMSATopo_PIL(inFile, g_params):#{{{
 
                 (posTM,typeTM) = lcmp.GetTMType(topoSeqList[idx])
                 # draw topology of the representative protein
-                TMname = myfunc.GetTMnameFromAnnotation(annotationList[idx])
-                DrawTMOfConsensus2(topoSeqList[idx], posTM, typeTM, TMname, (x,y), fontWidth,
+                DrawTMOfConsensus2(topoSeqList[idx], posTM, typeTM,
+                        TMnameList[idx], foldTypeList[idx], (x,y), fontWidth,
                         fontHeight, draw, lengthAlignment)
 
                 y += int(g_params['heightTMbox']*fontHeightTMbox*1.5+0.5)

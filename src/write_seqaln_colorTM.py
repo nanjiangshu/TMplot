@@ -82,12 +82,15 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
     posTMList = []
     typeTMList = []
     TMnameList = []
+    foldTypeList = []
     for i in range(numSeq):
         (posTM,typeTM) = lcmp.GetTMType(alignedTopoSeqList[i])
         TMname = myfunc.GetTMnameFromAnnotation(annoList[i])
+        foldType = myfunc.GetFoldTypeFromAnnotation(annoList[i])
         posTMList.append(posTM)
         typeTMList.append(typeTM)
         TMnameList.append(TMname)
+        foldTypeList.append(foldType)
     #print(annoList)
 
     if g_params['makeCleanPlot']:
@@ -140,7 +143,9 @@ def WriteHTMLAlignment2(aln_name, idList, annoList, alignedTopoSeqList,#{{{
             if idxTM >= 0:
                 (b, e) = posTMList[i][idxTM]
                 (text_TMlabel, text_color, outline_color, outline_width) = lcmp.SetMakeTMplotColor(
-                        idxTM, TMnameList[i],  base_outline_width, base_text_color, base_outline_color)
+                        idxTM, TMnameList[i],  foldTypeList[i],
+                        base_outline_width, base_text_color,
+                        base_outline_color)
                 aa_segment = aaSeqList[i][b:e].upper()
                 if typeTM[idxTM] == 'M':
                     bgcolor = g_params['memcolor_out_to_in']

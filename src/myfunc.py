@@ -1418,6 +1418,25 @@ def GetTMnameFromAnnotation(line):#{{{
             TMname = ss.split(';')
             return TMname
 #}}}
+def GetFoldTypeFromAnnotation(line):#{{{
+    """Get foldType from the annotation line of the topomsa file
+
+       In the *.topomsa files, the header line has now been tagged with
+       fold-type (5B,7B, 6R - 5 helical broken fold-type, 7 helical broken
+       fold-type , 6 helical broken fold-type) in column 3.
+
+        Example from Full_alignment
+        >SBF_like|A0A077PBM8|tmname:TM1-S1;TM2-S1;TM3-BC1;TM4-BC1;TM5-BC1;TM6-S2;TM7-S2;TM8-BC2;TM9-BC2;TM10-BC2|5B
+        Example from Repeat_alignment
+        >Glt_symporter-NR|P73275_SYNY3|tmname:TM1-S1;TM2-S1;TM3-S1;TM4-RC1;RH-RC1;TM6-RC1|6R
+    """
+    foldType = ""
+    if line:
+        li = line.split('|')
+        if len(li) >= 3:
+            foldType = li[3]
+    return foldType
+#}}}
 def ReadSingleFasta(inFile):#{{{
 # return seqID, annotation, aaSeq
 # the leading '>' of the annotation is removed
